@@ -1,0 +1,6 @@
+"adc_0819_Vc_Jan10_13.obj",
+"data_nvm_5219_Vc_Dec09_13.obj",
+"keyboard.obj",
+"main.obj" 
+TO "solidic_proj" 
+RAMSIZE(256) 

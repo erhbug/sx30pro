@@ -1,0 +1,92 @@
+C51 COMPILER V7.50   ADC_0819_VC_JAN10_13                                                  09/07/2022 10:22:31 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE ADC_0819_VC_JAN10_13
+OBJECT MODULE PLACED IN adc_0819_Vc_Jan10_13.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE _adc\adc_0819_Vc_Jan10_13.c BROWSE DEBUG OBJECTEXTEND PRINT(.\adc_0819_Vc_J
+                    -an10_13.lst) OBJECT(adc_0819_Vc_Jan10_13.obj)
+
+line level    source
+
+   1          //*************************************************************************//
+   2          //* Name                                :   sdi0819.c
+   3          //* Vision                              :       VC
+   4          //* Project                             :   SDI0819系列方案
+   5          //* Function                    :   SDI0819 接口函数
+   6          //* $Author                             :   superc
+   7          //*
+   8          //* Copyright 2012 by solidic
+   9          //*
+  10          //* Recode:
+  11          //*                                             1: 2013-01-10  First Creat By Superc
+  12          //*
+  13          //*
+  14          //*
+  15          //*************************************************************************//
+  16          #include <REG52.H>
+  17          #include <math.h>
+  18          //**************************************************************************
+  19          // -- 全部头文件 集中管理 ---- ，版本修改文件名会变动 ---  必须修改 这个文件
+  20          //**************************************************************************
+  21          #include "./_solidic/head_file_version.h"
+  22          
+  23          //****************************************************
+  24          //-------------其他模块全局变量----------------------
+  25          //----全局变量 ADCcmd :                 //(头文件)ext_data
+  26          //----IO定义 :                                  //(头文件)ext_data
+  27          //****************************************************
+  28          
+  29          void sclk_unit(void)
+  30          {
+  31   1              _nop_();
+  32   1              SCLK = 1;
+  33   1              _nop_();
+  34   1              SCLK = 0;
+  35   1      }
+  36          
+  37          //-------------------------- 
+  38          void data_receive(void)
+  39          {
+  40   1              char    i;
+  41   1              //--ADcode_pre--赋值0
+  42   1              ADcode_pre = 0;
+  43   1              //--读取 24位 ADC 的输出
+  44   1              for(i=0;i<24;i++)
+  45   1              {       
+  46   2                      ADcode_pre <<=1;
+  47   2                      sclk_unit();
+  48   2                      if(DRDY_SDO)
+  49   2                      ADcode_pre++;
+  50   2              }
+  51   1              //--因为输出为双极性，+0x800000将负端平移上来
+  52   1              ADcode_pre ^= 0x800000; 
+  53   1              
+  54   1              //--SDI0819的配置脉冲--通道A,PGA=128
+C51 COMPILER V7.50   ADC_0819_VC_JAN10_13                                                  09/07/2022 10:22:31 PAGE 2   
+
+  55   1              sclk_unit(); //-- 25
+  56   1              sclk_unit(); //-- 26
+  57   1              sclk_unit(); //-- 27
+  58   1              
+  59   1              //--SDI0819 控制休眠
+  60   1              if(ADCcmd == 1)
+  61   1              {
+  62   2                      _nop_();
+  63   2                      SCLK = 1;
+  64   2                      ADCcmd = 0;
+  65   2              }
+  66   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     99    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

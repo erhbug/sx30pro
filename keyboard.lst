@@ -1,0 +1,222 @@
+C51 COMPILER V7.50   KEYBOARD                                                              09/07/2022 10:22:32 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE KEYBOARD
+OBJECT MODULE PLACED IN keyboard.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE customer\keyboard.c BROWSE DEBUG OBJECTEXTEND PRINT(.\keyboard.lst) OBJECT(
+                    -keyboard.obj)
+
+line level    source
+
+   1          //*************************************************************************//
+   2          //* Name                                :   display_cal.c
+   3          //* Vision                              :       V-Nov07_12
+   4          //* Project                             :   All project
+   5          //* Function                    :   Solidic 电子称 显存计算文件
+   6          //* $Author                             :   superc
+   7          //*
+   8          //* Copyright 2012 by solidic
+   9          //*
+  10          //* Recode:
+  11          //*                                             1: 2012-11-07  First Creat By Superc
+  12          //*
+  13          //*
+  14          //*
+  15          //*************************************************************************//
+  16          #include <REG52.H>
+  17          #include <math.h>
+  18          //**************************************************************************
+  19          // -- 全部头文件 集中管理 ---- ，版本修改文件名会变动 ---  必须修改 这个文件
+  20          //**************************************************************************
+  21          #include "./_solidic/head_file_version.h"
+  22          
+  23          //****************************************************
+  24          //----全局变量 Dsp_buf[]:  16字节显存
+  25          //----
+  26          //****************************************************
+  27          
+  28          
+  29          
+  30          
+  31          //----------------------------------------------------
+  32          //----- 键码扫描函数 ------------
+  33          void key_scan(void)             
+  34          {
+  35   1              EA = 0;
+  36   1              delay_ms(5);
+  37   1              // 6ms 延时后再次检测是否有健按下
+  38   1              // 检测是否有健按下
+  39   1              //--IO口配置--
+  40   1              IO_MODE_KEY_A_EN;
+  41   1              IO_MODE_KEY_B_EN;
+  42   1              //------------
+  43   1              KEY_PIN5 = 0;
+  44   1              KEY_PIN6 = 0;
+  45   1              KEY_PIN7 = 0;
+  46   1              KEY_PIN8 = 0;
+  47   1              //KEY_PIN9 = 0;
+  48   1              KEY_PIN10 = 0;
+  49   1              delay_ms(0);
+  50   1              // 如果 KEY_1,KEY_2,KEY_3,KEY_4为1,则说明没有键被按下
+  51   1              if(KEY_PIN1 && KEY_PIN2 && KEY_PIN3 && KEY_PIN4)
+  52   1              {
+  53   2                      Key_code = NONE;
+  54   2              }
+C51 COMPILER V7.50   KEYBOARD                                                              09/07/2022 10:22:32 PAGE 2   
+
+  55   1              else
+  56   1              {
+  57   2      //----- 扫描列线 gnd(KEY9) -------------------------------------------
+  58   2                      KEY_PIN5 = 1;
+  59   2                      KEY_PIN6 = 1;
+  60   2                      KEY_PIN7 = 1;
+  61   2                      KEY_PIN8 = 1;
+  62   2                      //KEY_PIN9 = 1;
+  63   2                      KEY_PIN10 = 1;
+  64   2                      delay_ms(0);
+  65   2                      //--- 判断按键 ---
+  66   2                      if(!KEY_PIN1)
+  67   2                          Key_code = KEY_1_9;
+  68   2                      else
+  69   2                      if(!KEY_PIN2)
+  70   2                              Key_code = KEY_2_9;
+  71   2                      else
+  72   2                      if(!KEY_PIN3)
+  73   2                              Key_code = KEY_3_9;
+  74   2                      else
+  75   2                      if(!KEY_PIN4)
+  76   2                              Key_code = KEY_4_9;
+  77   2                      else
+  78   2                              Key_code = NONE;
+  79   2      //----- 扫描列线 KEY10(优先扫描和蜂鸣器公用的线) -------------------------------------------
+  80   2                      if(Key_code == NONE)
+  81   2                      {
+  82   3                      KEY_PIN10 = 0;
+  83   3                      delay_ms(0);
+  84   3                      //--- 判断按键 ---
+  85   3                      if(!KEY_PIN1)
+  86   3                          Key_code = KEY_1_10;
+  87   3                      else
+  88   3                      if(!KEY_PIN2)
+  89   3                              Key_code = KEY_2_10;
+  90   3                      else
+  91   3                      if(!KEY_PIN3)
+  92   3                              Key_code = KEY_3_10;
+  93   3                      else
+  94   3                      if(!KEY_PIN4)
+  95   3                              Key_code = KEY_4_10;
+  96   3                      else
+  97   3                              Key_code = NONE;        
+  98   3                      }
+  99   2      //----- 扫描列线 KEY8 -------------------------------------------
+ 100   2                      if(Key_code == NONE)
+ 101   2                      {
+ 102   3                      KEY_PIN8 = 0;
+ 103   3                      delay_ms(0);
+ 104   3                      //--- 判断按键 ---
+ 105   3                      if(!KEY_PIN1)
+ 106   3                          Key_code = KEY_1_8;
+ 107   3                      else
+ 108   3                      if(!KEY_PIN2)
+ 109   3                              Key_code = KEY_2_8;
+ 110   3                      else
+ 111   3                      if(!KEY_PIN3)
+ 112   3                              Key_code = KEY_3_8;
+ 113   3                      else
+ 114   3                      if(!KEY_PIN4)
+ 115   3                              Key_code = KEY_4_8;
+ 116   3                      else
+C51 COMPILER V7.50   KEYBOARD                                                              09/07/2022 10:22:32 PAGE 3   
+
+ 117   3                              Key_code = NONE;        
+ 118   3                      }
+ 119   2      //----- 扫描列线 KEY7 -------------------------------------------
+ 120   2                      if(Key_code == NONE)
+ 121   2                      {
+ 122   3                      KEY_PIN7 = 0;
+ 123   3                      delay_ms(0);
+ 124   3                      //--- 判断按键 ---
+ 125   3                      if(!KEY_PIN1)
+ 126   3                          Key_code = KEY_1_7;
+ 127   3                      else
+ 128   3                      if(!KEY_PIN2)
+ 129   3                              Key_code = KEY_2_7;
+ 130   3                      else
+ 131   3                      if(!KEY_PIN3)
+ 132   3                              Key_code = KEY_3_7;
+ 133   3                      else
+ 134   3                      if(!KEY_PIN4)
+ 135   3                              Key_code = KEY_4_7;
+ 136   3                      else
+ 137   3                              Key_code = NONE;        
+ 138   3                      }
+ 139   2      //----- 扫描列线 KEY6 -------------------------------------------
+ 140   2                      if(Key_code == NONE)
+ 141   2                      {
+ 142   3                      KEY_PIN6 = 0;
+ 143   3                      delay_ms(0);
+ 144   3                      //--- 判断按键 ---
+ 145   3                      if(!KEY_PIN1)
+ 146   3                      {
+ 147   4                              Key_code = KEY_1_6;
+ 148   4                      }
+ 149   3                      else
+ 150   3                      if(!KEY_PIN2)
+ 151   3                      {
+ 152   4                              Key_code = KEY_2_6;
+ 153   4                      }
+ 154   3                      else
+ 155   3                      if(!KEY_PIN3)
+ 156   3                      {
+ 157   4                              Key_code = KEY_3_6;
+ 158   4                      }
+ 159   3                      else
+ 160   3                      if(!KEY_PIN4)
+ 161   3                      {
+ 162   4                              Key_code = KEY_4_6;
+ 163   4                      }
+ 164   3                      else
+ 165   3                              Key_code = NONE;        
+ 166   3                      }
+ 167   2      //----- 扫描列线 KEY5 -------------------------------------------
+ 168   2                      if(Key_code == NONE)
+ 169   2                      {
+ 170   3                      KEY_PIN5 = 0;
+ 171   3                      delay_ms(0);
+ 172   3                      //--- 判断按键 ---
+ 173   3                      if(!KEY_PIN1)
+ 174   3                          Key_code = KEY_1_5;
+ 175   3                      else
+ 176   3                      if(!KEY_PIN2)
+ 177   3                              Key_code = KEY_2_5;
+ 178   3                      else
+C51 COMPILER V7.50   KEYBOARD                                                              09/07/2022 10:22:32 PAGE 4   
+
+ 179   3                      if(!KEY_PIN3)
+ 180   3                              Key_code = KEY_3_5;
+ 181   3                      else
+ 182   3                      if(!KEY_PIN4)
+ 183   3                              Key_code = KEY_4_5;
+ 184   3                      else
+ 185   3                              Key_code = NONE;        
+ 186   3                      }
+ 187   2              }
+ 188   1              Key_press = 0;
+ 189   1              //--IO口配置--
+ 190   1              IO_MODE_KEY_DIS;
+ 191   1              EA = 1;
+ 192   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    383    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
