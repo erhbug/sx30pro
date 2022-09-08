@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   MAIN                                                                  09/07/2022 20:19:36 PAGE 1   
+C51 COMPILER V7.50   MAIN                                                                  09/08/2022 13:03:45 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
@@ -8,1290 +8,197 @@ COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE customer\main.c BROWSE DEBUG OBJECT
 
 line level    source
 
-   1          //*************************************************************************//
-   2          //* Name                                :   main.c
-   3          //* Vision                              :       V-Nov07_12
-   4          //* Project                             :   All project
-   5          //* Function                    :   Solidic µç×Ó³Æ Ö÷ÎÄ¼þ
-   6          //* $Author                             :   superc
-   7          //*
-   8          //* Copyright 2012 by solidic
-   9          //*
-  10          //* Recode:
-  11          //*                                             1: 2012-11-07  First Creat By Superc
-  12          //*
-  13          //*
-  14          //*
-  15          //*************************************************************************//
-  16          #pragma code symbols debug oe
-  17          #define EXTERN
-  18          #include <REG52.H>
-  19          #include <math.h>
-  20          #include "./_solidic/head_file_version.h"
-  21          
-  22          
-  23          main()
-  24          {
-  25   1              unsigned int i,j,num=90;
-  26   1              P1M0 = 0xff;
-  27   1              P1M1 = 0x00;
-  28   1      while(1){       
-  29   2              P1 = 0x04;
-  30   2              for(i= 0;i<num;i++)     //(SDI5219) ÑÓÊ±1ms
-  31   2                      for(j=0;j<164;j++)
-  32   2                              ;
-  33   2              P1 = 0x00;
-  34   2              for(i= 0;i<num;i++)     //(SDI5219) ÑÓÊ±1ms
-  35   2                      for(j=0;j<164;j++)
-  36   2                              ;
-  37   2      }
-  38   1      
-  39   1      //********************************************************************************************************
-             -****************
-  40   1      // -- ³õÊ¼»¯ÏµÍ³ --
-  41   1      //********************************************************************************************************
-             -****************
-  42   1      //--°´¼ü¹Ø»ú,¼æÈÝSDI5219X1ºÍSDI5219µÄ´úÂë--Begin--
-  43   1      //--SDI5219X1¿´ÃÅ¹·¸´Î»²¢²»¶Ô×ÔÉí¸´Î»£¬ËùÒÔÎªÁË¼æÈÝSDI5219µÄ°´¼ü¹Ø»ú0.2s¿´ÃÅ¹·¸´Î»,±ØÐëÒ»¿ª»ú¾Í½«¿´ÃÅ¹·ÅäÖ
-             -Ãµ½4Ãë,·ñÔò»áÓÐÒ»Ö±ÖØÆô
-  44   1      //--ÒòÎªSDI5219X1°´¼ü¹Ø»ú0.2s¿´ÃÅ¹·¸´Î»ºó£¬Ô­À´³ÌÐòÒªµ½0.5sºó²Å²Ù×÷¿´ÃÅ¹·£¬ËùÒÔ¿´ÃÅ¹·»áÔÚ²Ù×÷ËüÖ®Ç°ÖØÐÂ¸´Î
-             -»
-  45   1              //---´ò¿ª¿´ÃÅ¹·
-  46   1              EA = 0;
-  47   1              WD_TA = 0x05;
-  48   1              WD_TA = 0x0a;
-  49   1              WDCON = 0xbf;   //¿´ÃÅ¹·Ê±¼ä 4sÖÓ,µÍÆµ»½ÐÑ0.2s
-  50   1              //---ÅÐ¶ÏÊÇ·ñÊÇSDI5219-X1
-C51 COMPILER V7.50   MAIN                                                                  09/07/2022 20:19:36 PAGE 2   
+   1          #pragma code symbols debug oe
+   2          #define EXTERN
+   3          #include <REG52.H>
+   4          #include <math.h>
+   5          #include "./_solidic/head_file_version.h"
+   6          #include "./_display/dvr_lcd_SDI1621.h"
+*** WARNING C245 IN LINE 40 OF C:\KEIL\C51\INC\STDIO.H: unknown #pragma, line ignored
+*** WARNING C245 IN LINE 52 OF C:\KEIL\C51\INC\STRING.H: unknown #pragma, line ignored
+   7          
+   8          
+   9          
+  10          #define     BL_EN       P1 |= 0x20
+  11          #define     BL_DIS      P1 &= 0xDF
+  12          
+  13          #define     BEEPER_EN   P1 |= 0x10
+  14          #define     BEEPER_DIS  P1 &= 0xEF
+  15          
+  16          void delay_ms(unsigned int num)
+  17          {       
+  18   1              unsigned int i,j;
+  19   1              for(i= 0;i<num;i++)     //(SDI5219) ??1ms
+  20   1                      for(j=0;j<164;j++)
+  21   1                              ;
+  22   1      }
+  23          
+  24          void init_pwm(void){
+  25   1          PWMF_H  = 0x00;
+  26   1              PWMF_L  = 0x20;
+  27   1              PWM0    = 05;
+  28   1              PWM1    = 03;
+  29   1              PWMCON  = 0x04; //PWM0-P1.4(LCD_LAMP)????(?PWM0=0xff?,?????)
+  30   1      }
+  31          
+  32          main()
+  33          {
+  34   1              P1M0 = 0xff;
+  35   1              P1M1 = 0x00;
+  36   1              P2M0 = 0xff;
+  37   1              P2M1 = 0x00;
+  38   1              P2 = 0x00;
+  39   1              P1 = 0x00;
+  40   1      
+  41   1              iLCD_GLASS_Init();
+  42   1              LCD_GLASS_String("TORREY",LCD_PESO);
+  43   1              LCD_GLASS_String("Y",LCD_PRECIO);
+  44   1              LCD_GLASS_String("2022",LCD_TOTAL);
+  45   1       
+  46   1      
+  47   1              init_pwm();
+  48   1              BL_DIS;
+  49   1              BEEPER_EN;
+  50   1      
+  51   1      while(1){       
+  52   2              ;
+C51 COMPILER V7.50   MAIN                                                                  09/08/2022 13:03:45 PAGE 2   
 
-  51   1              if((LCD_CON == 0x5c) && (LCD_SEL == 0xd0))
-  52   1                      SDI5219X1_symbol = 1;
-  53   1              else
-  54   1                      SDI5219X1_symbol = 0;
-  55   1      //--¼æÈÝSDI5219X1ºÍSDI5219µÄ´úÂë--End--
-  56   1              P0 = 0xff;
-  57   1              P1 = 0xdf;      //P1.5(BUZZER_P) = 0; P1.4(LCD_LAMP) = 1;
-  58   1              P2 = 0xff;
-  59   1              SCLK = 0;       
-  60   1      //--³õÊ¼»¯PWM--
-  61   1              PWMF_H  = 0x00;
-  62   1              PWMF_L  = 0xff;
-  63   1              PWM0    = LCD_LAMP_B2;
-  64   1              PWM1    = 0xff; 
-  65   1              PWMCON  = 0x04; //PWM0-P1.4(LCD_LAMP)Êä³ö²¨ÐÎ(µ±PWM0=0xffÊ±,Êä³ö¸ßµçÆ½)
-  66   1      //--ÅäÖÃIOÄ£Ê½ 
-  67   1              //ÅäÖÃP1.1 P1.2ÎªÕý³£ÉÏÀ­
-  68   1              P1M0 = 0x00;
-  69   1              P1M1 = 0x00;
-  70   1              //ÅäÖÃP0 Îª ´¿Ä£ÄâÊäÈë
-  71   1              P0M0 = 0x00;
-  72   1              P0M1 = 0xff;
-  73   1              //ÅäÖÃP1 Îª ´¿Ä£ÄâÊäÈë
-  74   1              P1M0 = 0x00;
-  75   1              P1M1 = 0xff;
-  76   1              //ÅäÖÃP2.0 P2.1 Ö»ÊäÈë
-  77   1              P2M0 = 0x00;
-  78   1              P2M1 = 0xff;
-  79   1      //--¹Ø¼ü¹Ü½ÅµÄIOÅäÖÃ
-  80   1              IO_MODE_RESTORE_A_EN;
-  81   1      //---ÅäÖÃSigma_delta ADC---
-  82   1              //--ÅäÖÃADC---
-  83   1      //      (5216²»ÐèÒª´ò¿ªSOC-SGADCÖÐ¶Ï)EIE |= 0x04;               //´ò¿ªSG ADC ÖÐ¶Ï
-  84   1              SGADCON = SGADCON_DEFAULT;
-  85   1              PD_CON = PD_CON_DEFAULT;
-  86   1      //--³õÊ¼»¯¶¨Ê±Æ÷
-  87   1              TMOD = 0x11;    //¶¨Ê±Æ÷0¡¢1¶¼¹¤×÷ÔÚ16Î»×´Ì¬ÏÂ                          
-  88   1              TH0 = 0x80;                       
-  89   1              TL0 = 0x00;
-  90   1              //TH1 = 0x00;                       
-  91   1              //TL1 = 0x00;
-  92   1              //TR0  = 1;     //¿ª¼ÆÊýÆ÷0,ÓÃÓÚ¿ØÖÆ¼üÅÌÉ¨Ãè                                    
-  93   1              //TR1  = 1;     //¿ª¼ÆÊýÆ÷1,ÓÃÓÚÊ±¼ä¿ØÖÆ                        
-  94   1      //--ÅäÖÃÖÐ¶Ï
-  95   1              IT0 = 0;                //Éè¶¨Íâ²¿ÖÐ¶Ï0 ²ÉÓÃµÍµçÆ½´¥·¢
-  96   1              //IT1 = 0;              //Éè¶¨Íâ²¿ÖÐ¶Ï1 ²ÉÓÃµÍµçÆ½´¥·¢
-  97   1              //IE   = 0x82;  //½ö½ö¿ª ¼ÆÊ±Æ÷ÖÐ¶Ï0
-  98   1              IE   = 0x81;    //½ö½ö¿ª Íâ²¿ÖÐ¶Ï0
-  99   1              //--×¢Òâ£¬½«ÄÜ»½ÐÑSTOP1-2µÄÖÐ¶ÏÒªÅäÖÃÎª×î¸ßÓÅÏÈ¼¶
- 100   1              //--ÅäÖÃÖÐ¶ÏÓÅÏÈ¼¶
- 101   1              IP = 0x05;              //Íâ²¿ÖÐ¶Ï0,1Îª¸ßÓÅÏÈ¼¶
- 102   1              EIP = 0x06;             //µÍÆµ»½ÐÑ£¬24Î»ADCÖÐ¶ÏÎª¸ßÓÅÏÈ¼¶
- 103   1      //---±äÁ¿³õÊ¼»¯---
- 104   1      
- 105   1      //---Xdata ±äÁ¿³õÊ¼»¯ ---
- 106   1      //--- Ìõ¼þ±àÒë: ÎÂ¶È¼ì²â -- begin ---
- 107   1      #ifdef TEMP_DET_EN
- 108   1              Temperature = 25;
- 109   1              Temp_auto_det_counter = 0;
- 110   1      #endif
- 111   1      //--- Ìõ¼þ±àÒë: ÎÂ¶È¼ì²â -- end ---
- 112   1      //--ÑÓÊ±
-C51 COMPILER V7.50   MAIN                                                                  09/07/2022 20:19:36 PAGE 3   
-
- 113   1              delay_ms(500);
- 114   1      //--SDI5219---
- 115   1              //---´ò¿ª¿´ÃÅ¹·
- 116   1              EA = 0;
- 117   1              WD_TA = 0x05;
- 118   1              WD_TA = 0x0a;
- 119   1              WDCON = 0x1f;   //(SDI5216)¿´ÃÅ¹·Ê±¼ä 4sÖÓ,(¹Ø±Õ)µÍÆµ»½ÐÑ0.2s
- 120   1              EA = 1;
- 121   1              //--´ò¿ªµÍÆµ»½ÐÑÖÐ¶Ï
- 122   1      //--- Ìõ¼þ±àÒë: ÎÂ¶È¼ì²â -- begin ---
- 123   1      #ifdef TEMP_DET_EN
- 124   1              //--ÎÂ¶È¼ì²â--
- 125   1              temp_code_catch(0);
- 126   1      #endif
- 127   1      //--- Ìõ¼þ±àÒë: ÎÂ¶È¼ì²â -- end ---
- 128   1      
- 129   1      //********************************************************************************************************
-             -****************
- 130   1      // -- ´¦ÀíÖ÷Ñ­»· --
- 131   1      //********************************************************************************************************
-             -****************
- 132   1              while(1)
- 133   1              {
- 134   2                      //--¹Ø¼ü¹Ü½ÅµÄIOÅäÖÃ
- 135   2                      IO_MODE_RESTORE_A_EN;
- 136   2                      //************************************************
- 137   2                      //---Î¹¹·--¼°ÆäËû°²È«´¦Àí-begin-
- 138   2                      //************************************************
- 139   2                      EA = 0;
- 140   2                      WD_TA = 0x05;
- 141   2                      WD_TA = 0x0a;
- 142   2                      WDCON = 0x1f;   //(SDI5216)¿´ÃÅ¹·Ê±¼ä 4sÖÓ,(¹Ø±Õ)µÍÆµ»½ÐÑ0.2s
- 143   2                      EA = 1;
- 144   2                      //-- ¿ªÆôADCµÄÍâ²¿ÖÐ¶Ï --
- 145   2                      EX0 = 1;
- 146   2      
- 147   2                      //************************************************
- 148   2                      //---°´¼ü´¦Àí-----------------begin---------------
- 149   2                      //************************************************
- 150   2                      if( Key_press && (!Key_response) )
- 151   2                      {       
- 152   3                              key_scan();
- 153   3                              //Flash °²È«ÑéÖ¤Âë A
- 154   3                              NRM_securty_a = 0xaa;   //Flash °²È«ÑéÖ¤Âë A
- 155   3                              if(Key_code == TAPE)
- 156   3                              {
- 157   4                                      unsigned char temp;
- 158   4                                      //Flash °²È«ÑéÖ¤Âë B
- 159   4                                      NRM_securty_b = 0x55;   //Flash °²È«ÑéÖ¤Âë B
- 160   4                                      //--Flash Ð´Èë²âÊÔ --
- 161   4                                      temp = nvm_data_read_byte(ADDR_SYS_DATA + 0);
- 162   4                                      temp ++;
- 163   4                                      e2rom_erase(ADDR_SYS_DATA); //²Á³ý
- 164   4                                      nvm_data_write_byte(ADDR_SYS_DATA + 0,55);
- 165   4                                      Key_response = 1;
- 166   4                              }
- 167   3                      }
- 168   2                      //************************************************
- 169   2                      //---°´¼ü´¦Àí-----------------end---------------
- 170   2                      //************************************************
- 171   2      
- 172   2      
-C51 COMPILER V7.50   MAIN                                                                  09/07/2022 20:19:36 PAGE 4   
-
- 173   2                      //************************************************
- 174   2                      //---(Ê±¼äÏà¹Ø¹¦ÄÜ¿é)-----------------begin-------
- 175   2                      //************************************************              
- 176   2                      if(Data_sycle_symbol)
- 177   2                      {
- 178   3                              Data_sycle_symbol = 0;
- 179   3                              //-- ²âÊÔµçÑ¹ --
- 180   3                              if(Vol_auto_det_counter >= VOL_AUTO_DET_NUM) //µç³ØµçÑ¹¼ì²â
- 181   3                              {
- 182   4                                      power_detect();
- 183   4                                      Vol_auto_det_counter = 0;
- 184   4                              }
- 185   3                              else
- 186   3                              {
- 187   4                                      Vol_auto_det_counter ++;
- 188   4                              }
- 189   3      
- 190   3                      //--- Ìõ¼þ±àÒë: ÎÂ¶È¼ì²â -- begin ---
- 191   3                      #ifdef TEMP_DET_EN
- 192   3                              if(Temp_auto_det_counter >= TEMP_AUTO_DET_NUM) //µç³ØµçÑ¹¼ì²â
- 193   3                              {
- 194   4                                      //--ÎÂ¶È¼ì²â--
- 195   4                                      temp_code_catch(1);
- 196   4                                      Temp_auto_det_counter = 0;
- 197   4                              }
- 198   3                              else
- 199   3                              {
- 200   4                                      Temp_auto_det_counter ++;
- 201   4                              }
- 202   3                      #endif
- 203   3                      //--- Ìõ¼þ±àÒë: ÎÂ¶È¼ì²â -- end ---
- 204   3                      }
- 205   2      
- 206   2                      //************************************************
- 207   2                      //---(Ê±¼äÏà¹Ø¹¦ÄÜ¿é)-----------------end-------
- 208   2                      //************************************************
- 209   2      
- 210   2      //------ Çå³ý Flash °²È«Âë -- beign --
- 211   2                      NRM_securty_a = 0x00;   //Flash °²È«ÑéÖ¤Âë A
- 212   2                      NRM_securty_b = 0x00;   //Flash °²È«ÑéÖ¤Âë B
- 213   2      //------ Çå³ý Flash °²È«Âë -- end --
- 214   2      
- 215   2                      //************************************************
- 216   2                      //---  ÐÝÃß´¦Àí ----------------- begin -------
- 217   2                      //************************************************
- 218   2      
- 219   2                      //×¢Òâ: Ã¿´ÎÑ­»·MCUÍ£ÔÚ´Ë´¦£¬ÓÉÍâ²¿ÖÐ¶Ï»½ÐÑ
- 220   2                      PCON |= 0x10; //STOP2 ----MCU½«Í£ÔÚ´Ë´¦ 
- 221   2      
- 222   2                      //************************************************
- 223   2                      //---  ÐÝÃß´¦Àí ----------------- end -------
- 224   2                      //************************************************
- 225   2      
- 226   2                      //************************************************
- 227   2                      //---  ¼üÅÌÒÔ¼°IO¼ì²â ----------------- begin ----
- 228   2                      //************************************************
- 229   2                      EA = 0;
- 230   2                      //--IO¿ÚÅäÖÃ--
- 231   2                      IO_MODE_KEY_A_EN;
- 232   2                      // ·ÀÖ¹³ö´í£¬½« KEY_PIN1 - KEY_PIN4 Ð´1
- 233   2                      KEY_PIN1 = 1;   
- 234   2                      KEY_PIN2 = 1;   
-C51 COMPILER V7.50   MAIN                                                                  09/07/2022 20:19:36 PAGE 5   
-
- 235   2                      KEY_PIN3 = 1;   
- 236   2                      KEY_PIN4 = 1;
- 237   2                      // ¼ì²âÊÇ·ñÓÐ½¡°´ÏÂ
- 238   2                      KEY_PIN5 = 0;
- 239   2                      KEY_PIN6 = 0;
- 240   2                      KEY_PIN7 = 0;
- 241   2                      KEY_PIN8 = 0;
- 242   2                      //KEY_PIN9 = 0;
- 243   2                      KEY_PIN10 = 0;
- 244   2                      delay_ms(0);
- 245   2                      // Èç¹û KEY_1,KEY_2,KEY_3,KEY_4Îª1,ÔòËµÃ÷Ã»ÓÐ¼ü±»°´ÏÂ
- 246   2                      if(KEY_PIN1 && KEY_PIN2 && KEY_PIN3 && KEY_PIN4)
- 247   2                      {
- 248   3                              Key_press = 0;
- 249   3                              Key_response = 0;
- 250   3                      }
- 251   2                      else
- 252   2                      {
- 253   3                              Key_press = 1;                                                                                                                  
- 254   3                      }
- 255   2                      //--IO¿ÚÅäÖÃ--
- 256   2                      IO_MODE_KEY_DIS;
- 257   2                      EA = 1;
- 258   2                      //************************************************
- 259   2                      //---  ¼üÅÌÒÔ¼°IO¼ì²â ----------------- end ----
- 260   2                      //************************************************                              
- 261   2              }//---while(1)
- 262   1      }//----main()
- 263          
- 264          
- 265          //--------------------------------
- 266          //----- ÑÓÊ±º¯Êý,num=1,ÑÓÊ±1ms ---
- 267          //--SDI5219---
- 268          void delay_ms(unsigned int num)
- 269          {       
- 270   1              unsigned int i,j;
- 271   1              for(i= 0;i<num;i++)     //(SDI5219) ÑÓÊ±1ms
- 272   1                      for(j=0;j<164;j++)
- 273   1                              ;
- 274   1      }
- 275          
- 276          //----------------------------------------------------------
- 277          //---   ¼ì²âµç³ØµçÑ¹   ----
- 278          unsigned int power_detect(void)
- 279          {
- 280   1              unsigned int v;
- 281   1              EA = 0;
- 282   1      //--- 
- 283   1              BAT_DET_PIN_HIGH; // µç³ØµçÑ¹¼ì²â½Å±ä¸ß, ·ñÔòµç³ØµçÑ¹¼ì²â½«²»Õý³£
- 284   1              //--²âÊÔÍ¨µÀ1µÄµçÑ¹
- 285   1              SARCON  = 0x09;  //Í¨µÀ1 ËÙ¶È×î¿ì ´ò¿ªSar-ADC
- 286   1              delay_ms(1);
- 287   1              
- 288   1              if(!(SARCON & 0x04)) // ADC²»Ã¦Ôò¿ªÊ¼×ª»»
- 289   1              {
- 290   2                      SARCON |= 0x04;
- 291   2                      while(SARCON & 0x04) // µÈ´ý×ª»»½áÊø
- 292   2                      {
- 293   3                      }
- 294   2              }
- 295   1      
- 296   1              v = SARDATA;
-C51 COMPILER V7.50   MAIN                                                                  09/07/2022 20:19:36 PAGE 6   
-
- 297   1              v = (unsigned long)v * (unsigned long)V_CO_PRE / 0xff; // ¼ÆËãµç³ØµçÑ¹
- 298   1      
- 299   1      //--- »Ö¸´ Ïà¹ØIO¿ÚÅäÖÃ ----
- 300   1              //-- Èç¹û µçÑ¹¼ì²â¹Ü½ÅºÍ¼üÅÌ¹Ü½Å¹«ÓÃµÄ»°£¬ÐèÒª½«¼üÅÌËùÓÐ¼ì²âIO±äÎª [½öÊäÈëÄ£Ê½]
- 301   1      
- 302   1              SARCON  &= 0xf7;; //¹Ø±ÕADC
- 303   1              EA = 1;
- 304   1              return(v);
- 305   1      }
- 306          
- 307          
- 308          //0819 24bit SG ADC ÖÐ¶Ï,¶ÁÈ¡adcÊý¾Ý£»*****************
- 309          static void int0_serve(void) interrupt 0
- 310          {               
- 311   1              EA = 0;  // ½ûÖ¹ÖÐ¶Ï
- 312   1              ADCcmd = 0;
- 313   1              data_receive(); // ¶ÁÈ¡ SDI0818 µÄ ×ª»»Êý¾Ý
- 314   1              ADcode_pre &= 0x00ffffff;
- 315   1              ADcode_pre >>= 2;
- 316   1              Data_sycle_symbol = 1;  //ÐÂµÄÊý¾ÝÖÜÆÚ
- 317   1              IE0 = 0;        // ½«¶ÁÐ´Êý¾ÝÊ± µÄÏÂ½µÑØ ´¥·¢µÄÖÐ¶ÏÐÅÏ¢ È¥³ý
- 318   1              EA = 1;  // ´ò¿ªÖÐ¶Ï
- 319   1      }
- 320          
- 321          
- 322          //--- Ìõ¼þ±àÒë: ÎÂ¶È¼ì²â -- begin ---
- 323          #ifdef TEMP_DET_EN
- 324          // -- ÎÂ¶È¼ì²â Í¨µÀ --
- 325          // mode = 1: ÐèÒªÍ¨µÀ1ÑÓ³Ù
- 326          // mode = 0: ²»ÐèÒªÍ¨µÀ1ÑÓ³Ù
- 327          //-----------
- 328          void temp_code_catch(bit mode)
- 329          { 
- 330   1              unsigned long  adcode_last = 0;
- 331   1              union  ADpattern xdata temp;
- 332   1              unsigned char i = 0;
- 333   1              unsigned char j = 0;
- 334   1              bit temp_sign;
- 335   1      //-----------------
- 336   1              unsigned long  per_temp_code_acture = TEMP_PER_D_CODE_0;        
- 337   1                      
- 338   1              EA = 0; //½ûÖ¹ÖÐ¶Ï
- 339   1              ADCcmd = 0;     
- 340   1              //-- ÎÂ¶ÈÍ¨µÀ -- 80Hz --
- 341   1              PD_CON &= 0xe7;         //½âËø SGADCON,SGADCON2
- 342   1              PD_CON |= 0x07;         //¿ªÆôÎÂ¶ÈÍ¨µÀ
- 343   1              SGADCON = 0xf4;         //ÎÂ¶ÈÍ¨µÀ,160Hz
- 344   1              EXIF &= 0xbf;           //Çå³ý±êÖ¾
- 345   1      //      delay_ms(1);
- 346   1              //-- µÃµ½ÎÂ¶È±àÂë --
- 347   1              ADcode_pre = 0;
- 348   1              while (1)
- 349   1              {
- 350   2                      //---Î¹¹·--¼°ÆäËû°²È«´¦Àí-begin-
- 351   2                      WD_TA = 0x05;
- 352   2                      WD_TA = 0x0a;
- 353   2                      WDCON = 0x1f;   //¿´ÃÅ¹·Ê±¼ä 4sÖÓ,(¹Ø±Õ)µÍÆµ»½ÐÑ0.2s
- 354   2                      //---Î¹¹·--¼°ÆäËû°²È«´¦Àí-end-
- 355   2                      
- 356   2                      while((EXIF & 0x40) == 0x00)    //Èç¹ûÃ»ÓÐÊý¾Ý
- 357   2                              ;
- 358   2                      EXIF &= 0xbf;           //Çå³ý±êÖ¾
-C51 COMPILER V7.50   MAIN                                                                  09/07/2022 20:19:36 PAGE 7   
-
- 359   2                      //-----------
- 360   2                      // ¶ÁÈ¡  µÄ ×ª»»Êý¾Ý
- 361   2                      temp.b[1] = SGADC3;
- 362   2                      temp.b[2] = SGADC2;
- 363   2                      temp.b[3] = SGADC1;
- 364   2                      temp.b[0] = 0;
- 365   2                      temp.w ^= 0x800000;                     // ÒòÎªÊä³öÎªË«¼«ÐÔ£¬+0x800000½«¸º¶ËÆ½ÒÆÉÏÀ´
- 366   2                      temp.w &= 0x00ffffff;
- 367   2                      temp.w >>= 2;
- 368   2      
- 369   2                      //-----------
- 370   2                      j ++;
- 371   2                      if(labs(temp.w - adcode_last) <= 0x200) 
- 372   2                      {
- 373   3                              ADcode_pre += temp.w;
- 374   3                              i++;
- 375   3                      }
- 376   2                      else 
- 377   2                      {
- 378   3                              adcode_last = temp.w;
- 379   3                              ADcode_pre = 0;
- 380   3                              i = 0;
- 381   3                      }
- 382   2      
- 383   2                      if(i >= 4)
- 384   2                      {
- 385   3                              adcode_last = ADcode_pre >> 2;
- 386   3                              break;
- 387   3                      }
- 388   2                      else
- 389   2                      if(j >= 10)
- 390   2                      {
- 391   3                              adcode_last = temp.w;
- 392   3                              break;
- 393   3                      }
- 394   2              }
- 395   1              //-- ÎÂ¶È¼ÆËã --
- 396   1              if(SDI5219X1_symbol)
- 397   1              {
- 398   2              temp.w = (unsigned long)(TEMP_CODE_DELTA_X1) * (unsigned long)(TEMP_VREF_0_X1) / (unsigned long)(System_d
-             -ata.sys_struct.Temp_vref);
- 399   2              temp.w += ZERO_SIGNAL_CODE_X1;
- 400   2              per_temp_code_acture = (unsigned long)(TEMP_PER_D_CODE_0_X1) * (unsigned long)(TEMP_VREF_0_X1) / (unsigne
-             -d long)(System_data.sys_struct.Temp_vref);
- 401   2              }
- 402   1              else
- 403   1              {
- 404   2              temp.w = (unsigned long)(TEMP_CODE_DELTA) * (unsigned long)(TEMP_VREF_0) / (unsigned long)(System_data.sy
-             -s_struct.Temp_vref);
- 405   2              temp.w += ZERO_SIGNAL_CODE;
- 406   2              per_temp_code_acture = (unsigned long)(TEMP_PER_D_CODE_0) * (unsigned long)(TEMP_VREF_0) / (unsigned long
-             -)(System_data.sys_struct.Temp_vref);
- 407   2              }
- 408   1              //--test-
- 409   1              //Price = per_temp_code_acture; //temp.w / 100;
- 410   1              //--test-
- 411   1      
- 412   1              Temperature = 0x00;
- 413   1              if(adcode_last >= temp.w)       //Áã¶ÈÒÔÉÏ
- 414   1              {
- 415   2                      ADcode_pre =    adcode_last - temp.w;
- 416   2                      temp_sign = 0;
-C51 COMPILER V7.50   MAIN                                                                  09/07/2022 20:19:36 PAGE 8   
-
- 417   2              }
- 418   1              else
- 419   1              {
- 420   2                      ADcode_pre =    temp.w - adcode_last;
- 421   2                      temp_sign = 1;
- 422   2              }
- 423   1              Temperature = ADcode_pre / per_temp_code_acture;
- 424   1              if(Temperature >= 70)   //ÏÞÖÆÔÚ+/- 70¶ÈµÄ·¶Î§
- 425   1                      Temperature = 70;
- 426   1              if(temp_sign)
- 427   1                      Temperature = -Temperature;
- 428   1              //-- Í¨µÀ»Ö¸´ --
- 429   1              SGADCON = SGADCON_DEFAULT;      //1Í¨µÀ,20Hz
- 430   1              PD_CON = PD_CON_DEFAULT;
- 431   1              EXIF &= 0xbf;           //Çå³ý±êÖ¾
- 432   1              i = 0;
- 433   1              if(mode)        //ÐèÒªÍ¨µÀ1ÑÓ³Ù
- 434   1              {
- 435   2                      while (i<5)
- 436   2                      {
- 437   3                              //---Î¹¹·--¼°ÆäËû°²È«´¦Àí-begin-
- 438   3                              WD_TA = 0x05;
- 439   3                              WD_TA = 0x0a;
- 440   3                              WDCON = 0x1f;   //¿´ÃÅ¹·Ê±¼ä 4sÖÓ,(¹Ø±Õ)µÍÆµ»½ÐÑ0.2s
- 441   3                              //---Î¹¹·--¼°ÆäËû°²È«´¦Àí-end-
- 442   3                              while(!IE0)     //Èç¹ûÃ»ÓÐÊý¾Ý
- 443   3                                      ;
- 444   3                              IE0 = 0;                //Çå³ý±êÖ¾
- 445   3                              i++;
- 446   3                      }
- 447   2              }
- 448   1              EA = 1; //´ò¿ª°´¼üÖÐ¶Ï          
- 449   1      }
- 450          #endif
- 451          //--- Ìõ¼þ±àÒë: ÎÂ¶È¼ì²â -- end ---
-C51 COMPILER V7.50   MAIN                                                                  09/07/2022 20:19:36 PAGE 9   
+  53   2      /*P1 = 0x04;
+  54   2              delay_ms(400);
+  55   2              P1 = 0x00;
+  56   2              delay_ms(400);
+  57   2              P2 = 0x0E;
+  58   2              delay_ms(200);
+  59   2              P2 = 0x00;
+  60   2              delay_ms(200);*/
+  61   2      }
+  62   1      
+  63   1      }
+  64          
+  65          /*      while(1){
+  66          
+  67          LCD_DATA_ON;//P2.2
+  68          delay_ms(10);
+  69          LCD_DATA_OFF;
+  70          delay_ms(10);
+  71          
+  72                  }*/
+C51 COMPILER V7.50   MAIN                                                                  09/08/2022 13:03:45 PAGE 3   
 
 ASSEMBLY LISTING OF GENERATED OBJECT CODE
 
 
-             ; FUNCTION main (BEGIN)
-                                           ; SOURCE LINE # 23
-                                           ; SOURCE LINE # 24
-                                           ; SOURCE LINE # 25
-;---- Variable 'num' assigned to Register 'R6/R7' ----
-0000 7F5A              MOV     R7,#05AH
-0002 7E00              MOV     R6,#00H
-                                           ; SOURCE LINE # 26
-0004 7594FF            MOV     P1M0,#0FFH
-                                           ; SOURCE LINE # 27
-0007 E4                CLR     A
-0008 F595              MOV     P1M1,A
-000A         ?C0001:
-                                           ; SOURCE LINE # 28
-                                           ; SOURCE LINE # 29
-000A 759004            MOV     P1,#04H
-                                           ; SOURCE LINE # 30
-;---- Variable 'i' assigned to Register 'R4/R5' ----
-000D E4                CLR     A
-000E FD                MOV     R5,A
-000F FC                MOV     R4,A
-0010         ?C0003:
-0010 C3                CLR     C
-0011 ED                MOV     A,R5
-0012 9F                SUBB    A,R7
-0013 EC                MOV     A,R4
-0014 9E                SUBB    A,R6
-0015 501A              JNC     ?C0004
-                                           ; SOURCE LINE # 31
-0017 E4                CLR     A
-0018 F500        R     MOV     j,A
-001A F500        R     MOV     j+01H,A
-001C         ?C0006:
-001C 0500        R     INC     j+01H
-001E E500        R     MOV     A,j+01H
-0020 7002              JNZ     ?C0062
-0022 0500        R     INC     j
-0024         ?C0062:
-0024 64A4              XRL     A,#0A4H
-0026 4500        R     ORL     A,j
-0028 70F2              JNZ     ?C0006
-002A         ?C0005:
-002A 0D                INC     R5
-002B BD0001            CJNE    R5,#00H,?C0063
-002E 0C                INC     R4
-002F         ?C0063:
-002F 80DF              SJMP    ?C0003
-0031         ?C0004:
-                                           ; SOURCE LINE # 33
-0031 E4                CLR     A
-0032 F590              MOV     P1,A
-                                           ; SOURCE LINE # 34
-0034 FC                MOV     R4,A
-0035 FD                MOV     R5,A
-0036         ?C0009:
-0036 C3                CLR     C
-0037 ED                MOV     A,R5
-0038 9F                SUBB    A,R7
-0039 EC                MOV     A,R4
-C51 COMPILER V7.50   MAIN                                                                  09/07/2022 20:19:36 PAGE 10  
-
-003A 9E                SUBB    A,R6
-003B 50CD              JNC     ?C0001
-                                           ; SOURCE LINE # 35
-003D E4                CLR     A
-003E F500        R     MOV     j,A
-0040 F500        R     MOV     j+01H,A
-0042         ?C0012:
-0042 0500        R     INC     j+01H
-0044 E500        R     MOV     A,j+01H
-0046 7002              JNZ     ?C0064
-0048 0500        R     INC     j
-004A         ?C0064:
-004A 64A4              XRL     A,#0A4H
-004C 4500        R     ORL     A,j
-004E 70F2              JNZ     ?C0012
-0050         ?C0011:
-0050 0D                INC     R5
-0051 BD0001            CJNE    R5,#00H,?C0065
-0054 0C                INC     R4
-0055         ?C0065:
-0055 80DF              SJMP    ?C0009
-             ; FUNCTION main (END)
-
              ; FUNCTION _delay_ms (BEGIN)
-                                           ; SOURCE LINE # 268
+                                           ; SOURCE LINE # 16
 ;---- Variable 'num' assigned to Register 'R6/R7' ----
-                                           ; SOURCE LINE # 269
-                                           ; SOURCE LINE # 271
+                                           ; SOURCE LINE # 17
+                                           ; SOURCE LINE # 19
 ;---- Variable 'i' assigned to Register 'R4/R5' ----
 0000 E4                CLR     A
 0001 FD                MOV     R5,A
 0002 FC                MOV     R4,A
-0003         ?C0029:
+0003         ?C0001:
 0003 C3                CLR     C
 0004 ED                MOV     A,R5
 0005 9F                SUBB    A,R7
 0006 EC                MOV     A,R4
 0007 9E                SUBB    A,R6
-0008 5015              JNC     ?C0035
-                                           ; SOURCE LINE # 272
+0008 5015              JNC     ?C0007
+                                           ; SOURCE LINE # 20
 ;---- Variable 'j' assigned to Register 'R2/R3' ----
 000A E4                CLR     A
 000B FB                MOV     R3,A
 000C FA                MOV     R2,A
-000D         ?C0032:
+000D         ?C0004:
 000D 0B                INC     R3
-000E BB0001            CJNE    R3,#00H,?C0068
+000E BB0001            CJNE    R3,#00H,?C0012
 0011 0A                INC     R2
-0012         ?C0068:
+0012         ?C0012:
 0012 EB                MOV     A,R3
 0013 64A4              XRL     A,#0A4H
 0015 4A                ORL     A,R2
-0016 70F5              JNZ     ?C0032
-0018         ?C0031:
+0016 70F5              JNZ     ?C0004
+0018         ?C0003:
 0018 0D                INC     R5
-0019 BD0001            CJNE    R5,#00H,?C0069
+0019 BD0001            CJNE    R5,#00H,?C0013
 001C 0C                INC     R4
-001D         ?C0069:
-001D 80E4              SJMP    ?C0029
-                                           ; SOURCE LINE # 274
-001F         ?C0035:
+001D         ?C0013:
+001D 80E4              SJMP    ?C0001
+                                           ; SOURCE LINE # 22
+001F         ?C0007:
 001F 22                RET     
-C51 COMPILER V7.50   MAIN                                                                  09/07/2022 20:19:36 PAGE 11  
-
              ; FUNCTION _delay_ms (END)
 
-             ; FUNCTION power_detect (BEGIN)
-                                           ; SOURCE LINE # 278
-                                           ; SOURCE LINE # 279
-                                           ; SOURCE LINE # 281
-0000 C2AF              CLR     EA
-                                           ; SOURCE LINE # 283
-0002 D285              SETB    BAT_DET_PIN
-                                           ; SOURCE LINE # 285
-0004 75AB09            MOV     SARCON,#09H
-                                           ; SOURCE LINE # 286
-0007 7F01              MOV     R7,#01H
-0009 7E00              MOV     R6,#00H
-000B 120000      R     LCALL   _delay_ms
-                                           ; SOURCE LINE # 288
-000E E5AB              MOV     A,SARCON
-0010 20E208            JB      ACC.2,?C0036
-                                           ; SOURCE LINE # 289
-                                           ; SOURCE LINE # 290
-0013 43AB04            ORL     SARCON,#04H
-0016         ?C0037:
-                                           ; SOURCE LINE # 291
-0016 E5AB              MOV     A,SARCON
-0018 20E2FB            JB      ACC.2,?C0037
-                                           ; SOURCE LINE # 292
-                                           ; SOURCE LINE # 293
-                                           ; SOURCE LINE # 294
-001B         ?C0036:
-                                           ; SOURCE LINE # 296
-001B AFAC              MOV     R7,SARDATA
-001D 7E00              MOV     R6,#00H
-;---- Variable 'v' assigned to Register 'R6/R7' ----
-                                           ; SOURCE LINE # 297
-001F E4                CLR     A
-0020 FC                MOV     R4,A
-0021 FD                MOV     R5,A
-0022 7BD8              MOV     R3,#0D8H
-0024 7A03              MOV     R2,#03H
-0026 F9                MOV     R1,A
-0027 F8                MOV     R0,A
-0028 120000      E     LCALL   ?C?LMUL
-002B E4                CLR     A
-002C 7BFF              MOV     R3,#0FFH
-002E FA                MOV     R2,A
-002F F9                MOV     R1,A
-0030 F8                MOV     R0,A
-0031 120000      E     LCALL   ?C?ULDIV
-                                           ; SOURCE LINE # 302
-0034 53ABF7            ANL     SARCON,#0F7H
-                                           ; SOURCE LINE # 303
-0037 D2AF              SETB    EA
-                                           ; SOURCE LINE # 304
-                                           ; SOURCE LINE # 305
-0039         ?C0039:
-0039 22                RET     
-             ; FUNCTION power_detect (END)
-
-             ; FUNCTION int0_serve (BEGIN)
-0000 C0E0              PUSH    ACC
-0002 C0F0              PUSH    B
-0004 C083              PUSH    DPH
-C51 COMPILER V7.50   MAIN                                                                  09/07/2022 20:19:36 PAGE 12  
-
-0006 C082              PUSH    DPL
-0008 C0D0              PUSH    PSW
-000A 75D000            MOV     PSW,#00H
-000D C000              PUSH    AR0
-000F C001              PUSH    AR1
-0011 C002              PUSH    AR2
-0013 C003              PUSH    AR3
-0015 C004              PUSH    AR4
-0017 C005              PUSH    AR5
-0019 C006              PUSH    AR6
-001B C007              PUSH    AR7
-                                           ; SOURCE LINE # 309
-                                           ; SOURCE LINE # 311
-001D C2AF              CLR     EA
-                                           ; SOURCE LINE # 312
-001F C200        R     CLR     ADCcmd
-                                           ; SOURCE LINE # 313
-0021 120000      E     LCALL   data_receive
-                                           ; SOURCE LINE # 314
-0024 7800        R     MOV     R0,#LOW ADcode_pre
-0026 120000      E     LCALL   ?C?LLDIDATA
-0029 E4                CLR     A
-002A FC                MOV     R4,A
-002B 7800        R     MOV     R0,#LOW ADcode_pre
-002D 120000      E     LCALL   ?C?LSTIDATA
-                                           ; SOURCE LINE # 315
-0030 7800        R     MOV     R0,#LOW ADcode_pre
-0032 120000      E     LCALL   ?C?LLDIDATA
-0035 7802              MOV     R0,#02H
-0037 120000      E     LCALL   ?C?ULSHR
-003A 7800        R     MOV     R0,#LOW ADcode_pre
-003C 120000      E     LCALL   ?C?LSTIDATA
-                                           ; SOURCE LINE # 316
-003F D200        R     SETB    Data_sycle_symbol
-                                           ; SOURCE LINE # 317
-0041 C289              CLR     IE0
-                                           ; SOURCE LINE # 318
-0043 D2AF              SETB    EA
-                                           ; SOURCE LINE # 319
-0045 D007              POP     AR7
-0047 D006              POP     AR6
-0049 D005              POP     AR5
-004B D004              POP     AR4
-004D D003              POP     AR3
-004F D002              POP     AR2
-0051 D001              POP     AR1
-0053 D000              POP     AR0
-0055 D0D0              POP     PSW
-0057 D082              POP     DPL
-0059 D083              POP     DPH
-005B D0F0              POP     B
-005D D0E0              POP     ACC
-005F 32                RETI    
-             ; FUNCTION int0_serve (END)
-
-             ; FUNCTION temp_code_catch (BEGIN)
-                                           ; SOURCE LINE # 328
-                                           ; SOURCE LINE # 329
-                                           ; SOURCE LINE # 330
+             ; FUNCTION init_pwm (BEGIN)
+                                           ; SOURCE LINE # 24
+                                           ; SOURCE LINE # 25
 0000 E4                CLR     A
-0001 F500        R     MOV     adcode_last+03H,A
-0003 F500        R     MOV     adcode_last+02H,A
-C51 COMPILER V7.50   MAIN                                                                  09/07/2022 20:19:36 PAGE 13  
+0001 F59A              MOV     PWMF_H,A
+                                           ; SOURCE LINE # 26
+0003 759B20            MOV     PWMF_L,#020H
+                                           ; SOURCE LINE # 27
+0006 759C05            MOV     PWM0,#05H
+                                           ; SOURCE LINE # 28
+0009 759D03            MOV     PWM1,#03H
+                                           ; SOURCE LINE # 29
+000C 759E04            MOV     PWMCON,#04H
+                                           ; SOURCE LINE # 30
+000F 22                RET     
+             ; FUNCTION init_pwm (END)
 
-0005 F500        R     MOV     adcode_last+01H,A
-0007 F500        R     MOV     adcode_last,A
-                                           ; SOURCE LINE # 332
-0009 F500        R     MOV     i,A
-                                           ; SOURCE LINE # 333
-000B F500        R     MOV     j,A
-                                           ; SOURCE LINE # 336
-000D 7500F8      R     MOV     per_temp_code_acture+03H,#0F8H
-0010 750002      R     MOV     per_temp_code_acture+02H,#02H
-0013 F500        R     MOV     per_temp_code_acture+01H,A
-0015 F500        R     MOV     per_temp_code_acture,A
-                                           ; SOURCE LINE # 338
-0017 C2AF              CLR     EA
-                                           ; SOURCE LINE # 339
-0019 C200        R     CLR     ADCcmd
-                                           ; SOURCE LINE # 341
-001B 53A2E7            ANL     PD_CON,#0E7H
-                                           ; SOURCE LINE # 342
-001E 43A207            ORL     PD_CON,#07H
-                                           ; SOURCE LINE # 343
-0021 75B1F4            MOV     SGADCON,#0F4H
-                                           ; SOURCE LINE # 344
-0024 5391BF            ANL     EXIF,#0BFH
-                                           ; SOURCE LINE # 347
-0027 7800        R     MOV     R0,#LOW ADcode_pre
-0029 120000      E     LCALL   ?C?LSTKIDATA
-002C 00                DB      00H
-002D 00                DB      00H
-002E 00                DB      00H
-002F 00                DB      00H
-0030         ?C0041:
-                                           ; SOURCE LINE # 348
-                                           ; SOURCE LINE # 349
-                                           ; SOURCE LINE # 351
-0030 75AA05            MOV     WD_TA,#05H
-                                           ; SOURCE LINE # 352
-0033 75AA0A            MOV     WD_TA,#0AH
-                                           ; SOURCE LINE # 353
-0036 75A91F            MOV     WDCON,#01FH
-0039         ?C0043:
-                                           ; SOURCE LINE # 356
-0039 E591              MOV     A,EXIF
-003B 30E6FB            JNB     ACC.6,?C0043
-003E         ?C0044:
-                                           ; SOURCE LINE # 358
-003E 5391BF            ANL     EXIF,#0BFH
-                                           ; SOURCE LINE # 361
-0041 900000      R     MOV     DPTR,#temp+01H
-0044 E5B2              MOV     A,SGADC3
-0046 F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 362
-0047 A3                INC     DPTR
-0048 E5B3              MOV     A,SGADC2
-004A F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 363
-004B A3                INC     DPTR
-004C E5B4              MOV     A,SGADC1
-004E F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 364
-004F E4                CLR     A
-0050 900000      R     MOV     DPTR,#temp
-0053 F0                MOVX    @DPTR,A
-C51 COMPILER V7.50   MAIN                                                                  09/07/2022 20:19:36 PAGE 14  
+             ; FUNCTION main (BEGIN)
+C51 COMPILER V7.50   MAIN                                                                  09/08/2022 13:03:45 PAGE 4   
 
-                                           ; SOURCE LINE # 365
-0054 E0                MOVX    A,@DPTR
-0055 FC                MOV     R4,A
-0056 A3                INC     DPTR
-0057 E0                MOVX    A,@DPTR
-0058 FD                MOV     R5,A
-0059 A3                INC     DPTR
-005A E0                MOVX    A,@DPTR
-005B FE                MOV     R6,A
-005C A3                INC     DPTR
-005D E0                MOVX    A,@DPTR
-005E FF                MOV     R7,A
-005F ED                MOV     A,R5
-0060 6480              XRL     A,#080H
-0062 FD                MOV     R5,A
-0063 EC                MOV     A,R4
-0064 900000      R     MOV     DPTR,#temp
-0067 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 366
-006A 900000      R     MOV     DPTR,#temp
-006D A3                INC     DPTR
-006E E0                MOVX    A,@DPTR
-006F FD                MOV     R5,A
-0070 A3                INC     DPTR
-0071 E0                MOVX    A,@DPTR
-0072 FE                MOV     R6,A
-0073 A3                INC     DPTR
-0074 E0                MOVX    A,@DPTR
-0075 FF                MOV     R7,A
-0076 E4                CLR     A
-0077 FC                MOV     R4,A
-0078 900000      R     MOV     DPTR,#temp
-007B 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 367
-007E 900000      R     MOV     DPTR,#temp
-0081 E0                MOVX    A,@DPTR
-0082 FC                MOV     R4,A
-0083 A3                INC     DPTR
-0084 E0                MOVX    A,@DPTR
-0085 FD                MOV     R5,A
-0086 A3                INC     DPTR
-0087 E0                MOVX    A,@DPTR
-0088 FE                MOV     R6,A
-0089 A3                INC     DPTR
-008A E0                MOVX    A,@DPTR
-008B FF                MOV     R7,A
-008C 7802              MOV     R0,#02H
-008E 120000      E     LCALL   ?C?ULSHR
-0091 900000      R     MOV     DPTR,#temp
-0094 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 370
-0097 0500        R     INC     j
-                                           ; SOURCE LINE # 371
-0099 900000      R     MOV     DPTR,#temp
-009C E0                MOVX    A,@DPTR
-009D FC                MOV     R4,A
-009E A3                INC     DPTR
-009F E0                MOVX    A,@DPTR
-00A0 FD                MOV     R5,A
-00A1 A3                INC     DPTR
-00A2 E0                MOVX    A,@DPTR
-00A3 FE                MOV     R6,A
-C51 COMPILER V7.50   MAIN                                                                  09/07/2022 20:19:36 PAGE 15  
+                                           ; SOURCE LINE # 32
+                                           ; SOURCE LINE # 33
+                                           ; SOURCE LINE # 34
+0000 7594FF            MOV     P1M0,#0FFH
+                                           ; SOURCE LINE # 35
+0003 E4                CLR     A
+0004 F595              MOV     P1M1,A
+                                           ; SOURCE LINE # 36
+0006 7596FF            MOV     P2M0,#0FFH
+                                           ; SOURCE LINE # 37
+0009 F597              MOV     P2M1,A
+                                           ; SOURCE LINE # 38
+000B F5A0              MOV     P2,A
+                                           ; SOURCE LINE # 39
+000D F590              MOV     P1,A
+                                           ; SOURCE LINE # 41
+000F 120000      E     LCALL   iLCD_GLASS_Init
+                                           ; SOURCE LINE # 42
+0012 7BFF              MOV     R3,#0FFH
+0014 7A00        R     MOV     R2,#HIGH ?SC_0
+0016 7900        R     MOV     R1,#LOW ?SC_0
+0018 7D01              MOV     R5,#01H
+001A 120000      E     LCALL   _LCD_GLASS_String
+                                           ; SOURCE LINE # 43
+001D 7BFF              MOV     R3,#0FFH
+001F 7A00        R     MOV     R2,#HIGH ?SC_7
+0021 7900        R     MOV     R1,#LOW ?SC_7
+0023 7D02              MOV     R5,#02H
+0025 120000      E     LCALL   _LCD_GLASS_String
+                                           ; SOURCE LINE # 44
+0028 7BFF              MOV     R3,#0FFH
+002A 7A00        R     MOV     R2,#HIGH ?SC_9
+002C 7900        R     MOV     R1,#LOW ?SC_9
+002E E4                CLR     A
+002F FD                MOV     R5,A
+0030 120000      E     LCALL   _LCD_GLASS_String
+                                           ; SOURCE LINE # 47
+0033 120000      R     LCALL   init_pwm
+                                           ; SOURCE LINE # 48
+0036 5390DF            ANL     P1,#0DFH
+                                           ; SOURCE LINE # 49
+0039 439010            ORL     P1,#010H
+003C         ?C0009:
+                                           ; SOURCE LINE # 51
+                                           ; SOURCE LINE # 61
+003C 80FE              SJMP    ?C0009
+             ; FUNCTION main (END)
 
-00A4 A3                INC     DPTR
-00A5 E0                MOVX    A,@DPTR
-00A6 C3                CLR     C
-00A7 9500        R     SUBB    A,adcode_last+03H
-00A9 FF                MOV     R7,A
-00AA EE                MOV     A,R6
-00AB 9500        R     SUBB    A,adcode_last+02H
-00AD FE                MOV     R6,A
-00AE ED                MOV     A,R5
-00AF 9500        R     SUBB    A,adcode_last+01H
-00B1 FD                MOV     R5,A
-00B2 EC                MOV     A,R4
-00B3 9500        R     SUBB    A,adcode_last
-00B5 FC                MOV     R4,A
-00B6 120000      E     LCALL   _labs
-00B9 E4                CLR     A
-00BA FB                MOV     R3,A
-00BB 7A02              MOV     R2,#02H
-00BD F9                MOV     R1,A
-00BE F8                MOV     R0,A
-00BF C3                CLR     C
-00C0 120000      E     LCALL   ?C?SLCMP
-00C3 4026              JC      ?C0045
-                                           ; SOURCE LINE # 372
-                                           ; SOURCE LINE # 373
-00C5 7800        R     MOV     R0,#LOW ADcode_pre
-00C7 120000      E     LCALL   ?C?LLDIDATA
-00CA 900000      R     MOV     DPTR,#temp
-00CD E0                MOVX    A,@DPTR
-00CE F8                MOV     R0,A
-00CF A3                INC     DPTR
-00D0 E0                MOVX    A,@DPTR
-00D1 F9                MOV     R1,A
-00D2 A3                INC     DPTR
-00D3 E0                MOVX    A,@DPTR
-00D4 FA                MOV     R2,A
-00D5 A3                INC     DPTR
-00D6 E0                MOVX    A,@DPTR
-00D7 2F                ADD     A,R7
-00D8 FF                MOV     R7,A
-00D9 EA                MOV     A,R2
-00DA 3E                ADDC    A,R6
-00DB FE                MOV     R6,A
-00DC E9                MOV     A,R1
-00DD 3D                ADDC    A,R5
-00DE FD                MOV     R5,A
-00DF E8                MOV     A,R0
-00E0 3C                ADDC    A,R4
-00E1 FC                MOV     R4,A
-00E2 7800        R     MOV     R0,#LOW ADcode_pre
-00E4 120000      E     LCALL   ?C?LSTIDATA
-                                           ; SOURCE LINE # 374
-00E7 0500        R     INC     i
-                                           ; SOURCE LINE # 375
-00E9 8021              SJMP    ?C0046
-00EB         ?C0045:
-                                           ; SOURCE LINE # 377
-                                           ; SOURCE LINE # 378
-00EB 900000      R     MOV     DPTR,#temp
-00EE E0                MOVX    A,@DPTR
-00EF FC                MOV     R4,A
-00F0 A3                INC     DPTR
-C51 COMPILER V7.50   MAIN                                                                  09/07/2022 20:19:36 PAGE 16  
-
-00F1 E0                MOVX    A,@DPTR
-00F2 FD                MOV     R5,A
-00F3 A3                INC     DPTR
-00F4 E0                MOVX    A,@DPTR
-00F5 FE                MOV     R6,A
-00F6 A3                INC     DPTR
-00F7 E0                MOVX    A,@DPTR
-00F8 F500        R     MOV     adcode_last+03H,A
-00FA 8E00        R     MOV     adcode_last+02H,R6
-00FC 8D00        R     MOV     adcode_last+01H,R5
-00FE 8C00        R     MOV     adcode_last,R4
-                                           ; SOURCE LINE # 379
-0100 7800        R     MOV     R0,#LOW ADcode_pre
-0102 120000      E     LCALL   ?C?LSTKIDATA
-0105 00                DB      00H
-0106 00                DB      00H
-0107 00                DB      00H
-0108 00                DB      00H
-                                           ; SOURCE LINE # 380
-0109 E4                CLR     A
-010A F500        R     MOV     i,A
-                                           ; SOURCE LINE # 381
-010C         ?C0046:
-                                           ; SOURCE LINE # 383
-010C E500        R     MOV     A,i
-010E C3                CLR     C
-010F 9404              SUBB    A,#04H
-0111 400E              JC      ?C0047
-                                           ; SOURCE LINE # 384
-                                           ; SOURCE LINE # 385
-0113 7800        R     MOV     R0,#LOW ADcode_pre
-0115 120000      E     LCALL   ?C?LLDIDATA
-0118 7802              MOV     R0,#02H
-011A 120000      E     LCALL   ?C?ULSHR
-011D 8F00        R     MOV     adcode_last+03H,R7
-                                           ; SOURCE LINE # 386
-011F 8019              SJMP    ?C0071
-                                           ; SOURCE LINE # 387
-0121         ?C0047:
-                                           ; SOURCE LINE # 389
-0121 E500        R     MOV     A,j
-0123 C3                CLR     C
-0124 940A              SUBB    A,#0AH
-0126 5003              JNC     $ + 5H
-0128 020000      R     LJMP    ?C0041
-                                           ; SOURCE LINE # 390
-                                           ; SOURCE LINE # 391
-012B 900000      R     MOV     DPTR,#temp
-012E E0                MOVX    A,@DPTR
-012F FC                MOV     R4,A
-0130 A3                INC     DPTR
-0131 E0                MOVX    A,@DPTR
-0132 FD                MOV     R5,A
-0133 A3                INC     DPTR
-0134 E0                MOVX    A,@DPTR
-0135 FE                MOV     R6,A
-0136 A3                INC     DPTR
-0137 E0                MOVX    A,@DPTR
-0138 F500        R     MOV     adcode_last+03H,A
-013A         ?C0071:
-013A 8E00        R     MOV     adcode_last+02H,R6
-013C 8D00        R     MOV     adcode_last+01H,R5
-C51 COMPILER V7.50   MAIN                                                                  09/07/2022 20:19:36 PAGE 17  
-
-013E 8C00        R     MOV     adcode_last,R4
-                                           ; SOURCE LINE # 392
-                                           ; SOURCE LINE # 393
-                                           ; SOURCE LINE # 394
-0140         ?C0042:
-                                           ; SOURCE LINE # 396
-0140 900000      R     MOV     DPTR,#System_data+08H
-0143 E0                MOVX    A,@DPTR
-0144 FE                MOV     R6,A
-0145 A3                INC     DPTR
-0146 E0                MOVX    A,@DPTR
-0147 FB                MOV     R3,A
-0148 30004B      R     JNB     SDI5219X1_symbol,?C0050
-                                           ; SOURCE LINE # 397
-                                           ; SOURCE LINE # 398
-014B AA06              MOV     R2,AR6
-014D E4                CLR     A
-014E F9                MOV     R1,A
-014F F8                MOV     R0,A
-0150 7F30              MOV     R7,#030H
-0152 7E5E              MOV     R6,#05EH
-0154 7D37              MOV     R5,#037H
-0156 7C2B              MOV     R4,#02BH
-0158 120000      E     LCALL   ?C?ULDIV
-015B 900000      R     MOV     DPTR,#temp
-015E 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 399
-0161 900000      R     MOV     DPTR,#temp
-0164 E0                MOVX    A,@DPTR
-0165 FC                MOV     R4,A
-0166 A3                INC     DPTR
-0167 E0                MOVX    A,@DPTR
-0168 FD                MOV     R5,A
-0169 A3                INC     DPTR
-016A E0                MOVX    A,@DPTR
-016B FE                MOV     R6,A
-016C A3                INC     DPTR
-016D E0                MOVX    A,@DPTR
-016E 2400              ADD     A,#00H
-0170 FF                MOV     R7,A
-0171 E4                CLR     A
-0172 3E                ADDC    A,R6
-0173 FE                MOV     R6,A
-0174 ED                MOV     A,R5
-0175 3420              ADDC    A,#020H
-0177 FD                MOV     R5,A
-0178 E4                CLR     A
-0179 3C                ADDC    A,R4
-017A FC                MOV     R4,A
-017B 900000      R     MOV     DPTR,#temp
-017E 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 400
-0181 900000      R     MOV     DPTR,#System_data+08H
-0184 E0                MOVX    A,@DPTR
-0185 FE                MOV     R6,A
-0186 A3                INC     DPTR
-0187 E0                MOVX    A,@DPTR
-0188 FB                MOV     R3,A
-0189 AA06              MOV     R2,AR6
-018B E4                CLR     A
-018C F9                MOV     R1,A
-018D F8                MOV     R0,A
-C51 COMPILER V7.50   MAIN                                                                  09/07/2022 20:19:36 PAGE 18  
-
-018E 7FAC              MOV     R7,#0ACH
-0190 7EDE              MOV     R6,#0DEH
-0192 7D24              MOV     R5,#024H
-                                           ; SOURCE LINE # 401
-0194 8049              SJMP    ?C0070
-0196         ?C0050:
-                                           ; SOURCE LINE # 403
-                                           ; SOURCE LINE # 404
-0196 AA06              MOV     R2,AR6
-0198 E4                CLR     A
-0199 F9                MOV     R1,A
-019A F8                MOV     R0,A
-019B 7FE0              MOV     R7,#0E0H
-019D 7EDF              MOV     R6,#0DFH
-019F 7D69              MOV     R5,#069H
-01A1 7C2B              MOV     R4,#02BH
-01A3 120000      E     LCALL   ?C?ULDIV
-01A6 900000      R     MOV     DPTR,#temp
-01A9 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 405
-01AC 900000      R     MOV     DPTR,#temp
-01AF E0                MOVX    A,@DPTR
-01B0 FC                MOV     R4,A
-01B1 A3                INC     DPTR
-01B2 E0                MOVX    A,@DPTR
-01B3 FD                MOV     R5,A
-01B4 A3                INC     DPTR
-01B5 E0                MOVX    A,@DPTR
-01B6 FE                MOV     R6,A
-01B7 A3                INC     DPTR
-01B8 E0                MOVX    A,@DPTR
-01B9 2400              ADD     A,#00H
-01BB FF                MOV     R7,A
-01BC E4                CLR     A
-01BD 3E                ADDC    A,R6
-01BE FE                MOV     R6,A
-01BF ED                MOV     A,R5
-01C0 3420              ADDC    A,#020H
-01C2 FD                MOV     R5,A
-01C3 E4                CLR     A
-01C4 3C                ADDC    A,R4
-01C5 FC                MOV     R4,A
-01C6 900000      R     MOV     DPTR,#temp
-01C9 120000      E     LCALL   ?C?LSTXDATA
-                                           ; SOURCE LINE # 406
-01CC 900000      R     MOV     DPTR,#System_data+08H
-01CF E0                MOVX    A,@DPTR
-01D0 FE                MOV     R6,A
-01D1 A3                INC     DPTR
-01D2 E0                MOVX    A,@DPTR
-01D3 FB                MOV     R3,A
-01D4 AA06              MOV     R2,AR6
-01D6 E4                CLR     A
-01D7 F9                MOV     R1,A
-01D8 F8                MOV     R0,A
-01D9 7F90              MOV     R7,#090H
-01DB 7E62              MOV     R6,#062H
-01DD 7D26              MOV     R5,#026H
-01DF         ?C0070:
-01DF FC                MOV     R4,A
-01E0 120000      E     LCALL   ?C?ULDIV
-01E3 8F00        R     MOV     per_temp_code_acture+03H,R7
-C51 COMPILER V7.50   MAIN                                                                  09/07/2022 20:19:36 PAGE 19  
-
-01E5 8E00        R     MOV     per_temp_code_acture+02H,R6
-01E7 8D00        R     MOV     per_temp_code_acture+01H,R5
-01E9 8C00        R     MOV     per_temp_code_acture,R4
-                                           ; SOURCE LINE # 407
-01EB         ?C0051:
-                                           ; SOURCE LINE # 412
-01EB E4                CLR     A
-01EC 900000      R     MOV     DPTR,#Temperature
-01EF F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 413
-01F0 900000      R     MOV     DPTR,#temp
-01F3 E0                MOVX    A,@DPTR
-01F4 FC                MOV     R4,A
-01F5 A3                INC     DPTR
-01F6 E0                MOVX    A,@DPTR
-01F7 FD                MOV     R5,A
-01F8 A3                INC     DPTR
-01F9 E0                MOVX    A,@DPTR
-01FA FE                MOV     R6,A
-01FB A3                INC     DPTR
-01FC E0                MOVX    A,@DPTR
-01FD FF                MOV     R7,A
-01FE AB00        R     MOV     R3,adcode_last+03H
-0200 AA00        R     MOV     R2,adcode_last+02H
-0202 A900        R     MOV     R1,adcode_last+01H
-0204 A800        R     MOV     R0,adcode_last
-0206 C3                CLR     C
-0207 120000      E     LCALL   ?C?ULCMP
-020A 900000      R     MOV     DPTR,#temp
-020D E0                MOVX    A,@DPTR
-020E 4023              JC      ?C0052
-                                           ; SOURCE LINE # 414
-                                           ; SOURCE LINE # 415
-0210 F8                MOV     R0,A
-0211 A3                INC     DPTR
-0212 E0                MOVX    A,@DPTR
-0213 F9                MOV     R1,A
-0214 A3                INC     DPTR
-0215 E0                MOVX    A,@DPTR
-0216 FA                MOV     R2,A
-0217 A3                INC     DPTR
-0218 E0                MOVX    A,@DPTR
-0219 FB                MOV     R3,A
-021A E500        R     MOV     A,adcode_last+03H
-021C 9B                SUBB    A,R3
-021D FF                MOV     R7,A
-021E E500        R     MOV     A,adcode_last+02H
-0220 9A                SUBB    A,R2
-0221 FE                MOV     R6,A
-0222 E500        R     MOV     A,adcode_last+01H
-0224 99                SUBB    A,R1
-0225 FD                MOV     R5,A
-0226 E500        R     MOV     A,adcode_last
-0228 98                SUBB    A,R0
-0229 FC                MOV     R4,A
-022A 7800        R     MOV     R0,#LOW ADcode_pre
-022C 120000      E     LCALL   ?C?LSTIDATA
-                                           ; SOURCE LINE # 416
-022F C200        R     CLR     temp_sign
-                                           ; SOURCE LINE # 417
-0231 8020              SJMP    ?C0053
-0233         ?C0052:
-C51 COMPILER V7.50   MAIN                                                                  09/07/2022 20:19:36 PAGE 20  
-
-                                           ; SOURCE LINE # 419
-                                           ; SOURCE LINE # 420
-0233 FC                MOV     R4,A
-0234 A3                INC     DPTR
-0235 E0                MOVX    A,@DPTR
-0236 FD                MOV     R5,A
-0237 A3                INC     DPTR
-0238 E0                MOVX    A,@DPTR
-0239 FE                MOV     R6,A
-023A A3                INC     DPTR
-023B E0                MOVX    A,@DPTR
-023C C3                CLR     C
-023D 9500        R     SUBB    A,adcode_last+03H
-023F FF                MOV     R7,A
-0240 EE                MOV     A,R6
-0241 9500        R     SUBB    A,adcode_last+02H
-0243 FE                MOV     R6,A
-0244 ED                MOV     A,R5
-0245 9500        R     SUBB    A,adcode_last+01H
-0247 FD                MOV     R5,A
-0248 EC                MOV     A,R4
-0249 9500        R     SUBB    A,adcode_last
-024B FC                MOV     R4,A
-024C 7800        R     MOV     R0,#LOW ADcode_pre
-024E 120000      E     LCALL   ?C?LSTIDATA
-                                           ; SOURCE LINE # 421
-0251 D200        R     SETB    temp_sign
-                                           ; SOURCE LINE # 422
-0253         ?C0053:
-                                           ; SOURCE LINE # 423
-0253 AB00        R     MOV     R3,per_temp_code_acture+03H
-0255 AA00        R     MOV     R2,per_temp_code_acture+02H
-0257 A900        R     MOV     R1,per_temp_code_acture+01H
-0259 A800        R     MOV     R0,per_temp_code_acture
-025B C000              PUSH    AR0
-025D 7800        R     MOV     R0,#LOW ADcode_pre
-025F 120000      E     LCALL   ?C?LLDIDATA
-0262 D000              POP     AR0
-0264 120000      E     LCALL   ?C?ULDIV
-0267 900000      R     MOV     DPTR,#Temperature
-026A EF                MOV     A,R7
-026B F0                MOVX    @DPTR,A
-                                           ; SOURCE LINE # 424
-026C C3                CLR     C
-026D 6480              XRL     A,#080H
-026F 94C6              SUBB    A,#0C6H
-0271 4003              JC      ?C0054
-                                           ; SOURCE LINE # 425
-0273 7446              MOV     A,#046H
-0275 F0                MOVX    @DPTR,A
-0276         ?C0054:
-                                           ; SOURCE LINE # 426
-0276 300007      R     JNB     temp_sign,?C0055
-                                           ; SOURCE LINE # 427
-0279 900000      R     MOV     DPTR,#Temperature
-027C E0                MOVX    A,@DPTR
-027D F4                CPL     A
-027E 04                INC     A
-027F F0                MOVX    @DPTR,A
-0280         ?C0055:
-                                           ; SOURCE LINE # 429
-0280 75B134            MOV     SGADCON,#034H
-C51 COMPILER V7.50   MAIN                                                                  09/07/2022 20:19:36 PAGE 21  
-
-                                           ; SOURCE LINE # 430
-0283 75A218            MOV     PD_CON,#018H
-                                           ; SOURCE LINE # 431
-0286 5391BF            ANL     EXIF,#0BFH
-                                           ; SOURCE LINE # 432
-0289 E4                CLR     A
-028A F500        R     MOV     i,A
-                                           ; SOURCE LINE # 433
-028C 300015      R     JNB     mode,?C0056
-                                           ; SOURCE LINE # 434
-028F         ?C0057:
-                                           ; SOURCE LINE # 435
-                                           ; SOURCE LINE # 436
-                                           ; SOURCE LINE # 438
-028F 75AA05            MOV     WD_TA,#05H
-                                           ; SOURCE LINE # 439
-0292 75AA0A            MOV     WD_TA,#0AH
-                                           ; SOURCE LINE # 440
-0295 75A91F            MOV     WDCON,#01FH
-0298         ?C0059:
-                                           ; SOURCE LINE # 442
-0298 3089FD            JNB     IE0,?C0059
-029B         ?C0060:
-                                           ; SOURCE LINE # 444
-029B C289              CLR     IE0
-                                           ; SOURCE LINE # 445
-029D 0500        R     INC     i
-                                           ; SOURCE LINE # 446
-029F E500        R     MOV     A,i
-02A1 B405EB            CJNE    A,#05H,?C0057
-                                           ; SOURCE LINE # 447
-02A4         ?C0056:
-                                           ; SOURCE LINE # 448
-02A4 D2AF              SETB    EA
-                                           ; SOURCE LINE # 449
-02A6 22                RET     
-             ; FUNCTION temp_code_catch (END)
-
-C51 COMPILER V7.50   MAIN                                                                  09/07/2022 20:19:36 PAGE 22  
+C51 COMPILER V7.50   MAIN                                                                  09/08/2022 13:03:45 PAGE 5   
 
 NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 ====                                    =====   ======  ====    ======  ====
@@ -1299,113 +206,70 @@ NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 
 ADCcmd . . . . . . . . . . . . . . . .  PUBLIC   DATA   BIT      0000H  1
 P1M0 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0094H  1
-P0M1 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0093H  1
 Key_response . . . . . . . . . . . . .  PUBLIC   DATA   BIT      0001H  1
 P2M0 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0096H  1
 P1M1 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0095H  1
 P0 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0080H  1
 P2M1 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0097H  1
 P1 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0090H  1
-SGADCON. . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B1H  1
 P2 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A0H  1
-SARDATA. . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00ACH  1
 P3 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B0H  1
-_labs. . . . . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
-int0_serve . . . . . . . . . . . . . .  STATIC   CODE   PROC     0000H  -----
 System_data. . . . . . . . . . . . . .  PUBLIC   XDATA  UNION    0000H  10
-EA . . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00AFH  1
 ADpattern. . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  4
   w. . . . . . . . . . . . . . . . . .  MEMBER   -----  U_LONG   0000H  4
   b. . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  4
-power_detect . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-  v. . . . . . . . . . . . . . . . . .  * REG *  DATA   U_INT    0006H  2
+SOLIDIC. . . . . . . . . . . . . . . .  TYPEDEF  -----  STRUCT   -----  20
+  mode . . . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0000H  1
+  cmd. . . . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0001H  1
+  LCD_BUF. . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0002H  16
+  addr . . . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0012H  1
+  counter. . . . . . . . . . . . . . .  MEMBER   -----  U_CHAR   0013H  1
 _bool. . . . . . . . . . . . . . . . .  * TAG *  -----  ENUM     -----  -----
 IE . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A8H  1
-WD_TA. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00AAH  1
-KEY_PIN10. . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0081H  1
-LCD_CON. . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00EBH  1
-SGADC1 . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B4H  1
+iLCD_GLASS_Init. . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
+size_t . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_INT    -----  2
 Temperature. . . . . . . . . . . . . .  PUBLIC   XDATA  CHAR     000AH  1
-SGADC2 . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B3H  1
 uchar. . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_CHAR   -----  1
-SGADC3 . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B2H  1
-LCD_SEL. . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00ECH  1
 IP . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B8H  1
 Lcd_lamp_symbol. . . . . . . . . . . .  PUBLIC   DATA   BIT      0002H  1
-temp_code_catch. . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-  mode . . . . . . . . . . . . . . . .  AUTO     DATA   BIT      0000H  1
-  adcode_last. . . . . . . . . . . . .  AUTO     DATA   U_LONG   0000H  4
-  temp . . . . . . . . . . . . . . . .  AUTO     XDATA  UNION    0000H  4
-  i. . . . . . . . . . . . . . . . . .  AUTO     DATA   U_CHAR   0004H  1
-  j. . . . . . . . . . . . . . . . . .  AUTO     DATA   U_CHAR   0005H  1
-  temp_sign. . . . . . . . . . . . . .  AUTO     DATA   BIT      0001H  1
-  per_temp_code_acture . . . . . . . .  AUTO     DATA   U_LONG   0006H  4
 NRM_securty_a. . . . . . . . . . . . .  PUBLIC   XDATA  U_CHAR   000BH  1
 NRM_securty_b. . . . . . . . . . . . .  PUBLIC   XDATA  U_CHAR   000CH  1
 PWM0 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   009CH  1
 PWM1 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   009DH  1
 main . . . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
-  temp . . . . . . . . . . . . . . . .  AUTO     DATA   U_CHAR   0002H  1
-  i. . . . . . . . . . . . . . . . . .  * REG *  DATA   U_INT    0004H  2
-  j. . . . . . . . . . . . . . . . . .  AUTO     DATA   U_INT    0000H  2
-  num. . . . . . . . . . . . . . . . .  * REG *  DATA   U_INT    0006H  2
 Key_code . . . . . . . . . . . . . . .  PUBLIC   DATA   U_CHAR   0000H  1
 ulong. . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_LONG   -----  4
-EXIF . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0091H  1
-SCLK . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0082H  1
-PCON . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0087H  1
-C51 COMPILER V7.50   MAIN                                                                  09/07/2022 20:19:36 PAGE 23  
-
-NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
-====                                    =====   ======  ====    ======  ====
-
-
 _delay_ms. . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
   num. . . . . . . . . . . . . . . . .  * REG *  DATA   U_INT    0006H  2
   i. . . . . . . . . . . . . . . . . .  * REG *  DATA   U_INT    0004H  2
   j. . . . . . . . . . . . . . . . . .  * REG *  DATA   U_INT    0002H  2
 SCON . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0098H  1
-TMOD . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0089H  1
 TCON . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0088H  1
 Power_det_mode . . . . . . . . . . . .  PUBLIC   DATA   BIT      0003H  1
 SDI5219X1_symbol . . . . . . . . . . .  PUBLIC   DATA   BIT      0004H  1
 Temp_auto_det_counter. . . . . . . . .  PUBLIC   XDATA  U_INT    000DH  2
-_e2rom_erase . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
 Key_press. . . . . . . . . . . . . . .  PUBLIC   DATA   BIT      0005H  1
 Cal_temp_sign. . . . . . . . . . . . .  PUBLIC   DATA   BIT      0006H  1
-IE0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0089H  1
 TURE . . . . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
 uint . . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_INT    -----  2
-_nvm_data_read_byte. . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
-SARCON . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00ABH  1
 ADcode_pre . . . . . . . . . . . . . .  PUBLIC   IDATA  U_LONG   0000H  4
-TH0. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   008CH  1
-EX0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A8H  1
-IT0. . . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0088H  1
-TL0. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   008AH  1
-key_scan . . . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
 Vol_auto_det_counter . . . . . . . . .  PUBLIC   DATA   U_INT    0001H  2
-_nvm_data_write_byte . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
-PD_CON . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A2H  1
 PWMCON . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   009EH  1
-BAT_DET_PIN. . . . . . . . . . . . . .  ABSBIT   -----  BIT      0085H  1
-EIP. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00F8H  1
 SYS_pattern. . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  10
   sys_struct . . . . . . . . . . . . .  MEMBER   -----  STRUCT   0000H  10
   b. . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  10
-KEY_PIN1 . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A2H  1
 PWMF_H . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   009AH  1
-data_receive . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
-KEY_PIN2 . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A1H  1
 boolean. . . . . . . . . . . . . . . .  TYPEDEF  -----  U_CHAR   -----  1
-KEY_PIN3 . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A3H  1
-KEY_PIN4 . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A0H  1
-KEY_PIN5 . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0084H  1
 PWMF_L . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   009BH  1
+C51 COMPILER V7.50   MAIN                                                                  09/08/2022 13:03:45 PAGE 6   
+
+NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
+====                                    =====   ======  ====    ======  ====
+
+
 T2CON. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00C8H  1
-KEY_PIN6 . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A4H  1
-KEY_PIN7 . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0083H  1
-KEY_PIN8 . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0096H  1
+_LCD_GLASS_String. . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
+init_pwm . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
 FALSE. . . . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
 INTpattern . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  2
   i. . . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0000H  2
@@ -1413,21 +277,17 @@ INTpattern . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  2
 Lcd_bright . . . . . . . . . . . . . .  PUBLIC   DATA   U_CHAR   0003H  1
 Data_sycle_symbol. . . . . . . . . . .  PUBLIC   DATA   BIT      0007H  1
 PSW. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00D0H  1
-WDCON. . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00A9H  1
-P0M0 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0092H  1
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-C51 COMPILER V7.50   MAIN                                                                  09/07/2022 20:19:36 PAGE 24  
-
-   CODE SIZE        =    952    ----
-   CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =     15       4
+   CODE SIZE        =    110    ----
+   CONSTANT SIZE    =     14    ----
+   XDATA SIZE       =     15    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =      4      13
+   DATA SIZE        =      4    ----
    IDATA SIZE       =      4    ----
-   BIT SIZE         =      8       2
+   BIT SIZE         =      8    ----
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  2 WARNING(S),  0 ERROR(S)
