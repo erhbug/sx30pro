@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   ADC_0819_VC_JAN10_13                                                  09/08/2022 13:03:47 PAGE 1   
+C51 COMPILER V7.50   ADC_0819_VC_JAN10_13                                                  09/08/2022 17:52:24 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE ADC_0819_VC_JAN10_13
@@ -62,7 +62,7 @@ line level    source
   52   1              ADcode_pre ^= 0x800000; 
   53   1              
   54   1              //--SDI0819µƒ≈‰÷√¬ˆ≥Â--Õ®µ¿A,PGA=128
-C51 COMPILER V7.50   ADC_0819_VC_JAN10_13                                                  09/08/2022 13:03:47 PAGE 2   
+C51 COMPILER V7.50   ADC_0819_VC_JAN10_13                                                  09/08/2022 17:52:24 PAGE 2   
 
   55   1              sclk_unit(); //-- 25
   56   1              sclk_unit(); //-- 26

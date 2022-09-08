@@ -4,8 +4,10 @@
 #include <math.h>
 #include "./_solidic/head_file_version.h"
 #include "./_display/dvr_lcd_SDI1621.h"
+#include "./customer/keyboard.h"
 
 
+unsigned char Key_code;
 
 #define     BL_EN	P1 |= 0x20
 #define     BL_DIS	P1 &= 0xDF
@@ -29,8 +31,21 @@ void init_pwm(void){
 	PWMCON  = 0x04;	//PWM0-P1.4(LCD_LAMP)????(?PWM0=0xff?,?????)
 }
 
-main()
-{
+
+void main(void)
+{char txt[5]={0};
+
+/*sbit KEY_K0 = P0^2;	
+sbit KEY_K1 = P2^4;	
+sbit KEY_K2 = P2^0;	
+sbit KEY_K3 = P1^6;	
+
+sbit KEY_D0 = P0^1;
+sbit KEY_D1 = P0^0;	
+sbit KEY_D2 = P1^0;	
+sbit KEY_D3 = P1^1;	
+sbit KEY_D4 = P1^2;*/
+
 	P1M0 = 0xff;
 	P1M1 = 0x00;
 	P2M0 = 0xff;
@@ -39,9 +54,18 @@ main()
 	P1 = 0x00;
 
 	iLCD_GLASS_Init();
-	LCD_GLASS_String("TORREY",LCD_PESO);
-	LCD_GLASS_String("Y",LCD_PRECIO);
+			delay_ms(500);
+	LCD_GLASS_String("-TORR",LCD_PESO);
+		delay_ms(500);
+	LCD_GLASS_String("EY-",LCD_PRECIO);
+			delay_ms(500);
+
 	LCD_GLASS_String("2022",LCD_TOTAL);
+				delay_ms(500);
+
+	
+
+    
  
 
 	init_pwm();
@@ -49,24 +73,14 @@ main()
 	BEEPER_EN;
 
 while(1){	
-	;
-/*P1 = 0x04;
-	delay_ms(400);
-	P1 = 0x00;
-	delay_ms(400);
-	P2 = 0x0E;
-	delay_ms(200);
-	P2 = 0x00;
-	delay_ms(200);*/
+
+     key_scan();
+	sprintf(txt,"%d",Key_code);
+LCD_GLASS_String(txt,LCD_TOTAL);
+	delay_ms(50);
+
 }
 
 }
 
-/*	while(1){
 
-LCD_DATA_ON;//P2.2
-delay_ms(10);
-LCD_DATA_OFF;
-delay_ms(10);
-
-	}*/

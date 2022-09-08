@@ -62,16 +62,16 @@ sbit BAT_DET_PIN = P0^5;
 #define  BAT_DET_PIN_HIGH		(BAT_DET_PIN = 1)		// 电压检测 口线 变高
 #define  BAT_DET_PIN_LOW		(BAT_DET_PIN = 0)		// 电压检测 口线 变低
 //------------ 配置 键盘的接口 ------------
-sbit KEY_PIN1 = P2^2;	
-sbit KEY_PIN2 = P2^1;	
-sbit KEY_PIN3 = P2^3;	
-sbit KEY_PIN4 = P2^0;	
-sbit KEY_PIN5 = P0^4;
-sbit KEY_PIN6 = P2^4;	
-sbit KEY_PIN7 = P0^3;	
-sbit KEY_PIN8 = P1^6;	
-//sbit KEY_PIN9 = P1^6;	
-sbit KEY_PIN10 = P0^1;
+sbit KEY_K0 = P0^2;	
+sbit KEY_K1 = P2^4;	
+sbit KEY_K2 = P2^0;	
+sbit KEY_K3 = P1^6;	
+
+sbit KEY_D0 = P0^1;
+sbit KEY_D1 = P0^0;	
+sbit KEY_D2 = P1^0;	
+sbit KEY_D3 = P1^1;	
+sbit KEY_D4 = P1^2;
 
 //------------ IO口操作(宏定义) ------------
 //关键管脚的IO配置

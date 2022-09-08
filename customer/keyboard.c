@@ -30,163 +30,41 @@
 
 //----------------------------------------------------
 //----- 键码扫描函数 ------------
-void key_scan(void)		
+/*sbit KEY_K0 = P0^2;	
+sbit KEY_K1 = P2^4;	
+sbit KEY_K2 = P2^0;	
+sbit KEY_K3 = P1^6;	
+
+sbit KEY_D0 = P0^1;
+sbit KEY_D1 = P0^0;	
+sbit KEY_D2 = P1^0;	
+sbit KEY_D3 = P1^1;	
+sbit KEY_D4 = P1^2;*/
+void key_scan0(void)		
 {
-	EA = 0;
+char k=0;
+char d=0;
+
+Key_code=0;
+for(k=1;k<=4;k++){
+KEY_K0=0;
+KEY_K1=0;
+KEY_K2=0;
+KEY_K3=0;
+if(k=1)KEY_K0=1;
+if(k=2)KEY_K1=1;
+if(k=3)KEY_K2=1;
+if(k=4)KEY_K3=1;
+
+if(KEY_D0!=0)Key_code=1*k;
+if(KEY_D1!=0)Key_code=2*k;
+if(KEY_D2!=0)Key_code=3*k;
+if(KEY_D3!=0)Key_code=4*k;
+if(KEY_D4!=0)Key_code=5*k;
 	delay_ms(5);
-	// 6ms 延时后再次检测是否有健按下
-	// 检测是否有健按下
-	//--IO口配置--
-	IO_MODE_KEY_A_EN;
-	IO_MODE_KEY_B_EN;
-	//------------
-	KEY_PIN5 = 0;
-	KEY_PIN6 = 0;
-	KEY_PIN7 = 0;
-	KEY_PIN8 = 0;
-	//KEY_PIN9 = 0;
-	KEY_PIN10 = 0;
-	delay_ms(0);
-	// 如果 KEY_1,KEY_2,KEY_3,KEY_4为1,则说明没有键被按下
-	if(KEY_PIN1 && KEY_PIN2 && KEY_PIN3 && KEY_PIN4)
-	{
-		Key_code = NONE;
-	}
-	else
-	{
-//----- 扫描列线 gnd(KEY9) -------------------------------------------
-		KEY_PIN5 = 1;
-		KEY_PIN6 = 1;
-		KEY_PIN7 = 1;
-		KEY_PIN8 = 1;
-		//KEY_PIN9 = 1;
-		KEY_PIN10 = 1;
-		delay_ms(0);
-		//--- 判断按键 ---
-		if(!KEY_PIN1)
-		    Key_code = KEY_1_9;
-		else
-		if(!KEY_PIN2)
-			Key_code = KEY_2_9;
-		else
-		if(!KEY_PIN3)
-			Key_code = KEY_3_9;
-		else
-		if(!KEY_PIN4)
-			Key_code = KEY_4_9;
-		else
-			Key_code = NONE;
-//----- 扫描列线 KEY10(优先扫描和蜂鸣器公用的线) -------------------------------------------
-		if(Key_code == NONE)
-		{
-		KEY_PIN10 = 0;
-		delay_ms(0);
-		//--- 判断按键 ---
-		if(!KEY_PIN1)
-		    Key_code = KEY_1_10;
-		else
-		if(!KEY_PIN2)
-			Key_code = KEY_2_10;
-		else
-		if(!KEY_PIN3)
-			Key_code = KEY_3_10;
-		else
-		if(!KEY_PIN4)
-			Key_code = KEY_4_10;
-		else
-			Key_code = NONE;	
-		}
-//----- 扫描列线 KEY8 -------------------------------------------
-		if(Key_code == NONE)
-		{
-		KEY_PIN8 = 0;
-		delay_ms(0);
-		//--- 判断按键 ---
-		if(!KEY_PIN1)
-		    Key_code = KEY_1_8;
-		else
-		if(!KEY_PIN2)
-			Key_code = KEY_2_8;
-		else
-		if(!KEY_PIN3)
-			Key_code = KEY_3_8;
-		else
-		if(!KEY_PIN4)
-			Key_code = KEY_4_8;
-		else
-			Key_code = NONE;	
-		}
-//----- 扫描列线 KEY7 -------------------------------------------
-		if(Key_code == NONE)
-		{
-		KEY_PIN7 = 0;
-		delay_ms(0);
-		//--- 判断按键 ---
-		if(!KEY_PIN1)
-		    Key_code = KEY_1_7;
-		else
-		if(!KEY_PIN2)
-			Key_code = KEY_2_7;
-		else
-		if(!KEY_PIN3)
-			Key_code = KEY_3_7;
-		else
-		if(!KEY_PIN4)
-			Key_code = KEY_4_7;
-		else
-			Key_code = NONE;	
-		}
-//----- 扫描列线 KEY6 -------------------------------------------
-		if(Key_code == NONE)
-		{
-		KEY_PIN6 = 0;
-		delay_ms(0);
-		//--- 判断按键 ---
-		if(!KEY_PIN1)
-		{
-			Key_code = KEY_1_6;
-		}
-		else
-		if(!KEY_PIN2)
-		{
-			Key_code = KEY_2_6;
-		}
-		else
-		if(!KEY_PIN3)
-		{
-			Key_code = KEY_3_6;
-		}
-		else
-		if(!KEY_PIN4)
-		{
-			Key_code = KEY_4_6;
-		}
-		else
-			Key_code = NONE;	
-		}
-//----- 扫描列线 KEY5 -------------------------------------------
-		if(Key_code == NONE)
-		{
-		KEY_PIN5 = 0;
-		delay_ms(0);
-		//--- 判断按键 ---
-		if(!KEY_PIN1)
-		    Key_code = KEY_1_5;
-		else
-		if(!KEY_PIN2)
-			Key_code = KEY_2_5;
-		else
-		if(!KEY_PIN3)
-			Key_code = KEY_3_5;
-		else
-		if(!KEY_PIN4)
-			Key_code = KEY_4_5;
-		else
-			Key_code = NONE;	
-		}
-	}
-	Key_press = 0;
-	//--IO口配置--
-	IO_MODE_KEY_DIS;
-	EA = 1;
 }
+
+}
+
+
+
