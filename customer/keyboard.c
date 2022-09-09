@@ -22,30 +22,52 @@
 #include "./customer/keyboard.h"
 
 extern unsigned char Key;
-
-void key_scan(void)		
-{
-char k=0;
-char d=0;
+unsigned char LastKey;
+unsigned char KeyState=0;
 
 
-Key=0;
-for(k=0;k<4;k++){
-KEY_K0=0;
-KEY_K1=0;
-KEY_K2=0;
-KEY_K3=0;
-if(k==1)KEY_K0=1;
-if(k==2)KEY_K1=1;
-if(k==3)KEY_K2=1;
-if(k==4)KEY_K3=1;
+#define KEY_D0_ON				P2 |= 0x02 
+#define KEY_D0_OFF			P2 &= 0xFD 
 
-if(KEY_D0!=0)Key=1+(k*4);
-if(KEY_D1!=0)Key=2+(k*4);
-if(KEY_D2!=0)Key=3+(k*4);
-if(KEY_D3!=0)Key=4+(k*4);
-if(KEY_D4!=0)Key=5+(k*4);
-	//delay_ms(5);
+void delay_ms(unsigned int num)
+{ 	
+	unsigned int i,j;
+  	for(i= 0;i<num;i++)	//(SDI5219) ??1ms
+		for(j=0;j<164;j++)
+			;
 }
 
+void key_scan(void) {
+  char k = 0;
+  Key = 0;
+
+  for (k = 0; k < 5; k++) {
+    KEY_D0 = 1;
+    KEY_D1 = 1;
+    KEY_D2 = 1;
+    KEY_D3 = 1;
+    KEY_D4 = 1;
+    if (k == 0) KEY_D0 = 0;
+    if (k == 1) KEY_D1 = 0;
+    if (k == 2) KEY_D2 = 0;
+    if (k == 3) KEY_D3 = 0;
+    if (k == 4) KEY_D4 = 0;
+    delay_ms(1);
+    if (KEY_K0 != 1) Key = 1 + (k * 4);
+    if (KEY_K1 != 1) Key = 2 + (k * 4);
+    if (KEY_K2 != 1) Key = 3 + (k * 4);
+    if (KEY_K3 != 1) Key = 4 + (k * 4);
+  }
+
+  if (LastKey == 0 && Key != 0) {
+    KeyState = PRESS; //se presiono
+  } else if (LastKey == Key && Key != 0) {
+    KeyState = PRESSED; //se mantiene presionado
+  } else if (LastKey != 0 && Key == 0) {
+    KeyState = RELEASE; //se solto
+  } else if (LastKey == 0 && Key == 0) {
+    KeyState = 0; //no se ha presionado una tecla
+  }
+  LastKey = Key;
 }
+

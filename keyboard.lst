@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   KEYBOARD                                                              09/08/2022 20:21:29 PAGE 1   
+C51 COMPILER V7.50   KEYBOARD                                                              09/09/2022 16:08:58 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE KEYBOARD
@@ -32,43 +32,65 @@ line level    source
   22          #include "./customer/keyboard.h"
   23          
   24          extern unsigned char Key;
-  25          
-  26          void key_scan(void)             
-  27          {
-  28   1      char k=0;
-  29   1      char d=0;
-  30   1      
-  31   1      
-  32   1      Key=0;
-  33   1      for(k=0;k<4;k++){
-  34   2      KEY_K0=0;
-  35   2      KEY_K1=0;
-  36   2      KEY_K2=0;
-  37   2      KEY_K3=0;
-  38   2      if(k==1)KEY_K0=1;
-  39   2      if(k==2)KEY_K1=1;
-  40   2      if(k==3)KEY_K2=1;
-  41   2      if(k==4)KEY_K3=1;
-  42   2      
-  43   2      if(KEY_D0!=0)Key=1+(k*4);
-  44   2      if(KEY_D1!=0)Key=2+(k*4);
-  45   2      if(KEY_D2!=0)Key=3+(k*4);
-  46   2      if(KEY_D3!=0)Key=4+(k*4);
-  47   2      if(KEY_D4!=0)Key=5+(k*4);
-  48   2              //delay_ms(5);
-  49   2      }
-  50   1      
-  51   1      }
+  25          unsigned char LastKey;
+  26          unsigned char KeyState=0;
+  27          
+  28          
+  29          #define KEY_D0_ON                               P2 |= 0x02 
+  30          #define KEY_D0_OFF                      P2 &= 0xFD 
+  31          
+  32          void delay_ms(unsigned int num)
+  33          {       
+  34   1              unsigned int i,j;
+  35   1              for(i= 0;i<num;i++)     //(SDI5219) ??1ms
+  36   1                      for(j=0;j<164;j++)
+  37   1                              ;
+  38   1      }
+  39          
+  40          void key_scan(void) {
+  41   1        char k = 0;
+  42   1        Key = 0;
+  43   1      
+  44   1        for (k = 0; k < 5; k++) {
+  45   2          KEY_D0 = 1;
+  46   2          KEY_D1 = 1;
+  47   2          KEY_D2 = 1;
+  48   2          KEY_D3 = 1;
+  49   2          KEY_D4 = 1;
+  50   2          if (k == 0) KEY_D0 = 0;
+  51   2          if (k == 1) KEY_D1 = 0;
+  52   2          if (k == 2) KEY_D2 = 0;
+  53   2          if (k == 3) KEY_D3 = 0;
+  54   2          if (k == 4) KEY_D4 = 0;
+C51 COMPILER V7.50   KEYBOARD                                                              09/09/2022 16:08:58 PAGE 2   
+
+  55   2          delay_ms(1);
+  56   2          if (KEY_K0 != 1) Key = 1 + (k * 4);
+  57   2          if (KEY_K1 != 1) Key = 2 + (k * 4);
+  58   2          if (KEY_K2 != 1) Key = 3 + (k * 4);
+  59   2          if (KEY_K3 != 1) Key = 4 + (k * 4);
+  60   2        }
+  61   1      
+  62   1        if (LastKey == 0 && Key != 0) {
+  63   2          KeyState = PRESS; //se presiono
+  64   2        } else if (LastKey == Key && Key != 0) {
+  65   2          KeyState = PRESSED; //se mantiene presionado
+  66   2        } else if (LastKey != 0 && Key == 0) {
+  67   2          KeyState = RELEASE; //se solto
+  68   2        } else if (LastKey == 0 && Key == 0) {
+  69   2          KeyState = 0; //no se ha presionado una tecla
+  70   2        }
+  71   1        LastKey = Key;
+  72   1      }
+  73          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-C51 COMPILER V7.50   KEYBOARD                                                              09/08/2022 20:21:29 PAGE 2   
-
-   CODE SIZE        =     98    ----
+   CODE SIZE        =    183    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----       1
+   DATA SIZE        =      2    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.

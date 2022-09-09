@@ -72,7 +72,6 @@ void write_lcd(SOLIDIC Display);
 int iLCD_GLASS_DeInit(void);
 int iLCD_GLASS_Clear(void);
 int iLCD_GLASS_All_On(void);
-int iLCD_GLASS_Blink(char comand_value);
 void LCD_SET_Char(char cCaracter, char cPosition_On_LCD, 
 	char cPosition_Text);
 void LCD_GLASS_Dot(char iNumber_Dot, char cPosition_On_LCD, char cFLag_On);

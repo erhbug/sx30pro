@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/08/2022 20:21:28 PAGE 1   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/09/2022 16:08:58 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE DVR_LCD_SDI1621
@@ -62,7 +62,7 @@ line level    source
   52                          0x2F,   //      00101111, //E
   53                          0x27,   //      00100111,       //F
   54                          0x6F,   //      01101111,       //G
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/08/2022 20:21:28 PAGE 2   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/09/2022 16:08:58 PAGE 2   
 
   55                          0x76,   //      01110110,       //H
   56                          0x50,   //      01010000,       //I
@@ -126,7 +126,7 @@ line level    source
                               0x17,   //      00010111,       //F
                               0x5F,   //      01011111,       //G
                               0x67,   //      01100111,       //H
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/08/2022 20:21:28 PAGE 3   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/09/2022 16:08:58 PAGE 3   
 
                               0x60,   //      01100000,       //I
                               0x6C,   //      01101000,       //J
@@ -190,7 +190,7 @@ line level    source
  175   1      /* Configurar como salidas
  176   1        LCD_CS_N_Pin
  177   1        LCD_WR_N_Pin
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/08/2022 20:21:28 PAGE 4   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/09/2022 16:08:58 PAGE 4   
 
  178   1        LCD_DATA_Pin
  179   1      */
@@ -254,7 +254,7 @@ line level    source
  237   1                      
  238   1                      LCD_GLASS_Symbols(9,0); //bateria 0/3
  239   1                                      LCD_GLASS_Symbols(8,1);
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/08/2022 20:21:28 PAGE 5   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/09/2022 16:08:58 PAGE 5   
 
  240   1                                      LCD_GLASS_Symbols(7,1);
  241   1                                      LCD_GLASS_Symbols(10,1);
@@ -318,7 +318,7 @@ line level    source
  296   1                              strTimer.iTimerI-=35;                   
  297   1                      }
  298   1              }*/
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/08/2022 20:21:28 PAGE 6   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/09/2022 16:08:58 PAGE 6   
 
  299   1              
  300   1              LCD_CS_N_ON;
@@ -382,7 +382,7 @@ line level    source
  357          
  358          int iLCD_GLASS_DeInit(void){    
  359   1              Display.mode=LCD_DATA;
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/08/2022 20:21:28 PAGE 7   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/09/2022 16:08:58 PAGE 7   
 
  360   1              Display.addr=0;
  361   1              Display.counter=sizeof(Display.LCD_BUF);        
@@ -423,142 +423,137 @@ line level    source
  396   1              return 1;
  397   1      }
  398          
- 399          int iLCD_GLASS_Blink(char comand_value){
- 400   1      
- 401   1              return 1;
- 402   1      }
-*** WARNING C280 IN LINE 399 OF _DISPLAY\DVR_LCD_SDI1621.C: 'comand_value': unreferenced local variable
- 403          
- 404          
- 405          void LCD_SET_Char(char cCaracter, char cPosition_On_LCD, 
- 406                  char cPosition_Text){
- 407   1                      char i=0;
- 408   1                      #if DISPLAY_20400047_EN > 0                     
- 409   1                      if(cPosition_On_LCD==LCD_PESO)i=0;
- 410   1                      if(cPosition_On_LCD==LCD_PRECIO)i=11;
- 411   1                      if(cPosition_On_LCD==LCD_TOTAL) i=5;            
- 412   1                      #else
+ 399          
+ 400          
+ 401          void LCD_SET_Char(char cCaracter, char cPosition_On_LCD, 
+ 402                  char cPosition_Text){
+ 403   1                      char i=0;
+ 404   1                      #if DISPLAY_20400047_EN > 0                     
+ 405   1                      if(cPosition_On_LCD==LCD_PESO)i=0;
+ 406   1                      if(cPosition_On_LCD==LCD_PRECIO)i=11;
+ 407   1                      if(cPosition_On_LCD==LCD_TOTAL) i=5;            
+ 408   1                      #else
                                 if(cPosition_On_LCD==LCD_PESO)i=5;
                                 if(cPosition_On_LCD==LCD_PRECIO)i=0;
                                 if(cPosition_On_LCD==LCD_TOTAL) i=10;         
                               #endif
- 417   1                      i+=(5-cPosition_Text);
- 418   1                      Display.LCD_BUF[i]&=0x80;       
- 419   1                Display.LCD_BUF[i]|=cCaracter;
- 420   1              
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/08/2022 20:21:28 PAGE 8   
+ 413   1                      i+=(5-cPosition_Text);
+ 414   1                      Display.LCD_BUF[i]&=0x80;       
+ 415   1                Display.LCD_BUF[i]|=cCaracter;
+ 416   1              
+ 417   1      }
+ 418          
+ 419          
+ 420          void LCD_GLASS_Dot(char iNumber_Dot, char cPosition_On_LCD, char cFLag_On){
+ 421   1              
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/09/2022 16:08:58 PAGE 8   
 
- 421   1      }
- 422          
- 423          
- 424          void LCD_GLASS_Dot(char iNumber_Dot, char cPosition_On_LCD, char cFLag_On){
- 425   1              
- 426   1              switch(cPosition_On_LCD){
- 427   2                      case LCD_PESO:
- 428   2                              if(iNumber_Dot == 3){                         
- 429   3                                      if(cFLag_On == 1)
- 430   3                                        Display.LCD_BUF[P_PESO_3]|=0x80;
- 431   3                          else
- 432   3                                        Display.LCD_BUF[P_PESO_3]&=0x7F;
- 433   3                              }
- 434   2                              if(iNumber_Dot == 2){
- 435   3              if(cFLag_On == 1)
- 436   3                                        Display.LCD_BUF[P_PESO_2]|=0x80;
- 437   3                          else
- 438   3                                        Display.LCD_BUF[P_PESO_2]&=0x7F;
- 439   3                      
- 440   3                              }
- 441   2                              if(iNumber_Dot == 1){
- 442   3              if(cFLag_On == 1)
- 443   3                                        Display.LCD_BUF[P_PESO_1]|=0x80;
- 444   3                          else
- 445   3                                        Display.LCD_BUF[P_PESO_1]&=0x7F;
- 446   3                              }               
- 447   2                              break;
- 448   2                      case LCD_PRECIO:
- 449   2                              #if DISPLAY_20400047_EN > 0     
- 450   2                              if(iNumber_Dot == 3){
- 451   3                if(cFLag_On == 1)
- 452   3                                          Display.LCD_BUF[P_PRECIO_3]|=0x80;
- 453   3                            else
- 454   3                                          Display.LCD_BUF[P_PRECIO_3]&=0x7F;          
- 455   3                                 }
- 456   2                              #endif
- 457   2                              if(iNumber_Dot == 2){
- 458   3              if(cFLag_On == 1)
- 459   3                                        Display.LCD_BUF[P_PRECIO_2]|=0x80;
- 460   3                          else
- 461   3                                        Display.LCD_BUF[P_PRECIO_2]&=0x7F;            
- 462   3                              }
- 463   2                              if(iNumber_Dot == 1){
- 464   3              if(cFLag_On == 1)
- 465   3                                        Display.LCD_BUF[P_PRECIO_1]|=0x80;
- 466   3                          else
- 467   3                                        Display.LCD_BUF[P_PRECIO_1]&=0x7F;
- 468   3                              }                       
- 469   2                              break;
- 470   2                              
- 471   2                      case LCD_TOTAL:
- 472   2                              if(iNumber_Dot == 2){
- 473   3              if(cFLag_On == 1)
- 474   3                                        Display.LCD_BUF[P_TOTAL_2]|=0x80;
- 475   3                          else
- 476   3                                        Display.LCD_BUF[P_TOTAL_2]&=0x7F;             
- 477   3                              }
- 478   2                              if(iNumber_Dot == 1){
- 479   3              if(cFLag_On == 1)
- 480   3                                        Display.LCD_BUF[P_TOTAL_1]|=0x80;
- 481   3                          else
- 482   3                                        Display.LCD_BUF[P_TOTAL_1]&=0x7F;
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/08/2022 20:21:28 PAGE 9   
+ 422   1              switch(cPosition_On_LCD){
+ 423   2                      case LCD_PESO:
+ 424   2                              if(iNumber_Dot == 3){                         
+ 425   3                                      if(cFLag_On == 1)
+ 426   3                                        Display.LCD_BUF[P_PESO_3]|=0x80;
+ 427   3                          else
+ 428   3                                        Display.LCD_BUF[P_PESO_3]&=0x7F;
+ 429   3                              }
+ 430   2                              if(iNumber_Dot == 2){
+ 431   3              if(cFLag_On == 1)
+ 432   3                                        Display.LCD_BUF[P_PESO_2]|=0x80;
+ 433   3                          else
+ 434   3                                        Display.LCD_BUF[P_PESO_2]&=0x7F;
+ 435   3                      
+ 436   3                              }
+ 437   2                              if(iNumber_Dot == 1){
+ 438   3              if(cFLag_On == 1)
+ 439   3                                        Display.LCD_BUF[P_PESO_1]|=0x80;
+ 440   3                          else
+ 441   3                                        Display.LCD_BUF[P_PESO_1]&=0x7F;
+ 442   3                              }               
+ 443   2                              break;
+ 444   2                      case LCD_PRECIO:
+ 445   2                              #if DISPLAY_20400047_EN > 0     
+ 446   2                              if(iNumber_Dot == 3){
+ 447   3                if(cFLag_On == 1)
+ 448   3                                          Display.LCD_BUF[P_PRECIO_3]|=0x80;
+ 449   3                            else
+ 450   3                                          Display.LCD_BUF[P_PRECIO_3]&=0x7F;          
+ 451   3                                 }
+ 452   2                              #endif
+ 453   2                              if(iNumber_Dot == 2){
+ 454   3              if(cFLag_On == 1)
+ 455   3                                        Display.LCD_BUF[P_PRECIO_2]|=0x80;
+ 456   3                          else
+ 457   3                                        Display.LCD_BUF[P_PRECIO_2]&=0x7F;            
+ 458   3                              }
+ 459   2                              if(iNumber_Dot == 1){
+ 460   3              if(cFLag_On == 1)
+ 461   3                                        Display.LCD_BUF[P_PRECIO_1]|=0x80;
+ 462   3                          else
+ 463   3                                        Display.LCD_BUF[P_PRECIO_1]&=0x7F;
+ 464   3                              }                       
+ 465   2                              break;
+ 466   2                              
+ 467   2                      case LCD_TOTAL:
+ 468   2                              if(iNumber_Dot == 2){
+ 469   3              if(cFLag_On == 1)
+ 470   3                                        Display.LCD_BUF[P_TOTAL_2]|=0x80;
+ 471   3                          else
+ 472   3                                        Display.LCD_BUF[P_TOTAL_2]&=0x7F;             
+ 473   3                              }
+ 474   2                              if(iNumber_Dot == 1){
+ 475   3              if(cFLag_On == 1)
+ 476   3                                        Display.LCD_BUF[P_TOTAL_1]|=0x80;
+ 477   3                          else
+ 478   3                                        Display.LCD_BUF[P_TOTAL_1]&=0x7F;
+ 479   3                              }
+ 480   2                      break;
+ 481   2              }
+ 482   1              
+ 483   1              LCD_GLASS_Update();
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/09/2022 16:08:58 PAGE 9   
 
- 483   3                              }
- 484   2                      break;
- 485   2              }
- 486   1              
- 487   1              LCD_GLASS_Update();
- 488   1      }
- 489          
- 490          
- 491          void LCD_GLASS_Symbols(char cSymbol, char cFlag_On){
- 492   1              
- 493   1              //if(cFlag_On!=0&&cFlag_On!=1)vSend_String_Usart(&huart1,"-------------ERROR------------\r\n");
- 494   1      
- 495   1              switch(cSymbol){        
- 496   2                      #if DISPLAY_20400047_EN > 0     
- 497   2                      
- 498   2                      case 10:  //vSend_String_Usart(&huart1,"1/4 ");
- 499   2                              if(cFlag_On == 1)
- 500   2                                      Display.LCD_BUF[S_14]|=0x80;
- 501   2                              else
- 502   2                                      Display.LCD_BUF[S_14]&=0x7F;    
- 503   2                              break;  
- 504   2                              case 7: // vSend_String_Usart(&huart1,"2/4 ");
- 505   2                                      if(cFlag_On == 1)
- 506   2                                      Display.LCD_BUF[S_24]|=0x80;
- 507   2                              else
- 508   2                                      Display.LCD_BUF[S_24]&=0x7F;    
- 509   2                              break;  
- 510   2                              case 8:  //vSend_String_Usart(&huart1,"3/4");
- 511   2                              if(cFlag_On == 1)
- 512   2                                      Display.LCD_BUF[S_34]|=0x80;
- 513   2                              else
- 514   2                                      Display.LCD_BUF[S_34]&=0x7F;    
- 515   2                              break;  
- 516   2                              case 9:  //vSend_String_Usart(&huart1,"4/4");
- 517   2                              if(cFlag_On == 1)
- 518   2                                      Display.LCD_BUF[S_44]|=0x80;
- 519   2                              else
- 520   2                                      Display.LCD_BUF[S_44]&=0x7F;    
- 521   2                              break;  
- 522   2                              case SYMBOL_NET:  //vSend_String_Usart(&huart1,"SYMBOL_NET");
- 523   2                              if(cFlag_On == 1)
- 524   2                                      Display.LCD_BUF[S_TARE]|=0x80;
- 525   2                              else
- 526   2                                      Display.LCD_BUF[S_TARE]&=0x7F;  
- 527   2                              break;  
- 528   2                      
- 529   2          #else               
+ 484   1      }
+ 485          
+ 486          
+ 487          void LCD_GLASS_Symbols(char cSymbol, char cFlag_On){
+ 488   1              
+ 489   1              //if(cFlag_On!=0&&cFlag_On!=1)vSend_String_Usart(&huart1,"-------------ERROR------------\r\n");
+ 490   1      
+ 491   1              switch(cSymbol){        
+ 492   2                      #if DISPLAY_20400047_EN > 0     
+ 493   2                      
+ 494   2                      case 10:  //vSend_String_Usart(&huart1,"1/4 ");
+ 495   2                              if(cFlag_On == 1)
+ 496   2                                      Display.LCD_BUF[S_14]|=0x80;
+ 497   2                              else
+ 498   2                                      Display.LCD_BUF[S_14]&=0x7F;    
+ 499   2                              break;  
+ 500   2                              case 7: // vSend_String_Usart(&huart1,"2/4 ");
+ 501   2                                      if(cFlag_On == 1)
+ 502   2                                      Display.LCD_BUF[S_24]|=0x80;
+ 503   2                              else
+ 504   2                                      Display.LCD_BUF[S_24]&=0x7F;    
+ 505   2                              break;  
+ 506   2                              case 8:  //vSend_String_Usart(&huart1,"3/4");
+ 507   2                              if(cFlag_On == 1)
+ 508   2                                      Display.LCD_BUF[S_34]|=0x80;
+ 509   2                              else
+ 510   2                                      Display.LCD_BUF[S_34]&=0x7F;    
+ 511   2                              break;  
+ 512   2                              case 9:  //vSend_String_Usart(&huart1,"4/4");
+ 513   2                              if(cFlag_On == 1)
+ 514   2                                      Display.LCD_BUF[S_44]|=0x80;
+ 515   2                              else
+ 516   2                                      Display.LCD_BUF[S_44]&=0x7F;    
+ 517   2                              break;  
+ 518   2                              case SYMBOL_NET:  //vSend_String_Usart(&huart1,"SYMBOL_NET");
+ 519   2                              if(cFlag_On == 1)
+ 520   2                                      Display.LCD_BUF[S_TARE]|=0x80;
+ 521   2                              else
+ 522   2                                      Display.LCD_BUF[S_TARE]&=0x7F;  
+ 523   2                              break;  
+ 524   2                      
+ 525   2          #else               
                               case SYMBOL_KG:                 //vSend_String_Usart(&huart1,"SYMBOL_KG");
                                       if(cFlag_On == 1)
                                               Display.LCD_BUF[S_KG]|=0x80;
@@ -574,107 +569,111 @@ line level    source
                               case SYMBOL_NET:  //vSend_String_Usart(&huart1,"SYMBOL_NET");
                                       if(cFlag_On == 1)
                                               Display.LCD_BUF[S_NET]|=0x80;
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/08/2022 20:21:28 PAGE 10  
-
                                       else
                                               Display.LCD_BUF[S_NET]&=0x7F;   
                                       break;          
                               #endif
- 549   2                      
- 550   2                              /*case SYMBOL_TARE:  vSend_String_Usart(&huart1,"SYMBOL_TARE\r\n");
- 551   2                              if(cFlag_On == 1)
- 552   2                                      Display.LCD_BUF[S_TARE]|=0x80;
- 553   2                              else
- 554   2                                      Display.LCD_BUF[S_TARE]&=0x7F;  
- 555   2                              break;  */
- 556   2                              
- 557   2                              case SYMBOL_ZERO:  //vSend_String_Usart(&huart1,"SYMBOL_ZERO");
- 558   2                              if(cFlag_On == 1)
- 559   2                                      Display.LCD_BUF[S_ZERO]|=0x80;
- 560   2                              else
- 561   2                                      Display.LCD_BUF[S_ZERO]&=0x7F;  
- 562   2                              break;          
- 563   2                              
- 564   2                              
- 565   2                              
- 566   2                              case SYMBOL_X:  //vSend_String_Usart(&huart1,"SYMBOL_X");
- 567   2                              if(cFlag_On == 1)
- 568   2                                      Display.LCD_BUF[S_X]|=0x80;
- 569   2                              else
- 570   2                                      Display.LCD_BUF[S_X]&=0x7F;     
- 571   2                              break;  
- 572   2                              
- 573   2                              case SYMBOL_Y:  //vSend_String_Usart(&huart1,"SYMBOL_Y");
- 574   2                              if(cFlag_On == 1)
- 575   2                                      Display.LCD_BUF[S_Y]|=0x80;
- 576   2                              else
- 577   2                                      Display.LCD_BUF[S_Y]&=0x7F;     
- 578   2                              break;          
- 579   2                      
- 580   2                                                              
- 581   2                              
- 582   2                      case SYMBOL_ALL:  //vSend_String_Usart(&huart1,"SYMBOL_ALL");   
- 583   2                              if(cFlag_On==1){
- 584   3                                #if DISPLAY_20400047_EN > 0   
- 585   3                      Display.LCD_BUF[S_14]|=0x80;
- 586   3                      Display.LCD_BUF[S_24]|=0x80;
- 587   3                      Display.LCD_BUF[S_34]|=0x80;
- 588   3                      Display.LCD_BUF[S_44]|=0x80;    
- 589   3                              #else
+ 545   2                      
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/09/2022 16:08:58 PAGE 10  
+
+ 546   2                              /*case SYMBOL_TARE:  vSend_String_Usart(&huart1,"SYMBOL_TARE\r\n");
+ 547   2                              if(cFlag_On == 1)
+ 548   2                                      Display.LCD_BUF[S_TARE]|=0x80;
+ 549   2                              else
+ 550   2                                      Display.LCD_BUF[S_TARE]&=0x7F;  
+ 551   2                              break;  */
+ 552   2                              
+ 553   2                              case SYMBOL_ZERO:  //vSend_String_Usart(&huart1,"SYMBOL_ZERO");
+ 554   2                              if(cFlag_On == 1)
+ 555   2                                      Display.LCD_BUF[S_ZERO]|=0x80;
+ 556   2                              else
+ 557   2                                      Display.LCD_BUF[S_ZERO]&=0x7F;  
+ 558   2                              break;          
+ 559   2                              
+ 560   2                              
+ 561   2                              
+ 562   2                              case SYMBOL_X:  //vSend_String_Usart(&huart1,"SYMBOL_X");
+ 563   2                              if(cFlag_On == 1)
+ 564   2                                      Display.LCD_BUF[S_X]|=0x80;
+ 565   2                              else
+ 566   2                                      Display.LCD_BUF[S_X]&=0x7F;     
+ 567   2                              break;  
+ 568   2                              
+ 569   2                              case SYMBOL_Y:  //vSend_String_Usart(&huart1,"SYMBOL_Y");
+ 570   2                              if(cFlag_On == 1)
+ 571   2                                      Display.LCD_BUF[S_Y]|=0x80;
+ 572   2                              else
+ 573   2                                      Display.LCD_BUF[S_Y]&=0x7F;     
+ 574   2                              break;          
+ 575   2                      
+ 576   2                                                              
+ 577   2                              
+ 578   2                      case SYMBOL_ALL:  //vSend_String_Usart(&huart1,"SYMBOL_ALL");   
+ 579   2                              if(cFlag_On==1){
+ 580   3                                #if DISPLAY_20400047_EN > 0   
+ 581   3                      Display.LCD_BUF[S_14]|=0x80;
+ 582   3                      Display.LCD_BUF[S_24]|=0x80;
+ 583   3                      Display.LCD_BUF[S_34]|=0x80;
+ 584   3                      Display.LCD_BUF[S_44]|=0x80;    
+ 585   3                              #else
                               Display.LCD_BUF[S_LB]|=0x80;
                               Display.LCD_BUF[S_KG]|=0x80;            
                               Display.LCD_BUF[S_NET]|=0x80;   
                     #endif                                    
- 594   3                      Display.LCD_BUF[S_ZERO]|=0x80;
- 595   3                      Display.LCD_BUF[S_Y]|=0x80;
- 596   3                      Display.LCD_BUF[S_X]|=0x80;     
- 597   3                                      
- 598   3                              }
- 599   2                              else{
- 600   3                                      #if DISPLAY_20400047_EN > 0     
- 601   3                      Display.LCD_BUF[S_14]&=0x7F;
- 602   3                      Display.LCD_BUF[S_24]&=0x7F;
- 603   3                      Display.LCD_BUF[S_34]&=0x7F;
- 604   3                      Display.LCD_BUF[S_44]&=0x7F;    
- 605   3                              #else           
+ 590   3                      Display.LCD_BUF[S_ZERO]|=0x80;
+ 591   3                      Display.LCD_BUF[S_Y]|=0x80;
+ 592   3                      Display.LCD_BUF[S_X]|=0x80;     
+ 593   3                                      
+ 594   3                              }
+ 595   2                              else{
+ 596   3                                      #if DISPLAY_20400047_EN > 0     
+ 597   3                      Display.LCD_BUF[S_14]&=0x7F;
+ 598   3                      Display.LCD_BUF[S_24]&=0x7F;
+ 599   3                      Display.LCD_BUF[S_34]&=0x7F;
+ 600   3                      Display.LCD_BUF[S_44]&=0x7F;    
+ 601   3                              #else           
                         Display.LCD_BUF[S_LB]&=0x7F;
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/08/2022 20:21:28 PAGE 11  
-
                               Display.LCD_BUF[S_KG]&=0x7F;            
                               Display.LCD_BUF[S_NET]&=0x7F;   
                     #endif                                    
- 610   3                      Display.LCD_BUF[S_ZERO]&=0x7F;
- 611   3                      Display.LCD_BUF[S_Y]&=0x7F;
- 612   3                      Display.LCD_BUF[S_X]&=0x7F;     
- 613   3                              }
- 614   2                              
- 615   2                                      
- 616   2                      break;
- 617   2      
- 618   2              }
- 619   1              
- 620   1      /*      if(cSymbol==SYMBOL_TARE){
- 621   1              if(cFlag_On == 1)
- 622   1                              vSend_String_Usart(&huart1,"  on\r\n ");
- 623   1                              else
- 624   1                              vSend_String_Usart(&huart1,"  off\r\n ");
- 625   1                      }*/
- 626   1              
- 627   1              Display.mode=LCD_DATA;
- 628   1              Display.addr=0;
- 629   1              Display.counter=sizeof(Display.LCD_BUF);        
- 630   1              LCD_GLASS_Update();
- 631   1      }
- 632          
- 633          /**
- 634                  ******************************************************************************
- 635            * Objetivo: Mostrar en LCD numero con formato float.
- 636            * Parametros entrada: Numero, numero de decimales, posicion en la LCD, e
- 637                  *               indicacion de punto flotante.
- 638                  * Parametros Salida: Ninguno.
- 639            * Prerequisitos: 
- 640            ***
- 641          */
+ 606   3                      Display.LCD_BUF[S_ZERO]&=0x7F;
+ 607   3                      Display.LCD_BUF[S_Y]&=0x7F;
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/09/2022 16:08:58 PAGE 11  
+
+ 608   3                      Display.LCD_BUF[S_X]&=0x7F;     
+ 609   3                              }
+ 610   2                              
+ 611   2                                      
+ 612   2                      break;
+ 613   2      
+ 614   2              }
+ 615   1              
+ 616   1      /*      if(cSymbol==SYMBOL_TARE){
+ 617   1              if(cFlag_On == 1)
+ 618   1                              vSend_String_Usart(&huart1,"  on\r\n ");
+ 619   1                              else
+ 620   1                              vSend_String_Usart(&huart1,"  off\r\n ");
+ 621   1                      }*/
+ 622   1              
+ 623   1              Display.mode=LCD_DATA;
+ 624   1              Display.addr=0;
+ 625   1              Display.counter=sizeof(Display.LCD_BUF);        
+ 626   1              LCD_GLASS_Update();
+ 627   1      }
+ 628          
+ 629          /**
+ 630                  ******************************************************************************
+ 631            * Objetivo: Mostrar en LCD numero con formato float.
+ 632            * Parametros entrada: Numero, numero de decimales, posicion en la LCD, e
+ 633                  *               indicacion de punto flotante.
+ 634                  * Parametros Salida: Ninguno.
+ 635            * Prerequisitos: 
+ 636            ***
+ 637          */
+ 638          
+ 639          
+ 640          
+ 641          
  642          
  643          
  644          
@@ -686,53 +685,53 @@ line level    source
  650          
  651          
  652          
- 653          
- 654          
- 655          
- 656          
- 657          /*void LCD_GLASS_Float(float fNumber_To_LCD, char iNumber_Decimal, char cPosition_On_LCD){
- 658                  
- 659                  char strText_LCD[8] = {0,0,0,0,0,0,0,0};
- 660                  
- 661          
- 662                  switch(iNumber_Decimal){
- 663                          case 0:
- 664                                  if(cPosition_On_LCD == LCD_TOTAL){
- 665                                          sprintf(strText_LCD, "%6.0lf", fNumber_To_LCD);
- 666                                  }else{
- 667                                          sprintf(strText_LCD, "%5.0lf", fNumber_To_LCD);
- 668                                  }
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/08/2022 20:21:28 PAGE 12  
+ 653          /*void LCD_GLASS_Float(float fNumber_To_LCD, char iNumber_Decimal, char cPosition_On_LCD){
+ 654                  
+ 655                  char strText_LCD[8] = {0,0,0,0,0,0,0,0};
+ 656                  
+ 657          
+ 658                  switch(iNumber_Decimal){
+ 659                          case 0:
+ 660                                  if(cPosition_On_LCD == LCD_TOTAL){
+ 661                                          sprintf(strText_LCD, "%6.0lf", fNumber_To_LCD);
+ 662                                  }else{
+ 663                                          sprintf(strText_LCD, "%5.0lf", fNumber_To_LCD);
+ 664                                  }
+ 665                                  break;
+ 666                          
+ 667                          case 1:
+ 668                                  if(cPosition_On_LCD == LCD_TOTAL){
+ 669                                          sprintf(strText_LCD, "%7.1lf", fNumber_To_LCD);
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/09/2022 16:08:58 PAGE 12  
 
- 669                                  break;
- 670                          
- 671                          case 1:
- 672                                  if(cPosition_On_LCD == LCD_TOTAL){
- 673                                          sprintf(strText_LCD, "%7.1lf", fNumber_To_LCD);
- 674                                  }else{
- 675                                          sprintf(strText_LCD, "%6.1lf", fNumber_To_LCD);
- 676                                  }
- 677                                  break;
- 678                          
- 679                          case 2:
- 680                                  if(cPosition_On_LCD == LCD_TOTAL){
- 681                                          sprintf(strText_LCD, "%7.2lf", fNumber_To_LCD); 
- 682                                  }else{
- 683                                          sprintf(strText_LCD, "%6.2lf", fNumber_To_LCD);
- 684                                  }
- 685                                  break;
- 686                          
- 687                          case 3:
- 688                                  if(cPosition_On_LCD == LCD_TOTAL){
- 689                                          sprintf(strText_LCD, "%7.3lf", fNumber_To_LCD);
- 690                                  }else{
- 691                                          sprintf(strText_LCD, "%6.3lf", fNumber_To_LCD);
- 692                                  }
- 693                                  break;
- 694                  }
- 695                  
- 696                  LCD_GLASS_String(strText_LCD, cPosition_On_LCD);
- 697          }*/
+ 670                                  }else{
+ 671                                          sprintf(strText_LCD, "%6.1lf", fNumber_To_LCD);
+ 672                                  }
+ 673                                  break;
+ 674                          
+ 675                          case 2:
+ 676                                  if(cPosition_On_LCD == LCD_TOTAL){
+ 677                                          sprintf(strText_LCD, "%7.2lf", fNumber_To_LCD); 
+ 678                                  }else{
+ 679                                          sprintf(strText_LCD, "%6.2lf", fNumber_To_LCD);
+ 680                                  }
+ 681                                  break;
+ 682                          
+ 683                          case 3:
+ 684                                  if(cPosition_On_LCD == LCD_TOTAL){
+ 685                                          sprintf(strText_LCD, "%7.3lf", fNumber_To_LCD);
+ 686                                  }else{
+ 687                                          sprintf(strText_LCD, "%6.3lf", fNumber_To_LCD);
+ 688                                  }
+ 689                                  break;
+ 690                  }
+ 691                  
+ 692                  LCD_GLASS_String(strText_LCD, cPosition_On_LCD);
+ 693          }*/
+ 694          
+ 695          
+ 696          
+ 697          
  698          
  699          
  700          
@@ -742,174 +741,170 @@ line level    source
  704          
  705          
  706          
- 707          
- 708          
- 709          
- 710          
- 711                  
- 712          /**
- 713                  ******************************************************************************
- 714            * Objetivo: Mostrar en LCD texto.
- 715            * Parametros entrada: Texo y posicion en la LCD.
- 716                  * Parametros Salida: Ninguno.
- 717            * Prerequisitos: 
- 718            ***
- 719          */
- 720          
- 721          void LCD_GLASS_String(char *pCaracter, char cPosition_On_LCD){
- 722   1              char iIndex_Text = 5;
- 723   1              char iPosicion_Decimal = 0;
- 724   1              //char txt[30];
- 725   1              /*vSend_String_USB("\r\n");     
- 726   1              if(cPosition_On_LCD==LCD_TOTAL)   vSend_String_USB("LCD_TOTAL=  ");
- 727   1              if(cPosition_On_LCD==LCD_PRECIO)        vSend_String_USB("LCD_PRECIO= ");
- 728   1              if(cPosition_On_LCD==LCD_PESO)    vSend_String_USB("LCD_PESO=   ");     
- 729   1              vSend_String_USB(pCaracter);vSend_String_USB("\r\n");   */
- 730   1              
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/08/2022 20:21:28 PAGE 13  
+ 707                  
+ 708          /**
+ 709                  ******************************************************************************
+ 710            * Objetivo: Mostrar en LCD texto.
+ 711            * Parametros entrada: Texo y posicion en la LCD.
+ 712                  * Parametros Salida: Ninguno.
+ 713            * Prerequisitos: 
+ 714            ***
+ 715          */
+ 716          
+ 717          void LCD_GLASS_String(char *pCaracter, char cPosition_On_LCD){
+ 718   1              char iIndex_Text = 5;
+ 719   1              char iPosicion_Decimal = 0;
+ 720   1              //char txt[30];
+ 721   1              /*vSend_String_USB("\r\n");     
+ 722   1              if(cPosition_On_LCD==LCD_TOTAL)   vSend_String_USB("LCD_TOTAL=  ");
+ 723   1              if(cPosition_On_LCD==LCD_PRECIO)        vSend_String_USB("LCD_PRECIO= ");
+ 724   1              if(cPosition_On_LCD==LCD_PESO)    vSend_String_USB("LCD_PESO=   ");     
+ 725   1              vSend_String_USB(pCaracter);vSend_String_USB("\r\n");   */
+ 726   1              
+ 727   1              /*if(cPosition_On_LCD==LCD_TOTAL)         vSend_String_Usart(&huart1,"LCD_TOTAL=  ");
+ 728   1              if(cPosition_On_LCD==LCD_PRECIO)        vSend_String_Usart(&huart1,"LCD_PRECIO= ");
+ 729   1              if(cPosition_On_LCD==LCD_PESO)    vSend_String_Usart(&huart1,"LCD_PESO=   ");   
+ 730   1              vSend_String_Usart(&huart1,pCaracter);vSend_String_Usart(&huart1,"\r\n");       
+ 731   1              */
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/09/2022 16:08:58 PAGE 13  
 
- 731   1              /*if(cPosition_On_LCD==LCD_TOTAL)         vSend_String_Usart(&huart1,"LCD_TOTAL=  ");
- 732   1              if(cPosition_On_LCD==LCD_PRECIO)        vSend_String_Usart(&huart1,"LCD_PRECIO= ");
- 733   1              if(cPosition_On_LCD==LCD_PESO)    vSend_String_Usart(&huart1,"LCD_PESO=   ");   
- 734   1              vSend_String_Usart(&huart1,pCaracter);vSend_String_Usart(&huart1,"\r\n");       
- 735   1              */
- 736   1      
- 737   1              if(cPosition_On_LCD==LCD_TOTAL) {Display.LCD_BUF[P_TOTAL_2]&=0x7F;Display.LCD_BUF[P_TOTAL_1]&=0x7F;}
- 738   1        if(cPosition_On_LCD==LCD_PRECIO){
- 739   2              #if DISPLAY_20400047_EN > 0     
- 740   2                              Display.LCD_BUF[P_PRECIO_3]&=0x7F;
- 741   2              #endif
- 742   2              Display.LCD_BUF[P_PRECIO_2]&=0x7F;Display.LCD_BUF[P_PRECIO_1]&=0x7F;}
- 743   1              if(cPosition_On_LCD==LCD_PESO)  {Display.LCD_BUF[P_PESO_3]&=0x7F;Display.LCD_BUF[P_PESO_2]&=0x7F;Display.L
+ 732   1      
+ 733   1              if(cPosition_On_LCD==LCD_TOTAL) {Display.LCD_BUF[P_TOTAL_2]&=0x7F;Display.LCD_BUF[P_TOTAL_1]&=0x7F;}
+ 734   1        if(cPosition_On_LCD==LCD_PRECIO){
+ 735   2              #if DISPLAY_20400047_EN > 0     
+ 736   2                              Display.LCD_BUF[P_PRECIO_3]&=0x7F;
+ 737   2              #endif
+ 738   2              Display.LCD_BUF[P_PRECIO_2]&=0x7F;Display.LCD_BUF[P_PRECIO_1]&=0x7F;}
+ 739   1              if(cPosition_On_LCD==LCD_PESO)  {Display.LCD_BUF[P_PESO_3]&=0x7F;Display.LCD_BUF[P_PESO_2]&=0x7F;Display.L
              -CD_BUF[P_PESO_1]&=0x7F;}              
- 744   1      
- 745   1              while(*(pCaracter) != 0){
+ 740   1      
+ 741   1              while(*(pCaracter) != 0){
+ 742   2                      
+ 743   2                      if(*(pCaracter) >= '0' && *(pCaracter) <= '9'){                 
+ 744   3                              LCD_SET_Char(cNumber_LCD[*(pCaracter)-'0'], cPosition_On_LCD, iIndex_Text--);                   
+ 745   3                      }
  746   2                      
- 747   2                      if(*(pCaracter) >= '0' && *(pCaracter) <= '9'){                 
- 748   3                              LCD_SET_Char(cNumber_LCD[*(pCaracter)-'0'], cPosition_On_LCD, iIndex_Text--);                   
+ 747   2                      if(*(pCaracter) == '-'){
+ 748   3                              LCD_SET_Char(cABC_LCD[26], cPosition_On_LCD, iIndex_Text--);                    
  749   3                      }
  750   2                      
- 751   2                      if(*(pCaracter) == '-'){
- 752   3                              LCD_SET_Char(cABC_LCD[26], cPosition_On_LCD, iIndex_Text--);                    
- 753   3                      }
- 754   2                      
- 755   2                      if(*(pCaracter) == ' '){
- 756   3                              LCD_SET_Char(0x0, cPosition_On_LCD, iIndex_Text);
- 757   3                              iIndex_Text--;                  
- 758   3                      }
- 759   2                      
- 760   2                      if(*(pCaracter) >= 'A' && *(pCaracter) <= 'Z'){
- 761   3                              LCD_SET_Char(cABC_LCD[*(pCaracter)-'A'], cPosition_On_LCD, iIndex_Text);
- 762   3                              iIndex_Text--;                  
- 763   3                      }
- 764   2                      
- 765   2                      if(*(pCaracter) == '.'){
- 766   3                              
- 767   3                              //sprintf(txt,"PosDec= %d \r\n\r\n",iPosicion_Decimal);                         
- 768   3                                      //vSend_String_Usart(&huart1,txt);              
- 769   3                                      
- 770   3                              if(cPosition_On_LCD == LCD_PRECIO){     
- 771   4               #if DISPLAY_20400047_EN > 0    
- 772   4                                      if(iPosicion_Decimal == 2)
- 773   4                                              Display.LCD_BUF[P_PRECIO_3]|=0x80;      
- 774   4                     #endif                           
- 775   4                                      if(iPosicion_Decimal == 3)
- 776   4                                              Display.LCD_BUF[P_PRECIO_2]|=0x80;                              
- 777   4                                      if(iPosicion_Decimal == 4)
- 778   4                                              Display.LCD_BUF[P_PRECIO_1]|=0x80;                                                      
- 779   4                              }
- 780   3                              if(cPosition_On_LCD == LCD_PESO){                               
- 781   4                                      if(iPosicion_Decimal == 2)
- 782   4                                              Display.LCD_BUF[P_PESO_3]|=0x80;
- 783   4                                      if(iPosicion_Decimal == 3)
- 784   4                                              Display.LCD_BUF[P_PESO_2]|=0x80;
- 785   4                                      if(iPosicion_Decimal == 4)
- 786   4                                              Display.LCD_BUF[P_PESO_1]|=0x80;                                                        
- 787   4                              }
- 788   3                              if(cPosition_On_LCD == LCD_TOTAL){
- 789   4                               #if DISPLAY_20400047_EN > 0    
- 790   4                                      if(iPosicion_Decimal == 4)                                      
- 791   4                                              Display.LCD_BUF[P_TOTAL_1]|=0x80;//sprintf(txt,"LCD_BUF[9]= d%d",Display.LCD_BUF[9]);                           
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/08/2022 20:21:28 PAGE 14  
-
- 792   4                                      if(iPosicion_Decimal == 3)
- 793   4                                              Display.LCD_BUF[P_TOTAL_2]|=0x80;//vSend_String_Usart(&huart1,"CC ");
- 794   4                               #else
+ 751   2                      if(*(pCaracter) == ' '){
+ 752   3                              LCD_SET_Char(0x0, cPosition_On_LCD, iIndex_Text);
+ 753   3                              iIndex_Text--;                  
+ 754   3                      }
+ 755   2                      
+ 756   2                      if(*(pCaracter) >= 'A' && *(pCaracter) <= 'Z'){
+ 757   3                              LCD_SET_Char(cABC_LCD[*(pCaracter)-'A'], cPosition_On_LCD, iIndex_Text);
+ 758   3                              iIndex_Text--;                  
+ 759   3                      }
+ 760   2                      
+ 761   2                      if(*(pCaracter) == '.'){
+ 762   3                              
+ 763   3                              //sprintf(txt,"PosDec= %d \r\n\r\n",iPosicion_Decimal);                         
+ 764   3                                      //vSend_String_Usart(&huart1,txt);              
+ 765   3                                      
+ 766   3                              if(cPosition_On_LCD == LCD_PRECIO){     
+ 767   4               #if DISPLAY_20400047_EN > 0    
+ 768   4                                      if(iPosicion_Decimal == 2)
+ 769   4                                              Display.LCD_BUF[P_PRECIO_3]|=0x80;      
+ 770   4                     #endif                           
+ 771   4                                      if(iPosicion_Decimal == 3)
+ 772   4                                              Display.LCD_BUF[P_PRECIO_2]|=0x80;                              
+ 773   4                                      if(iPosicion_Decimal == 4)
+ 774   4                                              Display.LCD_BUF[P_PRECIO_1]|=0x80;                                                      
+ 775   4                              }
+ 776   3                              if(cPosition_On_LCD == LCD_PESO){                               
+ 777   4                                      if(iPosicion_Decimal == 2)
+ 778   4                                              Display.LCD_BUF[P_PESO_3]|=0x80;
+ 779   4                                      if(iPosicion_Decimal == 3)
+ 780   4                                              Display.LCD_BUF[P_PESO_2]|=0x80;
+ 781   4                                      if(iPosicion_Decimal == 4)
+ 782   4                                              Display.LCD_BUF[P_PESO_1]|=0x80;                                                        
+ 783   4                              }
+ 784   3                              if(cPosition_On_LCD == LCD_TOTAL){
+ 785   4                               #if DISPLAY_20400047_EN > 0    
+ 786   4                                      if(iPosicion_Decimal == 4)                                      
+ 787   4                                              Display.LCD_BUF[P_TOTAL_1]|=0x80;//sprintf(txt,"LCD_BUF[9]= d%d",Display.LCD_BUF[9]);                           
+ 788   4                                      if(iPosicion_Decimal == 3)
+ 789   4                                              Display.LCD_BUF[P_TOTAL_2]|=0x80;//vSend_String_Usart(&huart1,"CC ");
+ 790   4                               #else
                                               if(iPosicion_Decimal == 4)                                      
                                                       Display.LCD_BUF[P_TOTAL_2]|=0x80;//sprintf(txt,"LCD_BUF[9]= d%d",Display.LCD_BUF[9]);                           
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/09/2022 16:08:58 PAGE 14  
+
                                               if(iPosicion_Decimal == 5)
                                                       Display.LCD_BUF[P_TOTAL_1]|=0x80;//vSend_String_Usart(&huart1,"CC ");                           
                                        #endif
- 800   4                              }                                               
- 801   3                      }
- 802   2                      iPosicion_Decimal++;
- 803   2                      pCaracter++;
- 804   2              }
- 805   1              
- 806   1              Display.mode=LCD_DATA;
- 807   1              Display.addr=0;
- 808   1              Display.counter=sizeof(Display.LCD_BUF);        
- 809   1              LCD_GLASS_Update();
- 810   1      }
- 811          
- 812          void LCD_GLASS_Update(void){
- 813   1              //char txt[10];int i;
- 814   1              Display.mode=LCD_DATA;  
- 815   1              /*for(i=0;i<16;i++){
- 816   1                sprintf(txt, "%02x, ", Display.LCD_BUF[i]);
- 817   1                      vSend_String_Usart(&huart1,txt);                                
- 818   1              }
- 819   1              vSend_String_Usart(&huart1," \r\n");    
- 820   1              vSend_String_Usart(&huart1," \r\n");    */
- 821   1              
- 822   1              write_lcd(Display);//Write data to the RAM                      
- 823   1      }
- 824          /*
- 825          
- 826                a7 a6 a5 a4 a3 a2 a1 a0
- 827          20400021
- 828                   / /////A4/////
- 829                   /              /
- 830                  A0             A5
+ 796   4                              }                                               
+ 797   3                      }
+ 798   2                      iPosicion_Decimal++;
+ 799   2                      pCaracter++;
+ 800   2              }
+ 801   1              
+ 802   1              Display.mode=LCD_DATA;
+ 803   1              Display.addr=0;
+ 804   1              Display.counter=sizeof(Display.LCD_BUF);        
+ 805   1              LCD_GLASS_Update();
+ 806   1      }
+ 807          
+ 808          void LCD_GLASS_Update(void){
+ 809   1              //char txt[10];int i;
+ 810   1              Display.mode=LCD_DATA;  
+ 811   1              /*for(i=0;i<16;i++){
+ 812   1                sprintf(txt, "%02x, ", Display.LCD_BUF[i]);
+ 813   1                      vSend_String_Usart(&huart1,txt);                                
+ 814   1              }
+ 815   1              vSend_String_Usart(&huart1," \r\n");    
+ 816   1              vSend_String_Usart(&huart1," \r\n");    */
+ 817   1              
+ 818   1              write_lcd(Display);//Write data to the RAM                      
+ 819   1      }
+ 820          /*
+ 821          
+ 822                a7 a6 a5 a4 a3 a2 a1 a0
+ 823          20400021
+ 824                   / /////A4/////
+ 825                   /              /
+ 826                  A0             A5
+ 827                  /               /
+ 828                  /               /
+ 829                    /////A1//////
+ 830                  /               /
  831                  /               /
- 832                  /               /
- 833                    /////A1//////
+ 832                  A2             A6
+ 833                  /               /
  834                  /               /
- 835                  /               /
- 836                  A2             A6
- 837                  /               /
- 838                  /               /
- 839                   /////A3///////
- 840                                           
- 841                                           DISPLAY PC-HS
- 842                   / /////A0/////
- 843                   /              /
- 844                  A1             A4
+ 835                   /////A3///////
+ 836                                           
+ 837                                           DISPLAY PC-HS
+ 838                   / /////A0/////
+ 839                   /              /
+ 840                  A1             A4
+ 841                  /               /
+ 842                  /               /
+ 843                    /////A5//////
+ 844                  /               /
  845                  /               /
- 846                  /               /
- 847                    /////A5//////
+ 846                  A2             A6
+ 847                  /               /
  848                  /               /
- 849                  /               /
- 850                  A2             A6
- 851                  /               /
- 852                  /               /
- 853                   /////A3///////
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/08/2022 20:21:28 PAGE 15  
+ 849                   /////A3///////
+ 850                                           
+ 851          */
+ 852          
 
- 854                                           
- 855          */
- 856          
 
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/09/2022 16:08:58 PAGE 15  
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1042    ----
+   CODE SIZE        =   1035    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =     58      26
+   DATA SIZE        =     58      25
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

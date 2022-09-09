@@ -103,10 +103,17 @@ sbit KEY_D2 = P1^0;
 sbit KEY_D3 = P1^1;	
 sbit KEY_D4 = P1^2;
 
+#define PRESS 1
+#define PRESSED 2
+#define RELEASE  3
+
 
 //*************************************************************************//
 //----------  º¯ÊýÔ­ÐÍ ---------------
 //*************************************************************************//
 void key_scan(void);
+void delay_ms(unsigned int num);
+
+extern unsigned char KeyState;
 
 #endif

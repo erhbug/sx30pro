@@ -1,0 +1,168 @@
+C51 COMPILER V7.50   DVR_HX712                                                             09/09/2022 16:08:59 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE DVR_HX712
+OBJECT MODULE PLACED IN dvr_HX712.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE _weight\dvr_HX712.c BROWSE DEBUG OBJECTEXTEND PRINT(.\dvr_HX712.lst) OBJECT
+                    -(dvr_HX712.obj)
+
+line level    source
+
+   1          /* Includes ------------------------------------------------------------------*/
+   2          
+   3          /*#include "dvr_def.h"
+   4          #include "dvr_HX712.h"
+   5          #include "dvr_scale.h"
+   6          #include "dvr_keyboard.h"
+   7          #include "dvr_lcd.h"
+   8          
+   9          #include "app_cfg.h"
+  10          #include "app_keyboard.h"
+  11          #include "bsp.h"
+  12          */
+  13          #include "./_weight/dvr_HX712.h"
+  14          #include <stdio.h>
+  15          #include <string.h>
+  16          #include <REG52.H>
+  17          #include <math.h>
+  18          #include "./customer/keyboard.h"
+  19          
+  20          int iCountFailResponse = 0;
+  21          
+  22          sbit MISO = P0^3;       
+  23          sbit SCLK = P0^4;       
+  24          
+  25          float fRead_Adc(char cFillFilter){
+  26   1      float ValueCount = 0;
+  27   1              
+  28   1              unsigned char *pWeightByte;
+  29   1              unsigned int iActualWeight = 0;
+  30   1              unsigned int iTemp_RA = 0;
+  31   1              unsigned int tickstart = 0;
+  32   1              unsigned int tickend = 0;
+  33   1              unsigned int Timeout = 0;
+  34   1              unsigned char BufferSPI[10]= {0};
+  35   1      
+  36   1              pWeightByte = (unsigned char *)&iActualWeight;
+  37   1                      
+  38   1              
+  39   1              tickend = 0;
+  40   1              Timeout = 120;
+  41   1              while(MISO != 0){               
+  42   2                      ;
+  43   2                      delay_ms(1);            
+  44   2                      tickend ++;
+  45   2                      
+  46   2                      if(tickend >=  Timeout){
+  47   3                              if(iCountFailResponse++ > 5){
+  48   4                                      iCountFailResponse = 5;
+  49   4      //////////////////////////////////////////////////////////////                          srFlagScale.bErrorResponseAdc = 1;
+  50   4                              }
+  51   3                              
+  52   3                              return ValueCount;
+  53   3                      }
+  54   2              }
+C51 COMPILER V7.50   DVR_HX712                                                             09/09/2022 16:08:59 PAGE 2   
+
+  55   1              tickend = 0;
+  56   1              while(tickend < 5){
+  57   2              delay_ms(1);
+  58   2                      tickend ++;
+  59   2      
+  60   2                      
+  61   2                      if(MISO != 0){          //Detecta ruido en la lectura
+  62   3                              
+  63   3                              tickend = 0;
+  64   3                              Timeout = 500;
+  65   3      
+  66   3                              while(tickend <  Timeout){
+  67   4              delay_ms(1);            
+  68   4                      tickend ++;
+  69   4                              }
+  70   3                              
+  71   3                              if(iCountFailResponse++ > 2){
+  72   4                                      iCountFailResponse = 2;
+  73   4      /////////////////////////////////////////////////////////////////////////////////////////////////////////       
+             -                        srFlagScale.bErrorNoiseAdc = 1;
+  74   4                              }
+  75   3                              
+  76   3                              return ValueCount;
+  77   3                      }
+  78   2              }
+  79   1              
+  80   1              if(iCountFailResponse > 0){
+  81   2                      iCountFailResponse--;
+  82   2                      return ValueCount;
+  83   2              }
+  84   1              
+  85   1              /////////////////////////////////////////////////////////////////////////////////////////////////////////
+             -srFlagScale.bErrorResponseAdc = 0;
+  86   1      /////////////////////////////////////////////////////////////////////////////////////////////////////////       
+             -srFlagScale.bErrorNoiseAdc = 0;
+  87   1              SPIGPIO_Sync(BufferSPI); //pvr
+  88   1              //-----------------------------------------------------------   
+  89   1              
+  90   1              *(pWeightByte++)= BufferSPI[2];
+  91   1              *(pWeightByte++)= BufferSPI[1];
+  92   1              *(pWeightByte++)        = BufferSPI[0]; 
+  93   1              *(pWeightByte) = 0;
+  94   1                      
+  95   1              iTemp_RA = iActualWeight >> 7;  // Elimina los 0s generados 
+  96   1              
+  97   1              if(iTemp_RA == 65535){
+  98   2              }else if(iTemp_RA > 65535){
+  99   2                      iTemp_RA = 131072 - iTemp_RA;
+ 100   2                      iTemp_RA = 32500 - iTemp_RA;
+ 101   2              }else{
+ 102   2                      iTemp_RA += 32500;
+ 103   2              }
+ 104   1              
+ 105   1      //      ValueCount = fFilter_Averaging(iTemp_RA,cFillFilter);
+ 106   1              
+ 107   1              return ValueCount;
+ 108   1      }
+*** WARNING C280 IN LINE 25 OF _WEIGHT\DVR_HX712.C: 'cFillFilter': unreferenced local variable
+ 109          
+ 110          void SPIGPIO_Sync(char* buf)
+ 111          {
+ 112   1              long int lByte=0;
+C51 COMPILER V7.50   DVR_HX712                                                             09/09/2022 16:08:59 PAGE 3   
+
+ 113   1              int i,j;
+ 114   1              
+ 115   1              //24 bits de comunicación
+ 116   1              for(i=0;i<24;i++)
+ 117   1              {
+ 118   2          SCLK=1;  for(j=0;j<10;j++);
+ 119   2              lByte<<=1;
+ 120   2              lByte|=(P0^3)&0x00000001;                                                                                               //Lectura en flanco negativo
+ 121   2              SCLK=0; for(j=0;j<10;j++);
+ 122   2              }
+ 123   1              
+ 124   1              //1 bit de configuración a 10Hz
+ 125   1              SCLK=1;  for(j=0;j<10;j++);
+ 126   1              SCLK=0; for(j=0;j<10;j++);
+ 127   1      
+ 128   1              buf[2]= lByte&0x000000FF;
+ 129   1              buf[1]= (lByte>>8)&0x000000FF;
+ 130   1              buf[0]= (lByte>>16)&0x000000FF;
+ 131   1      
+ 132   1      }
+ 133          
+ 134          
+ 135          
+ 136          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    636    ----
+   CONSTANT SIZE    =     10    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      2      37
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

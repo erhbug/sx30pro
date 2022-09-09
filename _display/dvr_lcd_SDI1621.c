@@ -396,10 +396,6 @@ int iLCD_GLASS_All_On(void){
 	return 1;
 }
 
-int iLCD_GLASS_Blink(char comand_value){
-
-	return 1;
-}
 
 
 void LCD_SET_Char(char cCaracter, char cPosition_On_LCD, 
