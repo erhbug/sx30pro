@@ -7,7 +7,8 @@
 #include "./customer/keyboard.h"
 
 
-unsigned char Key_code;
+
+unsigned char Key;
 
 #define     BL_EN	P1 |= 0x20
 #define     BL_DIS	P1 &= 0xDF
@@ -34,24 +35,24 @@ void init_pwm(void){
 
 void main(void)
 {char txt[5]={0};
+    P0M0 = 0xFB; //0b11111011;
+    P0M1 = 0x04; //0b00000100;    
+    P1M0 = 0xBF; //0b10111111;
+    P1M1 = 0x40; //0b01000000;        
+    P2M0 = 0xEE; //0b11101110;
+    P2M1 = 0x11; //0b00010001
 
-/*sbit KEY_K0 = P0^2;	
-sbit KEY_K1 = P2^4;	
-sbit KEY_K2 = P2^0;	
-sbit KEY_K3 = P1^6;	
-
-sbit KEY_D0 = P0^1;
-sbit KEY_D1 = P0^0;	
-sbit KEY_D2 = P1^0;	
-sbit KEY_D3 = P1^1;	
-sbit KEY_D4 = P1^2;*/
-
-	P1M0 = 0xff;
+/*	P1M0 = 0xff;
 	P1M1 = 0x00;
 	P2M0 = 0xff;
-	P2M1 = 0x00;
-	P2 = 0x00;
-	P1 = 0x00;
+	P2M1 = 0x00;*/
+
+	P0 = 0x04;
+    P1 = 0x40;
+    P2 = 0x11;
+
+/*	P2 = 0x00;
+	P1 = 0x00;*/
 
 	iLCD_GLASS_Init();
 			delay_ms(500);
@@ -60,8 +61,6 @@ sbit KEY_D4 = P1^2;*/
 	LCD_GLASS_String("EY-",LCD_PRECIO);
 			delay_ms(500);
 
-	LCD_GLASS_String("2022",LCD_TOTAL);
-				delay_ms(500);
 
 	
 
@@ -74,10 +73,18 @@ sbit KEY_D4 = P1^2;*/
 
 while(1){	
 
-     key_scan();
-	sprintf(txt,"%d",Key_code);
+    // key_scan();
+//Key=0;
+	sprintf(txt,"0000");
+if(KEY_K0!=0)txt[0]='1';
+if(KEY_K1!=0)txt[1]='1';
+if(KEY_K2!=0)txt[2]='1';
+if(KEY_K3!=0)txt[3]='1';
+
+
+//	sprintf(txt,"%d  ",(int)(Key));
 LCD_GLASS_String(txt,LCD_TOTAL);
-	delay_ms(50);
+	delay_ms(500);
 
 }
 

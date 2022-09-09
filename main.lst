@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   MAIN                                                                  09/08/2022 17:52:23 PAGE 1   
+C51 COMPILER V7.50   MAIN                                                                  09/08/2022 18:57:55 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
@@ -19,99 +19,106 @@ line level    source
    7          #include "./customer/keyboard.h"
    8          
    9          
-  10          unsigned char Key_code;
-  11          
-  12          #define     BL_EN       P1 |= 0x20
-  13          #define     BL_DIS      P1 &= 0xDF
-  14          
-  15          #define     BEEPER_EN   P1 |= 0x10
-  16          #define     BEEPER_DIS  P1 &= 0xEF
-  17          
-  18          void delay_ms(unsigned int num)
-  19          {       
-  20   1              unsigned int i,j;
-  21   1              for(i= 0;i<num;i++)     //(SDI5219) ??1ms
-  22   1                      for(j=0;j<164;j++)
-  23   1                              ;
-  24   1      }
-  25          
-  26          void init_pwm(void){
-  27   1          PWMF_H  = 0x00;
-  28   1              PWMF_L  = 0x20;
-  29   1              PWM0    = 05;
-  30   1              PWM1    = 03;
-  31   1              PWMCON  = 0x04; //PWM0-P1.4(LCD_LAMP)????(?PWM0=0xff?,?????)
-  32   1      }
-  33          
+  10          
+  11          unsigned char Key;
+  12          
+  13          #define     BL_EN       P1 |= 0x20
+  14          #define     BL_DIS      P1 &= 0xDF
+  15          
+  16          #define     BEEPER_EN   P1 |= 0x10
+  17          #define     BEEPER_DIS  P1 &= 0xEF
+  18          
+  19          void delay_ms(unsigned int num)
+  20          {       
+  21   1              unsigned int i,j;
+  22   1              for(i= 0;i<num;i++)     //(SDI5219) ??1ms
+  23   1                      for(j=0;j<164;j++)
+  24   1                              ;
+  25   1      }
+  26          
+  27          void init_pwm(void){
+  28   1          PWMF_H  = 0x00;
+  29   1              PWMF_L  = 0x20;
+  30   1              PWM0    = 05;
+  31   1              PWM1    = 03;
+  32   1              PWMCON  = 0x04; //PWM0-P1.4(LCD_LAMP)????(?PWM0=0xff?,?????)
+  33   1      }
   34          
-  35          void main(void)
-  36          {char txt[5]={0};
-  37   1      
-  38   1      /*sbit KEY_K0 = P0^2;   
-  39   1      sbit KEY_K1 = P2^4;     
-  40   1      sbit KEY_K2 = P2^0;     
-  41   1      sbit KEY_K3 = P1^6;     
-  42   1      
-  43   1      sbit KEY_D0 = P0^1;
-  44   1      sbit KEY_D1 = P0^0;     
-  45   1      sbit KEY_D2 = P1^0;     
-  46   1      sbit KEY_D3 = P1^1;     
-  47   1      sbit KEY_D4 = P1^2;*/
-  48   1      
-  49   1              P1M0 = 0xff;
-  50   1              P1M1 = 0x00;
-  51   1              P2M0 = 0xff;
-  52   1              P2M1 = 0x00;
-C51 COMPILER V7.50   MAIN                                                                  09/08/2022 17:52:23 PAGE 2   
+  35          
+  36          void main(void)
+  37          {char txt[5]={0};
+  38   1          P0M0 = 0xFB; //0b11111011;
+  39   1          P0M1 = 0x04; //0b00000100;    
+  40   1          P1M0 = 0xBF; //0b10111111;
+  41   1          P1M1 = 0x40; //0b01000000;        
+  42   1          P2M0 = 0xEE; //0b11101110;
+  43   1          P2M1 = 0x11; //0b00010001
+  44   1      
+  45   1      /*      P1M0 = 0xff;
+  46   1              P1M1 = 0x00;
+  47   1              P2M0 = 0xff;
+  48   1              P2M1 = 0x00;*/
+  49   1      
+  50   1              P0 = 0x04;
+  51   1          P1 = 0x40;
+  52   1          P2 = 0x11;
+C51 COMPILER V7.50   MAIN                                                                  09/08/2022 18:57:55 PAGE 2   
 
-  53   1              P2 = 0x00;
-  54   1              P1 = 0x00;
-  55   1      
-  56   1              iLCD_GLASS_Init();
-  57   1                              delay_ms(500);
-  58   1              LCD_GLASS_String("-TORR",LCD_PESO);
-  59   1                      delay_ms(500);
-  60   1              LCD_GLASS_String("EY-",LCD_PRECIO);
-  61   1                              delay_ms(500);
-  62   1      
-  63   1              LCD_GLASS_String("2022",LCD_TOTAL);
-  64   1                                      delay_ms(500);
-  65   1      
-  66   1              
-  67   1      
-  68   1          
-  69   1       
-  70   1      
-  71   1              init_pwm();
-  72   1              BL_DIS;
-  73   1              BEEPER_EN;
-  74   1      
-  75   1      while(1){       
-  76   2      
-  77   2           key_scan();
-  78   2              sprintf(txt,"%d",Key_code);
-  79   2      LCD_GLASS_String(txt,LCD_TOTAL);
-  80   2              delay_ms(50);
-  81   2      
-  82   2      }
-  83   1      
-  84   1      }
-  85          
-  86          
-C51 COMPILER V7.50   MAIN                                                                  09/08/2022 17:52:23 PAGE 3   
+  53   1      
+  54   1      /*      P2 = 0x00;
+  55   1              P1 = 0x00;*/
+  56   1      
+  57   1              iLCD_GLASS_Init();
+  58   1                              delay_ms(500);
+  59   1              LCD_GLASS_String("-TORR",LCD_PESO);
+  60   1                      delay_ms(500);
+  61   1              LCD_GLASS_String("EY-",LCD_PRECIO);
+  62   1                              delay_ms(500);
+  63   1      
+  64   1      
+  65   1              
+  66   1      
+  67   1          
+  68   1       
+  69   1      
+  70   1              init_pwm();
+  71   1              BL_DIS;
+  72   1              BEEPER_EN;
+  73   1      
+  74   1      while(1){       
+  75   2      
+  76   2          // key_scan();
+  77   2      //Key=0;
+  78   2              sprintf(txt,"0000");
+  79   2      if(KEY_K0!=0)txt[0]='1';
+  80   2      if(KEY_K1!=0)txt[1]='1';
+  81   2      if(KEY_K2!=0)txt[2]='1';
+  82   2      if(KEY_K3!=0)txt[3]='1';
+  83   2      
+  84   2      
+  85   2      //      sprintf(txt,"%d  ",(int)(Key));
+  86   2      LCD_GLASS_String(txt,LCD_TOTAL);
+  87   2              delay_ms(500);
+  88   2      
+  89   2      }
+  90   1      
+  91   1      }
+  92          
+  93          
+C51 COMPILER V7.50   MAIN                                                                  09/08/2022 18:57:55 PAGE 3   
 
 ASSEMBLY LISTING OF GENERATED OBJECT CODE
 
 
-             ; FUNCTION L?0014 (BEGIN)
-0000         L?0015:
+             ; FUNCTION L?0018 (BEGIN)
+0000         L?0019:
 0000 7FF4              MOV     R7,#0F4H
 0002 7E01              MOV     R6,#01H
              ; FUNCTION _delay_ms (BEGIN)
-                                           ; SOURCE LINE # 18
-;---- Variable 'num' assigned to Register 'R6/R7' ----
                                            ; SOURCE LINE # 19
-                                           ; SOURCE LINE # 21
+;---- Variable 'num' assigned to Register 'R6/R7' ----
+                                           ; SOURCE LINE # 20
+                                           ; SOURCE LINE # 22
 ;---- Variable 'i' assigned to Register 'R4/R5' ----
 0004 E4                CLR     A
 0005 FD                MOV     R5,A
@@ -123,53 +130,53 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 000A EC                MOV     A,R4
 000B 9E                SUBB    A,R6
 000C 5015              JNC     ?C0007
-                                           ; SOURCE LINE # 22
+                                           ; SOURCE LINE # 23
 ;---- Variable 'j' assigned to Register 'R2/R3' ----
 000E E4                CLR     A
 000F FB                MOV     R3,A
 0010 FA                MOV     R2,A
 0011         ?C0004:
 0011 0B                INC     R3
-0012 BB0001            CJNE    R3,#00H,?C0012
+0012 BB0001            CJNE    R3,#00H,?C0016
 0015 0A                INC     R2
-0016         ?C0012:
+0016         ?C0016:
 0016 EB                MOV     A,R3
 0017 64A4              XRL     A,#0A4H
 0019 4A                ORL     A,R2
 001A 70F5              JNZ     ?C0004
 001C         ?C0003:
 001C 0D                INC     R5
-001D BD0001            CJNE    R5,#00H,?C0013
+001D BD0001            CJNE    R5,#00H,?C0017
 0020 0C                INC     R4
-0021         ?C0013:
+0021         ?C0017:
 0021 80E4              SJMP    ?C0001
-                                           ; SOURCE LINE # 24
+                                           ; SOURCE LINE # 25
 0023         ?C0007:
 0023 22                RET     
              ; FUNCTION _delay_ms (END)
 
              ; FUNCTION init_pwm (BEGIN)
-                                           ; SOURCE LINE # 26
                                            ; SOURCE LINE # 27
+                                           ; SOURCE LINE # 28
 0000 E4                CLR     A
 0001 F59A              MOV     PWMF_H,A
-                                           ; SOURCE LINE # 28
-0003 759B20            MOV     PWMF_L,#020H
                                            ; SOURCE LINE # 29
-0006 759C05            MOV     PWM0,#05H
+0003 759B20            MOV     PWMF_L,#020H
                                            ; SOURCE LINE # 30
-0009 759D03            MOV     PWM1,#03H
+0006 759C05            MOV     PWM0,#05H
                                            ; SOURCE LINE # 31
-000C 759E04            MOV     PWMCON,#04H
+0009 759D03            MOV     PWM1,#03H
                                            ; SOURCE LINE # 32
-C51 COMPILER V7.50   MAIN                                                                  09/08/2022 17:52:23 PAGE 4   
+000C 759E04            MOV     PWMCON,#04H
+                                           ; SOURCE LINE # 33
+C51 COMPILER V7.50   MAIN                                                                  09/08/2022 18:57:55 PAGE 4   
 
 000F 22                RET     
              ; FUNCTION init_pwm (END)
 
              ; FUNCTION main (BEGIN)
-                                           ; SOURCE LINE # 35
                                            ; SOURCE LINE # 36
+                                           ; SOURCE LINE # 37
 0000 7800        R     MOV     R0,#LOW txt
 0002 7C00        R     MOV     R4,#HIGH txt
 0004 7D00              MOV     R5,#00H
@@ -179,85 +186,92 @@ ASSEMBLY LISTING OF GENERATED OBJECT CODE
 000C 7E00              MOV     R6,#00H
 000E 7F05              MOV     R7,#05H
 0010 120000      E     LCALL   ?C?COPY
-                                           ; SOURCE LINE # 49
-0013 7594FF            MOV     P1M0,#0FFH
+                                           ; SOURCE LINE # 38
+0013 7592FB            MOV     P0M0,#0FBH
+                                           ; SOURCE LINE # 39
+0016 759304            MOV     P0M1,#04H
+                                           ; SOURCE LINE # 40
+0019 7594BF            MOV     P1M0,#0BFH
+                                           ; SOURCE LINE # 41
+001C 759540            MOV     P1M1,#040H
+                                           ; SOURCE LINE # 42
+001F 7596EE            MOV     P2M0,#0EEH
+                                           ; SOURCE LINE # 43
+0022 759711            MOV     P2M1,#011H
                                            ; SOURCE LINE # 50
-0016 E4                CLR     A
-0017 F595              MOV     P1M1,A
+0025 758004            MOV     P0,#04H
                                            ; SOURCE LINE # 51
-0019 7596FF            MOV     P2M0,#0FFH
+0028 759040            MOV     P1,#040H
                                            ; SOURCE LINE # 52
-001C F597              MOV     P2M1,A
-                                           ; SOURCE LINE # 53
-001E F5A0              MOV     P2,A
-                                           ; SOURCE LINE # 54
-0020 F590              MOV     P1,A
-                                           ; SOURCE LINE # 56
-0022 120000      E     LCALL   iLCD_GLASS_Init
+002B 75A011            MOV     P2,#011H
                                            ; SOURCE LINE # 57
-0025 120000      R     LCALL   L?0014
+002E 120000      E     LCALL   iLCD_GLASS_Init
                                            ; SOURCE LINE # 58
-0028 7BFF              MOV     R3,#0FFH
-002A 7A00        R     MOV     R2,#HIGH ?SC_0
-002C 7900        R     MOV     R1,#LOW ?SC_0
-002E 7D01              MOV     R5,#01H
-0030 120000      E     LCALL   _LCD_GLASS_String
+0031 120000      R     LCALL   L?0018
                                            ; SOURCE LINE # 59
-0033 120000      R     LCALL   L?0014
+0034 7BFF              MOV     R3,#0FFH
+0036 7A00        R     MOV     R2,#HIGH ?SC_0
+0038 7900        R     MOV     R1,#LOW ?SC_0
+003A 7D01              MOV     R5,#01H
+003C 120000      E     LCALL   _LCD_GLASS_String
                                            ; SOURCE LINE # 60
-0036 7BFF              MOV     R3,#0FFH
-0038 7A00        R     MOV     R2,#HIGH ?SC_6
-003A 7900        R     MOV     R1,#LOW ?SC_6
-003C 7D02              MOV     R5,#02H
-003E 120000      E     LCALL   _LCD_GLASS_String
+003F 120000      R     LCALL   L?0018
                                            ; SOURCE LINE # 61
-0041 120000      R     LCALL   L?0015
-                                           ; SOURCE LINE # 63
-0044 7BFF              MOV     R3,#0FFH
-0046 7A00        R     MOV     R2,#HIGH ?SC_10
-0048 7900        R     MOV     R1,#LOW ?SC_10
-004A E4                CLR     A
-004B FD                MOV     R5,A
-004C 120000      E     LCALL   _LCD_GLASS_String
-                                           ; SOURCE LINE # 64
-004F 120000      R     LCALL   L?0015
+0042 7BFF              MOV     R3,#0FFH
+0044 7A00        R     MOV     R2,#HIGH ?SC_6
+0046 7900        R     MOV     R1,#LOW ?SC_6
+0048 7D02              MOV     R5,#02H
+004A 120000      E     LCALL   _LCD_GLASS_String
+                                           ; SOURCE LINE # 62
+004D 120000      R     LCALL   L?0019
+                                           ; SOURCE LINE # 70
+0050 120000      R     LCALL   init_pwm
                                            ; SOURCE LINE # 71
-0052 120000      R     LCALL   init_pwm
+0053 5390DF            ANL     P1,#0DFH
                                            ; SOURCE LINE # 72
-0055 5390DF            ANL     P1,#0DFH
-                                           ; SOURCE LINE # 73
-C51 COMPILER V7.50   MAIN                                                                  09/08/2022 17:52:23 PAGE 5   
-
-0058 439010            ORL     P1,#010H
-005B         ?C0009:
-                                           ; SOURCE LINE # 75
-                                           ; SOURCE LINE # 77
-005B 120000      E     LCALL   key_scan
+0056 439010            ORL     P1,#010H
+0059         ?C0009:
+                                           ; SOURCE LINE # 74
                                            ; SOURCE LINE # 78
-005E 7500FF      E     MOV     ?_sprintf?BYTE+03H,#0FFH
-0061 750000      R     MOV     ?_sprintf?BYTE+04H,#HIGH ?SC_15
-0064 750000      R     MOV     ?_sprintf?BYTE+05H,#LOW ?SC_15
-0067 850000      E     MOV     ?_sprintf?BYTE+06H,Key_code
-006A 7B00              MOV     R3,#00H
-006C 7A00        R     MOV     R2,#HIGH txt
-006E 7900        R     MOV     R1,#LOW txt
-0070 120000      E     LCALL   _sprintf
+C51 COMPILER V7.50   MAIN                                                                  09/08/2022 18:57:55 PAGE 5   
+
+0059 7500FF      E     MOV     ?_sprintf?BYTE+03H,#0FFH
+005C 750000      R     MOV     ?_sprintf?BYTE+04H,#HIGH ?SC_10
+005F 750000      R     MOV     ?_sprintf?BYTE+05H,#LOW ?SC_10
+0062 7B00              MOV     R3,#00H
+0064 7A00        R     MOV     R2,#HIGH txt
+0066 7900        R     MOV     R1,#LOW txt
+0068 120000      E     LCALL   _sprintf
                                            ; SOURCE LINE # 79
-0073 7B00              MOV     R3,#00H
-0075 7A00        R     MOV     R2,#HIGH txt
-0077 7900        R     MOV     R1,#LOW txt
-0079 E4                CLR     A
-007A FD                MOV     R5,A
-007B 120000      E     LCALL   _LCD_GLASS_String
+006B 308203            JNB     KEY_K0,?C0011
+006E 750031      R     MOV     txt,#031H
+0071         ?C0011:
                                            ; SOURCE LINE # 80
-007E 7F32              MOV     R7,#032H
-0080 7E00              MOV     R6,#00H
-0082 120000      R     LCALL   _delay_ms
+0071 30A403            JNB     KEY_K1,?C0012
+0074 750031      R     MOV     txt+01H,#031H
+0077         ?C0012:
+                                           ; SOURCE LINE # 81
+0077 30A003            JNB     KEY_K2,?C0013
+007A 750031      R     MOV     txt+02H,#031H
+007D         ?C0013:
                                            ; SOURCE LINE # 82
-0085 80D4              SJMP    ?C0009
+007D 309603            JNB     KEY_K3,?C0014
+0080 750031      R     MOV     txt+03H,#031H
+0083         ?C0014:
+                                           ; SOURCE LINE # 86
+0083 7B00              MOV     R3,#00H
+0085 7A00        R     MOV     R2,#HIGH txt
+0087 7900        R     MOV     R1,#LOW txt
+0089 E4                CLR     A
+008A FD                MOV     R5,A
+008B 120000      E     LCALL   _LCD_GLASS_String
+                                           ; SOURCE LINE # 87
+008E 120000      R     LCALL   L?0019
+                                           ; SOURCE LINE # 89
+0091 80C6              SJMP    ?C0009
              ; FUNCTION main (END)
 
-C51 COMPILER V7.50   MAIN                                                                  09/08/2022 17:52:23 PAGE 6   
+C51 COMPILER V7.50   MAIN                                                                  09/08/2022 18:57:55 PAGE 6   
 
 NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 ====                                    =====   ======  ====    ======  ====
@@ -265,7 +279,7 @@ NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 
 ADCcmd . . . . . . . . . . . . . . . .  PUBLIC   DATA   BIT      0000H  1
 P1M0 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0094H  1
-Key_response . . . . . . . . . . . . .  PUBLIC   DATA   BIT      0001H  1
+P0M1 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0093H  1
 P2M0 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0096H  1
 P1M1 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0095H  1
 P0 . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0080H  1
@@ -290,42 +304,43 @@ size_t . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_INT    -----  2
 Temperature. . . . . . . . . . . . . .  PUBLIC   XDATA  CHAR     000AH  1
 uchar. . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_CHAR   -----  1
 IP . . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00B8H  1
-Lcd_lamp_symbol. . . . . . . . . . . .  PUBLIC   DATA   BIT      0002H  1
-NRM_securty_a. . . . . . . . . . . . .  PUBLIC   XDATA  U_CHAR   000BH  1
-NRM_securty_b. . . . . . . . . . . . .  PUBLIC   XDATA  U_CHAR   000CH  1
+Lcd_lamp_symbol. . . . . . . . . . . .  PUBLIC   DATA   BIT      0001H  1
 PWM0 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   009CH  1
 PWM1 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   009DH  1
 main . . . . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0000H  -----
   txt. . . . . . . . . . . . . . . . .  AUTO     DATA   ARRAY    0000H  5
 Key_code . . . . . . . . . . . . . . .  PUBLIC   DATA   U_CHAR   0000H  1
 ulong. . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_LONG   -----  4
+Key. . . . . . . . . . . . . . . . . .  PUBLIC   DATA   U_CHAR   0001H  1
 _delay_ms. . . . . . . . . . . . . . .  PUBLIC   CODE   PROC     0004H  -----
   num. . . . . . . . . . . . . . . . .  * REG *  DATA   U_INT    0006H  2
   i. . . . . . . . . . . . . . . . . .  * REG *  DATA   U_INT    0004H  2
   j. . . . . . . . . . . . . . . . . .  * REG *  DATA   U_INT    0002H  2
 SCON . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0098H  1
 TCON . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0088H  1
-Power_det_mode . . . . . . . . . . . .  PUBLIC   DATA   BIT      0003H  1
-SDI5219X1_symbol . . . . . . . . . . .  PUBLIC   DATA   BIT      0004H  1
-Temp_auto_det_counter. . . . . . . . .  PUBLIC   XDATA  U_INT    000DH  2
-Key_press. . . . . . . . . . . . . . .  PUBLIC   DATA   BIT      0005H  1
-Cal_temp_sign. . . . . . . . . . . . .  PUBLIC   DATA   BIT      0006H  1
+Power_det_mode . . . . . . . . . . . .  PUBLIC   DATA   BIT      0002H  1
+SDI5219X1_symbol . . . . . . . . . . .  PUBLIC   DATA   BIT      0003H  1
+Temp_auto_det_counter. . . . . . . . .  PUBLIC   XDATA  U_INT    000BH  2
+Cal_temp_sign. . . . . . . . . . . . .  PUBLIC   DATA   BIT      0004H  1
 TURE . . . . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
 uint . . . . . . . . . . . . . . . . .  TYPEDEF  -----  U_INT    -----  2
-_?ix1000 . . . . . . . . . . . . . . .  STATIC   CODE   ARRAY    0012H  5
+_?ix1000 . . . . . . . . . . . . . . .  STATIC   CODE   ARRAY    000FH  5
+KEY_K0 . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0082H  1
+KEY_K1 . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A4H  1
+KEY_K2 . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      00A0H  1
+KEY_K3 . . . . . . . . . . . . . . . .  ABSBIT   -----  BIT      0096H  1
 ADcode_pre . . . . . . . . . . . . . .  PUBLIC   IDATA  U_LONG   0000H  4
-key_scan . . . . . . . . . . . . . . .  EXTERN   CODE   PROC     -----  -----
-Vol_auto_det_counter . . . . . . . . .  PUBLIC   DATA   U_INT    0001H  2
+Vol_auto_det_counter . . . . . . . . .  PUBLIC   DATA   U_INT    0002H  2
 PWMCON . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   009EH  1
 SYS_pattern. . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  10
   sys_struct . . . . . . . . . . . . .  MEMBER   -----  STRUCT   0000H  10
-  b. . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  10
-C51 COMPILER V7.50   MAIN                                                                  09/08/2022 17:52:23 PAGE 7   
+C51 COMPILER V7.50   MAIN                                                                  09/08/2022 18:57:55 PAGE 7   
 
 NAME                                    CLASS   MSPACE  TYPE    OFFSET  SIZE
 ====                                    =====   ======  ====    ======  ====
 
 
+  b. . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  10
 PWMF_H . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   009AH  1
 boolean. . . . . . . . . . . . . . . .  TYPEDEF  -----  U_CHAR   -----  1
 PWMF_L . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   009BH  1
@@ -337,19 +352,20 @@ FALSE. . . . . . . . . . . . . . . . .  E_CONST  -----  U_CHAR   -----  1
 INTpattern . . . . . . . . . . . . . .  * TAG *  -----  UNION    -----  2
   i. . . . . . . . . . . . . . . . . .  MEMBER   -----  U_INT    0000H  2
   b. . . . . . . . . . . . . . . . . .  MEMBER   -----  ARRAY    0000H  2
-Lcd_bright . . . . . . . . . . . . . .  PUBLIC   DATA   U_CHAR   0003H  1
-Data_sycle_symbol. . . . . . . . . . .  PUBLIC   DATA   BIT      0007H  1
+Lcd_bright . . . . . . . . . . . . . .  PUBLIC   DATA   U_CHAR   0004H  1
+Data_sycle_symbol. . . . . . . . . . .  PUBLIC   DATA   BIT      0005H  1
 PSW. . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   00D0H  1
+P0M0 . . . . . . . . . . . . . . . . .  SFR      DATA   U_CHAR   0092H  1
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    187    ----
-   CONSTANT SIZE    =     23    ----
-   XDATA SIZE       =     15    ----
+   CODE SIZE        =    199    ----
+   CONSTANT SIZE    =     20    ----
+   XDATA SIZE       =     13    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =      4       5
+   DATA SIZE        =      5       5
    IDATA SIZE       =      4    ----
-   BIT SIZE         =      8    ----
+   BIT SIZE         =      6    ----
 END OF MODULE INFORMATION.
 
 

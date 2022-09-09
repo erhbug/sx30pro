@@ -92,11 +92,17 @@
 #define KEY_3_10 NUM_THREE
 #define KEY_4_10 TAPE
 
-//------------------------------------------------------------------
-//--- 案件处理变量定义 --
-//EXTERN unsigned char Key_code;		//按键编码
-EXTERN bit Key_press;					//表示有按键被按下
-EXTERN bit Key_response;				// ==1 表示一次按键已经响应过了，放开按键才能使 KEY_RESPONSE = 0，从而有可能在一次被响应;
+sbit KEY_K0 = P0^2;	
+sbit KEY_K1 = P2^4;	
+sbit KEY_K2 = P2^0;	
+sbit KEY_K3 = P1^6;	
+
+sbit KEY_D0 = P0^1;
+sbit KEY_D1 = P0^0;	
+sbit KEY_D2 = P1^0;	
+sbit KEY_D3 = P1^1;	
+sbit KEY_D4 = P1^2;
+
 
 //*************************************************************************//
 //----------  函数原型 ---------------
