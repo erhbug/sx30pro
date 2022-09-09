@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   KEYBOARD                                                              09/08/2022 18:57:56 PAGE 1   
+C51 COMPILER V7.50   KEYBOARD                                                              09/08/2022 20:21:29 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE KEYBOARD
@@ -62,7 +62,7 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-C51 COMPILER V7.50   KEYBOARD                                                              09/08/2022 18:57:56 PAGE 2   
+C51 COMPILER V7.50   KEYBOARD                                                              09/08/2022 20:21:29 PAGE 2   
 
    CODE SIZE        =     98    ----
    CONSTANT SIZE    =   ----    ----

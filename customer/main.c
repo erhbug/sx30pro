@@ -35,8 +35,9 @@ void init_pwm(void){
 
 void main(void)
 {char txt[5]={0};
-    P0M0 = 0xFB; //0b11111011;
-    P0M1 = 0x04; //0b00000100;    
+	int a = 0;
+    P0M0 = 0xFF; //0b11111111;
+    P0M1 = 0x00; //0b00000000;    
     P1M0 = 0xBF; //0b10111111;
     P1M1 = 0x40; //0b01000000;        
     P2M0 = 0xEE; //0b11101110;
@@ -75,16 +76,18 @@ while(1){
 
     // key_scan();
 //Key=0;
-	sprintf(txt,"0000");
+/*	sprintf(txt,"0000");
 if(KEY_K0!=0)txt[0]='1';
 if(KEY_K1!=0)txt[1]='1';
 if(KEY_K2!=0)txt[2]='1';
-if(KEY_K3!=0)txt[3]='1';
+if(KEY_K3!=0)txt[3]='1';*/
 
-
+a = KEY_K0;
+sprintf(txt,"%d ",a);
+//sprintf(txt,"%d ",(int)(KEY_K0));
 //	sprintf(txt,"%d  ",(int)(Key));
 LCD_GLASS_String(txt,LCD_TOTAL);
-	delay_ms(500);
+	delay_ms(10);
 
 }
 
