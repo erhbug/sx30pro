@@ -30,6 +30,6 @@
 #endif
 
 
-#define sVersion "22IR0"
+#define sVersion "22I0"
 
 #endif // APP_CFG_H

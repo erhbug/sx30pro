@@ -1,6 +1,5 @@
 "main.obj",
 "dvr_lcd_SDI1621.obj",
-"adc_0819_Vc_Jan10_13.obj",
 "keyboard.obj",
 "dvr_HX712.obj" 
 TO "solidic_proj" 

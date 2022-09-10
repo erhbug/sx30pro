@@ -63,7 +63,9 @@
 #define Blink_OFF       0
 #define Blink_500mHz    2
 #define Blink_1Hz       4
-#define Blink_2Hz				6
+#define Blink_2Hz	    6
+
+
 
 void delay_35u(void);
 int iLCD_GLASS_Init(void);
@@ -79,3 +81,4 @@ void LCD_GLASS_Symbols(char cSymbol, char cFlag_On);
 void LCD_GLASS_Float(float fNumber_To_LCD, char iNumber_Decimal, char cPosition_On_LCD);
 void LCD_GLASS_String(char *pCaracter, char cPosition_On_LCD);
 void LCD_GLASS_Update(void);
+void LCD_GLASS_Float(float fNumber_To_LCD, char iNumber_Decimal, char cPosition_On_LCD);

@@ -1,10 +1,10 @@
-C51 COMPILER V7.50   DVR_HX712                                                             09/09/2022 16:08:59 PAGE 1   
+C51 COMPILER V7.50   DVR_HX712                                                             09/09/2022 20:08:25 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE DVR_HX712
 OBJECT MODULE PLACED IN dvr_HX712.obj
-COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE _weight\dvr_HX712.c BROWSE DEBUG OBJECTEXTEND PRINT(.\dvr_HX712.lst) OBJECT
-                    -(dvr_HX712.obj)
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE _weight\dvr_HX712.c LARGE BROWSE DEBUG OBJECTEXTEND PRINT(.\dvr_HX712.lst) 
+                    -OBJECT(dvr_HX712.obj)
 
 line level    source
 
@@ -27,142 +27,238 @@ line level    source
   17          #include <math.h>
   18          #include "./customer/keyboard.h"
   19          
-  20          int iCountFailResponse = 0;
-  21          
-  22          sbit MISO = P0^3;       
-  23          sbit SCLK = P0^4;       
-  24          
-  25          float fRead_Adc(char cFillFilter){
-  26   1      float ValueCount = 0;
-  27   1              
-  28   1              unsigned char *pWeightByte;
-  29   1              unsigned int iActualWeight = 0;
-  30   1              unsigned int iTemp_RA = 0;
-  31   1              unsigned int tickstart = 0;
-  32   1              unsigned int tickend = 0;
-  33   1              unsigned int Timeout = 0;
-  34   1              unsigned char BufferSPI[10]= {0};
-  35   1      
-  36   1              pWeightByte = (unsigned char *)&iActualWeight;
-  37   1                      
-  38   1              
-  39   1              tickend = 0;
-  40   1              Timeout = 120;
-  41   1              while(MISO != 0){               
-  42   2                      ;
-  43   2                      delay_ms(1);            
-  44   2                      tickend ++;
-  45   2                      
-  46   2                      if(tickend >=  Timeout){
-  47   3                              if(iCountFailResponse++ > 5){
-  48   4                                      iCountFailResponse = 5;
-  49   4      //////////////////////////////////////////////////////////////                          srFlagScale.bErrorResponseAdc = 1;
-  50   4                              }
-  51   3                              
-  52   3                              return ValueCount;
-  53   3                      }
-  54   2              }
-C51 COMPILER V7.50   DVR_HX712                                                             09/09/2022 16:08:59 PAGE 2   
+  20          sbit MISO = P0^3;       
+  21          sbit SCLK = P0^4;       
+  22          
+  23          
+  24          //--------------------------------------------------------------------------------
+  25          float ValueCount = 0;
+  26          int iCountFailRead = 0;
+  27          int iCountFailResponse = 0;
+  28          
+  29          
+  30          
+  31          unsigned char iSelectFrecuency = 1;
+  32          float arfDataFilter_x[10] = {0};
+  33          float fBeforeValue_x = 0;
+  34          float fAverage_x = 0;
+  35          unsigned char iValueOut = 0;
+  36          
+  37          /*
+  38          */
+  39          float fFilter_Averaging(unsigned int iActualWeight, unsigned char cFastFill){   
+  40   1              
+  41   1              float arfLowestToHighest[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+  42   1      
+  43   1              //////////////////////////////////////////float fThreshold = stScaleParam.fFactorCalibrate[stScaleParam.i
+             -Units]/2;
+  44   1              float fThreshold = 7.15/2;
+  45   1              float fData_Vector = 0;
+  46   1              float *pfData_Filter;
+  47   1              float fActualWeight = (float)(iActualWeight);
+  48   1              unsigned char iLenthData_x = 6;         // Longitud de los datos a ordenar, original 6, en prueba 10 
+  49   1              unsigned char i = 0;    // Variable para ciclos iterativo 
+  50   1          unsigned char j = 0;        // Variable para ciclos iterativo 
+  51   1              
+  52   1              pfData_Filter = arfDataFilter_x;
+  53   1              
+C51 COMPILER V7.50   DVR_HX712                                                             09/09/2022 20:08:25 PAGE 2   
 
-  55   1              tickend = 0;
-  56   1              while(tickend < 5){
-  57   2              delay_ms(1);
-  58   2                      tickend ++;
-  59   2      
-  60   2                      
-  61   2                      if(MISO != 0){          //Detecta ruido en la lectura
-  62   3                              
-  63   3                              tickend = 0;
-  64   3                              Timeout = 500;
-  65   3      
-  66   3                              while(tickend <  Timeout){
-  67   4              delay_ms(1);            
-  68   4                      tickend ++;
-  69   4                              }
-  70   3                              
-  71   3                              if(iCountFailResponse++ > 2){
-  72   4                                      iCountFailResponse = 2;
-  73   4      /////////////////////////////////////////////////////////////////////////////////////////////////////////       
-             -                        srFlagScale.bErrorNoiseAdc = 1;
-  74   4                              }
-  75   3                              
-  76   3                              return ValueCount;
-  77   3                      }
-  78   2              }
-  79   1              
-  80   1              if(iCountFailResponse > 0){
-  81   2                      iCountFailResponse--;
-  82   2                      return ValueCount;
-  83   2              }
-  84   1              
-  85   1              /////////////////////////////////////////////////////////////////////////////////////////////////////////
-             -srFlagScale.bErrorResponseAdc = 0;
-  86   1      /////////////////////////////////////////////////////////////////////////////////////////////////////////       
-             -srFlagScale.bErrorNoiseAdc = 0;
-  87   1              SPIGPIO_Sync(BufferSPI); //pvr
-  88   1              //-----------------------------------------------------------   
-  89   1              
-  90   1              *(pWeightByte++)= BufferSPI[2];
-  91   1              *(pWeightByte++)= BufferSPI[1];
-  92   1              *(pWeightByte++)        = BufferSPI[0]; 
-  93   1              *(pWeightByte) = 0;
-  94   1                      
-  95   1              iTemp_RA = iActualWeight >> 7;  // Elimina los 0s generados 
+  54   1              if((fActualWeight > fAverage_x + fThreshold || fActualWeight < fAverage_x - fThreshold) && cFastFill == 0
+             -){
+  55   2                      if(iValueOut++ > 2){
+  56   3                              iValueOut = 0;  
+  57   3                              for(i=0; i<iLenthData_x-1; i++){
+  58   4                                      pfData_Filter[i] = fActualWeight;
+  59   4                              }                       
+  60   3                      }else{
+  61   3                              return fAverage_x;
+  62   3                      }
+  63   2              }else if(cFastFill == 1){       //Llena todo el vector de promedios con el mismo valor
+  64   2                      iValueOut = 0;          
+  65   2                      for(i=0; i<iLenthData_x-1; i++){
+  66   3                              pfData_Filter[i] = iActualWeight;
+  67   3                      }
+  68   2              }else if(cFastFill == 2){       //Indica que es el inicio para tomar referencia a Zero.
+  69   2                      for(i=0; i<iLenthData_x-1; i++){
+  70   3                              pfData_Filter[i] = pfData_Filter[i+1];
+  71   3                      }
+  72   2              }else{          // Agrega nuevo valor al vector para promedio           
+  73   2                      iValueOut = 0;          
+  74   2                      for(i=0; i<iLenthData_x-1; i++){
+  75   3                              pfData_Filter[i] = pfData_Filter[i+1];
+  76   3                      }
+  77   2              }
+  78   1              
+  79   1                              
+  80   1              pfData_Filter[iLenthData_x-1] = fActualWeight;
+  81   1              
+  82   1              for(i=0; i<iLenthData_x; i++){
+  83   2                      arfLowestToHighest[i] = pfData_Filter[i];
+  84   2              }
+  85   1              
+  86   1              // Se ordenan los datos de menor a mayor por el metodo burbuja 
+  87   1              for (i = 0; i < iLenthData_x -1 ; i++) {        
+  88   2                      for (j = (i + 1); j < iLenthData_x ; j++) {                     
+  89   3                              if (arfLowestToHighest[j] < arfLowestToHighest[i]) {
+  90   4                                      fData_Vector = arfLowestToHighest[j];
+  91   4                                      arfLowestToHighest[j] = arfLowestToHighest[i];
+  92   4                                      arfLowestToHighest[i] = fData_Vector;
+  93   4                              }
+  94   3                      }        
+  95   2              }
   96   1              
-  97   1              if(iTemp_RA == 65535){
-  98   2              }else if(iTemp_RA > 65535){
-  99   2                      iTemp_RA = 131072 - iTemp_RA;
- 100   2                      iTemp_RA = 32500 - iTemp_RA;
- 101   2              }else{
- 102   2                      iTemp_RA += 32500;
- 103   2              }
+  97   1              fAverage_x = 0;
+  98   1              
+  99   1              for(i=1; i<iLenthData_x-1; i++){
+ 100   2                      fAverage_x += arfLowestToHighest[i];
+ 101   2              }
+ 102   1              
+ 103   1              fAverage_x /= (float)(iLenthData_x - 2);
  104   1              
- 105   1      //      ValueCount = fFilter_Averaging(iTemp_RA,cFillFilter);
+ 105   1              fBeforeValue_x = fAverage_x;
  106   1              
- 107   1              return ValueCount;
+ 107   1              return fAverage_x;
  108   1      }
-*** WARNING C280 IN LINE 25 OF _WEIGHT\DVR_HX712.C: 'cFillFilter': unreferenced local variable
  109          
- 110          void SPIGPIO_Sync(char* buf)
- 111          {
- 112   1              long int lByte=0;
-C51 COMPILER V7.50   DVR_HX712                                                             09/09/2022 16:08:59 PAGE 3   
+ 110          
+ 111          /*
+ 112          */
+ 113          
+ 114          /*
+C51 COMPILER V7.50   DVR_HX712                                                             09/09/2022 20:08:25 PAGE 3   
 
- 113   1              int i,j;
- 114   1              
- 115   1              //24 bits de comunicación
- 116   1              for(i=0;i<24;i++)
- 117   1              {
- 118   2          SCLK=1;  for(j=0;j<10;j++);
- 119   2              lByte<<=1;
- 120   2              lByte|=(P0^3)&0x00000001;                                                                                               //Lectura en flanco negativo
- 121   2              SCLK=0; for(j=0;j<10;j++);
- 122   2              }
- 123   1              
- 124   1              //1 bit de configuración a 10Hz
- 125   1              SCLK=1;  for(j=0;j<10;j++);
- 126   1              SCLK=0; for(j=0;j<10;j++);
+ 115          */
+ 116          float fRead_Adc(char cFillFilter){
+ 117   1      
+ 118   1              
+ 119   1              unsigned char *pWeightByte;
+ 120   1              unsigned int iActualWeight = 0;
+ 121   1              unsigned int iTemp_RA = 0;
+ 122   1              unsigned int tickstart = 0;
+ 123   1              unsigned int tickend = 0;
+ 124   1              unsigned int Timeout = 0;
+ 125   1              unsigned char BufferSPI[10]= {0};
+ 126   1      
  127   1      
- 128   1              buf[2]= lByte&0x000000FF;
- 129   1              buf[1]= (lByte>>8)&0x000000FF;
- 130   1              buf[0]= (lByte>>16)&0x000000FF;
- 131   1      
- 132   1      }
- 133          
- 134          
- 135          
- 136          
+ 128   1      
+ 129   1              pWeightByte = (unsigned char *)&iActualWeight;
+ 130   1                      
+ 131   1              
+ 132   1              tickend = 0;
+ 133   1              Timeout = 120;
+ 134   1              while(MISO != 0){               
+ 135   2                      ;
+ 136   2                      delay_ms(1);            
+ 137   2                      tickend ++;
+ 138   2                      
+ 139   2                      if(tickend >=  Timeout){
+ 140   3                              if(iCountFailResponse++ > 5){
+ 141   4                                      iCountFailResponse = 5;
+ 142   4      //////////////////////////////////////////////////////////////                          srFlagScale.bErrorResponseAdc = 1;
+ 143   4                              }
+ 144   3                              
+ 145   3                              return ValueCount;
+ 146   3                      }
+ 147   2              }
+ 148   1              tickend = 0;
+ 149   1              while(tickend < 5){
+ 150   2              delay_ms(1);
+ 151   2                      tickend ++;
+ 152   2      
+ 153   2                      
+ 154   2                      if(MISO != 0){          //Detecta ruido en la lectura
+ 155   3                              
+ 156   3                              tickend = 0;
+ 157   3                              Timeout = 500;
+ 158   3      
+ 159   3                              while(tickend <  Timeout){
+ 160   4              delay_ms(1);            
+ 161   4                      tickend ++;
+ 162   4                              }
+ 163   3                              
+ 164   3                              if(iCountFailResponse++ > 2){
+ 165   4                                      iCountFailResponse = 2;
+ 166   4      /////////////////////////////////////////////////////////////////////////////////////////////////////////       
+             -                        srFlagScale.bErrorNoiseAdc = 1;
+ 167   4                              }
+ 168   3                              
+ 169   3                              return ValueCount;
+ 170   3                      }
+ 171   2              }
+ 172   1              
+ 173   1              if(iCountFailResponse > 0){
+ 174   2                      iCountFailResponse--;
+ 175   2                      return ValueCount;
+C51 COMPILER V7.50   DVR_HX712                                                             09/09/2022 20:08:25 PAGE 4   
+
+ 176   2              }
+ 177   1              
+ 178   1              /////////////////////////////////////////////////////////////////////////////////////////////////////////
+             -srFlagScale.bErrorResponseAdc = 0;
+ 179   1      /////////////////////////////////////////////////////////////////////////////////////////////////////////       
+             -srFlagScale.bErrorNoiseAdc = 0;
+ 180   1              SPIGPIO_Sync(BufferSPI); //pvr
+ 181   1              //-----------------------------------------------------------   
+ 182   1              
+ 183   1              *(pWeightByte++)= BufferSPI[2];
+ 184   1              *(pWeightByte++)= BufferSPI[1];
+ 185   1              *(pWeightByte++)        = BufferSPI[0]; 
+ 186   1              *(pWeightByte) = 0;
+ 187   1                      
+ 188   1              iTemp_RA = iActualWeight >> 7;  // Elimina los 0s generados 
+ 189   1              
+ 190   1              if(iTemp_RA == 65535){
+ 191   2              }else if(iTemp_RA > 65535){
+ 192   2                      iTemp_RA = 131072 - iTemp_RA;
+ 193   2                      iTemp_RA = 32500 - iTemp_RA;
+ 194   2              }else{
+ 195   2                      iTemp_RA += 32500;
+ 196   2              }
+ 197   1              
+ 198   1              ValueCount = fFilter_Averaging(iTemp_RA,cFillFilter);
+ 199   1              
+ 200   1              return ValueCount;
+ 201   1      }
+ 202          
+ 203          void SPIGPIO_Sync(char* buf)
+ 204          {
+ 205   1              long int lByte=0;
+ 206   1              int i,j;
+ 207   1              
+ 208   1              //24 bits de comunicación
+ 209   1              for(i=0;i<24;i++)
+ 210   1              {
+ 211   2          lByte<<=1;
+ 212   2              SCLK=1;  //for(j=0;j<5;j++);    
+ 213   2      //      if(MISO!=0)lByte|=0x00000001;   
+ 214   2              lByte|=(MISO)&0x00000001;                                                                                               //Lectura en flanco negativo
+ 215   2              SCLK=0; //for(j=0;j<10;j++);
+ 216   2              }
+ 217   1              
+ 218   1              //1 bit de configuración a 10Hz
+ 219   1              for(j=0;j<7;j++);
+ 220   1              SCLK=1;  for(j=0;j<6;j++);
+ 221   1              SCLK=0;  //for(j=0;j<10;j++);
+ 222   1      
+ 223   1              buf[2]= lByte&0x000000FF;
+ 224   1              buf[1]= (lByte>>8)&0x000000FF;
+ 225   1              buf[0]= (lByte>>16)&0x000000FF;
+ 226   1      
+ 227   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    636    ----
-   CONSTANT SIZE    =     10    ----
-   XDATA SIZE       =   ----    ----
+   CODE SIZE        =   1892    ----
+   CONSTANT SIZE    =     50    ----
+   XDATA SIZE       =     58      94
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =      2      37
+   DATA SIZE        =   ----    ----
+C51 COMPILER V7.50   DVR_HX712                                                             09/09/2022 20:08:25 PAGE 5   
+
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

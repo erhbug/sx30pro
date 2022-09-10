@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   ADC_0819_VC_JAN10_13                                                  09/09/2022 16:08:58 PAGE 1   
+C51 COMPILER V7.50   ADC_0819_VC_JAN10_13                                                  09/09/2022 17:38:38 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE ADC_0819_VC_JAN10_13
@@ -50,20 +50,24 @@ line level    source
   40   1              char    i;
   41   1              //--ADcode_pre--赋值0
   42   1              ADcode_pre = 0;
+*** ERROR C202 IN LINE 42 OF _ADC\ADC_0819_VC_JAN10_13.C: 'ADcode_pre': undefined identifier
   43   1              //--读取 24位 ADC 的输出
   44   1              for(i=0;i<24;i++)
   45   1              {       
   46   2                      ADcode_pre <<=1;
+*** ERROR C202 IN LINE 46 OF _ADC\ADC_0819_VC_JAN10_13.C: 'ADcode_pre': undefined identifier
   47   2                      sclk_unit();
   48   2                      if(DRDY_SDO)
   49   2                      ADcode_pre++;
+*** ERROR C202 IN LINE 49 OF _ADC\ADC_0819_VC_JAN10_13.C: 'ADcode_pre': undefined identifier
   50   2              }
   51   1              //--因为输出为双极性，+0x800000将负端平移上来
+C51 COMPILER V7.50   ADC_0819_VC_JAN10_13                                                  09/09/2022 17:38:38 PAGE 2   
+
   52   1              ADcode_pre ^= 0x800000; 
+*** ERROR C202 IN LINE 52 OF _ADC\ADC_0819_VC_JAN10_13.C: 'ADcode_pre': undefined identifier
   53   1              
   54   1              //--SDI0819的配置脉冲--通道A,PGA=128
-C51 COMPILER V7.50   ADC_0819_VC_JAN10_13                                                  09/09/2022 16:08:58 PAGE 2   
-
   55   1              sclk_unit(); //-- 25
   56   1              sclk_unit(); //-- 26
   57   1              sclk_unit(); //-- 27
@@ -77,16 +81,4 @@ line level    source
   65   2              }
   66   1      }
 
-
-MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     99    ----
-   CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =   ----    ----
-   PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----    ----
-   IDATA SIZE       =   ----    ----
-   BIT SIZE         =   ----    ----
-END OF MODULE INFORMATION.
-
-
-C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  0 WARNING(S),  4 ERROR(S)

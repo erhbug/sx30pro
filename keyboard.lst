@@ -1,10 +1,10 @@
-C51 COMPILER V7.50   KEYBOARD                                                              09/09/2022 16:08:58 PAGE 1   
+C51 COMPILER V7.50   KEYBOARD                                                              09/09/2022 20:08:25 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE KEYBOARD
 OBJECT MODULE PLACED IN keyboard.obj
-COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE customer\keyboard.c BROWSE DEBUG OBJECTEXTEND PRINT(.\keyboard.lst) OBJECT(
-                    -keyboard.obj)
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE customer\keyboard.c LARGE BROWSE DEBUG OBJECTEXTEND PRINT(.\keyboard.lst) O
+                    -BJECT(keyboard.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   52   2          if (k == 2) KEY_D2 = 0;
   53   2          if (k == 3) KEY_D3 = 0;
   54   2          if (k == 4) KEY_D4 = 0;
-C51 COMPILER V7.50   KEYBOARD                                                              09/09/2022 16:08:58 PAGE 2   
+C51 COMPILER V7.50   KEYBOARD                                                              09/09/2022 20:08:25 PAGE 2   
 
   55   2          delay_ms(1);
   56   2          if (KEY_K0 != 1) Key = 1 + (k * 4);
@@ -86,11 +86,11 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    183    ----
+   CODE SIZE        =    230    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =   ----    ----
+   XDATA SIZE       =      2    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =      2    ----
+   DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.

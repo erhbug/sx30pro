@@ -7,8 +7,8 @@ Group (Source Group 1)
 
 File 1,1,<.\customer\main.c><main.c> 0x0 
 File 1,1,<.\_display\dvr_lcd_SDI1621.c><dvr_lcd_SDI1621.c> 0x0 
-File 1,1,<.\_adc\adc_0819_Vc_Jan10_13.c><adc_0819_Vc_Jan10_13.c> 0x0 
 File 1,1,<.\customer\keyboard.c><keyboard.c> 0x0 
+File 1,1,<.\_weight\dvr_HX712.c><dvr_HX712.c> 0x0 
 
 
 Options 1,0,0  // Target 'Target 1'

@@ -650,7 +650,7 @@ void LCD_GLASS_Symbols(char cSymbol, char cFlag_On){
 
 
 
-/*void LCD_GLASS_Float(float fNumber_To_LCD, char iNumber_Decimal, char cPosition_On_LCD){
+void LCD_GLASS_Float(float fNumber_To_LCD, char iNumber_Decimal, char cPosition_On_LCD){
 	
 	char strText_LCD[8] = {0,0,0,0,0,0,0,0};
 	
@@ -690,7 +690,7 @@ void LCD_GLASS_Symbols(char cSymbol, char cFlag_On){
 	}
 	
 	LCD_GLASS_String(strText_LCD, cPosition_On_LCD);
-}*/
+}
 
 
 
