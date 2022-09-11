@@ -11,262 +11,41 @@ Build target 'Target 1'
 compiling main.c...
 C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
 C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+CUSTOMER\MAIN.C(112): error C202: 'v': undefined identifier
+CUSTOMER\MAIN.C(112): error C141: syntax error near '}'
 compiling dvr_lcd_SDI1621.c...
 compiling keyboard.c...
 compiling dvr_HX712.c...
-_WEIGHT\DVR_HX712.C(25): warning C280: 'cFillFilter': unreferenced local variable
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_FREAD_ADC?DVR_HX712
-Program Size: data=112.0 xdata=0 code=2156
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 9 Warning(s).
+Target not created
 Build target 'Target 1'
 compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+./_SOLIDIC/SDI5219_VC_SEP02_15.H(122): error C231: 'SARCON': redefinition
+./_SOLIDIC/SDI5219_VC_SEP02_15.H(123): error C231: 'SARDATA': redefinition
 compiling dvr_lcd_SDI1621.c...
 compiling keyboard.c...
 compiling dvr_HX712.c...
-_WEIGHT\DVR_HX712.C(25): warning C280: 'cFillFilter': unreferenced local variable
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_FREAD_ADC?DVR_HX712
-Program Size: data=9.0 xdata=104 code=2636
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 9 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-_WEIGHT\DVR_HX712.C(25): warning C280: 'cFillFilter': unreferenced local variable
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_FREAD_ADC?DVR_HX712
-Program Size: data=9.0 xdata=124 code=2659
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 9 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-_WEIGHT\DVR_HX712.C(25): warning C280: 'cFillFilter': unreferenced local variable
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_FREAD_ADC?DVR_HX712
-Program Size: data=9.0 xdata=129 code=2664
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 9 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-_WEIGHT\DVR_HX712.C(25): warning C280: 'cFillFilter': unreferenced local variable
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_FREAD_ADC?DVR_HX712
-Program Size: data=9.0 xdata=204 code=2740
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 9 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-_WEIGHT\DVR_HX712.C(25): warning C280: 'cFillFilter': unreferenced local variable
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_FREAD_ADC?DVR_HX712
-Program Size: data=9.0 xdata=304 code=2840
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 9 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-_WEIGHT\DVR_HX712.C(25): warning C280: 'cFillFilter': unreferenced local variable
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_FREAD_ADC?DVR_HX712
-Program Size: data=9.0 xdata=404 code=2940
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 9 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-_WEIGHT\DVR_HX712.C(25): warning C280: 'cFillFilter': unreferenced local variable
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_FREAD_ADC?DVR_HX712
-Program Size: data=9.0 xdata=504 code=3040
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 9 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-_WEIGHT\DVR_HX712.C(25): warning C280: 'cFillFilter': unreferenced local variable
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_FREAD_ADC?DVR_HX712
-Program Size: data=9.0 xdata=616 code=3152
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 9 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-CUSTOMER\MAIN.C(88): error C202: 'txt': undefined identifier
-CUSTOMER\MAIN.C(89): error C202: 'txt': undefined identifier
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-_WEIGHT\DVR_HX712.C(25): warning C280: 'cFillFilter': unreferenced local variable
 Target not created
 Build target 'Target 1'
 compiling main.c...
 C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
 C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+CUSTOMER\MAIN.C(103): warning C206: 'convertADC': missing function-prototype
+CUSTOMER\MAIN.C(108): error C231: 'convertADC': redefinition
+CUSTOMER\MAIN.C(112): error C231: 'convertADC': redefinition
 compiling dvr_lcd_SDI1621.c...
 compiling keyboard.c...
 compiling dvr_HX712.c...
-_WEIGHT\DVR_HX712.C(25): warning C280: 'cFillFilter': unreferenced local variable
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_FREAD_ADC?DVR_HX712
-Program Size: data=15.1 xdata=635 code=4251
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 9 Warning(s).
+Target not created
 Build target 'Target 1'
 compiling main.c...
 C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
 C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+CUSTOMER\MAIN.C(103): warning C206: 'convertidorADC': missing function-prototype
+CUSTOMER\MAIN.C(108): error C231: 'convertidorADC': redefinition
+CUSTOMER\MAIN.C(113): error C231: 'convertidorADC': redefinition
 compiling dvr_lcd_SDI1621.c...
 compiling keyboard.c...
 compiling dvr_HX712.c...
-_WEIGHT\DVR_HX712.C(116): error C231: '_fRead_Adc': redefinition
-_WEIGHT\DVR_HX712.C(199): error C231: '_fRead_Adc': redefinition
 Target not created
 Build target 'Target 1'
 compiling main.c...
@@ -287,8 +66,172 @@ linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_FREAD_ADC?DVR_HX712
-Program Size: data=15.1 xdata=784 code=8000
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=731 code=8190
+creating hex file from "solidic_proj"...
+"solidic_proj" - 0 Error(s), 8 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+CUSTOMER\MAIN.C(103): warning C209: '_LCD_GLASS_Float': too few actual parameters
+CUSTOMER\MAIN.C(105): error C141: syntax error near '}'
+CUSTOMER\MAIN.C(121): error C141: syntax error near 'return'
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+Target not created
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+CUSTOMER\MAIN.C(121): error C141: syntax error near 'return'
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+Target not created
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+CUSTOMER\MAIN.C(121): error C141: syntax error near 'return'
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+Target not created
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=731 code=8308
+creating hex file from "solidic_proj"...
+"solidic_proj" - 0 Error(s), 8 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=731 code=8314
+creating hex file from "solidic_proj"...
+"solidic_proj" - 0 Error(s), 8 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=731 code=8316
+creating hex file from "solidic_proj"...
+"solidic_proj" - 0 Error(s), 8 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=731 code=8318
+creating hex file from "solidic_proj"...
+"solidic_proj" - 0 Error(s), 8 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=219 code=7802
+creating hex file from "solidic_proj"...
+"solidic_proj" - 0 Error(s), 8 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=219 code=7793
 creating hex file from "solidic_proj"...
 "solidic_proj" - 0 Error(s), 8 Warning(s).
 Build target 'Target 1'
@@ -311,14 +254,524 @@ linking...
     SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_LCD_GLASS_FLOAT?DVR_LCD_SDI1621
-Program Size: data=15.1 xdata=743 code=8304
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=281 code=7747
+creating hex file from "solidic_proj"...
+"solidic_proj" - 0 Error(s), 9 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=219 code=7792
 creating hex file from "solidic_proj"...
 "solidic_proj" - 0 Error(s), 8 Warning(s).
 Build target 'Target 1'
 compiling main.c...
 C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
 C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-CUSTOMER\MAIN.C(101): error C141: syntax error near 'char'
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=219 code=7802
+creating hex file from "solidic_proj"...
+"solidic_proj" - 0 Error(s), 8 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=219 code=7802
+creating hex file from "solidic_proj"...
+"solidic_proj" - 0 Error(s), 8 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=221 code=7748
+creating hex file from "solidic_proj"...
+"solidic_proj" - 0 Error(s), 8 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=221 code=7749
+creating hex file from "solidic_proj"...
+"solidic_proj" - 0 Error(s), 8 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=221 code=7749
+creating hex file from "solidic_proj"...
+"solidic_proj" - 0 Error(s), 8 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=221 code=7749
+creating hex file from "solidic_proj"...
+"solidic_proj" - 0 Error(s), 8 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=221 code=7749
+creating hex file from "solidic_proj"...
+"solidic_proj" - 0 Error(s), 8 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=221 code=7752
+creating hex file from "solidic_proj"...
+"solidic_proj" - 0 Error(s), 8 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=221 code=7788
+creating hex file from "solidic_proj"...
+"solidic_proj" - 0 Error(s), 8 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=221 code=7788
+creating hex file from "solidic_proj"...
+"solidic_proj" - 0 Error(s), 8 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=221 code=7804
+creating hex file from "solidic_proj"...
+"solidic_proj" - 0 Error(s), 8 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=221 code=7794
+creating hex file from "solidic_proj"...
+"solidic_proj" - 0 Error(s), 8 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=221 code=7804
+creating hex file from "solidic_proj"...
+"solidic_proj" - 0 Error(s), 8 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=221 code=7794
+creating hex file from "solidic_proj"...
+"solidic_proj" - 0 Error(s), 8 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=221 code=7843
+creating hex file from "solidic_proj"...
+"solidic_proj" - 0 Error(s), 8 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=221 code=7843
+creating hex file from "solidic_proj"...
+"solidic_proj" - 0 Error(s), 8 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=221 code=7844
+creating hex file from "solidic_proj"...
+"solidic_proj" - 0 Error(s), 8 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=221 code=7846
+creating hex file from "solidic_proj"...
+"solidic_proj" - 0 Error(s), 7 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=219 code=7731
+creating hex file from "solidic_proj"...
+"solidic_proj" - 0 Error(s), 7 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+linking...
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=219 code=7730
+creating hex file from "solidic_proj"...
+"solidic_proj" - 0 Error(s), 7 Warning(s).
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+CUSTOMER\MAIN.C(106): error C211: call not to a function
+CUSTOMER\MAIN.C(106): error C207: 'function': declared with 'void' parameter list
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+Target not created
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+CUSTOMER\MAIN.C(106): error C211: call not to a function
+CUSTOMER\MAIN.C(106): error C207: 'function': declared with 'void' parameter list
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+Target not created
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+CUSTOMER\MAIN.C(106): error C211: call not to a function
+CUSTOMER\MAIN.C(106): error C207: 'function': declared with 'void' parameter list
+compiling dvr_lcd_SDI1621.c...
+compiling keyboard.c...
+compiling dvr_HX712.c...
+Target not created
+Build target 'Target 1'
+compiling main.c...
+C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
+C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+CUSTOMER\MAIN.C(106): error C211: call not to a function
+CUSTOMER\MAIN.C(106): error C207: 'function': declared with 'void' parameter list
 compiling dvr_lcd_SDI1621.c...
 compiling keyboard.c...
 compiling dvr_HX712.c...
@@ -334,14 +787,14 @@ linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-Program Size: data=15.1 xdata=729 code=8330
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=223 code=7767
 creating hex file from "solidic_proj"...
 "solidic_proj" - 0 Error(s), 7 Warning(s).
 Build target 'Target 1'
@@ -355,148 +808,24 @@ linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-Program Size: data=15.1 xdata=729 code=8330
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
+Program Size: data=15.1 xdata=223 code=7767
 creating hex file from "solidic_proj"...
 "solidic_proj" - 0 Error(s), 7 Warning(s).
 Build target 'Target 1'
 compiling main.c...
 C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
 C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
+CUSTOMER\MAIN.C(108): error C141: syntax error near '1'
 compiling dvr_lcd_SDI1621.c...
 compiling keyboard.c...
 compiling dvr_HX712.c...
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-Program Size: data=15.1 xdata=729 code=8330
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 7 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-Program Size: data=15.1 xdata=729 code=8275
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 8 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-Program Size: data=15.1 xdata=729 code=8275
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 8 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-Program Size: data=15.1 xdata=729 code=8275
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 8 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-Program Size: data=15.1 xdata=729 code=8275
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 8 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-_WEIGHT\DVR_HX712.C(211): error C141: syntax error near 'MISO'
-_WEIGHT\DVR_HX712.C(211): error C190: '&': not an lvalue
-Target not created
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-_WEIGHT\DVR_HX712.C(211): error C141: syntax error near 'MISO'
-_WEIGHT\DVR_HX712.C(211): error C190: '&': not an lvalue
 Target not created
 Build target 'Target 1'
 compiling main.c...
@@ -509,8 +838,6 @@ linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
@@ -518,9 +845,9 @@ linking...
     SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-Program Size: data=15.1 xdata=729 code=8246
+Program Size: data=15.1 xdata=223 code=7764
 creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 8 Warning(s).
+"solidic_proj" - 0 Error(s), 7 Warning(s).
 Build target 'Target 1'
 compiling main.c...
 C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
@@ -532,8 +859,6 @@ linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
@@ -541,9 +866,9 @@ linking...
     SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-Program Size: data=15.1 xdata=729 code=8246
+Program Size: data=15.1 xdata=223 code=7752
 creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 8 Warning(s).
+"solidic_proj" - 0 Error(s), 7 Warning(s).
 Build target 'Target 1'
 compiling main.c...
 C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
@@ -555,8 +880,6 @@ linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
@@ -564,9 +887,9 @@ linking...
     SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-Program Size: data=15.1 xdata=729 code=8245
+Program Size: data=15.1 xdata=223 code=7753
 creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 8 Warning(s).
+"solidic_proj" - 0 Error(s), 7 Warning(s).
 Build target 'Target 1'
 compiling main.c...
 C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
@@ -578,8 +901,6 @@ linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
@@ -587,9 +908,9 @@ linking...
     SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-Program Size: data=15.1 xdata=729 code=8245
+Program Size: data=15.1 xdata=223 code=7754
 creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 8 Warning(s).
+"solidic_proj" - 0 Error(s), 7 Warning(s).
 Build target 'Target 1'
 compiling main.c...
 C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
@@ -601,8 +922,6 @@ linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
@@ -610,11 +929,9 @@ linking...
     SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_FFILTER_AVERAGING?DVR_HX712
-Program Size: data=15.1 xdata=767 code=7738
+Program Size: data=15.1 xdata=223 code=7754
 creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 9 Warning(s).
+"solidic_proj" - 0 Error(s), 7 Warning(s).
 Build target 'Target 1'
 compiling main.c...
 C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
@@ -626,8 +943,6 @@ linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
@@ -635,11 +950,9 @@ linking...
     SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_FFILTER_AVERAGING?DVR_HX712
-Program Size: data=15.1 xdata=767 code=7741
+Program Size: data=15.1 xdata=223 code=7768
 creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 9 Warning(s).
+"solidic_proj" - 0 Error(s), 7 Warning(s).
 Build target 'Target 1'
 compiling main.c...
 C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
@@ -651,8 +964,6 @@ linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
@@ -660,11 +971,9 @@ linking...
     SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_FFILTER_AVERAGING?DVR_HX712
-Program Size: data=15.1 xdata=767 code=7741
+Program Size: data=15.1 xdata=223 code=7767
 creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 9 Warning(s).
+"solidic_proj" - 0 Error(s), 7 Warning(s).
 Build target 'Target 1'
 compiling main.c...
 C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
@@ -676,8 +985,6 @@ linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
@@ -685,9 +992,9 @@ linking...
     SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-Program Size: data=15.1 xdata=729 code=8245
+Program Size: data=15.1 xdata=223 code=7760
 creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 8 Warning(s).
+"solidic_proj" - 0 Error(s), 7 Warning(s).
 Build target 'Target 1'
 compiling main.c...
 C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
@@ -699,8 +1006,6 @@ linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
@@ -708,9 +1013,9 @@ linking...
     SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-Program Size: data=15.1 xdata=729 code=8245
+Program Size: data=15.1 xdata=221 code=7754
 creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 8 Warning(s).
+"solidic_proj" - 0 Error(s), 7 Warning(s).
 Build target 'Target 1'
 compiling main.c...
 C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
@@ -722,8 +1027,6 @@ linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
@@ -731,331 +1034,6 @@ linking...
     SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-Program Size: data=15.1 xdata=729 code=8245
+Program Size: data=15.1 xdata=221 code=7754
 creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 8 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-Program Size: data=15.1 xdata=729 code=8245
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 8 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-Program Size: data=15.1 xdata=729 code=8245
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 8 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-Program Size: data=15.1 xdata=729 code=8245
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 8 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-Program Size: data=15.1 xdata=729 code=8245
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 8 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-_WEIGHT\DVR_HX712.C(206): warning C280: 'j': unreferenced local variable
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-Program Size: data=15.1 xdata=729 code=8110
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 9 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-_WEIGHT\DVR_HX712.C(206): warning C280: 'j': unreferenced local variable
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-Program Size: data=15.1 xdata=729 code=8137
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 9 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-_WEIGHT\DVR_HX712.C(206): warning C280: 'j': unreferenced local variable
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-Program Size: data=15.1 xdata=729 code=8137
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 9 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-Program Size: data=15.1 xdata=729 code=8151
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 8 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-Program Size: data=15.1 xdata=729 code=8165
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 8 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-Program Size: data=15.1 xdata=729 code=8165
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 8 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-Program Size: data=15.1 xdata=729 code=8165
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 8 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-Program Size: data=15.1 xdata=729 code=8165
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 8 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-Program Size: data=15.1 xdata=729 code=8165
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 8 Warning(s).
-Build target 'Target 1'
-compiling main.c...
-C:\KEIL\C51\INC\STDIO.H(40): warning C245: unknown #pragma, line ignored
-C:\KEIL\C51\INC\STRING.H(52): warning C245: unknown #pragma, line ignored
-compiling dvr_lcd_SDI1621.c...
-compiling keyboard.c...
-compiling dvr_HX712.c...
-linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_DEINIT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_CLEAR?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?ILCD_GLASS_ALL_ON?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_DOT?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_LCD_GLASS_SYMBOLS?DVR_LCD_SDI1621
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?KEY_SCAN?KEYBOARD
-Program Size: data=15.1 xdata=729 code=8165
-creating hex file from "solidic_proj"...
-"solidic_proj" - 0 Error(s), 8 Warning(s).
+"solidic_proj" - 0 Error(s), 7 Warning(s).
