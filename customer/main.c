@@ -43,6 +43,9 @@ void main(void)
 	//Configuracion salida BL
     P1M0 |= (1<<5);
     P1M1 &= ~(1<<5);
+	//Configuracion salida BL
+    P0M0 |= (1<<1);
+    P0M1 &= ~(1<<1);
 /*bit KEY_K0 = P0^2;	
 sbit KEY_K1 = P2^4;	
 sbit KEY_K2 = P2^0;	
@@ -79,9 +82,9 @@ sbit KEY_K3 = P1^6;		*/
 	LCD_GLASS_String("EY",LCD_PRECIO);
 			delay_ms(500);    
  
-	/*init_pwm();
+	init_pwm();
 	BL_DIS;
-	BEEPER_EN;*/
+	BEEPER_EN;
 	
 
 /*	while(1)
@@ -150,7 +153,7 @@ static void timer0(void) interrupt 1
 		P1 |= (1<<5);
 		cont = 0;
 		}*/
-	P1 ^= (1<<5);
+	P0 ^= (1<<1);//P1 ^= (1<<5);
 	TL0 = 0xCF;
 	TH0 = 0xAF;
 	/*if(cont){

@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   MAIN                                                                  09/12/2022 19:07:02 PAGE 1   
+C51 COMPILER V7.50   MAIN                                                                  09/12/2022 21:19:22 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
@@ -55,143 +55,146 @@ line level    source
   43   1              //Configuracion salida BL
   44   1          P1M0 |= (1<<5);
   45   1          P1M1 &= ~(1<<5);
-  46   1      /*bit KEY_K0 = P0^2;    
-  47   1      sbit KEY_K1 = P2^4;     
-  48   1      sbit KEY_K2 = P2^0;     
-  49   1      sbit KEY_K3 = P1^6;             */
-  50   1      
-  51   1      /*      P1M0 = 0xff;
-  52   1              P1M1 = 0x00;
-C51 COMPILER V7.50   MAIN                                                                  09/12/2022 19:07:02 PAGE 2   
+  46   1              //Configuracion salida BL
+  47   1          P0M0 |= (1<<1);
+  48   1          P0M1 &= ~(1<<1);
+  49   1      /*bit KEY_K0 = P0^2;    
+  50   1      sbit KEY_K1 = P2^4;     
+  51   1      sbit KEY_K2 = P2^0;     
+  52   1      sbit KEY_K3 = P1^6;             */
+C51 COMPILER V7.50   MAIN                                                                  09/12/2022 21:19:22 PAGE 2   
 
-  53   1              P2M0 = 0xff;
-  54   1              P2M1 = 0x00;*/
-  55   1      
-  56   1          P0 = 0x0C;//P0 = 0x04;
-  57   1          P1 = 0x40;
-  58   1          P2 = 0x11;
-  59   1              //Salida en 1  para lectura adc
-  60   1              P0|= (1<<5);
-  61   1              
-  62   1              //Interrupcion timer0
-  63   1              IE = 0x82;
-  64   1              IP = 0x02;
-  65   1              
-  66   1              //timer0
-  67   1              TMOD = 0x00;
-  68   1              TL0 = 0x00;
-  69   1              TH0 = 0x7F;
-  70   1              CKCON = 0x04;
-  71   1      
-  72   1      /*      P2 = 0x00;
-  73   1              P1 = 0x00;*/
+  53   1      
+  54   1      /*      P1M0 = 0xff;
+  55   1              P1M1 = 0x00;
+  56   1              P2M0 = 0xff;
+  57   1              P2M1 = 0x00;*/
+  58   1      
+  59   1          P0 = 0x0C;//P0 = 0x04;
+  60   1          P1 = 0x40;
+  61   1          P2 = 0x11;
+  62   1              //Salida en 1  para lectura adc
+  63   1              P0|= (1<<5);
+  64   1              
+  65   1              //Interrupcion timer0
+  66   1              IE = 0x82;
+  67   1              IP = 0x02;
+  68   1              
+  69   1              //timer0
+  70   1              TMOD = 0x00;
+  71   1              TL0 = 0x00;
+  72   1              TH0 = 0x7F;
+  73   1              CKCON = 0x04;
   74   1      
-  75   1              iLCD_GLASS_Init();
-  76   1                              delay_ms(500);
-  77   1              LCD_GLASS_String("TORR",LCD_PESO);
-  78   1                      delay_ms(500);
-  79   1              LCD_GLASS_String("EY",LCD_PRECIO);
-  80   1                              delay_ms(500);    
-  81   1       
-  82   1              /*init_pwm();
-  83   1              BL_DIS;
-  84   1              BEEPER_EN;*/
-  85   1              
-  86   1      
-  87   1      /*      while(1)
-  88   1              {
-  89   1              KEY_D0=1;
-  90   1      KEY_D1=1;
-  91   1      KEY_D2=1;
-  92   1      KEY_D3=1;
-  93   1      KEY_D4=1;
-  94   1      delay_ms(100);
-  95   1      
-  96   1      KEY_D0=0;
-  97   1      KEY_D1=0;
-  98   1      KEY_D2=0;
-  99   1      KEY_D3=0;
- 100   1      KEY_D4=0;
- 101   1      delay_ms(100);
- 102   1      
- 103   1              }*/
- 104   1       TCON |= (1<<4);
- 105   1       iLCD_GLASS_Clear();
- 106   1       while(1){   
- 107   2       /*key_scan();
- 108   2              sprintf(txt,"%d  ",(int)(Key));
- 109   2              LCD_GLASS_String(txt,LCD_TOTAL)*/
- 110   2      
- 111   2              //sprintf(txt,"%d  ",(int)(KeyState));
- 112   2              //LCD_GLASS_String(txt,LCD_PRECIO);
+  75   1      /*      P2 = 0x00;
+  76   1              P1 = 0x00;*/
+  77   1      
+  78   1              iLCD_GLASS_Init();
+  79   1                              delay_ms(500);
+  80   1              LCD_GLASS_String("TORR",LCD_PESO);
+  81   1                      delay_ms(500);
+  82   1              LCD_GLASS_String("EY",LCD_PRECIO);
+  83   1                              delay_ms(500);    
+  84   1       
+  85   1              init_pwm();
+  86   1              BL_DIS;
+  87   1              BEEPER_EN;
+  88   1              
+  89   1      
+  90   1      /*      while(1)
+  91   1              {
+  92   1              KEY_D0=1;
+  93   1      KEY_D1=1;
+  94   1      KEY_D2=1;
+  95   1      KEY_D3=1;
+  96   1      KEY_D4=1;
+  97   1      delay_ms(100);
+  98   1      
+  99   1      KEY_D0=0;
+ 100   1      KEY_D1=0;
+ 101   1      KEY_D2=0;
+ 102   1      KEY_D3=0;
+ 103   1      KEY_D4=0;
+ 104   1      delay_ms(100);
+ 105   1      
+ 106   1              }*/
+ 107   1       TCON |= (1<<4);
+ 108   1       iLCD_GLASS_Clear();
+ 109   1       while(1){   
+ 110   2       /*key_scan();
+ 111   2              sprintf(txt,"%d  ",(int)(Key));
+ 112   2              LCD_GLASS_String(txt,LCD_TOTAL)*/
  113   2      
- 114   2              
-C51 COMPILER V7.50   MAIN                                                                  09/12/2022 19:07:02 PAGE 3   
+ 114   2              //sprintf(txt,"%d  ",(int)(KeyState));
+C51 COMPILER V7.50   MAIN                                                                  09/12/2022 21:19:22 PAGE 3   
 
- 115   2              delay_ms(50);
+ 115   2              //LCD_GLASS_String(txt,LCD_PRECIO);
  116   2      
- 117   2              peso=fRead_Adc(0);
- 118   2              P0|= (1<<5);
- 119   2              voltaje=convertidorADC()*(3.3/255);
- 120   2              LCD_GLASS_Float(peso, 2,  LCD_TOTAL);
- 121   2              LCD_GLASS_Float(voltaje, 2, LCD_PESO);
- 122   2      
- 123   2      }
- 124   1      
- 125   1      }
- 126          
- 127          unsigned int convertidorADC(){
- 128   1      
- 129   1      unsigned int v=0;
- 130   1      SARCON = 0x09;
- 131   1              if(!(SARCON & 0x04))
- 132   1              {
- 133   2                      SARCON |= 0x04;
- 134   2                      while(SARCON & 0x04)
- 135   2                      {
- 136   3                      }
- 137   2              }
- 138   1      v=SARDATA;
- 139   1      SARCON &= 0xf7;
- 140   1      return v;
- 141   1      
- 142   1      }
- 143          
- 144          static void timer0(void) interrupt 1
- 145          {               
- 146   1              //static unsigned char cont = 0;
- 147   1              //IE = 0;        // 禁止中断
- 148   1              //P1 &= ~(1<<5);
- 149   1              /*if(cont==40){
- 150   1                      P1 |= (1<<5);
- 151   1                      cont = 0;
- 152   1                      }*/
- 153   1              P1 ^= (1<<5);
- 154   1              TL0 = 0xCF;
- 155   1              TH0 = 0xAF;
- 156   1              /*if(cont){
- 157   1                      cont = 0;
- 158   1                      P1 &= ~(1<<5);
- 159   1              }else{
- 160   1                      cont = 1;
- 161   1                      P1 |= (1<<5);
- 162   1                      }*/
- 163   1              //TCON |= (1<<4);
- 164   1              //IE = 0x02;  // 打开中断
- 165   1      }
+ 117   2              
+ 118   2              delay_ms(50);
+ 119   2      
+ 120   2              peso=fRead_Adc(0);
+ 121   2              P0|= (1<<5);
+ 122   2              voltaje=convertidorADC()*(3.3/255);
+ 123   2              LCD_GLASS_Float(peso, 2,  LCD_TOTAL);
+ 124   2              LCD_GLASS_Float(voltaje, 2, LCD_PESO);
+ 125   2      
+ 126   2      }
+ 127   1      
+ 128   1      }
+ 129          
+ 130          unsigned int convertidorADC(){
+ 131   1      
+ 132   1      unsigned int v=0;
+ 133   1      SARCON = 0x09;
+ 134   1              if(!(SARCON & 0x04))
+ 135   1              {
+ 136   2                      SARCON |= 0x04;
+ 137   2                      while(SARCON & 0x04)
+ 138   2                      {
+ 139   3                      }
+ 140   2              }
+ 141   1      v=SARDATA;
+ 142   1      SARCON &= 0xf7;
+ 143   1      return v;
+ 144   1      
+ 145   1      }
+ 146          
+ 147          static void timer0(void) interrupt 1
+ 148          {               
+ 149   1              //static unsigned char cont = 0;
+ 150   1              //IE = 0;        // 禁止中断
+ 151   1              //P1 &= ~(1<<5);
+ 152   1              /*if(cont==40){
+ 153   1                      P1 |= (1<<5);
+ 154   1                      cont = 0;
+ 155   1                      }*/
+ 156   1              P0 ^= (1<<1);//P1 ^= (1<<5);
+ 157   1              TL0 = 0xCF;
+ 158   1              TH0 = 0xAF;
+ 159   1              /*if(cont){
+ 160   1                      cont = 0;
+ 161   1                      P1 &= ~(1<<5);
+ 162   1              }else{
+ 163   1                      cont = 1;
+ 164   1                      P1 |= (1<<5);
+ 165   1                      }*/
+ 166   1              //TCON |= (1<<4);
+ 167   1              //IE = 0x02;  // 打开中断
+ 168   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    303    ----
+   CODE SIZE        =    318    ----
    CONSTANT SIZE    =     13    ----
    XDATA SIZE       =      6      13
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
+C51 COMPILER V7.50   MAIN                                                                  09/12/2022 21:19:22 PAGE 4   
+
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
-
-C51 COMPILER V7.50   MAIN                                                                  09/12/2022 19:07:02 PAGE 4   
 
 
 C51 COMPILATION COMPLETE.  2 WARNING(S),  0 ERROR(S)
