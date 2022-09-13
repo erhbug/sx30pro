@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   DVR_HX712                                                             09/10/2022 19:46:29 PAGE 1   
+C51 COMPILER V7.50   DVR_HX712                                                             09/12/2022 19:07:03 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE DVR_HX712
@@ -62,7 +62,7 @@ line level    source
   51   1              
   52   1              pfData_Filter = arfDataFilter_x;
   53   1              
-C51 COMPILER V7.50   DVR_HX712                                                             09/10/2022 19:46:29 PAGE 2   
+C51 COMPILER V7.50   DVR_HX712                                                             09/12/2022 19:07:03 PAGE 2   
 
   54   1              if((fActualWeight > fAverage_x + fThreshold || fActualWeight < fAverage_x - fThreshold) && cFastFill == 0
              -){
@@ -126,7 +126,7 @@ line level    source
  112          */
  113          
  114          /*
-C51 COMPILER V7.50   DVR_HX712                                                             09/10/2022 19:46:29 PAGE 3   
+C51 COMPILER V7.50   DVR_HX712                                                             09/12/2022 19:07:03 PAGE 3   
 
  115          */
  116          float fRead_Adc(char cFillFilter){
@@ -190,7 +190,7 @@ line level    source
  173   1              if(iCountFailResponse > 0){
  174   2                      iCountFailResponse--;
  175   2                      return ValueCount;
-C51 COMPILER V7.50   DVR_HX712                                                             09/10/2022 19:46:29 PAGE 4   
+C51 COMPILER V7.50   DVR_HX712                                                             09/12/2022 19:07:03 PAGE 4   
 
  176   2              }
  177   1              
@@ -254,7 +254,7 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
    XDATA SIZE       =     58      94
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
-C51 COMPILER V7.50   DVR_HX712                                                             09/10/2022 19:46:29 PAGE 5   
+C51 COMPILER V7.50   DVR_HX712                                                             09/12/2022 19:07:03 PAGE 5   
 
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----

@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   MAIN                                                                  09/10/2022 19:46:28 PAGE 1   
+C51 COMPILER V7.50   MAIN                                                                  09/12/2022 19:07:02 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
@@ -21,137 +21,177 @@ line level    source
    9          
   10          unsigned char Key;
   11          unsigned char lecturaADC[4]= {0};
-  12          
-  13          #define     BL_EN       P1 |= 0x20
-  14          #define     BL_DIS      P1 &= 0xDF
-  15          
-  16          #define     BEEPER_EN   P1 |= 0x10
-  17          #define     BEEPER_DIS  P1 &= 0xEF
-  18          
-  19          unsigned int convertidorADC(void);
-  20          
-  21          void init_pwm(void){
-  22   1          PWMF_H  = 0x00;
-  23   1              PWMF_L  = 0x20;
-  24   1              PWM0    = 05;
-  25   1              PWM1    = 03;
-  26   1              PWMCON  = 0x04; //PWM0-P1.4(LCD_LAMP)????(?PWM0=0xff?,?????)
-  27   1      }
-  28          
-  29          void main(void)
-  30          {char txt[5]={0};
-  31   1       float peso=0, voltaje=0;
-  32   1              //int a = 0, b = 0;
-  33   1          P0M0 = 0xF0; //0b11111111;
-  34   1          P0M1 = 0x00; //0b00000000;    
-  35   1          P1M0 = 0xBF; //0b10111111;
-  36   1          P1M1 = 0x00; //0b00000000;        
-  37   1          P2M0 = 0xEE; //0b11101110;
-  38   1          P2M1 = 0x00; //0b00000000;
-  39   1              //Config lectura adc
-  40   1              P0M0 &= ~(1<<5);
-  41   1              P0M1 |= (1<<5);
-  42   1      /*bit KEY_K0 = P0^2;    
-  43   1      sbit KEY_K1 = P2^4;     
-  44   1      sbit KEY_K2 = P2^0;     
-  45   1      sbit KEY_K3 = P1^6;             */
-  46   1      
-  47   1      /*      P1M0 = 0xff;
-  48   1              P1M1 = 0x00;
-  49   1              P2M0 = 0xff;
-  50   1              P2M1 = 0x00;*/
-  51   1      
-  52   1          P0 = 0x0C;//P0 = 0x04;
-C51 COMPILER V7.50   MAIN                                                                  09/10/2022 19:46:28 PAGE 2   
+  12          static unsigned char cont = 0;
+  13          
+  14          #define     BL_EN       P1 |= 0x20
+  15          #define     BL_DIS      P1 &= 0xDF
+  16          
+  17          #define     BEEPER_EN   P1 |= 0x10
+  18          #define     BEEPER_DIS  P1 &= 0xEF
+  19          
+  20          unsigned int convertidorADC(void);
+  21          
+  22          void init_pwm(void){
+  23   1          PWMF_H  = 0x00;
+  24   1              PWMF_L  = 0x20;
+  25   1              PWM0    = 05;
+  26   1              PWM1    = 03;
+  27   1              PWMCON  = 0x04; //PWM0-P1.4(LCD_LAMP)????(?PWM0=0xff?,?????)
+  28   1      }
+  29          
+  30          void main(void)
+  31          {char txt[5]={0};
+  32   1       float peso=0, voltaje=0;
+  33   1              //int a = 0, b = 0;
+  34   1          P0M0 = 0xF0; //0b11111111;
+  35   1          P0M1 = 0x00; //0b00000000;    
+  36   1          P1M0 = 0xBF; //0b10111111;
+  37   1          P1M1 = 0x00; //0b00000000;        
+  38   1          P2M0 = 0xEE; //0b11101110;
+  39   1          P2M1 = 0x00; //0b00000000;
+  40   1              //Config lectura adc
+  41   1              P0M0 &= ~(1<<5);
+  42   1              P0M1 |= (1<<5);
+  43   1              //Configuracion salida BL
+  44   1          P1M0 |= (1<<5);
+  45   1          P1M1 &= ~(1<<5);
+  46   1      /*bit KEY_K0 = P0^2;    
+  47   1      sbit KEY_K1 = P2^4;     
+  48   1      sbit KEY_K2 = P2^0;     
+  49   1      sbit KEY_K3 = P1^6;             */
+  50   1      
+  51   1      /*      P1M0 = 0xff;
+  52   1              P1M1 = 0x00;
+C51 COMPILER V7.50   MAIN                                                                  09/12/2022 19:07:02 PAGE 2   
 
-  53   1          P1 = 0x40;
-  54   1          P2 = 0x11;
-  55   1              //Salida en 1  para lectura adc
-  56   1              P0|= (1<<5);
-  57   1              
-  58   1      /*      P2 = 0x00;
-  59   1              P1 = 0x00;*/
-  60   1      
-  61   1              iLCD_GLASS_Init();
-  62   1                              delay_ms(500);
-  63   1              LCD_GLASS_String("TORR",LCD_PESO);
-  64   1                      delay_ms(500);
-  65   1              LCD_GLASS_String("EY",LCD_PRECIO);
-  66   1                              delay_ms(500);    
-  67   1       
-  68   1              init_pwm();
-  69   1              BL_DIS;
-  70   1              BEEPER_EN;
-  71   1              
-  72   1      
-  73   1      /*      while(1)
-  74   1              {
-  75   1              KEY_D0=1;
-  76   1      KEY_D1=1;
-  77   1      KEY_D2=1;
-  78   1      KEY_D3=1;
-  79   1      KEY_D4=1;
-  80   1      delay_ms(100);
-  81   1      
-  82   1      KEY_D0=0;
-  83   1      KEY_D1=0;
-  84   1      KEY_D2=0;
-  85   1      KEY_D3=0;
-  86   1      KEY_D4=0;
-  87   1      delay_ms(100);
-  88   1      
-  89   1              }*/
-  90   1       iLCD_GLASS_Clear();
-  91   1       while(1){   
-  92   2       /*key_scan();
-  93   2              sprintf(txt,"%d  ",(int)(Key));
-  94   2              LCD_GLASS_String(txt,LCD_TOTAL)*/
-  95   2      
-  96   2              //sprintf(txt,"%d  ",(int)(KeyState));
-  97   2              //LCD_GLASS_String(txt,LCD_PRECIO);
-  98   2      
-  99   2              
- 100   2              delay_ms(50);
- 101   2      
- 102   2              peso=fRead_Adc(0);
- 103   2              P0|= (1<<5);
- 104   2              voltaje=convertidorADC()*(3.3/255);
- 105   2              LCD_GLASS_Float(peso, 2,  LCD_TOTAL);
- 106   2              LCD_GLASS_Float(voltaje, 2, LCD_PESO);
- 107   2      
- 108   2      }
- 109   1      
- 110   1      }
- 111          
- 112          unsigned int convertidorADC(){
- 113   1      
- 114   1      unsigned int v=0;
-C51 COMPILER V7.50   MAIN                                                                  09/10/2022 19:46:28 PAGE 3   
+  53   1              P2M0 = 0xff;
+  54   1              P2M1 = 0x00;*/
+  55   1      
+  56   1          P0 = 0x0C;//P0 = 0x04;
+  57   1          P1 = 0x40;
+  58   1          P2 = 0x11;
+  59   1              //Salida en 1  para lectura adc
+  60   1              P0|= (1<<5);
+  61   1              
+  62   1              //Interrupcion timer0
+  63   1              IE = 0x82;
+  64   1              IP = 0x02;
+  65   1              
+  66   1              //timer0
+  67   1              TMOD = 0x00;
+  68   1              TL0 = 0x00;
+  69   1              TH0 = 0x7F;
+  70   1              CKCON = 0x04;
+  71   1      
+  72   1      /*      P2 = 0x00;
+  73   1              P1 = 0x00;*/
+  74   1      
+  75   1              iLCD_GLASS_Init();
+  76   1                              delay_ms(500);
+  77   1              LCD_GLASS_String("TORR",LCD_PESO);
+  78   1                      delay_ms(500);
+  79   1              LCD_GLASS_String("EY",LCD_PRECIO);
+  80   1                              delay_ms(500);    
+  81   1       
+  82   1              /*init_pwm();
+  83   1              BL_DIS;
+  84   1              BEEPER_EN;*/
+  85   1              
+  86   1      
+  87   1      /*      while(1)
+  88   1              {
+  89   1              KEY_D0=1;
+  90   1      KEY_D1=1;
+  91   1      KEY_D2=1;
+  92   1      KEY_D3=1;
+  93   1      KEY_D4=1;
+  94   1      delay_ms(100);
+  95   1      
+  96   1      KEY_D0=0;
+  97   1      KEY_D1=0;
+  98   1      KEY_D2=0;
+  99   1      KEY_D3=0;
+ 100   1      KEY_D4=0;
+ 101   1      delay_ms(100);
+ 102   1      
+ 103   1              }*/
+ 104   1       TCON |= (1<<4);
+ 105   1       iLCD_GLASS_Clear();
+ 106   1       while(1){   
+ 107   2       /*key_scan();
+ 108   2              sprintf(txt,"%d  ",(int)(Key));
+ 109   2              LCD_GLASS_String(txt,LCD_TOTAL)*/
+ 110   2      
+ 111   2              //sprintf(txt,"%d  ",(int)(KeyState));
+ 112   2              //LCD_GLASS_String(txt,LCD_PRECIO);
+ 113   2      
+ 114   2              
+C51 COMPILER V7.50   MAIN                                                                  09/12/2022 19:07:02 PAGE 3   
 
- 115   1      SARCON = 0x09;
- 116   1              if(!(SARCON & 0x04))
- 117   1              {
- 118   2                      SARCON |= 0x04;
- 119   2                      while(SARCON & 0x04)
- 120   2                      {
- 121   3                      }
- 122   2              }
- 123   1      v=SARDATA;
- 124   1      SARCON &= 0xf7;
- 125   1      return v;
- 126   1      
- 127   1      }
+ 115   2              delay_ms(50);
+ 116   2      
+ 117   2              peso=fRead_Adc(0);
+ 118   2              P0|= (1<<5);
+ 119   2              voltaje=convertidorADC()*(3.3/255);
+ 120   2              LCD_GLASS_Float(peso, 2,  LCD_TOTAL);
+ 121   2              LCD_GLASS_Float(voltaje, 2, LCD_PESO);
+ 122   2      
+ 123   2      }
+ 124   1      
+ 125   1      }
+ 126          
+ 127          unsigned int convertidorADC(){
+ 128   1      
+ 129   1      unsigned int v=0;
+ 130   1      SARCON = 0x09;
+ 131   1              if(!(SARCON & 0x04))
+ 132   1              {
+ 133   2                      SARCON |= 0x04;
+ 134   2                      while(SARCON & 0x04)
+ 135   2                      {
+ 136   3                      }
+ 137   2              }
+ 138   1      v=SARDATA;
+ 139   1      SARCON &= 0xf7;
+ 140   1      return v;
+ 141   1      
+ 142   1      }
+ 143          
+ 144          static void timer0(void) interrupt 1
+ 145          {               
+ 146   1              //static unsigned char cont = 0;
+ 147   1              //IE = 0;        // 禁止中断
+ 148   1              //P1 &= ~(1<<5);
+ 149   1              /*if(cont==40){
+ 150   1                      P1 |= (1<<5);
+ 151   1                      cont = 0;
+ 152   1                      }*/
+ 153   1              P1 ^= (1<<5);
+ 154   1              TL0 = 0xCF;
+ 155   1              TH0 = 0xAF;
+ 156   1              /*if(cont){
+ 157   1                      cont = 0;
+ 158   1                      P1 &= ~(1<<5);
+ 159   1              }else{
+ 160   1                      cont = 1;
+ 161   1                      P1 |= (1<<5);
+ 162   1                      }*/
+ 163   1              //TCON |= (1<<4);
+ 164   1              //IE = 0x02;  // 打开中断
+ 165   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    277    ----
+   CODE SIZE        =    303    ----
    CONSTANT SIZE    =     13    ----
-   XDATA SIZE       =      5      13
+   XDATA SIZE       =      6      13
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
+
+C51 COMPILER V7.50   MAIN                                                                  09/12/2022 19:07:02 PAGE 4   
 
 
 C51 COMPILATION COMPLETE.  2 WARNING(S),  0 ERROR(S)

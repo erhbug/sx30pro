@@ -9,6 +9,7 @@
 
 unsigned char Key;
 unsigned char lecturaADC[4]= {0};
+static unsigned char cont = 0;
 
 #define     BL_EN	P1 |= 0x20
 #define     BL_DIS	P1 &= 0xDF
@@ -39,6 +40,9 @@ void main(void)
 	//Config lectura adc
 	P0M0 &= ~(1<<5);
 	P0M1 |= (1<<5);
+	//Configuracion salida BL
+    P1M0 |= (1<<5);
+    P1M1 &= ~(1<<5);
 /*bit KEY_K0 = P0^2;	
 sbit KEY_K1 = P2^4;	
 sbit KEY_K2 = P2^0;	
@@ -55,6 +59,16 @@ sbit KEY_K3 = P1^6;		*/
 	//Salida en 1  para lectura adc
 	P0|= (1<<5);
 	
+	//Interrupcion timer0
+	IE = 0x82;
+	IP = 0x02;
+	
+	//timer0
+	TMOD = 0x00;
+	TL0 = 0x00;
+	TH0 = 0x7F;
+	CKCON = 0x04;
+
 /*	P2 = 0x00;
 	P1 = 0x00;*/
 
@@ -65,9 +79,9 @@ sbit KEY_K3 = P1^6;		*/
 	LCD_GLASS_String("EY",LCD_PRECIO);
 			delay_ms(500);    
  
-	init_pwm();
+	/*init_pwm();
 	BL_DIS;
-	BEEPER_EN;
+	BEEPER_EN;*/
 	
 
 /*	while(1)
@@ -87,6 +101,7 @@ KEY_D4=0;
 delay_ms(100);
 
 	}*/
+ TCON |= (1<<4);
  iLCD_GLASS_Clear();
  while(1){   
  /*key_scan();
@@ -124,4 +139,27 @@ v=SARDATA;
 SARCON &= 0xf7;
 return v;
 
+}
+
+static void timer0(void) interrupt 1
+{		
+	//static unsigned char cont = 0;
+	//IE = 0;	 // 禁止中断
+	//P1 &= ~(1<<5);
+	/*if(cont==40){
+		P1 |= (1<<5);
+		cont = 0;
+		}*/
+	P1 ^= (1<<5);
+	TL0 = 0xCF;
+	TH0 = 0xAF;
+	/*if(cont){
+		cont = 0;
+		P1 &= ~(1<<5);
+	}else{
+		cont = 1;
+		P1 |= (1<<5);
+		}*/
+	//TCON |= (1<<4);
+	//IE = 0x02;  // 打开中断
 }
