@@ -1,32 +1,20 @@
 /* Includes ------------------------------------------------------------------*/
-
-/*#include "dvr_def.h"
-#include "dvr_HX712.h"
-#include "dvr_scale.h"
-#include "dvr_keyboard.h"
-#include "dvr_lcd.h"
-
-#include "app_cfg.h"
-#include "app_keyboard.h"
-#include "bsp.h"
-*/
 #include "./_weight/dvr_HX712.h"
 #include <stdio.h>
 #include <string.h>
 #include <REG52.H>
 #include <math.h>
 #include "./customer/keyboard.h"
+//#include "./_display/dvr_lcd_SDI1621.h"
 
 sbit MISO = P0^3;	
 sbit SCLK = P0^4;	
 
 
 //--------------------------------------------------------------------------------
-float ValueCount = 0;
+float ValueCount = 0.0;
 int iCountFailRead = 0;
 int iCountFailResponse = 0;
-
-
 
 unsigned char iSelectFrecuency = 1;
 float arfDataFilter_x[10] = {0};
@@ -36,12 +24,10 @@ unsigned char iValueOut = 0;
 
 /*
 */
-float fFilter_Averaging(unsigned int iActualWeight, unsigned char cFastFill){	
-	
-	float arfLowestToHighest[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-
+float fFilter_Averaging(unsigned long iActualWeight, unsigned char cFastFill){	
+	float arfLowestToHighest[10] = {0.00};
 	//////////////////////////////////////////float fThreshold = stScaleParam.fFactorCalibrate[stScaleParam.iUnits]/2;
-	float fThreshold = 7.15/2;
+	float fThreshold = 8.526937/2;
 	float fData_Vector = 0;
 	float *pfData_Filter;
 	float fActualWeight = (float)(iActualWeight);
@@ -110,82 +96,24 @@ float fFilter_Averaging(unsigned int iActualWeight, unsigned char cFastFill){
 
 /*
 */
-
 /*
 */
-float fRead_Adc(char cFillFilter){
+float fRead_Adc(unsigned char cFillFilter){
+	unsigned long iTemp_RA = 0;
+	unsigned char txt[20]={0};
 
+	if(MISO!=0)return ValueCount;
+    
+  //iTemp_RA=123456789;	sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
 	
-	unsigned char *pWeightByte;
-	unsigned int iActualWeight = 0;
-	unsigned int iTemp_RA = 0;
-	unsigned int tickstart = 0;
-	unsigned int tickend = 0;
-	unsigned int Timeout = 0;
-	unsigned char BufferSPI[10]= {0};
+	iTemp_RA=ReadHX712(); 
 
+  //sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
 
+	iTemp_RA >>= 7;	// Elimina los 6 bits menos significativos
+    
 
-	pWeightByte = (unsigned char *)&iActualWeight;
-		
-	
-	tickend = 0;
-	Timeout = 120;
-	while(MISO != 0){		
-		;
-		delay_ms(1);		
-		tickend ++;
-		
-		if(tickend >=  Timeout){
-			if(iCountFailResponse++ > 5){
-				iCountFailResponse = 5;
-//////////////////////////////////////////////////////////////				srFlagScale.bErrorResponseAdc = 1;
-			}
-			
-			return ValueCount;
-		}
-	}
-	tickend = 0;
-	while(tickend < 5){
-	delay_ms(1);
-		tickend ++;
-
-		
-		if(MISO != 0){		//Detecta ruido en la lectura
-			
-			tickend = 0;
-			Timeout = 500;
-
-			while(tickend <  Timeout){
-        delay_ms(1);		
-		tickend ++;
-			}
-			
-			if(iCountFailResponse++ > 2){
-				iCountFailResponse = 2;
-/////////////////////////////////////////////////////////////////////////////////////////////////////////				srFlagScale.bErrorNoiseAdc = 1;
-			}
-			
-			return ValueCount;
-		}
-	}
-	
-	if(iCountFailResponse > 0){
-		iCountFailResponse--;
-		return ValueCount;
-	}
-	
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////srFlagScale.bErrorResponseAdc = 0;
-/////////////////////////////////////////////////////////////////////////////////////////////////////////	srFlagScale.bErrorNoiseAdc = 0;
-	SPIGPIO_Sync(BufferSPI); //pvr
-	//-----------------------------------------------------------	
-	
-	*(pWeightByte++)= BufferSPI[2];
-	*(pWeightByte++)= BufferSPI[1];
-	*(pWeightByte++) 	= BufferSPI[0];	
-	*(pWeightByte) = 0;
-		
-	iTemp_RA = iActualWeight >> 7;	// Elimina los 0s generados 
+    // sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
 	
 	if(iTemp_RA == 65535){
 	}else if(iTemp_RA > 65535){
@@ -194,34 +122,33 @@ float fRead_Adc(char cFillFilter){
 	}else{
 		iTemp_RA += 32500;
 	}
-	
+
+   // sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
+
 	ValueCount = fFilter_Averaging(iTemp_RA,cFillFilter);
-	
+
+   // sprintf(txt,"%f      ",ValueCount);  LCD_GLASS_String(txt,LCD_PESO); 	delay_ms(500);	
+
 	return ValueCount;
 }
 
-void SPIGPIO_Sync(char* buf)
-{
-	long int lByte=0;
-	int i,j;
-	
-	//24 bits de comunicación
-	for(i=0;i<24;i++)
-	{
-    lByte<<=1;
-	SCLK=1;  //for(j=0;j<5;j++);	
-//	if(MISO!=0)lByte|=0x00000001;	
-	lByte|=(MISO)&0x00000001;												//Lectura en flanco negativo
-	SCLK=0; //for(j=0;j<10;j++);
+volatile unsigned long  ReadHX712(void){ //by ERH
+    unsigned int i;
+	unsigned long *ptr;	
+    unsigned char  dato[4]={0};
+    ptr=(unsigned long *)&dato;
+
+	if(MISO!=0)return;
+	for(i=0;i<24;i++)//24 bits de comunicación
+	{    
+    	SCLK=1;  
+    	dato[i/8+1]<<=1;//Lectura en flanco negativo
+	    SCLK=0; 
+        dato[i/8+1]|=MISO&0x01;
 	}
-	
 	//1 bit de configuración a 10Hz
-	for(j=0;j<7;j++);
-	SCLK=1;  for(j=0;j<6;j++);
-	SCLK=0;  //for(j=0;j<10;j++);
-
-	buf[2]= lByte&0x000000FF;
-	buf[1]= (lByte>>8)&0x000000FF;
-	buf[0]= (lByte>>16)&0x000000FF;
-
+	SCLK=1;   i<<=5;
+	SCLK=0;  
+  // sprintf(txt,"%lX",*ptr);  LCD_GLASS_String(txt,LCD_TOTAL); 
+   return *ptr;
 }

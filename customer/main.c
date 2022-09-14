@@ -118,10 +118,12 @@ delay_ms(100);
 	delay_ms(50);
 
 	peso=fRead_Adc(0);
+	sprintf(txt,"%f   ",peso);  LCD_GLASS_String(txt,LCD_PESO); 
+
 	P0|= (1<<5);
 	voltaje=convertidorADC()*(3.3/255);
-	LCD_GLASS_Float(peso, 2,  LCD_TOTAL);
-	LCD_GLASS_Float(voltaje, 2, LCD_PESO);
+//	LCD_GLASS_Float(peso, 2,  LCD_TOTAL);
+//	LCD_GLASS_Float(voltaje, 2, LCD_PESO);
 
 }
 

@@ -5,6 +5,6 @@ extern unsigned char lecturaADC[4];
 
 float fRead_Adc(unsigned char cFillFilter);
 void vSend_Status_Adc(void);
-void SPIGPIO_Sync(char*); //pvr	
+unsigned long  ReadHX712(void);
 
 #endif
