@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   DVR_BATTERY                                                           09/14/2022 19:36:59 PAGE 1   
+C51 COMPILER V7.50   DVR_BATTERY                                                           09/15/2022 17:44:31 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE DVR_BATTERY
@@ -62,7 +62,7 @@ line level    source
   52          
   53          enum ActionCargador eAccionCargador;
   54          
-C51 COMPILER V7.50   DVR_BATTERY                                                           09/14/2022 19:36:59 PAGE 2   
+C51 COMPILER V7.50   DVR_BATTERY                                                           09/15/2022 17:44:31 PAGE 2   
 
   55          struct Time_Battery{
   56                  long iDescanso_2_Hora;
@@ -126,7 +126,7 @@ line level    source
  114   3                              case SOURCE_ADAPTER:
  115   3                                      if(srFlagScale.bBateriaLow == 1){
  116   4                                              //LCD_BlinkConfig(LCD_BlinkMode_Off,LCD_BlinkFrequency_Div128);
-C51 COMPILER V7.50   DVR_BATTERY                                                           09/14/2022 19:36:59 PAGE 3   
+C51 COMPILER V7.50   DVR_BATTERY                                                           09/15/2022 17:44:31 PAGE 3   
 
  117   4                                              srFlagScale.bMsgBatteryLow = 0;
  118   4                                              srFlagScale.bBateriaLow = 0;
@@ -190,7 +190,7 @@ line level    source
  176   5                                                      LCD_GLASS_String("BAJA  ", LCD_PRECIO); 
  177   5                                                      LCD_GLASS_String("   BAT", LCD_TOTAL);
  178   5                                              }
-C51 COMPILER V7.50   DVR_BATTERY                                                           09/14/2022 19:36:59 PAGE 4   
+C51 COMPILER V7.50   DVR_BATTERY                                                           09/15/2022 17:44:31 PAGE 4   
 
  179   4                                              LCD_GLASS_Symbols(SYMBOL_ZERO, 0);                              
  180   4                                              LCD_GLASS_Symbols(SYMBOL_X, 0);
@@ -254,7 +254,7 @@ line level    source
  238   2              #endif
  239   2              
  240   2              }
-C51 COMPILER V7.50   DVR_BATTERY                                                           09/14/2022 19:36:59 PAGE 5   
+C51 COMPILER V7.50   DVR_BATTERY                                                           09/15/2022 17:44:31 PAGE 5   
 
  241   1      }
  242          
@@ -318,7 +318,7 @@ line level    source
  300   2              if(strTimer.cFLag_TimerCharge_On==0)
  301   2                      strTimer.cFLag_TimerCharge_Start=1;
  302   2      
-C51 COMPILER V7.50   DVR_BATTERY                                                           09/14/2022 19:36:59 PAGE 6   
+C51 COMPILER V7.50   DVR_BATTERY                                                           09/15/2022 17:44:31 PAGE 6   
 
  303   2              if(fVoltage_Battery>=lvl_5)
  304   2                      estado=5;
@@ -382,7 +382,7 @@ line level    source
  362          unsigned char uGet_Status_Volt(void){
  363   1              
  364   1              //vGet_Volts_Ref();
-C51 COMPILER V7.50   DVR_BATTERY                                                           09/14/2022 19:36:59 PAGE 7   
+C51 COMPILER V7.50   DVR_BATTERY                                                           09/15/2022 17:44:31 PAGE 7   
 
  365   1              
  366   1              //return SOURCE_ADAPTER;
@@ -446,7 +446,7 @@ line level    source
  424   1                      if(!(SARCON & 0x04))
  425   1                      {
  426   2                              SARCON |= 0x04;
-C51 COMPILER V7.50   DVR_BATTERY                                                           09/14/2022 19:36:59 PAGE 8   
+C51 COMPILER V7.50   DVR_BATTERY                                                           09/15/2022 17:44:31 PAGE 8   
 
  427   2                              while(SARCON & 0x04) //Espera conversion
  428   2                              {
@@ -510,7 +510,7 @@ line level    source
  486   1                      if(srFlagScale.bEliminadorOn == 1){
  487   1                              OffBackLight;
  488   1                      }
-C51 COMPILER V7.50   DVR_BATTERY                                                           09/14/2022 19:36:59 PAGE 9   
+C51 COMPILER V7.50   DVR_BATTERY                                                           09/15/2022 17:44:31 PAGE 9   
 
  489   1                      
  490   1                      srFlagScale.bEliminadorOn = 0;          
@@ -574,7 +574,7 @@ line level    source
  548   1      
  549   1              iLCD_GLASS_Init();//LCD_Cmd(ENABLE);            /* Habilita el modulo LCD */    
  550   1              iLCD_GLASS_Clear();
-C51 COMPILER V7.50   DVR_BATTERY                                                           09/14/2022 19:36:59 PAGE 10  
+C51 COMPILER V7.50   DVR_BATTERY                                                           09/15/2022 17:44:31 PAGE 10  
 
  551   1              
  552   1              if(stScaleParam.cLenguage == ENGLISH){
@@ -638,7 +638,7 @@ line level    source
  609   2                      LCD_GLASS_String("BAJA  ", LCD_PRECIO); 
  610   2                      LCD_GLASS_String("   BAT", LCD_TOTAL);
  611   2              }
-C51 COMPILER V7.50   DVR_BATTERY                                                           09/14/2022 19:36:59 PAGE 11  
+C51 COMPILER V7.50   DVR_BATTERY                                                           09/15/2022 17:44:31 PAGE 11  
 
  612   1      
  613   1              strTimer.cFLag_TimerE_Start = 1;
@@ -702,7 +702,7 @@ line level    source
  671                  ADC_ChannelCmd(ADC1, ADC_Channel, ENABLE);
  672                  
  673                  for(i=0; i<iSampleNumber; i++){         
-C51 COMPILER V7.50   DVR_BATTERY                                                           09/14/2022 19:36:59 PAGE 12  
+C51 COMPILER V7.50   DVR_BATTERY                                                           09/15/2022 17:44:31 PAGE 12  
 
  674                          ADC_SoftwareStartConv(ADC1);
  675                          
@@ -766,7 +766,7 @@ line level    source
 *** WARNING C280 IN LINE 711 OF _BATTERY\DVR_BATTERY.C: 'i': unreferenced local variable
  733                  
  734          
-C51 COMPILER V7.50   DVR_BATTERY                                                           09/14/2022 19:36:59 PAGE 13  
+C51 COMPILER V7.50   DVR_BATTERY                                                           09/15/2022 17:44:31 PAGE 13  
 
  735          /*
  736          

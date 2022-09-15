@@ -3,6 +3,7 @@
 "keyboard.obj",
 "dvr_HX712.obj",
 "dvr_battery.obj",
-"dvr_Inicio.obj" 
+"dvr_Inicio.obj",
+"data_nvm_5219_Vc_Dec09_13.obj" 
 TO "solidic_proj" 
 RAMSIZE(256) 

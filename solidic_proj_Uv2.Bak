@@ -10,6 +10,7 @@ File 1,1,<.\_display\dvr_lcd_SDI1621.c><dvr_lcd_SDI1621.c> 0x0
 File 1,1,<.\customer\keyboard.c><keyboard.c> 0x0 
 File 1,1,<.\_weight\dvr_HX712.c><dvr_HX712.c> 0x0 
 File 1,1,<.\_battery\dvr_battery.c><dvr_battery.c> 0x0 
+File 1,1,<.\_inicio\dvr_Inicio.c><dvr_Inicio.c> 0x0 
 
 
 Options 1,0,0  // Target 'Target 1'
@@ -31,7 +32,7 @@ Options 1,0,0  // Target 'Target 1'
  EnvLib ()
  EnvReg (ÿWinbond\)
  OrgReg (ÿWinbond\)
- TgStat=0
+ TgStat=9
  OutDir (.\)
  OutName (solidic_proj)
  GenApp=1

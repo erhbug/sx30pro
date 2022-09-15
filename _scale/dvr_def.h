@@ -1,8 +1,8 @@
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __DVR_DEF
 #define __DVR_DEF
-
 #include "./_scale/app_cfg.h"
+#include "./_solidic/SDI5219_Vc_Sep02_15.h"	
 
 #define TIMTICK         (TIM4)		/* Se define el timer a utilizar */
 

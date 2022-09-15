@@ -34,9 +34,11 @@ unsigned char KeyState=0;
 void delay_ms(unsigned int num)
 { 	
 	unsigned int i,j;
-  	for(i= 0;i<num;i++)	//(SDI5219) ??1ms
+  	for(i= 0;i<num;i++){	//(SDI5219) ??1ms
 		for(j=0;j<164;j++)
 			;
+IWDG_KEY_REFRESH; 
+}
 }
 
 void key_scan(void) {

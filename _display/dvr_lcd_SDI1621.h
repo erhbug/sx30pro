@@ -1,6 +1,6 @@
 #include <REG52.H>
 #include <stdio.h>
-#include <string.h>
+//#include <string.h>
 #include "./_scale/app_cfg.h"
 /* Define to prevent recursive inclusion -------------------------------------*/
  typedef struct

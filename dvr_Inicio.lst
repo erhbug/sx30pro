@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   DVR_INICIO                                                            09/14/2022 19:37:00 PAGE 1   
+C51 COMPILER V7.50   DVR_INICIO                                                            09/15/2022 17:44:32 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE DVR_INICIO
@@ -62,7 +62,7 @@ line level    source
   52          const enum digi_key eSEQUENCE_RESET_REFERENCE[8] = {
   53                  KEY_TARA, KEY_TARA, KEY_0};
   54                  
-C51 COMPILER V7.50   DVR_INICIO                                                            09/14/2022 19:37:00 PAGE 2   
+C51 COMPILER V7.50   DVR_INICIO                                                            09/15/2022 17:44:32 PAGE 2   
 
   55          const enum digi_key eTEST_TECLADO[8] = {        
   56                  KEY_TARA, KEY_MEM, KEY_MEM, KEY_RCL, KEY_RCL};
@@ -126,7 +126,7 @@ line level    source
  113   1              
  114   1              int i=0;
  115   1              
-C51 COMPILER V7.50   DVR_INICIO                                                            09/14/2022 19:37:00 PAGE 3   
+C51 COMPILER V7.50   DVR_INICIO                                                            09/15/2022 17:44:32 PAGE 3   
 
  116   1              strTimer.cFLag_TimerD_End = 0;
  117   1              strTimer.cFLag_TimerD_Start = 1;        /* Inicia un timer para esperar 2 seg
@@ -190,7 +190,7 @@ line level    source
  174   4                                      vSpecial_Action(Data_Scale);
  175   4                              }else if(strcmp(eOFFSET_ADC, arPass_Configuration) == 0){
  176   4                                      vSpecial_Action(Offset_Adc);
-C51 COMPILER V7.50   DVR_INICIO                                                            09/14/2022 19:37:00 PAGE 4   
+C51 COMPILER V7.50   DVR_INICIO                                                            09/15/2022 17:44:32 PAGE 4   
 
  177   4                              }else if(strcmp(eERASE_PLUS, arPass_Configuration) == 0){
  178   4                                      vSpecial_Action(Erase_Plus);
@@ -254,7 +254,7 @@ line level    source
  235   3                              }*/
  236   3                      }
  237   2                      
-C51 COMPILER V7.50   DVR_INICIO                                                            09/14/2022 19:37:00 PAGE 5   
+C51 COMPILER V7.50   DVR_INICIO                                                            09/15/2022 17:44:32 PAGE 5   
 
  238   2                      if(srFlagScale.bScaleOn == 0){//if(srFlagScale.bScaleOn == FALSE){
  239   3                              return 0;

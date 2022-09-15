@@ -29,7 +29,7 @@ void LCD_GLASS_String(char *pCaracter, char cPosition_On_LCD);
 
 //#include "dvr_battery_la.h"
 
-	SOLIDIC Display;
+static SOLIDIC Display;
 
 #if DISPLAY_20400047_EN > 0	
 const char cNumber_LCD[10] = { 
