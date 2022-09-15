@@ -19,9 +19,11 @@
 // -- 全部头文件 集中管理 ---- ，版本修改文件名会变动 ---  必须修改 这个文件
 //**************************************************************************
 //#include "./_solidic/head_file_version.h"
+#include "./_scale/dvr_scale.h"
+#include "./_scale/dvr_def.h"
+#include "./_scale/app_cfg.h"
 #include "./customer/keyboard.h"
 
-extern unsigned char Key;
 unsigned char LastKey;
 unsigned char KeyState=0;
 
@@ -69,5 +71,34 @@ void key_scan(void) {
     KeyState = 0; //no se ha presionado una tecla
   }
   LastKey = Key;
+}
+
+void vBeep_Key(void){
+
+	/*enum digi_key Value_Key_Press;
+	
+	if(srFlagScale.bCalidadTest == 2){
+		if(stScaleParam.cBacklight){OnBackLight;}
+	}*/
+	
+	if(!strTimer.cFLag_TimerA_On){
+		strTimer.cFLag_TimerA_End = 0;
+		Beep_On_Key;
+	}
+
+
+	/*while(strTimer.cFLag_TimerA_End == 0){
+		//IWDG->KR = IWDG_KEY_REFRESH;
+	}*/
+	
+	/*do{
+		Value_Key_Press = vActionKey();		
+	}while(Value_Key_Press != KEY_NULL);
+	
+	if(srFlagScale.bCalidadTest == 2){
+		//OffBackLight;
+	}
+	
+	KeyPressed = FALSE;*/
 }
 

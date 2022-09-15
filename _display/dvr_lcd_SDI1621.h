@@ -1,15 +1,15 @@
 #include <REG52.H>
 #include <stdio.h>
 #include <string.h>
-#include "./_display/app_cfg.h"
+#include "./_scale/app_cfg.h"
 /* Define to prevent recursive inclusion -------------------------------------*/
  typedef struct
   {
     unsigned char mode;
-		unsigned char cmd;
-		unsigned char LCD_BUF[16];
+	unsigned char cmd;
+	unsigned char LCD_BUF[16];
     unsigned char addr;
-		unsigned char counter;
+	unsigned char counter;
   } SOLIDIC;
 
 ///////////////////////////////////////////////////////////////////////////////

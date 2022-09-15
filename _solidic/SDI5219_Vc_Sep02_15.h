@@ -118,10 +118,6 @@ sfr IOLCD_CON    = 0xd6;
 sfr WDCON   = 0xA9;
 sfr WD_TA   = 0xAA;
 
-//------------ SAR ADC Registers ------------
-sfr SARCON  = 0xAB;
-sfr SARDATA = 0xAC;
-
 //------------ PWM Registers ------------
 sfr PWMF_H  = 0x9A;
 sfr PWMF_L  = 0x9B;

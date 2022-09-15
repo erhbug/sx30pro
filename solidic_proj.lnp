@@ -1,6 +1,8 @@
 "main.obj",
 "dvr_lcd_SDI1621.obj",
 "keyboard.obj",
-"dvr_HX712.obj" 
+"dvr_HX712.obj",
+"dvr_battery.obj",
+"dvr_Inicio.obj" 
 TO "solidic_proj" 
 RAMSIZE(256) 

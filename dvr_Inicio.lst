@@ -1,0 +1,314 @@
+C51 COMPILER V7.50   DVR_INICIO                                                            09/14/2022 19:37:00 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE DVR_INICIO
+OBJECT MODULE PLACED IN dvr_Inicio.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE _inicio\dvr_Inicio.c LARGE BROWSE DEBUG OBJECTEXTEND PRINT(.\dvr_Inicio.lst
+                    -) OBJECT(dvr_Inicio.obj)
+
+line level    source
+
+   1          #include <stdio.h>
+   2          #include <math.h>
+   3          #include <string.h>
+   4          #include "./_scale/app_cfg.h"
+   5          #include "./_scale/dvr_scale.h"
+   6          #include "./_scale/dvr_def.h"
+   7          #include "./_battery/dvr_battery.h"
+   8          #include "./_display/dvr_lcd_SDI1621.h"
+   9          #include "./_inicio/dvr_inicio.h"
+  10          
+  11          /* --- Registro de Password */
+  12          
+  13          const enum digi_key eSEQUENCE_CONFIGURATION[8] = {
+  14                  KEY_TARA, KEY_C, KEY_CERO, KEY_RCL};
+  15          const enum digi_key ePRE_CONFIGURATION_15KG[8] = {
+  16                  KEY_TARA, KEY_M1, KEY_TARA, KEY_1, KEY_5};
+  17          const enum digi_key ePRE_CONFIGURATION_20KG[8] = {
+  18                  KEY_TARA, KEY_M1, KEY_TARA, KEY_2, KEY_0};
+  19          const enum digi_key ePRE_CONFIGURATION_30KG[8] = {
+  20                  KEY_TARA, KEY_M1, KEY_TARA, KEY_3, KEY_0};
+  21          const enum digi_key ePRE_CONFIGURATION_31KG[8] = {
+  22                  KEY_TARA, KEY_M1, KEY_TARA, KEY_3, KEY_1};      
+  23          const enum digi_key ePRE_CONFIGURATION_32KG[8] = {
+  24                  KEY_TARA, KEY_M1, KEY_TARA, KEY_3, KEY_2};      
+  25          const enum digi_key ePRE_CONFIGURATION_40KG[8] = {
+  26                  KEY_TARA, KEY_M1, KEY_TARA, KEY_4, KEY_0};
+  27          
+  28          const enum digi_key eLCD_ALL_SEGMENT[8] = {
+  29                  KEY_TARA, KEY_8};
+  30          const enum digi_key eDATA_SCALE[8] = {
+  31                  KEY_TARA, KEY_C, KEY_RCL, KEY_MEM}; 
+  32          const enum digi_key eOFFSET_ADC[8] = {
+  33                  KEY_TARA, KEY_MEM, KEY_1, KEY_5};
+  34          const enum digi_key eSOBRE_PESO_OFF[8] = {
+  35                  KEY_TARA, KEY_MEM, KEY_1, KEY_TARA};
+  36          const enum digi_key eERASE_PLUS[8] = {
+  37                  KEY_TARA, KEY_TARA, KEY_2, KEY_9};
+  38          const enum digi_key eRESET_COUNTER[8] = {
+  39                  KEY_TARA, KEY_RCL, KEY_C, KEY_CERO};
+  40          const enum digi_key eVIEW_COUNTER_CALIBRATION[8] = {
+  41                  KEY_TARA, KEY_MEM, KEY_C, KEY_1, KEY_0, KEY_0, KEY_0};
+  42          const enum digi_key eVIEW_COUNTER_CONFIGURATION[8] = {
+  43                  KEY_TARA, KEY_MEM, KEY_C, KEY_1, KEY_0, KEY_0, KEY_1};
+  44          const enum digi_key eVIEW_VOLTAGE_BATTERY[8] = {
+  45                  KEY_TARA, KEY_MEM, KEY_MEM, KEY_C, KEY_C}; 
+  46          const enum digi_key eFUNC_ESPECIAL[8] = {
+  47                  KEY_C, KEY_MEM, KEY_RCL, KEY_MEM};
+  48                  
+  49          const enum digi_key eVIEW_MEMORY[8] = {
+  50                  KEY_TARA, KEY_MEM, KEY_C, KEY_C};
+  51                  
+  52          const enum digi_key eSEQUENCE_RESET_REFERENCE[8] = {
+  53                  KEY_TARA, KEY_TARA, KEY_0};
+  54                  
+C51 COMPILER V7.50   DVR_INICIO                                                            09/14/2022 19:37:00 PAGE 2   
+
+  55          const enum digi_key eTEST_TECLADO[8] = {        
+  56                  KEY_TARA, KEY_MEM, KEY_MEM, KEY_RCL, KEY_RCL};
+  57          
+  58          const enum digi_key eTEST_CALIDAD[8] = {        
+  59                  KEY_TARA, KEY_MEM, KEY_MEM, KEY_RCL, KEY_MEM};
+  60          
+  61          const enum digi_key eACT_PROGRAM[8] = {
+  62                  KEY_TARA, KEY_2, KEY_4, KEY_2, KEY_7};  
+  63          
+  64          const enum digi_key eINF_CAL[8] = {
+  65                  KEY_TARA, KEY_MEM, KEY_0};
+  66          
+  67          const enum digi_key eTEMPERATURE[8] = {
+  68                  KEY_TARA, KEY_CERO, KEY_CERO, KEY_RCL};
+  69                  
+  70          const enum digi_key eVER_OVERLOAD[8] = {
+  71                  KEY_TARA, KEY_RCL, KEY_CERO, KEY_1};
+  72          
+  73          const enum digi_key ePASS_MULTIRANGO_OFF[8] = {
+  74                  KEY_TARA, KEY_5, KEY_4, KEY_3, KEY_2, KEY_1, KEY_0};
+  75                  
+  76          const enum digi_key eBACKLIGHT[8] = {
+  77                  KEY_TARA, KEY_1, KEY_0, KEY_1, KEY_0};  
+  78          
+  79          
+  80          const unsigned char eCODE_CALIBRACION[7]        = "765432";
+  81          const unsigned char eCODE_MENU[7]                               = "779103";
+  82          
+  83          extern const unsigned char ADDR_POINT_ZERO;     /* 4 byte */
+  84          extern const unsigned char ADDR_POINT_ZERO_UNL;
+  85          
+  86          extern float fStablePoint(unsigned char cSetCountBack, unsigned char cShowCount, unsigned char cRunStable)
+             -;
+  87          
+  88          unsigned char cFuncion_Especial = 0;
+  89          
+  90          unsigned char vKey_Code(enum digi_key arCode[7]);
+  91          unsigned char cWrite_Code_Scale(void);
+  92          void vSpecial_Action(unsigned char cAction);
+  93          float fGet_Temp_Amb_Micro(void);
+  94          void vCalidadTest(void);
+  95          
+  96          void vTestTeclado(void);
+  97          
+  98          /**
+  99            ******************************************************************************
+ 100            * Objetivo: Capturar el codigo de configuracion mientras se estabiliza el peso
+ 101                                  de la bascula 
+ 102            * Parametros entrada:  
+ 103                  * Parametros Salida:
+ 104                          0 -> No se digito ningun codigo se inicia el programa 
+ 105                          1 -> Se digito una secuencia valida se pasa a solicitar el pass
+ 106            * Prerequisitos: 
+ 107            ***
+ 108                  */
+ 109          unsigned char cWait_Scale(void){
+ 110   1              
+ 111   1              enum digi_key arPass_Configuration[8] = {0,0,0,0,0,0,0,0};
+ 112   1              enum digi_key Value_Key_Press;
+ 113   1              
+ 114   1              int i=0;
+ 115   1              
+C51 COMPILER V7.50   DVR_INICIO                                                            09/14/2022 19:37:00 PAGE 3   
+
+ 116   1              strTimer.cFLag_TimerD_End = 0;
+ 117   1              strTimer.cFLag_TimerD_Start = 1;        /* Inicia un timer para esperar 2 seg
+ 118   1                                                                                              a qe se digite alguna tecla para introducir un codigo */
+ 119   1                                                                                              
+ 120   1              for(i=0;i<4;i++){
+ 121   2                      //fRead_Adc(1);
+ 122   2              }
+ 123   1              
+ 124   1              while(1){
+ 125   2                      
+ 126   2                      IWDG_KEY_REFRESH;//IWDG->KR = IWDG_KEY_REFRESH;
+ 127   2                      //Value_Key_Press = vActionKey();               /* Verifica si se oprimio alguna tecla y almacena este valor */
+ 128   2      
+ 129   2                      /* La tecla pulsada se almacena en el vector de pass de configuracion */
+ 130   2                      if(Value_Key_Press != KEY_NULL){
+ 131   3                              
+ 132   3                              vBeep_Key();
+ 133   3                              strTimer.cFLag_TimerD_Start = 1;                /* Reinicia el contador para permitir
+ 134   3                                                                                                                                                      /* escribir todo el codigo */
+ 135   3                              /* Solo permite 7 digitos para el codigo */
+ 136   3                              if(strlen(arPass_Configuration) < 7){
+ 137   4                                      /* Agrega la tecla pulsada a la cadena */
+ 138   4                                      strncat(arPass_Configuration, (unsigned char *)&Value_Key_Press, 1);
+ 139   4                              }else{
+ 140   4                                      LCD_GLASS_Clear();
+*** WARNING C206 IN LINE 140 OF _INICIO\DVR_INICIO.C: 'LCD_GLASS_Clear': missing function-prototype
+ 141   4                                      LCD_GLASS_String("CODE", LCD_PESO);
+ 142   4                                      LCD_GLASS_String("BAD", LCD_PRECIO);
+ 143   4                                      
+ 144   4                                      Auto_Off_On_5m_Restart;
+ 145   4                                      Auto_Off_On_5m;
+ 146   4                                      
+ 147   4                                      /*while(!srFlagScale.cWait_Time_Code){
+ 148   4                                              vActionKey();
+ 149   4                                              IWDG->KR = IWDG_KEY_REFRESH;
+ 150   4                                              if(srFlagScale.bScaleOn == FALSE){
+ 151   4                                                      return 0;
+ 152   4                                              }
+ 153   4                                      }*/
+ 154   4                              }
+ 155   3                              
+ 156   3                              if(strcmp(eSEQUENCE_CONFIGURATION, arPass_Configuration) == 0){
+ 157   4                                      srFlagScale.bCodeConfiguration = 1;
+ 158   4                                      return 1;
+ 159   4                              }else if(strcmp(ePRE_CONFIGURATION_15KG, arPass_Configuration) == 0){
+ 160   4                                      vPreConfiguration(PreConfig15KG);
+ 161   4                              }else if(strcmp(ePRE_CONFIGURATION_20KG, arPass_Configuration) == 0){
+ 162   4                                      vPreConfiguration(PreConfig20KG);
+ 163   4                              }else if(strcmp(ePRE_CONFIGURATION_30KG, arPass_Configuration) == 0){
+ 164   4                                      vPreConfiguration(PreConfig30KG);
+ 165   4                              }else if(strcmp(ePRE_CONFIGURATION_31KG, arPass_Configuration) == 0){
+ 166   4                                      vPreConfiguration(PreConfig31KG);                               
+ 167   4                              }else if(strcmp(ePRE_CONFIGURATION_32KG, arPass_Configuration) == 0){
+ 168   4                                      vPreConfiguration(PreConfig32KG);                               
+ 169   4                              }else if(strcmp(ePRE_CONFIGURATION_40KG, arPass_Configuration) == 0){
+ 170   4                                      vPreConfiguration(PreConfig40KG);
+ 171   4                              //}else if(strcmp(ePRE_CONFIGURATION_60LB, arPass_Configuration) == 0){
+ 172   4                              //      vPreConfiguration(PreConfig60LB);                               
+ 173   4                              }else if(strcmp(eDATA_SCALE, arPass_Configuration) == 0){
+ 174   4                                      vSpecial_Action(Data_Scale);
+ 175   4                              }else if(strcmp(eOFFSET_ADC, arPass_Configuration) == 0){
+ 176   4                                      vSpecial_Action(Offset_Adc);
+C51 COMPILER V7.50   DVR_INICIO                                                            09/14/2022 19:37:00 PAGE 4   
+
+ 177   4                              }else if(strcmp(eERASE_PLUS, arPass_Configuration) == 0){
+ 178   4                                      vSpecial_Action(Erase_Plus);
+ 179   4                                      strTimer.cFLag_TimerD_End = 1;
+ 180   4                              }else if(strcmp(eRESET_COUNTER, arPass_Configuration) == 0){
+ 181   4                                      vSpecial_Action(Reset_Counter);
+ 182   4                                      strTimer.cFLag_TimerD_End = 1;
+ 183   4                              }else if(strcmp(eVIEW_COUNTER_CALIBRATION, arPass_Configuration) == 0){
+ 184   4                                      vSpecial_Action(View_Counter_Calibration);
+ 185   4                              }else if(strcmp(eVIEW_COUNTER_CONFIGURATION, arPass_Configuration) == 0){
+ 186   4                                      vSpecial_Action(View_Counter_Configuration);
+ 187   4                              }else if(strcmp(eVIEW_VOLTAGE_BATTERY, arPass_Configuration) == 0){
+ 188   4                                      vSpecial_Action(View_Voltage_Battery);
+ 189   4                              }else if(strcmp(eVIEW_MEMORY, arPass_Configuration) == 0){
+ 190   4                                      vSpecial_Action(View_Memory);
+ 191   4                              }else if(strcmp(eACT_PROGRAM, arPass_Configuration) == 0){
+ 192   4                                      vSpecial_Action(Activar_Debug);
+ 193   4                              }else if(strcmp(eINF_CAL, arPass_Configuration) == 0){
+ 194   4                                      vSpecial_Action(Info_Calibracion);
+ 195   4                              }else if(strcmp(eTEMPERATURE, arPass_Configuration) == 0){
+ 196   4                                      vSpecial_Action(Function_Temperature);
+ 197   4                              }else if(strcmp(eVER_OVERLOAD, arPass_Configuration) == 0){
+ 198   4                                      vSpecial_Action(Function_VerOverload);
+ 199   4                              }else if(strcmp(eTEST_TECLADO, arPass_Configuration) == 0){                             
+ 200   4                                      vSpecial_Action(Function_TestTeclado);  
+ 201   4                              }else if(strcmp(eTEST_CALIDAD, arPass_Configuration) == 0){                             
+ 202   4                                      vSpecial_Action(Function_CalidadTest);  
+ 203   4                              }else if(strcmp(eBACKLIGHT, arPass_Configuration) == 0){                                
+ 204   4                                      vSpecial_Action(Function_Backlight);                                    
+ 205   4                              }else if(strcmp(eSEQUENCE_RESET_REFERENCE, arPass_Configuration) == 0){
+ 206   4                                                      
+ 207   4                                      /*stScaleParam.fPointZeroCali = fStablePoint(1, 0, 0);
+ 208   4                                      vEepromInit(ENABLE);                                    /// Habilita la escritura/lectura en la EEPROM ///
+ 209   4                                      vSaveFloatEeprom(ADDR_POINT_ZERO, stScaleParam.fPointZeroCali);                         
+ 210   4                                      vEepromInit(DISABLE);                                   /// Deshabilita la escritura en la EEPROM /// */
+ 211   4                                      
+ 212   4                                      LCD_GLASS_String("RESET", LCD_PESO);
+ 213   4                                      LCD_GLASS_String("  ADC", LCD_PRECIO);
+ 214   4                                      LCD_GLASS_String("      ", LCD_TOTAL);
+ 215   4                                      
+ 216   4                              }else if(strcmp(ePASS_MULTIRANGO_OFF, arPass_Configuration) == 0){
+ 217   4                                      
+ 218   4                                      stScaleParam.cMultirango = 0;                           
+ 219   4                                      LCD_GLASS_String("NNULR", LCD_PESO);
+ 220   4                                      LCD_GLASS_String("  OFF", LCD_PRECIO);
+ 221   4                                      LCD_GLASS_String("      ", LCD_TOTAL);
+ 222   4                                      vSound_Saved_Param();
+*** WARNING C206 IN LINE 222 OF _INICIO\DVR_INICIO.C: 'vSound_Saved_Param': missing function-prototype
+ 223   4                              }
+ 224   3                      }else{
+ 225   3                              
+ 226   3                              /*if(stScaleParam.iDebug != 24275){
+ 227   3                                      if((GPIOA->IDR & PUSH_SWITCH) == 0){
+ 228   3                                              while(!strTimer.cFLag_TimerD_End){
+ 229   3                                                      IWDG->KR = IWDG_KEY_REFRESH;
+ 230   3                                                      vActionKey();
+ 231   3                                              }
+ 232   3                                              srFlagScale.bCodeConfiguration = 1;
+ 233   3                                              return 1;
+ 234   3                                      }
+ 235   3                              }*/
+ 236   3                      }
+ 237   2                      
+C51 COMPILER V7.50   DVR_INICIO                                                            09/14/2022 19:37:00 PAGE 5   
+
+ 238   2                      if(srFlagScale.bScaleOn == 0){//if(srFlagScale.bScaleOn == FALSE){
+ 239   3                              return 0;
+ 240   3                      
+ 241   3                      }else if(strTimer.cFLag_TimerD_End){
+ 242   3      
+ 243   3                              if(strcmp(eLCD_ALL_SEGMENT, arPass_Configuration) == 0){
+ 244   4                                      
+ 245   4                                      vSpecial_Action(All_Segment);
+ 246   4                                      
+ 247   4                              }else if(strcmp(eSOBRE_PESO_OFF,arPass_Configuration) == 0){
+ 248   4                                      srFlagScale.bTopeSobrePeso = 1;
+ 249   4                                      vSound_Saved_Param();
+ 250   4                              }
+ 251   3      
+ 252   3                              strTimer.cFLag_TimerD_End = 0;
+ 253   3      
+ 254   3                              /* Se espera hasta encontrar un punto estable ademas de verificar las 
+ 255   3                                      condiciones iniciales del peso */
+ 256   3                              stScaleParam.fWeightOverload = (stScaleParam.fCapacityCali);
+ 257   3                              stScaleParam.fWeightOverload += (stScaleParam.fFactorCalibrate * 9);
+ 258   3      
+ 259   3                              if(cFuncion_Especial){
+ 260   4                                      stScaleParam.fPointZero = stScaleParam.fPointZeroCali;                          
+ 261   4                              }else{
+ 262   4                                      cSetZeroPoint();
+ 263   4                              }
+ 264   3                              
+ 265   3                              if(stScaleParam.cTimeAutooff == 1){
+ 266   4                                      Auto_Off_On_15m;
+ 267   4                              }
+ 268   3                              
+ 269   3                              Restart_Sleep_Time;
+ 270   3                                                      
+ 271   3                              stScaleParam.fPointZeroInitial = stScaleParam.fPointZero;
+ 272   3                              
+ 273   3                              return 0;
+ 274   3                      }
+ 275   2              }
+ 276   1              return 0;
+ 277   1      }
+ 278          
+ 279          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1034    ----
+   CONSTANT SIZE    =     48    ----
+   XDATA SIZE       =    231       9
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  2 WARNING(S),  0 ERROR(S)

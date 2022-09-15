@@ -1,0 +1,903 @@
+C51 COMPILER V7.50   DVR_BATTERY_LA                                                        09/12/2022 23:28:44 PAGE 1   
+
+
+C51 COMPILER V7.50, COMPILATION OF MODULE DVR_BATTERY_LA
+OBJECT MODULE PLACED IN dvr_battery_la.obj
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE _battery\dvr_battery_la.c LARGE BROWSE DEBUG OBJECTEXTEND PRINT(.\dvr_batte
+                    -ry_la.lst) OBJECT(dvr_battery_la.obj)
+
+line level    source
+
+   1          /*#include "stm32xx_hal.h"
+   2          #include "stm32xx_hal_adc.h"
+   3          #include <stdio.h>
+   4          #include <string.h>
+   5          #include "dvr_scale.h"
+   6          #include "dvr_battery_la.h"
+   7          #include "dvr_def.h"
+   8          #include "dvr_lcd.h"
+   9          
+  10          #include "app_cfg.h"
+  11          #include "bsp.h"
+  12          #include "app_keyboard.h"
+  13          
+  14          #include "bsp_backlight.h"
+  15          #include "bsp_keyboard.h"   */
+  16          
+  17          extern enum ActionScale eAccionScale;   /* Indica el estado de la maquina de estados*/
+*** ERROR C230 IN LINE 17 OF _BATTERY\DVR_BATTERY_LA.C: 'ActionScale': unknown struct/union/enum tag
+  18                  
+  19          #define HIGH_ADAPTER          10.0
+  20          #define HIGH_ADAPTER_MSG      7.0
+  21          #define LOW_BATTERY_MSG       3.6
+  22          
+  23          #if CAPACITIVE_KEYBOARD
+*** WARNING C322 IN LINE 23 OF _battery\dvr_battery_la.c: unknown identifier
+                      #define LOW_BATTERY_OFF   3.5//3.45
+              #else
+  26                  #define LOW_BATTERY_OFF   3.45
+  27          #endif
+  28          
+  29          #define LOW_VOLTAGE_ADAPTER   5.55
+  30          #define REFERENCE             0.4825                       //valor de ref int del uC en operacion estable
+  31          #define HIGH_BATTERY_MSG      5.7
+  32          #define HIGH_BATTERY              6.0
+  33          #define BAD_BATTERY                       1.0
+  34          
+  35          #define ADC_VIN         0
+  36          #define ADC_VBAT        1
+  37          #define ADC_VREF        2
+  38          
+  39          float fVoltage_Conector = 0;
+  40          float fVoltage_Battery = 0;
+  41          float fVoltage_Ref = 0;                 //variable auxiliar para trabajar con la ref int del uC
+  42          float arrfVoltage_Battery[3] = { 0 };
+  43          
+  44          unsigned char iPercentVoltageChargerSet = 0;
+  45          unsigned char iPercentVoltageChargerCurrent = 0;
+  46          unsigned char iVoltageChargerControl = 1;
+  47          
+  48          unsigned char iCountLowBattery = 0;
+  49          unsigned char iCountVeryLowBattery = 0;
+  50          unsigned char iCountHighBattery = 0;
+  51          
+  52          unsigned int convertidorADC(void);
+C51 COMPILER V7.50   DVR_BATTERY_LA                                                        09/12/2022 23:28:44 PAGE 2   
+
+  53          
+  54          void vGet_Volts_System(void);
+  55          unsigned char uGet_Status_Volt(void);
+  56          void vDriver_Backlight_Source(unsigned char bStatus_Volt);
+  57          
+  58          void vVbatBad(void);
+  59          void vVbatHigh(void);
+  60          void vVadapHigh(void);
+  61          uint16_t iGet_ADCx_Value(uint32_t *iVectorConv, unsigned char iSampleNumber);
+*** ERROR C129 IN LINE 61 OF _BATTERY\DVR_BATTERY_LA.C: missing ';' before 'iGet_ADCx_Value'
+  62          void vSend_Data_Cargador(unsigned char bStatus_Volt);
+  63          void vControlCargaBateria(void);
+  64          
+  65          #if DISPLAY_20400047_EN > 0
+*** WARNING C322 IN LINE 65 OF _battery\dvr_battery_la.c: unknown identifier
+              
+              const float delta=0.05; 
+              const float lvl_3 = 4.0;
+              const float lvl_2 = 3.90;
+              const float lvl_1 = 3.60;               
+              
+              unsigned char estado=0;
+              unsigned char var=0;
+              
+              void driver_symbol(void);
+              void driver_symbol_init(void);
+              
+              #endif
+  79          
+  80          //-----------------------------------------------------------------------------
+  81          
+  82          /*
+  83          */
+  84          void vGestorBateria(void){
+  85          
+  86                  unsigned char bStatus_Volt;
+  87                  //int iRet = 0;
+  88          
+  89                  if(srFlagScale.bReadBattery > 0){
+  90                          
+  91                          //DG->KR =  IWDG_KEY_REFRESH;
+  92                          if(srFlagScale.bFunctionViewVoltage == 0){
+  93                                  uOFF_Carga;
+  94                          }
+  95                          srFlagScale.bReadBattery = 0;
+  96                          bStatus_Volt = uGet_Status_Volt();
+  97                          vDriver_Backlight_Source(bStatus_Volt);
+  98                          
+  99                          switch(bStatus_Volt){
+ 100                                  
+ 101                                  case SOURCE_ADAPTER:    
+ 102                                          if(srFlagScale.bMsgBatteryLow == 1){
+ 103                                                  srFlagScale.bMsgBatteryLow = 0;
+ 104                                                  iLCD_GLASS_Blink(Blink_OFF);
+ 105                                          }
+ 106          
+ 107                                          if(stScaleParam.iModeloBascula == BasculaLpcrPcrCap || stScaleParam.iModeloBascula == BasculaPCB || st
+             -ScaleParam.iModeloBascula == BasculaPCP)
+ 108                                                  stScaleParam.iBatterySave = 0;
+ 109                                          
+ 110                                          srFlagScale.bBateriaLow = 0;
+ 111                                          srFlagScale.bMsgBatteryLow = 0;
+C51 COMPILER V7.50   DVR_BATTERY_LA                                                        09/12/2022 23:28:44 PAGE 3   
+
+ 112                                          srFlagScale.bBateriaCount = 0;
+ 113                                          srFlagScale.bSourceVoltage = SOURCE_ADAPTER;
+ 114                                          if(stScaleParam.iBL_Auto != 2 && stScaleParam.iModeloBascula != BasculaPCP && stScaleParam.iModeloBasc
+             -ula != BasculaPCB){
+ 115                                                  stScaleParam.iBL_Auto = 1;
+ 116                                          }
+ 117                                          Auto_Off_On_15m;        //Reinicia el contador de reset.
+ 118                                          
+ 119                                          if(srFlagScale.bFunctionViewVoltage == 0){
+ 120                                                  uON_Carga;
+ 121                                          }
+ 122                                          
+ 123                                          vControlCargaBateria();
+ 124                                          
+ 125                                          iCountVeryLowBattery = 0;
+ 126                                          iCountLowBattery = 0;
+ 127                                          iCountHighBattery = 0;
+ 128                                          break;
+ 129                                          
+ 130                                  case SOURCE_BATTERY_OK:
+ 131                                          if(srFlagScale.bMsgBatteryLow == 1){
+ 132                                                  srFlagScale.bMsgBatteryLow = 0;
+ 133                                                  iLCD_GLASS_Blink(Blink_OFF);
+ 134                                          }
+ 135                                          
+ 136                                          if(stScaleParam.iBL_Auto == 0 && strTimer.cFLag_TimerJ_End == 1){               // Muestra el mensaje de ahorro de 
+             -bateria
+ 137                                                  
+ 138                                                  if(srFlagScale.bBateriaCount < 117){
+ 139                                                          iLCD_GLASS_Blink(Blink_OFF);
+ 140                                                          srFlagScale.bMsgBatteryLow = 0;
+ 141                                                  }else if(srFlagScale.bBateriaCount < 120){                              
+ 142                                                          srFlagScale.bMsgBatteryLow = 1; 
+ 143                                                          iLCD_GLASS_Clear();
+ 144                                                          iLCD_GLASS_Blink(Blink_2Hz);
+ 145                                                          
+ 146                                                          if(stScaleParam.iLenguage){
+ 147                                                                  LCD_GLASS_String("BAT  ", LCD_PRECIO);  
+ 148                                                                  LCD_GLASS_String("AHORRO", LCD_TOTAL);                                  
+ 149                                                          }else{
+ 150                                                                  LCD_GLASS_String("SAVE ", LCD_PRECIO);  
+ 151                                                                  LCD_GLASS_String("  BATT", LCD_TOTAL);
+ 152                                                          }
+ 153                                                  }else{
+ 154                                                          iLCD_GLASS_Blink(Blink_OFF);
+ 155                                                          srFlagScale.bBateriaCount = 0;
+ 156                                                          srFlagScale.bMsgBatteryLow = 0;
+ 157                                                          strTimer.cFLag_TimerJ_Start = 1;
+ 158                                                  }
+ 159          
+ 160                                          }else if(stScaleParam.iBL_Auto == 1){
+ 161                                                  srFlagScale.bBateriaCount = 0;
+ 162                                                  srFlagScale.bMsgBatteryLow = 0;
+ 163                                                  
+ 164                                          }
+ 165                                          srFlagScale.bBateriaLow = 0;
+ 166                                          srFlagScale.bSourceVoltage =  SOURCE_BATTERY;
+ 167                                          iCountVeryLowBattery = 0;
+ 168                                          iCountLowBattery = 0;
+ 169                                          iCountHighBattery = 0;
+ 170                                          
+ 171                                          break;
+C51 COMPILER V7.50   DVR_BATTERY_LA                                                        09/12/2022 23:28:44 PAGE 4   
+
+ 172                                  
+ 173                                  case SOURCE_BATTERY_HIGH:                       
+ 174          
+ 175                                    if(iCountHighBattery++ >= 3){
+ 176                                                  iCountHighBattery = 3;
+ 177                                  
+ 178                                                  if(srFlagScale.bMsgBatteryLow == 1){
+ 179                                                          srFlagScale.bMsgBatteryLow = 0;
+ 180                                                          iLCD_GLASS_Blink(Blink_OFF);
+ 181                                                  }
+ 182                                                  srFlagScale.bBateriaLow = 0;
+ 183                                                  srFlagScale.bMsgBatteryLow = 0;
+ 184                                                  srFlagScale.bBateriaCount = 0;  
+ 185                                                  srFlagScale.bSourceVoltage =  SOURCE_BATTERY;
+ 186          
+ 187                                                  if(stScaleParam.iShowHighBat == 1){
+ 188                                                          vVbatHigh();
+ 189                                                  }
+ 190                                                  srFlagScale.bBateriaCount = 0;
+ 191                                                  LCD_GLASS_Symbols(SYMBOL_BATT, 0);                                      
+ 192                                          }
+ 193                                                  
+ 194                                          break;
+ 195                                  
+ 196                                  case SOURCE_BATTERY_LOW:
+ 197                                          
+ 198                                          iCountHighBattery = 0;
+ 199                                  
+ 200                                          if(iCountLowBattery++ >= 3){
+ 201                                                  iCountLowBattery = 3;
+ 202                                                  
+ 203                                                  srFlagScale.bSourceVoltage =  SOURCE_BATTERY;
+ 204                                                  srFlagScale.bBateriaLow = 1;
+ 205                                                  OffBackLight;
+ 206                                                  if(stScaleParam.iBL_Auto != 2){
+ 207                                                          
+ 208                                                          if(stScaleParam.iBL_Auto == 1){
+ 209                                                                  iLCD_GLASS_Clear();
+ 210                                                                  if(stScaleParam.iLenguage){
+ 211                                                                          LCD_GLASS_String("BAT  ", LCD_PRECIO);  
+ 212                                                                          LCD_GLASS_String("AHORRO", LCD_TOTAL);                                  
+ 213                                                                  }else{
+ 214                                                                          LCD_GLASS_String("SAVE ", LCD_PRECIO);  
+ 215                                                                          LCD_GLASS_String("  BATT", LCD_TOTAL);
+ 216                                                                  }
+ 217                                                                  
+ 218                                                                  strTimer.cFLag_TimerD_Start = 1;
+ 219                                                                  strTimer.cFLag_TimerD_End = 0;                  
+ 220                                                                  
+ 221                                                                  while(iCompareValue(strTimer.cFLag_TimerD_End,1) == 0 && srFlagScale.bScaleOn == true){
+ 222                                                                          IWDG->KR = IWDG_KEY_REFRESH;
+ 223                                                                  }
+ 224                                                          }
+ 225                                                          
+ 226                                                          stScaleParam.iBL_Auto = 0;
+ 227                                                          strTimer.cFLag_TimerJ_Start = 1;
+ 228                                                  }
+ 229                                                  LCD_GLASS_Symbols(SYMBOL_BATT, 1);
+ 230                                                  
+ 231                                                  if(srFlagScale.bBateriaCount < 7){
+ 232                                                          iLCD_GLASS_Blink(Blink_OFF);
+ 233                                                          srFlagScale.bMsgBatteryLow = 0;
+C51 COMPILER V7.50   DVR_BATTERY_LA                                                        09/12/2022 23:28:44 PAGE 5   
+
+ 234                                                  }else if(srFlagScale.bBateriaCount < 10){                               
+ 235                                                          srFlagScale.bMsgBatteryLow = 1; 
+ 236                                                          iLCD_GLASS_Clear();
+ 237                                                          iLCD_GLASS_Blink(Blink_2Hz);
+ 238                                                          
+ 239                                                          if(stScaleParam.iLenguage){
+ 240                                                                  LCD_GLASS_String("BAJA ", LCD_PRECIO);  
+ 241                                                                  LCD_GLASS_String("  BAT ", LCD_TOTAL);                                  
+ 242                                                          }else{
+ 243                                                                  LCD_GLASS_String("LOVV ", LCD_PRECIO);  
+ 244                                                                  LCD_GLASS_String("  BATT", LCD_TOTAL);
+ 245                                                          }
+ 246                                                  }else{
+ 247                                                          iLCD_GLASS_Blink(Blink_OFF);
+ 248                                                          srFlagScale.bBateriaCount = 0;
+ 249                                                          srFlagScale.bMsgBatteryLow = 0;
+ 250                                                  }
+ 251                                          }
+ 252                                          
+ 253                                          break;
+ 254                                          
+ 255                                  case SOURCE_BATTERY_VERY_LOW:
+ 256          
+ 257                                          iCountHighBattery = 0;
+ 258                                  
+ 259                                          if(iCountVeryLowBattery++ >= 3){
+ 260                                                  iCountVeryLowBattery = 3;
+ 261                                          
+ 262                                                  OffBackLight;                   
+ 263                                                  iLCD_GLASS_Clear();                             
+ 264                                                  
+ 265                                                  if(stScaleParam.iLenguage){
+ 266                                                          LCD_GLASS_String("BAJA ", LCD_PESO);    
+ 267                                                          LCD_GLASS_String("  BAT", LCD_PRECIO);  
+ 268                                                          LCD_GLASS_String("AUTOFF", LCD_TOTAL);  
+ 269                                                  }else{
+ 270                                                          LCD_GLASS_String("LOVV ", LCD_PESO);    
+ 271                                                          LCD_GLASS_String(" BATT", LCD_PRECIO);  
+ 272                                                          LCD_GLASS_String("AUTOFF", LCD_TOTAL);  
+ 273                                                  }                       
+ 274                                          
+ 275                                                  LCD_GLASS_Symbols(SYMBOL_BATT, 0);
+ 276                                                  
+ 277                                                  if(srFlagScale.bMsgBatteryLow == 1){
+ 278                                                          srFlagScale.bMsgBatteryLow = 0;
+ 279                                                          iLCD_GLASS_Blink(Blink_OFF);
+ 280                                                  }
+ 281                                                  strTimer.cFLag_TimerE_Start = 1;
+ 282                                                  strTimer.cFLag_TimerE_End = 0;                  
+ 283                                                  
+ 284                                                  while(iCompareValue(strTimer.cFLag_TimerE_End,1) == 0 && srFlagScale.bScaleOn == true){
+ 285                                                          IWDG->KR = IWDG_KEY_REFRESH;
+ 286                                                  }
+ 287                                                  
+ 288                                                  if(srFlagScale.bScaleOn == false){
+ 289                                                          return;
+ 290                                                  }
+ 291                                                  
+ 292                                                  vAutoOff();
+ 293                                          }
+ 294                                          
+ 295                                          break;
+C51 COMPILER V7.50   DVR_BATTERY_LA                                                        09/12/2022 23:28:44 PAGE 6   
+
+ 296                                          
+ 297                                  case SOURCE_ADAPTER_HIGH:
+ 298                                  
+ 299                                          iCountHighBattery = 0;
+ 300                                  
+ 301                                          if(srFlagScale.bBateriaLow == 1){
+ 302                                                  iLCD_GLASS_Blink(Blink_OFF);
+ 303                                                  srFlagScale.bMsgBatteryLow = 0;
+ 304                                                  srFlagScale.bBateriaLow = 0;
+ 305                                                  srFlagScale.bBateriaCount = 0;
+ 306                                          }
+ 307                                          vVadapHigh();                           
+ 308                                          break;
+ 309                                          
+ 310                                  case SOURCE_BAD_BATTERY:
+ 311          
+ 312                                          iCountHighBattery = 0;
+ 313                                  
+ 314                                          if(srFlagScale.bBateriaLow == 1){
+ 315                                                  iLCD_GLASS_Blink(Blink_OFF);
+ 316                                                  srFlagScale.bMsgBatteryLow = 0;
+ 317                                                  srFlagScale.bBateriaLow = 0;
+ 318                                                  srFlagScale.bBateriaCount = 0;
+ 319                                          }
+ 320                                          
+ 321                                          vVbatBad();                     
+ 322                                          break;
+ 323                          }
+ 324          
+ 325                  #if DISPLAY_20400047_EN > 0
+*** WARNING C322 IN LINE 325 OF _battery\dvr_battery_la.c: unknown identifier
+                      driver_symbol();
+                      #endif
+ 328                          
+ 329                  } 
+ 330          }
+ 331          
+ 332          /*
+ 333          */
+ 334                  
+ 335          #if DISPLAY_20400047_EN > 0
+*** WARNING C322 IN LINE 335 OF _battery\dvr_battery_la.c: unknown identifier
+              void driver_symbol_init(){
+                              
+                                      if(fVoltage_Battery>=4.0)
+                              {
+                                      estado=3;
+                              }else if(fVoltage_Battery<4.0 && fVoltage_Battery>=3.86)
+                              {
+                                      estado=2;
+                              }else if(fVoltage_Battery<3.86 && fVoltage_Battery>=3.6)
+                              {
+                                      estado=1;
+                              }else if(fVoltage_Battery<3.6)
+                              {
+                                      estado=0;
+                              }
+              }
+              
+              /*
+              */
+              
+C51 COMPILER V7.50   DVR_BATTERY_LA                                                        09/12/2022 23:28:44 PAGE 7   
+
+              void driver_symbol(){
+              
+              if(eAccionScale==scalePreOnDc)
+                      return;
+              else if(srFlagScale.bOverLoad ==1)
+                              {
+                                      LCD_GLASS_Symbols(9,0); //bateria 0/3
+                                      LCD_GLASS_Symbols(8,0);
+                                      LCD_GLASS_Symbols(7,0);
+                                      LCD_GLASS_Symbols(10,0);
+                                      return;
+                              } 
+                      
+              if(eAccionScale==scalePreOnDc || srFlagScale.bOverLoad ==1)
+                      return;
+              
+              if(srFlagScale.bSourceVoltage == SOURCE_ADAPTER)
+              {
+                      
+                      if(strTimer.cFLag_TimerCharge_End==1)
+                      {
+                                      estado++;
+                              if(estado==4)
+                                      estado=0;
+                      }
+                      
+                      if(strTimer.cFLag_TimerCharge_On==0)
+                              strTimer.cFLag_TimerCharge_Start=1;
+              
+                      if(fVoltage_Battery<=5.22 && fVoltage_Battery>=4.72)
+                              estado=5;
+              
+              }else{
+                                      
+                      if(fVoltage_Battery < (lvl_3 - delta) && estado == 3)   
+                              estado = 2;
+                      else if(fVoltage_Battery >= (lvl_3 + delta) && estado == 2)
+                              estado = 3;
+                      else if(fVoltage_Battery < (lvl_2 - delta) && estado == 2)
+                              estado = 1;
+                      else if(fVoltage_Battery >= (lvl_2 + delta) && estado == 1)
+                              estado = 2;
+                      else if(fVoltage_Battery < (lvl_1 - delta) && estado == 1)
+                              estado = 0;     
+                      else if(fVoltage_Battery >= (lvl_1 + delta) && estado == 0)
+                              estado = 1;
+                       }
+              
+                       if(estado==0)
+                      {
+                                      LCD_GLASS_Symbols(9,0); //bateria 0/3
+                                      LCD_GLASS_Symbols(8,0);
+                                      LCD_GLASS_Symbols(7,0);
+                                      LCD_GLASS_Symbols(10,1);
+                      }else if(estado==1)
+                      {
+                                      LCD_GLASS_Symbols(9,0); //bateria 1/3
+                                      LCD_GLASS_Symbols(8,0);
+                                      LCD_GLASS_Symbols(7,1);
+                                      LCD_GLASS_Symbols(10,1);
+                      }else if(estado==2)
+                      {
+C51 COMPILER V7.50   DVR_BATTERY_LA                                                        09/12/2022 23:28:44 PAGE 8   
+
+                                      LCD_GLASS_Symbols(9,0); //bateria 2/3
+                                      LCD_GLASS_Symbols(8,1);
+                                      LCD_GLASS_Symbols(7,1);
+                                      LCD_GLASS_Symbols(10,1);
+                      }else if(estado==3)
+                      {
+                                      LCD_GLASS_Symbols(9,1); //bateria 3/3
+                                      LCD_GLASS_Symbols(8,1);
+                                      LCD_GLASS_Symbols(7,1);
+                                      LCD_GLASS_Symbols(10,1);
+                      }else if(estado==5)
+                      {               
+                                      LCD_GLASS_Symbols(9,1); //bateria 3/3
+                                      LCD_GLASS_Symbols(8,1);
+                                      LCD_GLASS_Symbols(7,1);
+                                      LCD_GLASS_Symbols(10,1);
+                              
+                          estado=3;
+                      }       
+              }
+              #endif
+ 439          
+ 440          /*
+ 441          */
+ 442          unsigned char uGet_Status_Volt(void){
+ 443                  
+ 444                  vGet_Volts_System();
+ 445          
+ 446          #if CAPACITIVE_KEYBOARD > 0
+*** WARNING C322 IN LINE 446 OF _battery\dvr_battery_la.c: unknown identifier
+              if(fVoltage_Battery < (lvl_2 - delta) && (stScaleParam.iModeloBascula == BasculaLpcrPcrCap || stScaleParam
+             -.iModeloBascula == BasculaPCB || stScaleParam.iModeloBascula == BasculaPCP))
+                      stScaleParam.iBatterySave = 1;
+              #endif
+ 450          
+ 451                  if(fVoltage_Conector < LOW_VOLTAGE_ADAPTER && fVoltage_Battery < LOW_BATTERY_MSG){
+ 452                          if(fVoltage_Battery < BAD_BATTERY){
+ 453                                  return SOURCE_BAD_BATTERY;
+ 454                          }else if(fVoltage_Battery < LOW_BATTERY_OFF){
+ 455                                  return SOURCE_BATTERY_VERY_LOW;
+ 456                          }else if(fVoltage_Battery < LOW_BATTERY_MSG){
+ 457                                  return SOURCE_BATTERY_LOW;
+ 458                          }else{
+ 459                                  return SOURCE_BATTERY_OK;
+ 460                          }
+ 461                  }else{
+ 462          if(fVoltage_Battery < BAD_BATTERY){
+ 463                                  return SOURCE_BAD_BATTERY;
+ 464                          }else if(fVoltage_Battery > HIGH_BATTERY_MSG && stScaleParam.iShowHighAdapt7v == 1){
+ 465                                  return SOURCE_BATTERY_HIGH;
+ 466                          }else if(fVoltage_Battery > HIGH_BATTERY && stScaleParam.iShowHighAdapt7v == 0){
+ 467                                  return SOURCE_BATTERY_HIGH;
+ 468                          }else if(fVoltage_Conector < LOW_VOLTAGE_ADAPTER){
+ 469                                  return SOURCE_BATTERY_OK;       
+ 470                          }else if(fVoltage_Conector > HIGH_ADAPTER_MSG && stScaleParam.iShowHighAdapt7v == 1){
+ 471                                  return SOURCE_ADAPTER_HIGH;
+ 472                          }else if(fVoltage_Conector > HIGH_ADAPTER){
+ 473                                  return SOURCE_ADAPTER_HIGH;
+ 474                          }else{
+ 475                                  return SOURCE_ADAPTER;
+ 476                          }
+ 477                  }
+C51 COMPILER V7.50   DVR_BATTERY_LA                                                        09/12/2022 23:28:44 PAGE 9   
+
+ 478          }
+ 479          
+ 480          /*
+ 481          */
+ 482          void vGet_Volts_System(void){
+ 483                  
+ 484                  P0|= (1<<5);
+ 485                  fVoltage_Battery = convertidorADC()*(3.3/255);
+ 486                  if(fVoltage_Battery > LOW_VOLTAGE_ADAPTER){
+ 487                          fVoltage_Conector = fVoltage_Battery;
+ 488                          fVoltage_Battery = 4.6; 
+ 489                  }else{
+ 490                          fVoltage_Conector =4.0; 
+ 491                  }
+ 492          
+ 493          
+ 494          }
+ 495          
+ 496          /*
+ 497          */
+ 498          
+ 499          unsigned int convertidorADC(){
+ 500          
+ 501          unsigned int v=0;
+ 502          SARCON = 0x09;
+ 503                  if(!(SARCON & 0x04))
+ 504                  {
+ 505                          SARCON |= 0x04;
+ 506                          while(SARCON & 0x04)
+ 507                          {
+ 508                          }
+ 509                  }
+ 510          v=SARDATA;
+ 511          SARCON &= 0xf7;
+ 512          return v;
+ 513          
+ 514          }
+ 515          
+ 516          /*
+ 517          */
+ 518          void vControlCargaBateria(void){
+ 519                  
+ 520                          unsigned char i = 0;
+ 521                          float fTempfVoltage_Battery = 0;
+ 522                          static unsigned char iGetValueMaxBattery = 0;
+ 523                  
+ 524                          for(i=0; i<2; i++){
+ 525                                  arrfVoltage_Battery[i] = arrfVoltage_Battery[i+1];
+ 526                          }
+ 527                          
+ 528                          arrfVoltage_Battery[2] = fVoltage_Battery;
+ 529                          
+ 530                          fTempfVoltage_Battery = arrfVoltage_Battery[0] + arrfVoltage_Battery[1] + arrfVoltage_Battery[2];
+ 531                          fTempfVoltage_Battery /= 3;
+ 532                          
+ 533                          if(fVoltage_Conector >= LOW_VOLTAGE_ADAPTER ){                          
+ 534                                  if(fTempfVoltage_Battery < 4){
+ 535                                          iPercentVoltageChargerSet = 10;
+ 536                                          iGetValueMaxBattery = 0;
+ 537                                  }else if(fTempfVoltage_Battery < 4.6){
+ 538                                          iPercentVoltageChargerSet = 9;
+ 539                                          iGetValueMaxBattery = 0;
+C51 COMPILER V7.50   DVR_BATTERY_LA                                                        09/12/2022 23:28:44 PAGE 10  
+
+ 540                                  }else if(fTempfVoltage_Battery < 4.70){
+ 541                                          iPercentVoltageChargerSet = 8;
+ 542                                          iGetValueMaxBattery = 0;
+ 543                                  }else if(fTempfVoltage_Battery < 4.75){
+ 544                                          iPercentVoltageChargerSet = 7;
+ 545                                          iGetValueMaxBattery = 0;
+ 546                                  }else if(fTempfVoltage_Battery < 4.80){
+ 547                                          iPercentVoltageChargerSet = 6;
+ 548                                          iGetValueMaxBattery = 0;
+ 549                                  }else if(fTempfVoltage_Battery < 4.85 && iGetValueMaxBattery == 0){
+ 550                                          iPercentVoltageChargerSet = 3;
+ 551                                  }else{
+ 552                                          iPercentVoltageChargerSet = 0;
+ 553                                          iGetValueMaxBattery = 1;
+ 554                                  }
+ 555                          }else{
+ 556                                  iPercentVoltageChargerSet = 0;
+ 557                                  iGetValueMaxBattery = 0;
+ 558                          }
+ 559          }
+ 560          
+ 561          /*
+ 562          */
+ 563          void vSet_Volts_System(void){
+ 564                  uGet_Status_Volt();
+ 565                  stScaleParam.fVoltage_Batt =    fVoltage_Battery;
+ 566                  stScaleParam.fVoltage_Adap =    fVoltage_Conector;      
+ 567          }
+ 568          
+ 569          
+ 570          /*
+ 571          */
+ 572          void vDriver_Backlight_Source(unsigned char bStatus_Volt){
+ 573                  
+ 574                  if(bStatus_Volt != SOURCE_ADAPTER && !stScaleParam.sUsbConected){
+ 575                          if(srFlagScale.bEliminadorOn == 1){
+ 576                                  if(bStatus_Volt != SOURCE_BATTERY_HIGH){
+ 577                                          OffBackLight;
+ 578                                          srFlagScale.bEliminadorOn = 0;
+ 579                                  }else if(bStatus_Volt == SOURCE_BATTERY_HIGH && stScaleParam.iShowHighBat == 0){
+ 580                                          OffBackLight;
+ 581                                          srFlagScale.bEliminadorOn = 0;
+ 582                                  }
+ 583                          }               
+ 584                  }else{
+ 585                          if(eAccionScale == ScaleRun || eAccionScale == ScaleBattery || srFlagScale.bCalidadTest == 1){                  
+ 586                                  if(srFlagScale.bEliminadorOn == 0){
+ 587                                          srFlagScale.bBateriaLow = 0;
+ 588                                          srFlagScale.bEliminadorOn = 1;
+ 589                                          OnBackLight;
+ 590                                  }
+ 591                          }
+ 592                  }
+ 593          }
+ 594          
+ 595          /**
+ 596            ******************************************************************************
+ 597            * Objetivo: Proteger el circuito de una polaridad inversa de la bateria
+ 598            * Parametros entrada: Ninguno
+ 599                  */
+ 600          void vVbatBad(void){
+ 601                  
+C51 COMPILER V7.50   DVR_BATTERY_LA                                                        09/12/2022 23:28:44 PAGE 11  
+
+ 602                  enum digi_key Value_Key_Press;
+ 603                  
+ 604                  iLCD_GLASS_Init();              /* Habilita el modulo LCD */    
+ 605                  iLCD_GLASS_Clear();
+ 606          
+ 607                  if(stScaleParam.iLenguage){
+ 608                          LCD_GLASS_String("ERROR", LCD_PESO);    
+ 609                          LCD_GLASS_String("  BAT", LCD_PRECIO);  
+ 610                  }else{
+ 611                          LCD_GLASS_String("BAD ", LCD_PESO);     
+ 612                          LCD_GLASS_String(" BATT", LCD_PRECIO);  
+ 613                  }
+ 614                  
+ 615                  Value_Key_Press = vActionKey();
+ 616                  
+ 617                  while(fVoltage_Battery < 1 && Value_Key_Press != KEY_NC){
+ 618                          uOFF_Carga;             
+ 619                          uGet_Status_Volt();             
+ 620                          vSound_Saved_Param();                   
+ 621                          Value_Key_Press = vActionKey();         
+ 622                          IWDG->KR = IWDG_KEY_REFRESH;
+ 623                  }
+ 624                  
+ 625                  if(Value_Key_Press == KEY_NC){
+ 626                          srFlagScale.bShowErrorBat = 0;
+ 627                  }
+ 628                  
+ 629                  iLCD_GLASS_Clear();
+ 630          }
+ 631          
+ 632          /**
+ 633            ******************************************************************************
+ 634            * Objetivo: Proteger el circuito de una polaridad inversa de la bateria
+ 635            ******************************************************************************
+ 636                  */
+ 637          void vVbatHigh(void){
+ 638                  
+ 639                  iLCD_GLASS_Init();              /* Habilita el modulo LCD */    
+ 640                  iLCD_GLASS_Clear();
+ 641          
+ 642                  if(stScaleParam.iLenguage){
+ 643                          LCD_GLASS_String("ALTA ", LCD_PESO);    
+ 644                          LCD_GLASS_String("  BAT", LCD_PRECIO);  
+ 645                  }else{
+ 646                          LCD_GLASS_String("HIGH ", LCD_PESO);    
+ 647                          LCD_GLASS_String(" BATT", LCD_PRECIO);  
+ 648                  }
+ 649                  
+ 650                  
+ 651                  while(fVoltage_Battery > HIGH_BATTERY_MSG){             
+ 652                          uOFF_Carga;
+ 653                          uGet_Status_Volt();             
+ 654                          vSound_Saved_Param();
+ 655                          vActionKey();
+ 656                          IWDG->KR = IWDG_KEY_REFRESH;
+ 657                  }
+ 658                  
+ 659                  iLCD_GLASS_Clear();
+ 660          }
+ 661          
+ 662          /*
+ 663          */
+C51 COMPILER V7.50   DVR_BATTERY_LA                                                        09/12/2022 23:28:44 PAGE 12  
+
+ 664          void vVadapHigh(void){
+ 665                  
+ 666                  iLCD_GLASS_Init();              /* Habilita el modulo LCD */    
+ 667                  iLCD_GLASS_Clear();
+ 668                  
+ 669                  if(stScaleParam.iLenguage){
+ 670                          LCD_GLASS_String("ALTO ", LCD_PESO);    
+ 671                          LCD_GLASS_String(" ADAP", LCD_PRECIO);  
+ 672                  }else{
+ 673                          LCD_GLASS_String("HIGH ", LCD_PESO);    
+ 674                          LCD_GLASS_String(" ADAP", LCD_PRECIO);  
+ 675                  }
+ 676                  
+ 677                  while((fVoltage_Conector > HIGH_ADAPTER_MSG && stScaleParam.iShowHighAdapt7v == 1) || fVoltage_Conector >
+             - HIGH_ADAPTER){       
+ 678                          uOFF_Carga;             
+ 679                          uGet_Status_Volt();             
+ 680                          vSound_Saved_Param();
+ 681                          IWDG->KR = IWDG_KEY_REFRESH;
+ 682                  }
+ 683                  
+ 684                  iLCD_GLASS_Clear();
+ 685          }
+ 686          
+ 687          
+ 688          /**
+ 689            ******************************************************************************
+ 690            * Objective: To obtain the value of the channel ADC.
+ 691                  ******************************************************************************
+ 692                  */
+ 693          uint16_t iGet_ADCx_Value(uint32_t *iVectorConv, unsigned char iSampleNumber){
+ 694                  unsigned char j = 0;
+ 695                  uint32_t iVectorConvAcc[4]= {0};
+ 696                  uint32_t tickstart = 0;
+ 697                  uint32_t Timeout = 10;
+ 698                          
+ 699                  for(j=0;j<iSampleNumber;j++){
+ 700                          
+ 701                          
+ 702                          HAL_ADC_Start(&hadc);
+ 703                          tickstart = HAL_GetTick();
+ 704                          IWDG->KR =  IWDG_KEY_REFRESH;           
+ 705                          while(__HAL_ADC_GET_FLAG(&hadc, ADC_FLAG_EOC) == RESET){
+ 706                                  if((HAL_GetTick()-tickstart) >= Timeout){
+ 707                                          return 1;
+ 708                                  }
+ 709                                  IWDG->KR = IWDG_KEY_REFRESH;
+ 710                          }               
+ 711                          iVectorConvAcc[1] += HAL_ADC_GetValue(&hadc);   
+ 712          
+ 713                          tickstart = HAL_GetTick();                      
+ 714                          IWDG->KR =  IWDG_KEY_REFRESH;           
+ 715                          while(__HAL_ADC_GET_FLAG(&hadc, ADC_FLAG_EOC) == RESET)
+ 716                          {
+ 717                                  if((HAL_GetTick()-tickstart) >= Timeout){
+ 718                                          return 1;
+ 719                                  }
+ 720                                  IWDG->KR = IWDG_KEY_REFRESH;                    
+ 721                          }               
+ 722                          iVectorConvAcc[0] += HAL_ADC_GetValue(&hadc);
+ 723                          
+ 724          
+C51 COMPILER V7.50   DVR_BATTERY_LA                                                        09/12/2022 23:28:44 PAGE 13  
+
+ 725                          tickstart = HAL_GetTick();              
+ 726                          IWDG->KR =  IWDG_KEY_REFRESH;           
+ 727                          while(__HAL_ADC_GET_FLAG(&hadc, ADC_FLAG_EOC) == RESET)
+ 728                          {
+ 729                                  if((HAL_GetTick()-tickstart) >= Timeout){
+ 730                                          return 1;
+ 731                                  }
+ 732                                  IWDG->KR = IWDG_KEY_REFRESH;                    
+ 733                          }               
+ 734                          iVectorConvAcc[2] += HAL_ADC_GetValue(&hadc);   
+ 735                          
+ 736                          tickstart = HAL_GetTick();              
+ 737                          while(HAL_GetTick()-tickstart>=3)
+ 738                          {
+ 739                                  IWDG->KR = IWDG_KEY_REFRESH;                    
+ 740                          }       
+ 741                          
+ 742                  }
+ 743                  
+ 744                  for(j=0;j<3;j++){
+ 745                          IWDG->KR =  IWDG_KEY_REFRESH;
+ 746                          iVectorConv[j] = iVectorConvAcc[j]/iSampleNumber;
+ 747                  }
+ 748                  
+ 749                  return 0;
+ 750          }
+ 751          
+ 752          
+ 753          /**
+ 754            ******************************************************************************
+ 755            * Objective: To obtain the value of the Reference channel ADC.
+ 756                  ******************************************************************************
+ 757                  */
+ 758          uint16_t vGet_ADCx_Current_Ref(uint32_t ADC_Channel, unsigned char iSampleNumber){
+ 759          
+ 760                  /* long iValue_ADC = 0;
+ 761                  int i = 0;
+ 762                  ADC_VrefintCmd(ENABLE);
+ 763                  ADC_Cmd(ADC1, ENABLE);
+ 764                  ADC_ChannelCmd(ADC1, ADC_Channel, ENABLE);
+ 765                  
+ 766                  // Se realizan 1000 lecturas seguidas del valor solicitado para asegurar un dato correcto
+ 767                  
+ 768                  for(i=0; i<iSampleNumber; i++){         
+ 769                          ADC_SoftwareStartConv(ADC1);
+ 770                          
+ 771                          while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC)){}
+ 772                  
+ 773                          iValue_ADC += (long)(ADC_GetConversionValue(ADC1));
+ 774                  }
+ 775                  
+ 776                  iValue_ADC = iValue_ADC/iSampleNumber;
+ 777                                                  
+ 778                  ADC_ChannelCmd(ADC1, ADC_Channel, DISABLE);
+ 779                  
+ 780                  ADC_Cmd(ADC1, DISABLE);
+ 781                  
+ 782                  ADC_VrefintCmd(DISABLE);
+ 783                  
+ 784                  return (int)(iValue_ADC); */
+ 785                  
+ 786                  return 0;
+C51 COMPILER V7.50   DVR_BATTERY_LA                                                        09/12/2022 23:28:44 PAGE 14  
+
+ 787          }
+ 788          
+ 789          /*
+ 790          */
+ 791          void vShowDataBatLcd(void){
+ 792                  
+ 793                  LCD_GLASS_Float(fVoltage_Conector, 2, LCD_PESO);
+ 794                  LCD_GLASS_Float(fVoltage_Battery, 2, LCD_PRECIO);
+ 795                  LCD_GLASS_Float(fVoltage_Ref*100, 2, LCD_TOTAL);
+ 796          }
+ 797          
+ 798          /**
+ 799            ******************************************************************************
+ 800            * Objetivo: Enviar informacion del control de carga a traves del puerto serial
+ 801            * Parametros entrada: Ninguno
+ 802                  */
+ 803          void vSend_Data_Cargador(unsigned char bStatus_Volt){
+ 804                  
+ 805                  char cData_Serial[20];
+ 806                          
+ 807                  vSend_String_USB(" Vb: ");      
+ 808                  sprintf(cData_Serial, "%6.3f", fVoltage_Battery);
+ 809                  vSend_String_USB(cData_Serial); 
+ 810                  
+ 811                  vSend_String_USB(" Vc: ");      
+ 812                  sprintf(cData_Serial, "%6.3f", fVoltage_Conector);
+ 813                  vSend_String_USB(cData_Serial);
+ 814                  
+ 815                  vSend_String_USB(" Vr: ");      
+ 816                  sprintf(cData_Serial, "%6.3f ", fVoltage_Ref*100);
+ 817                  vSend_String_USB(cData_Serial);
+ 818                  
+ 819                  switch(bStatus_Volt){
+ 820                          
+ 821                          case SOURCE_ADAPTER:
+ 822                                  vSend_String_USB("SOURCE_ADAPTER");
+ 823                                  break;
+ 824                                  
+ 825                          case SOURCE_BATTERY_OK:
+ 826                                  vSend_String_USB("SOURCE_BATTERY_OK");
+ 827                                  break;
+ 828                          
+ 829                          case SOURCE_BATTERY_HIGH:                                       
+ 830                                  vSend_String_USB("SOURCE_BATTERY_HIGH");
+ 831                                  break;
+ 832                          
+ 833                          case SOURCE_BATTERY_LOW:
+ 834                                  vSend_String_USB("SOURCE_BATTERY_LOW");
+ 835                                  break;
+ 836                                  
+ 837                          case SOURCE_BATTERY_VERY_LOW:
+ 838                                  vSend_String_USB("SOURCE_BATTERY_VERY_LOW");
+ 839                                  break;
+ 840                                  
+ 841                          case SOURCE_ADAPTER_HIGH:
+ 842                                  vSend_String_USB("SOURCE_ADAPTER_HIGH");
+ 843                                  break;
+ 844                                  
+ 845                          case SOURCE_BAD_BATTERY:
+ 846                                  vSend_String_USB("SOURCE_BAD_BATTERY");
+ 847                                  break;
+ 848                  }
+C51 COMPILER V7.50   DVR_BATTERY_LA                                                        09/12/2022 23:28:44 PAGE 15  
+
+ 849                  
+ 850                  vSend_String_USB("\n\r");
+ 851          }
+
+C51 COMPILATION COMPLETE.  5 WARNING(S),  2 ERROR(S)

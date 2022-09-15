@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   MAIN                                                                  09/12/2022 21:19:22 PAGE 1   
+C51 COMPILER V7.50   MAIN                                                                  09/14/2022 19:45:08 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
@@ -14,187 +14,433 @@ line level    source
    4          //#include <math.h>
    5          #include "./_solidic/head_file_version.h"
    6          #include "./_display/dvr_lcd_SDI1621.h"
-*** WARNING C245 IN LINE 40 OF C:\KEIL\C51\INC\STDIO.H: unknown #pragma, line ignored
-*** WARNING C245 IN LINE 52 OF C:\KEIL\C51\INC\STRING.H: unknown #pragma, line ignored
    7          #include "./_weight/dvr_HX712.h"
-   8          
-   9          
-  10          unsigned char Key;
-  11          unsigned char lecturaADC[4]= {0};
-  12          static unsigned char cont = 0;
-  13          
-  14          #define     BL_EN       P1 |= 0x20
-  15          #define     BL_DIS      P1 &= 0xDF
+   8          #include "./_scale/dvr_scale.h"
+   9          #include "./_scale/dvr_def.h"
+  10          #include "./_scale/app_cfg.h"
+  11          #include "./_battery/dvr_battery.h"
+  12          #include "./customer/keyboard.h"
+  13          #include "./_inicio/dvr_inicio.h"
+  14          
+  15          //#define IWDG_KEY_REFRESH WD_TA = 0x05; WD_TA = 0x0a;WDCON = 0x1f;
   16          
-  17          #define     BEEPER_EN   P1 |= 0x10
-  18          #define     BEEPER_DIS  P1 &= 0xEF
-  19          
-  20          unsigned int convertidorADC(void);
-  21          
-  22          void init_pwm(void){
-  23   1          PWMF_H  = 0x00;
-  24   1              PWMF_L  = 0x20;
-  25   1              PWM0    = 05;
-  26   1              PWM1    = 03;
-  27   1              PWMCON  = 0x04; //PWM0-P1.4(LCD_LAMP)????(?PWM0=0xff?,?????)
-  28   1      }
+  17          enum ActionScale Key; //unsigned char Key = 0;
+  18          unsigned char lecturaADC[4]= {0};
+  19          enum ActionScale eAccionScale;
+  20          struct Parameter stScaleParam;
+  21          struct FlagScale srFlagScale;
+  22          struct strTimers strTimer;
+  23          
+  24          #define     BL_EN       P1 |= 0x20
+  25          #define     BL_DIS      P1 &= 0xDF
+  26          
+  27          #define     BEEPER_EN   P1 |= 0x10
+  28          #define     BEEPER_DIS  P1 &= 0xEF
   29          
-  30          void main(void)
-  31          {char txt[5]={0};
-  32   1       float peso=0, voltaje=0;
-  33   1              //int a = 0, b = 0;
-  34   1          P0M0 = 0xF0; //0b11111111;
-  35   1          P0M1 = 0x00; //0b00000000;    
-  36   1          P1M0 = 0xBF; //0b10111111;
-  37   1          P1M1 = 0x00; //0b00000000;        
-  38   1          P2M0 = 0xEE; //0b11101110;
-  39   1          P2M1 = 0x00; //0b00000000;
-  40   1              //Config lectura adc
-  41   1              P0M0 &= ~(1<<5);
-  42   1              P0M1 |= (1<<5);
-  43   1              //Configuracion salida BL
-  44   1          P1M0 |= (1<<5);
-  45   1          P1M1 &= ~(1<<5);
-  46   1              //Configuracion salida BL
-  47   1          P0M0 |= (1<<1);
-  48   1          P0M1 &= ~(1<<1);
-  49   1      /*bit KEY_K0 = P0^2;    
-  50   1      sbit KEY_K1 = P2^4;     
-  51   1      sbit KEY_K2 = P2^0;     
-  52   1      sbit KEY_K3 = P1^6;             */
-C51 COMPILER V7.50   MAIN                                                                  09/12/2022 21:19:22 PAGE 2   
+  30          void init_pwm(void){
+  31   1          PWMF_H  = 0x0F; //0FFF ->1.25k
+  32   1              PWMF_L  = 0xFF;//0xF0;->2k//0xC0;->3.33K//0x80;->5K//0x60;->6.66//0x40;->10K//0x10;//0x20;
+  33   1              PWM0    = 05;
+  34   1              PWM1    = 03;
+  35   1              PWMCON  = 0x04; //PWM0-P1.4(LCD_LAMP)????(?PWM0=0xff?,?????)
+  36   1      }
+  37          
+  38          void main(void)
+  39          {
+  40   1        unsigned char cRta_Function = 0;
+  41   1        char txt[5]={0};
+  42   1        float peso=0, voltaje=0;
+  43   1        unsigned int i=0;
+  44   1      
+  45   1         /// watch dog ///
+  46   1              EA = 0;
+  47   1          WD_TA = 0x05;
+  48   1              WD_TA = 0x0a;
+  49   1              WDCON = 0x1f; /// 4s?,0.2s ///
+  50   1          EA = 1;
+  51   1      
+  52   1              //int a = 0, b = 0;
+  53   1          P0M0 = 0xF0; //0b11111111;
+  54   1          P0M1 = 0x00; //0b00000000;    
+C51 COMPILER V7.50   MAIN                                                                  09/14/2022 19:45:08 PAGE 2   
 
-  53   1      
-  54   1      /*      P1M0 = 0xff;
-  55   1              P1M1 = 0x00;
-  56   1              P2M0 = 0xff;
-  57   1              P2M1 = 0x00;*/
-  58   1      
-  59   1          P0 = 0x0C;//P0 = 0x04;
-  60   1          P1 = 0x40;
-  61   1          P2 = 0x11;
-  62   1              //Salida en 1  para lectura adc
-  63   1              P0|= (1<<5);
-  64   1              
-  65   1              //Interrupcion timer0
-  66   1              IE = 0x82;
-  67   1              IP = 0x02;
-  68   1              
-  69   1              //timer0
-  70   1              TMOD = 0x00;
-  71   1              TL0 = 0x00;
-  72   1              TH0 = 0x7F;
-  73   1              CKCON = 0x04;
-  74   1      
-  75   1      /*      P2 = 0x00;
-  76   1              P1 = 0x00;*/
+  55   1          P1M0 = 0xBF; //0b10111111;
+  56   1          P1M1 = 0x00; //0b00000000;        
+  57   1          P2M0 = 0xEE; //0b11101110;
+  58   1          P2M1 = 0x00; //0b00000000;
+  59   1              //Config lectura adc Only input
+  60   1              P0M0 &= ~(1<<5);
+  61   1              P0M1 |= (1<<5);
+  62   1              //Configuracion salida BL
+  63   1          P1M0 |= (1<<5);
+  64   1          P1M1 &= ~(1<<5);
+  65   1              //Configuracion salida pin P0.1 prueba de togle pin interrup timer0. Salida para toogle prueba
+  66   1          P0M0 |= (1<<1);
+  67   1          P0M1 &= ~(1<<1);
+  68   1      /*bit KEY_K0 = P0^2;    
+  69   1      sbit KEY_K1 = P2^4;     
+  70   1      sbit KEY_K2 = P2^0;     
+  71   1      sbit KEY_K3 = P1^6;             */
+  72   1      
+  73   1      /*      P1M0 = 0xff;
+  74   1              P1M1 = 0x00;
+  75   1              P2M0 = 0xff;
+  76   1              P2M1 = 0x00;*/
   77   1      
-  78   1              iLCD_GLASS_Init();
-  79   1                              delay_ms(500);
-  80   1              LCD_GLASS_String("TORR",LCD_PESO);
-  81   1                      delay_ms(500);
-  82   1              LCD_GLASS_String("EY",LCD_PRECIO);
-  83   1                              delay_ms(500);    
-  84   1       
-  85   1              init_pwm();
-  86   1              BL_DIS;
-  87   1              BEEPER_EN;
-  88   1              
-  89   1      
-  90   1      /*      while(1)
-  91   1              {
-  92   1              KEY_D0=1;
-  93   1      KEY_D1=1;
-  94   1      KEY_D2=1;
-  95   1      KEY_D3=1;
-  96   1      KEY_D4=1;
-  97   1      delay_ms(100);
-  98   1      
-  99   1      KEY_D0=0;
- 100   1      KEY_D1=0;
- 101   1      KEY_D2=0;
- 102   1      KEY_D3=0;
- 103   1      KEY_D4=0;
- 104   1      delay_ms(100);
- 105   1      
- 106   1              }*/
- 107   1       TCON |= (1<<4);
- 108   1       iLCD_GLASS_Clear();
- 109   1       while(1){   
- 110   2       /*key_scan();
- 111   2              sprintf(txt,"%d  ",(int)(Key));
- 112   2              LCD_GLASS_String(txt,LCD_TOTAL)*/
- 113   2      
- 114   2              //sprintf(txt,"%d  ",(int)(KeyState));
-C51 COMPILER V7.50   MAIN                                                                  09/12/2022 21:19:22 PAGE 3   
+  78   1          P0 = 0x0C;//P0 = 0x04;
+  79   1          P1 = 0x40;
+  80   1          P2 = 0x11;
+  81   1              //Salida en 1 para lectura de adc
+  82   1              P0|= (1<<5);
+  83   1      
+  84   1              //Interrupcion timer0
+  85   1              IE = 0x82;
+  86   1              IP = 0x02;
+  87   1              
+  88   1              //timer0
+  89   1              TMOD = 0x00;
+  90   1              TL0 = 0x00;
+  91   1              TH0 = 0x7F;
+  92   1              CKCON = 0x04;
+  93   1      
+  94   1      /*      P2 = 0x00;
+  95   1              P1 = 0x00;*/
+  96   1      
+  97   1      /*      iLCD_GLASS_Init();
+  98   1                              delay_ms(500);
+  99   1              LCD_GLASS_String("TORR",LCD_PESO);
+ 100   1                      delay_ms(500);
+ 101   1              LCD_GLASS_String("EY",LCD_PRECIO);
+ 102   1                              delay_ms(500);    */
+ 103   1       
+ 104   1              init_pwm();
+ 105   1              BL_DIS;
+ 106   1              BEEPER_DIS;//BEEPER_EN;
+ 107   1              
+ 108   1              TCON |= (1<<4); //Inicio de timer0
+ 109   1              eAccionScale = ScalePreOn;
+ 110   1      
+ 111   1      /*      while(1)
+ 112   1              {
+ 113   1              KEY_D0=1;
+ 114   1      KEY_D1=1;
+ 115   1      KEY_D2=1;
+ 116   1      KEY_D3=1;
+C51 COMPILER V7.50   MAIN                                                                  09/14/2022 19:45:08 PAGE 3   
 
- 115   2              //LCD_GLASS_String(txt,LCD_PRECIO);
- 116   2      
- 117   2              
- 118   2              delay_ms(50);
- 119   2      
- 120   2              peso=fRead_Adc(0);
- 121   2              P0|= (1<<5);
- 122   2              voltaje=convertidorADC()*(3.3/255);
- 123   2              LCD_GLASS_Float(peso, 2,  LCD_TOTAL);
- 124   2              LCD_GLASS_Float(voltaje, 2, LCD_PESO);
- 125   2      
- 126   2      }
- 127   1      
- 128   1      }
- 129          
- 130          unsigned int convertidorADC(){
- 131   1      
- 132   1      unsigned int v=0;
- 133   1      SARCON = 0x09;
- 134   1              if(!(SARCON & 0x04))
- 135   1              {
- 136   2                      SARCON |= 0x04;
- 137   2                      while(SARCON & 0x04)
- 138   2                      {
- 139   3                      }
- 140   2              }
- 141   1      v=SARDATA;
- 142   1      SARCON &= 0xf7;
- 143   1      return v;
- 144   1      
- 145   1      }
- 146          
- 147          static void timer0(void) interrupt 1
- 148          {               
- 149   1              //static unsigned char cont = 0;
- 150   1              //IE = 0;        // 禁止中断
- 151   1              //P1 &= ~(1<<5);
- 152   1              /*if(cont==40){
- 153   1                      P1 |= (1<<5);
- 154   1                      cont = 0;
- 155   1                      }*/
- 156   1              P0 ^= (1<<1);//P1 ^= (1<<5);
- 157   1              TL0 = 0xCF;
- 158   1              TH0 = 0xAF;
- 159   1              /*if(cont){
- 160   1                      cont = 0;
- 161   1                      P1 &= ~(1<<5);
- 162   1              }else{
- 163   1                      cont = 1;
- 164   1                      P1 |= (1<<5);
- 165   1                      }*/
- 166   1              //TCON |= (1<<4);
- 167   1              //IE = 0x02;  // 打开中断
- 168   1      }
+ 117   1      KEY_D4=1;
+ 118   1      delay_ms(100);
+ 119   1      
+ 120   1      KEY_D0=0;
+ 121   1      KEY_D1=0;
+ 122   1      KEY_D2=0;
+ 123   1      KEY_D3=0;
+ 124   1      KEY_D4=0;
+ 125   1      delay_ms(100);
+ 126   1      
+ 127   1              }*/
+ 128   1      
+ 129   1      while(1){
+ 130   2      //iLCD_GLASS_Clear();
+ 131   2      switch(eAccionScale){
+ 132   3      
+ 133   3              case ScalePreOn:
+ 134   3                              
+ 135   3                      srFlagScale.bScaleOn = 1;//TRUE;
+ 136   3                      //uON_ON;
+ 137   3                      //vClearMemory();                       
+ 138   3                      //vReadParamScale();    // Inicia los parametros de la Bascula                                  
+ 139   3      
+ 140   3                      //IWDG->KR = IWDG_KEY_REFRESH;
+ 141   3                              
+ 142   3                      srFlagScale.bReadBattery = 0;
+ 143   3      
+ 144   3                      #if DISPLAY_20400047_EN > 0
+ 145   3                      vGestorBateria();
+ 146   3                      driver_symbol_init();
+ 147   3                      #endif
+ 148   3                              
+ 149   3                      iLCD_GLASS_Init();
+ 150   3                      iLCD_GLASS_Clear();
+ 151   3                      LCD_GLASS_String("-----", LCD_PESO);
+ 152   3                      delay_ms(500);
+ 153   3                      LCD_GLASS_String("-----", LCD_PRECIO);
+ 154   3                      delay_ms(500);
+ 155   3                      LCD_GLASS_String("------", LCD_TOTAL);
+ 156   3                      delay_ms(500);
+ 157   3                      
+ 158   3                      srFlagScale.bTopeSobrePeso = 0;
+ 159   3                      
+ 160   3                      vBeep_Key();
+ 161   3                      
+ 162   3                      eAccionScale = ScaleBattery; // Pasa al siguiente estado
+ 163   3                      
+ 164   3                      //EXTI_ClearITPendingBit(EXTI_IT_Pin0);
+ 165   3                      //GPIO_Init(GPIOF, ONu, GPIO_Mode_In_FL_IT);
+ 166   3                      //LCD_GLASS_Float(cRta_Function, 0, LCD_PRECIO);
+ 167   3              break;
+ 168   3      
+ 169   3              case ScaleBattery:
+ 170   3                      
+ 171   3                      // Verifica que el voltaje sea el apropiado para operar
+ 172   3                      cRta_Function = uGet_Status_Volt();
+ 173   3                      
+ 174   3                      if(cRta_Function != SOURCE_BATTERY_VERY_LOW){
+ 175   4                              if(cRta_Function == SOURCE_BATTERY_LOW){
+ 176   5                                      iLCD_GLASS_Clear();
+ 177   5                                      if(stScaleParam.cLenguage == ESPANOL){
+ 178   6                                              LCD_GLASS_String("BAJA  ", LCD_PRECIO); 
+C51 COMPILER V7.50   MAIN                                                                  09/14/2022 19:45:08 PAGE 4   
+
+ 179   6                                              LCD_GLASS_String("   BAT", LCD_TOTAL);
+ 180   6                                      }else{
+ 181   6                                              LCD_GLASS_String("LOW   ", LCD_PRECIO); 
+ 182   6                                              LCD_GLASS_String("  BATT", LCD_TOTAL);
+ 183   6                                      }
+ 184   5                              }
+ 185   4                              
+ 186   4                      if(cRta_Function != SOURCE_ADAPTER && srFlagScale.bBateriaLow == 0)
+ 187   4                              {
+ 188   5                                      strTimer.cFLag_TimerJ_Start = 1;
+ 189   5                                      if(stScaleParam.cBacklight){OnBackLight;}
+ 190   5                              }
+ 191   4                              strTimer.cFLag_TimerC_Start = 1;                                        
+ 192   4                              eAccionScale = ScaleWait;
+ 193   4                      }else{
+ 194   4                              
+ 195   4                              iLCD_GLASS_Clear();
+ 196   4      
+ 197   4                              if(stScaleParam.cLenguage == ENGLISH){
+ 198   5                                      LCD_GLASS_String("LOW ", LCD_PESO);     
+ 199   5                                      LCD_GLASS_String("BATT", LCD_PRECIO);
+ 200   5                                      LCD_GLASS_String(" OFF", LCD_TOTAL);
+ 201   5                              }else{
+ 202   5                                      LCD_GLASS_String("BAJA ", LCD_PESO);    
+ 203   5                                      LCD_GLASS_String("BAT", LCD_PRECIO);
+ 204   5                                      LCD_GLASS_String(" OFF", LCD_TOTAL);
+ 205   5                              }
+ 206   4      
+ 207   4              #if !SX30PRO                    
+                                      strTimer.cFLag_TimerE_Start = 1;
+                                      strTimer.cFLag_TimerE_End = 0;          
+                                      while(strTimer.cFLag_TimerE_End == 0){
+                                              IWDG->KR = IWDG_KEY_REFRESH;WD_TA = 0x05; WD_TA = 0x0a;WDCON = 0x1f;
+                                              
+                                              //if(srFlagScale.bScaleOn == FALSE){
+                                                      //eAccionScale = ScalePreOff;                           /* Inicia en el primer estado Off */
+                                              //}
+                                      }
+                                      IWDG->KR = IWDG_KEY_ENABLE;
+                                      while(1);    // Wait until reset occurs from IWDG
+                      #endif  
+ 220   4                              eAccionScale = ScaleBattery;                    /* Inicia en el primer estado Off */
+ 221   4                              
+ 222   4                      }
+ 223   3              delay_ms(5000);         
+ 224   3              break;
+ 225   3      
+ 226   3              case ScaleWait:
+ 227   3                                      
+ 228   3                      //GPIO_Init(GPIOA, PUSH_SWITCH, GPIO_Mode_In_PU_No_IT);
+ 229   3                      
+ 230   3                      if(cWait_Scale() == 0){
+ 231   4                              
+ 232   4                              eAccionScale = ScaleRun;
+ 233   4                              //Auto_Off_On_15m;
+ 234   4                              strTimer.iTimerF = Number_Count_Sec;
+ 235   4                              //KeyPressed = FALSE;
+ 236   4                              
+ 237   4                              if(srFlagScale.bScaleOn == FALSE){
+ 238   5                                      eAccionScale = ScalePreOff;                             //// Inicia en el primer estado Off ////
+ 239   5                              }
+ 240   4                      }else if(srFlagScale.bCodeConfiguration == 1){
+C51 COMPILER V7.50   MAIN                                                                  09/14/2022 19:45:08 PAGE 5   
+
+ 241   4                              eAccionScale = ScaleCode;
+ 242   4                      }
+ 243   3                      
+ 244   3                      //GPIO_Init(GPIOA, PUSH_SWITCH, GPIO_Mode_Out_PP_Low_Slow);
+ 245   3                      
+ 246   3              break;
+ 247   3      
+ 248   3              case ScaleCode:
+ 249   3              
+ 250   3                      cRta_Function = cWrite_Code_Scale();
+ 251   3                      
+ 252   3                      if(srFlagScale.bScaleOn == FALSE){
+ 253   4                              eAccionScale = ScalePreOff;                             /* Inicia en el primer estado Off */
+ 254   4                      }else if(cRta_Function == 0){
+ 255   4                              eAccionScale = ScaleMenu;
+ 256   4                      }else if(cRta_Function == 1){
+ 257   4                              eAccionScale = ScaleCalibrate;
+ 258   4                      }else{
+ 259   4                              eAccionScale = ScalePreOff;                             /* Inicia en el primer estado Off */
+ 260   4                      }
+ 261   3                                              
+ 262   3                      break;
+ 263   3      
+ 264   3              case ScaleCalibrate:    
+ 265   3              
+ 266   3                      vCalibrate_Scale();             /* Llama la funcion para el proceso de calibracion*/
+ 267   3                      /* al terminar de calibrar se pide que apague la bascula, si no, se 
+ 268   3                       apagara automaticamente a los 2 min */  
+ 269   3                      
+ 270   3                      if(srFlagScale.bScaleOn == FALSE){
+ 271   4                              eAccionScale = ScalePreOff;                             /* Inicia en el primer estado Off */
+ 272   4                              break;
+ 273   4                      }
+ 274   3                      
+ 275   3                      LCD_GLASS_String("  OFF", LCD_PRECIO);  /* Muestra el mensaje de
+ 276   3                                                                                                                                                                                              apagar la bascula */
+ 277   3      
+ 278   3                      //Auto_Off_On_5m_Restart;
+ 279   3                      //Auto_Off_On_5m;
+ 280   3                      
+ 281   3                      while(!srFlagScale.cWait_Time_Code){
+ 282   4                              IWDG_KEY_REFRESH;//IWDG->KR = IWDG_KEY_REFRESH;
+ 283   4                              key_scan();//vActionKey();
+ 284   4                              
+ 285   4                              if(srFlagScale.bScaleOn == FALSE){
+ 286   5                                      eAccionScale = ScalePreOff;                             /* Inicia en el primer estado Off */
+ 287   5                                      break;
+ 288   5                              }
+ 289   4                      }
+ 290   3      
+ 291   3                      eAccionScale = ScalePreOff;
+ 292   3                      
+ 293   3                      break;
+ 294   3      
+ 295   3              case ScaleMenu:
+ 296   3      
+ 297   3                      vMenu_Configuration_Scale();                            
+*** WARNING C206 IN LINE 297 OF CUSTOMER\MAIN.C: 'vMenu_Configuration_Scale': missing function-prototype
+ 298   3                      eAccionScale = ScalePreOff;
+ 299   3                      
+ 300   3                      break;
+ 301   3      
+C51 COMPILER V7.50   MAIN                                                                  09/14/2022 19:45:08 PAGE 6   
+
+ 302   3              case ScaleRun:
+ 303   3                      
+ 304   3                      if(srFlagScale.bScaleOn == 1){//if(srFlagScale.bScaleOn == TRUE){
+ 305   4                              cRun_Scale(1);
+ 306   4                      }else{
+ 307   4                              eAccionScale = ScalePreOff;                             /* Inicia en el primer estado Off */
+ 308   4                      }                               
+ 309   3                      break;
+ 310   3              
+ 311   3              case ScalePreOff:
+ 312   3      
+ 313   3                      stScaleParam.cSpecialAction = 0;
+ 314   3                      
+ 315   3                      //GPIO_Init(GPIOF, ONu, GPIO_Mode_In_PU_No_IT);
+ 316   3                      LCD_GLASS_Clear();                              
+*** WARNING C206 IN LINE 316 OF CUSTOMER\MAIN.C: 'LCD_GLASS_Clear': missing function-prototype
+ 317   3                      OffBackLight;                           // Apaga el Backlight           
+ 318   3                      
+ 319   3                      // Verifica que el voltaje sea el apropiado para operar
+ 320   3                      cRta_Function = uGet_Status_Volt();
+ 321   3                      
+ 322   3                      if(cRta_Function != SOURCE_ADAPTER){
+ 323   4                              //uON_OFF;
+ 324   4                              while(i<2000){
+ 325   5                                      i++;
+ 326   5                                      IWDG_KEY_REFRESH;//IWDG->KR = IWDG_KEY_REFRESH;
+ 327   5                              }
+ 328   4                      }
+ 329   3                      
+ 330   3                      strTimer.cFLag_TimerD_End = 0;
+ 331   3                      strTimer.cFLag_TimerD_Start = 1;
+ 332   3      
+ 333   3                      while(!strTimer.cFLag_TimerD_End){//while(ONOFF_uC != 0 && !strTimer.cFLag_TimerD_End){
+ 334   4                              IWDG_KEY_REFRESH;//IWDG->KR = IWDG_KEY_REFRESH;
+ 335   4                      }
+ 336   3                      
+ 337   3                      eAccionScale = scaleStandBy;                                    
+ 338   3      
+ 339   3                      iLCD_GLASS_DeInit();//LCD_Cmd(DISABLE);         // Deshabilita el modulo LCD                            
+ 340   3      
+ 341   3                      break;
+ 342   3      
+ 343   3      }//swith
+ 344   2      }//while
+ 345   1      /* TCON |= (1<<4);
+ 346   1       iLCD_GLASS_Clear();
+ 347   1       while(1){   
+ 348   1       //key_scan();
+ 349   1              //sprintf(txt,"%d  ",(int)(Key));
+ 350   1              //LCD_GLASS_String(txt,LCD_TOTAL)
+ 351   1      
+ 352   1              //sprintf(txt,"%d  ",(int)(KeyState));
+ 353   1              //LCD_GLASS_String(txt,LCD_PRECIO);
+ 354   1      
+ 355   1              
+ 356   1              delay_ms(50);
+ 357   1      
+ 358   1              peso=fRead_Adc(0);
+ 359   1              P0|= (1<<5);
+ 360   1              voltaje=convertidorADC()*(3.3/255);
+ 361   1              LCD_GLASS_Float(peso, 2,  LCD_TOTAL);
+ 362   1              LCD_GLASS_Float(voltaje, 2, LCD_PESO);
+C51 COMPILER V7.50   MAIN                                                                  09/14/2022 19:45:08 PAGE 7   
+
+ 363   1      
+ 364   1      }*/
+ 365   1      
+ 366   1      }
+ 367          
+ 368          /////////   Interrups timer0    ////////////////
+ 369          
+ 370          static void timer0(void) interrupt 1
+ 371          {               
+ 372   1              
+ 373   1                      /* 200mS*/
+ 374   1              if(strTimer.cFLag_TimerA_Start){
+ 375   2                      strTimer.iTimerA = 200;//200;//700; //891
+ 376   2                      //strTimer.cFLag_TimerA_Start = 0;
+ 377   2                      strTimer.cFLag_TimerA_On = 1;
+ 378   2                      strTimer.cFLag_TimerA_End = 0;
+ 379   2              }
+ 380   1              /*Accion de desbordamiento del timer */
+ 381   1              if(strTimer.cFLag_TimerA_On){
+ 382   2                      
+ 383   2                      /*if(stScaleParam.cTypeBeeper == BEEPER_SMT){
+ 384   2                              GPIO_ToggleBits(GPIOA, BEEPER);
+ 385   2                      }else{
+ 386   2                              GPIO_SetBits(GPIOA, BEEPER);
+ 387   2                      }*/
+ 388   2                      if(strTimer.cFLag_TimerA_Start = 1){
+*** WARNING C276 IN LINE 388 OF CUSTOMER\MAIN.C: constant in condition expression
+ 389   3                              strTimer.cFLag_TimerA_Start = 0;
+ 390   3                              BEEPER_EN;
+ 391   3                      }
+ 392   2                      if(strTimer.iTimerA > 0){
+ 393   3                              strTimer.iTimerA--;
+ 394   3                      }else{
+ 395   3                              strTimer.cFLag_TimerA_On = 0;
+ 396   3                              strTimer.cFLag_TimerA_End = 1;
+ 397   3                              BEEPER_DIS;
+ 398   3                              //GPIO_ResetBits(GPIOA, BEEPER);
+ 399   3                      }
+ 400   2              }
+ 401   1      
+ 402   1              //P0 ^= (1<<1);//P1 ^= (1<<5);
+ 403   1              TL0 = 0xCF;
+ 404   1              TH0 = 0xAF;
+ 405   1              TCON |= (1<<4);
+ 406   1      
+ 407   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    318    ----
-   CONSTANT SIZE    =     13    ----
-   XDATA SIZE       =      6      13
+   CODE SIZE        =    895    ----
+   CONSTANT SIZE    =     77    ----
+   XDATA SIZE       =    260      16
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
-C51 COMPILER V7.50   MAIN                                                                  09/12/2022 21:19:22 PAGE 4   
-
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  2 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  3 WARNING(S),  0 ERROR(S)
