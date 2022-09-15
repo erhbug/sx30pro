@@ -15,12 +15,10 @@
 //*************************************************************************//
 #include <REG52.H>
 #include <absacc.h>
-#include <math.h>
+#include "./_solidic/solidic_Vc_Jan10_13.h"							
+#include "./_solidic/SDI5219_Vc_Sep02_15.h"	
+#include "./_data_nvm/data_nvm_5219_Vc_Dec09_13.h"	
 
-//***************************************************************************
-// -- 全部头文件 集中管理 ---- ，版本修改文件名会变动 ---  必须修改 这个文件
-//***************************************************************************
-#include "./_solidic/head_file_version.h"
 unsigned char NRM_securty_a;						// EEPROM 安全码A
 unsigned char NRM_securty_b;	
 
@@ -31,8 +29,6 @@ volatile void nop(void){
  x<<=1;
 }
 
-
-//读取EEPROM中的一个字节；
 unsigned char flash_read_u8(unsigned int addr)
 {
 	unsigned char val;
@@ -95,9 +91,7 @@ void nvm_data_write_byte(unsigned int addr,unsigned char in_data)
 	//-- 准备地址和数据 --
 	FLASH_ADDRH = flash_addr.b[0]; // point to the address you want to erase 
 	FLASH_ADDRL = flash_addr.b[1]; 
-	FLASH_DATA = in_data;
-
-	
+	FLASH_DATA = in_data;	
 
 	//-- 状态清除 --
 	FLASH_ENA = 0x00;
@@ -267,39 +261,5 @@ void ClearThisButAll(unsigned int Address, unsigned int IntCount){
 	/************************/
 }
 
-/*void TestEEPROM(void)
-{
-	unsigned int addr=ADDRESS_PLU;
-	float val;
-	unsigned char txt[10]={0};
-	float i=0.12;
 
-	unsigned int x=0;
- 
-	NRM_securty_a = 0xaa;
-	NRM_securty_b = 0x55;
-	
-	flash_write_float32(addr,0.00);
-	flash_write_float32(addr+11,0.00);
 
-	while(1){	
-	for(x=1;x<11;x++){
-	flash_write_float32(addr+(x*4),i);
-
-	val = flash_read_float32(addr+(x*4)-4);
-	sprintf(txt,"%f",val);  LCD_GLASS_String(txt,LCD_PESO); 
-
-	val = flash_read_float32(addr+(x*4));
-	sprintf(txt,"%f",val);  LCD_GLASS_String(txt,LCD_TOTAL); 	
-
-	val = flash_read_float32(addr+(x*4)+4);
-	sprintf(txt,"%f",val);  LCD_GLASS_String(txt,LCD_PRECIO); 
-
-	i++;
-	delay_ms(1000);
-	}
-}
-
-NRM_securty_a = 0x00;
-	NRM_securty_b = 0x00;
-}*/

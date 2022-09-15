@@ -17,6 +17,7 @@ static unsigned char cont = 0;
 #define     BEEPER_DIS	P1 &= 0xEF
 
 unsigned int convertidorADC(void);
+void TestEEPROM(void);
 
 void init_pwm(void){
     PWMF_H  = 0x00;
@@ -26,46 +27,11 @@ void init_pwm(void){
 	PWMCON  = 0x04;	//PWM0-P1.4(LCD_LAMP)????(?PWM0=0xff?,?????)
 }
 
-void TestEEPROM(void)
-{
-	unsigned int addr=ADDRESS_PLU;
-	float val;
-	unsigned char txt[10]={0};
-	float i=0.12;
 
-	unsigned int x=0;
- 
-	NRM_securty_a = 0xaa;
-	NRM_securty_b = 0x55;
-	
-	flash_write_float32(addr,0.00);
-	flash_write_float32(addr+11,0.00);
-
-	while(1){	
-	for(x=1;x<11;x++){
-	flash_write_float32(addr+(x*4),i);
-
-	val = flash_read_float32(addr+(x*4)-4);
-	sprintf(txt,"%f",val);  LCD_GLASS_String(txt,LCD_PESO); 
-
-	val = flash_read_float32(addr+(x*4));
-	sprintf(txt,"%f",val);  LCD_GLASS_String(txt,LCD_TOTAL); 	
-
-	val = flash_read_float32(addr+(x*4)+4);
-	sprintf(txt,"%f",val);  LCD_GLASS_String(txt,LCD_PRECIO); 
-
-	i++;
-	delay_ms(1000);
-	}
-}
-
-NRM_securty_a = 0x00;
-	NRM_securty_b = 0x00;
-}
-
+float peso=0, voltaje=0;
 void main(void)
 {char txt[5]={0};
- float peso=0, voltaje=0;
+ 
 	//int a = 0, b = 0;
     P0M0 = 0xF0; //0b11111111;
     P0M1 = 0x00; //0b00000000;    
@@ -150,17 +116,17 @@ delay_ms(100);
 	//sprintf(txt,"%d  ",(int)(KeyState));
 	//LCD_GLASS_String(txt,LCD_PRECIO);
 
-TestEEPROM();	
+	
 	delay_ms(50);
    
-	//peso=fRead_Adc(0);
+	peso=fRead_Adc(0);
 	sprintf(txt,"%f   ",peso);  LCD_GLASS_String(txt,LCD_PESO); 
 
 	P0|= (1<<5);
 	voltaje=convertidorADC()*(3.3/255);
 //	LCD_GLASS_Float(peso, 2,  LCD_TOTAL);
 //	LCD_GLASS_Float(voltaje, 2, LCD_PESO);
-
+TestEEPROM();
 }
 
 }
@@ -203,4 +169,40 @@ static void timer0(void) interrupt 1
 		}*/
 	//TCON |= (1<<4);
 	//IE = 0x02;  // ´ò¿ªÖÐ¶Ï
+}
+void TestEEPROM(void)
+{
+	unsigned int addr=ADDRESS_PLU;
+	float val;
+	unsigned char txt[10]={0};
+	float i=0.12;
+
+	unsigned int x=0;
+ 
+	NRM_securty_a = 0xaa;
+	NRM_securty_b = 0x55;
+	
+	flash_write_float32(addr,0.00);
+	flash_write_float32(addr+11,0.00);
+
+	while(1){	
+	for(x=1;x<11;x++){
+	flash_write_float32(addr+(x*4),i);
+
+	val = flash_read_float32(addr+(x*4)-4);
+	sprintf(txt,"%f",val);  LCD_GLASS_String(txt,LCD_PESO); 
+
+	val = flash_read_float32(addr+(x*4));
+	sprintf(txt,"%f",val);  LCD_GLASS_String(txt,LCD_TOTAL); 	
+
+	val = flash_read_float32(addr+(x*4)+4);
+	sprintf(txt,"%f",val);  LCD_GLASS_String(txt,LCD_PRECIO); 
+
+	i++;
+	delay_ms(1000);
+	}
+}
+
+NRM_securty_a = 0x00;
+	NRM_securty_b = 0x00;
 }

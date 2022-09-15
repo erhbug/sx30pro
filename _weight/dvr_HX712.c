@@ -1,31 +1,32 @@
 /* Includes ------------------------------------------------------------------*/
 #include "./_weight/dvr_HX712.h"
-#include <stdio.h>
-#include <string.h>
+//#include <stdio.h>
+//#include <string.h>
 #include <REG52.H>
-#include <math.h>
-#include "./customer/keyboard.h"
+//#include <math.h>
+//#include "./customer/keyboard.h"
 //#include "./_display/dvr_lcd_SDI1621.h"
 
 sbit MISO = P0^3;	
 sbit SCLK = P0^4;	
 
+float ValueCount = 0.0;
 
 //--------------------------------------------------------------------------------
-float ValueCount = 0.0;
-int iCountFailRead = 0;
-int iCountFailResponse = 0;
 
-unsigned char iSelectFrecuency = 1;
-float arfDataFilter_x[10] = {0};
-float fBeforeValue_x = 0;
+//int iCountFailRead = 0;
+//int iCountFailResponse = 0;
+//unsigned char iSelectFrecuency = 1;
+float arfDataFilter_x[10] = {0.00};
+float arfLowestToHighest[10] = {0.00};
+//float fBeforeValue_x = 0;
 float fAverage_x = 0;
 unsigned char iValueOut = 0;
 
 /*
 */
 float fFilter_Averaging(unsigned long iActualWeight, unsigned char cFastFill){	
-	float arfLowestToHighest[10] = {0.00};
+	
 	//////////////////////////////////////////float fThreshold = stScaleParam.fFactorCalibrate[stScaleParam.iUnits]/2;
 	float fThreshold = 8.526937/2;
 	float fData_Vector = 0;
@@ -88,7 +89,7 @@ float fFilter_Averaging(unsigned long iActualWeight, unsigned char cFastFill){
 	
 	fAverage_x /= (float)(iLenthData_x - 2);
 	
-	fBeforeValue_x = fAverage_x;
+	//fBeforeValue_x = fAverage_x;
 	
 	return fAverage_x;
 }

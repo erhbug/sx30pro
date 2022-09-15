@@ -48,5 +48,4 @@ void flash_write_float32(unsigned int addr,float in_data);
 
 void e2rom_erase(unsigned int addr);
 
-
 #endif

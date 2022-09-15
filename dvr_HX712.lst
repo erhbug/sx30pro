@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   DVR_HX712                                                             09/15/2022 11:23:28 PAGE 1   
+C51 COMPILER V7.50   DVR_HX712                                                             09/15/2022 12:37:43 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE DVR_HX712
@@ -10,171 +10,172 @@ line level    source
 
    1          /* Includes ------------------------------------------------------------------*/
    2          #include "./_weight/dvr_HX712.h"
-   3          #include <stdio.h>
-   4          #include <string.h>
+   3          //#include <stdio.h>
+   4          //#include <string.h>
    5          #include <REG52.H>
-   6          #include <math.h>
-   7          #include "./customer/keyboard.h"
+   6          //#include <math.h>
+   7          //#include "./customer/keyboard.h"
    8          //#include "./_display/dvr_lcd_SDI1621.h"
    9          
   10          sbit MISO = P0^3;       
   11          sbit SCLK = P0^4;       
   12          
-  13          
-  14          //--------------------------------------------------------------------------------
-  15          float ValueCount = 0.0;
-  16          int iCountFailRead = 0;
-  17          int iCountFailResponse = 0;
-  18          
-  19          unsigned char iSelectFrecuency = 1;
-  20          float arfDataFilter_x[10] = {0};
-  21          float fBeforeValue_x = 0;
-  22          float fAverage_x = 0;
-  23          unsigned char iValueOut = 0;
-  24          
-  25          /*
-  26          */
-  27          float fFilter_Averaging(unsigned long iActualWeight, unsigned char cFastFill){  
-  28   1              float arfLowestToHighest[10] = {0.00};
-  29   1              //////////////////////////////////////////float fThreshold = stScaleParam.fFactorCalibrate[stScaleParam.i
+  13          float ValueCount = 0.0;
+  14          
+  15          //--------------------------------------------------------------------------------
+  16          
+  17          //int iCountFailRead = 0;
+  18          //int iCountFailResponse = 0;
+  19          //unsigned char iSelectFrecuency = 1;
+  20          float arfDataFilter_x[10] = {0.00};
+  21          float arfLowestToHighest[10] = {0.00};
+  22          //float fBeforeValue_x = 0;
+  23          float fAverage_x = 0;
+  24          unsigned char iValueOut = 0;
+  25          
+  26          /*
+  27          */
+  28          float fFilter_Averaging(unsigned long iActualWeight, unsigned char cFastFill){  
+  29   1              
+  30   1              //////////////////////////////////////////float fThreshold = stScaleParam.fFactorCalibrate[stScaleParam.i
              -Units]/2;
-  30   1              float fThreshold = 8.526937/2;
-  31   1              float fData_Vector = 0;
-  32   1              float *pfData_Filter;
-  33   1              float fActualWeight = (float)(iActualWeight);
-  34   1              unsigned char iLenthData_x = 6;         // Longitud de los datos a ordenar, original 6, en prueba 10 
-  35   1              unsigned char i = 0;    // Variable para ciclos iterativo 
-  36   1          unsigned char j = 0;        // Variable para ciclos iterativo 
-  37   1              
-  38   1              pfData_Filter = arfDataFilter_x;
-  39   1              
-  40   1              if((fActualWeight > fAverage_x + fThreshold || fActualWeight < fAverage_x - fThreshold) && cFastFill == 0
+  31   1              float fThreshold = 8.526937/2;
+  32   1              float fData_Vector = 0;
+  33   1              float *pfData_Filter;
+  34   1              float fActualWeight = (float)(iActualWeight);
+  35   1              unsigned char iLenthData_x = 6;         // Longitud de los datos a ordenar, original 6, en prueba 10 
+  36   1              unsigned char i = 0;    // Variable para ciclos iterativo 
+  37   1          unsigned char j = 0;        // Variable para ciclos iterativo 
+  38   1              
+  39   1              pfData_Filter = arfDataFilter_x;
+  40   1              
+  41   1              if((fActualWeight > fAverage_x + fThreshold || fActualWeight < fAverage_x - fThreshold) && cFastFill == 0
              -){
-  41   2                      if(iValueOut++ > 2){
-  42   3                              iValueOut = 0;  
-  43   3                              for(i=0; i<iLenthData_x-1; i++){
-  44   4                                      pfData_Filter[i] = fActualWeight;
-  45   4                              }                       
-  46   3                      }else{
-  47   3                              return fAverage_x;
-  48   3                      }
-  49   2              }else if(cFastFill == 1){       //Llena todo el vector de promedios con el mismo valor
-  50   2                      iValueOut = 0;          
-  51   2                      for(i=0; i<iLenthData_x-1; i++){
-  52   3                              pfData_Filter[i] = iActualWeight;
-C51 COMPILER V7.50   DVR_HX712                                                             09/15/2022 11:23:28 PAGE 2   
+  42   2                      if(iValueOut++ > 2){
+  43   3                              iValueOut = 0;  
+  44   3                              for(i=0; i<iLenthData_x-1; i++){
+  45   4                                      pfData_Filter[i] = fActualWeight;
+  46   4                              }                       
+  47   3                      }else{
+  48   3                              return fAverage_x;
+  49   3                      }
+  50   2              }else if(cFastFill == 1){       //Llena todo el vector de promedios con el mismo valor
+  51   2                      iValueOut = 0;          
+  52   2                      for(i=0; i<iLenthData_x-1; i++){
+C51 COMPILER V7.50   DVR_HX712                                                             09/15/2022 12:37:43 PAGE 2   
 
-  53   3                      }
-  54   2              }else if(cFastFill == 2){       //Indica que es el inicio para tomar referencia a Zero.
-  55   2                      for(i=0; i<iLenthData_x-1; i++){
-  56   3                              pfData_Filter[i] = pfData_Filter[i+1];
-  57   3                      }
-  58   2              }else{          // Agrega nuevo valor al vector para promedio           
-  59   2                      iValueOut = 0;          
-  60   2                      for(i=0; i<iLenthData_x-1; i++){
-  61   3                              pfData_Filter[i] = pfData_Filter[i+1];
-  62   3                      }
-  63   2              }
-  64   1              
-  65   1                              
-  66   1              pfData_Filter[iLenthData_x-1] = fActualWeight;
-  67   1              
-  68   1              for(i=0; i<iLenthData_x; i++){
-  69   2                      arfLowestToHighest[i] = pfData_Filter[i];
-  70   2              }
-  71   1              
-  72   1              // Se ordenan los datos de menor a mayor por el metodo burbuja 
-  73   1              for (i = 0; i < iLenthData_x -1 ; i++) {        
-  74   2                      for (j = (i + 1); j < iLenthData_x ; j++) {                     
-  75   3                              if (arfLowestToHighest[j] < arfLowestToHighest[i]) {
-  76   4                                      fData_Vector = arfLowestToHighest[j];
-  77   4                                      arfLowestToHighest[j] = arfLowestToHighest[i];
-  78   4                                      arfLowestToHighest[i] = fData_Vector;
-  79   4                              }
-  80   3                      }        
-  81   2              }
-  82   1              
-  83   1              fAverage_x = 0;
-  84   1              
-  85   1              for(i=1; i<iLenthData_x-1; i++){
-  86   2                      fAverage_x += arfLowestToHighest[i];
-  87   2              }
-  88   1              
-  89   1              fAverage_x /= (float)(iLenthData_x - 2);
-  90   1              
-  91   1              fBeforeValue_x = fAverage_x;
-  92   1              
-  93   1              return fAverage_x;
-  94   1      }
-  95          
+  53   3                              pfData_Filter[i] = iActualWeight;
+  54   3                      }
+  55   2              }else if(cFastFill == 2){       //Indica que es el inicio para tomar referencia a Zero.
+  56   2                      for(i=0; i<iLenthData_x-1; i++){
+  57   3                              pfData_Filter[i] = pfData_Filter[i+1];
+  58   3                      }
+  59   2              }else{          // Agrega nuevo valor al vector para promedio           
+  60   2                      iValueOut = 0;          
+  61   2                      for(i=0; i<iLenthData_x-1; i++){
+  62   3                              pfData_Filter[i] = pfData_Filter[i+1];
+  63   3                      }
+  64   2              }
+  65   1              
+  66   1                              
+  67   1              pfData_Filter[iLenthData_x-1] = fActualWeight;
+  68   1              
+  69   1              for(i=0; i<iLenthData_x; i++){
+  70   2                      arfLowestToHighest[i] = pfData_Filter[i];
+  71   2              }
+  72   1              
+  73   1              // Se ordenan los datos de menor a mayor por el metodo burbuja 
+  74   1              for (i = 0; i < iLenthData_x -1 ; i++) {        
+  75   2                      for (j = (i + 1); j < iLenthData_x ; j++) {                     
+  76   3                              if (arfLowestToHighest[j] < arfLowestToHighest[i]) {
+  77   4                                      fData_Vector = arfLowestToHighest[j];
+  78   4                                      arfLowestToHighest[j] = arfLowestToHighest[i];
+  79   4                                      arfLowestToHighest[i] = fData_Vector;
+  80   4                              }
+  81   3                      }        
+  82   2              }
+  83   1              
+  84   1              fAverage_x = 0;
+  85   1              
+  86   1              for(i=1; i<iLenthData_x-1; i++){
+  87   2                      fAverage_x += arfLowestToHighest[i];
+  88   2              }
+  89   1              
+  90   1              fAverage_x /= (float)(iLenthData_x - 2);
+  91   1              
+  92   1              //fBeforeValue_x = fAverage_x;
+  93   1              
+  94   1              return fAverage_x;
+  95   1      }
   96          
-  97          /*
-  98          */
-  99          /*
- 100          */
- 101          float fRead_Adc(unsigned char cFillFilter){
- 102   1              unsigned long iTemp_RA = 0;
- 103   1              unsigned char txt[20]={0};
- 104   1      
- 105   1              if(MISO!=0)return ValueCount;
- 106   1          
- 107   1        //iTemp_RA=123456789; sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
- 108   1              
- 109   1              iTemp_RA=ReadHX712(); 
- 110   1      
- 111   1        //sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
- 112   1      
- 113   1              iTemp_RA >>= 7; // Elimina los 6 bits menos significativos
- 114   1          
-C51 COMPILER V7.50   DVR_HX712                                                             09/15/2022 11:23:28 PAGE 3   
+  97          
+  98          /*
+  99          */
+ 100          /*
+ 101          */
+ 102          float fRead_Adc(unsigned char cFillFilter){
+ 103   1              unsigned long iTemp_RA = 0;
+ 104   1              unsigned char txt[20]={0};
+ 105   1      
+ 106   1              if(MISO!=0)return ValueCount;
+ 107   1          
+ 108   1        //iTemp_RA=123456789; sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
+ 109   1              
+ 110   1              iTemp_RA=ReadHX712(); 
+ 111   1      
+ 112   1        //sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
+ 113   1      
+ 114   1              iTemp_RA >>= 7; // Elimina los 6 bits menos significativos
+C51 COMPILER V7.50   DVR_HX712                                                             09/15/2022 12:37:43 PAGE 3   
 
- 115   1      
- 116   1          // sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
- 117   1              
- 118   1              if(iTemp_RA == 65535){
- 119   2              }else if(iTemp_RA > 65535){
- 120   2                      iTemp_RA = 131072 - iTemp_RA;
- 121   2                      iTemp_RA = 32500 - iTemp_RA;
- 122   2              }else{
- 123   2                      iTemp_RA += 32500;
- 124   2              }
- 125   1      
- 126   1         // sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
- 127   1      
- 128   1              ValueCount = fFilter_Averaging(iTemp_RA,cFillFilter);
- 129   1      
- 130   1         // sprintf(txt,"%f      ",ValueCount);  LCD_GLASS_String(txt,LCD_PESO);      delay_ms(500);  
- 131   1      
- 132   1              return ValueCount;
- 133   1      }
- 134          
- 135          volatile unsigned long  ReadHX712(void){ //by ERH
- 136   1          unsigned int i;
- 137   1              unsigned long *ptr;     
- 138   1          unsigned char  dato[4]={0};
- 139   1          ptr=(unsigned long *)&dato;
- 140   1      
- 141   1              if(MISO!=0)return;
-*** WARNING C173 IN LINE 141 OF _WEIGHT\DVR_HX712.C: missing return-expression
- 142   1              for(i=0;i<24;i++)//24 bits de comunicación
- 143   1              {    
- 144   2              SCLK=1;  
- 145   2              dato[i/8+1]<<=1;//Lectura en flanco negativo
- 146   2                  SCLK=0; 
- 147   2              dato[i/8+1]|=MISO&0x01;
- 148   2              }
- 149   1              //1 bit de configuración a 10Hz
- 150   1              SCLK=1;   i<<=5;
- 151   1              SCLK=0;  
- 152   1        // sprintf(txt,"%lX",*ptr);  LCD_GLASS_String(txt,LCD_TOTAL); 
- 153   1         return *ptr;
- 154   1      }
+ 115   1          
+ 116   1      
+ 117   1          // sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
+ 118   1              
+ 119   1              if(iTemp_RA == 65535){
+ 120   2              }else if(iTemp_RA > 65535){
+ 121   2                      iTemp_RA = 131072 - iTemp_RA;
+ 122   2                      iTemp_RA = 32500 - iTemp_RA;
+ 123   2              }else{
+ 124   2                      iTemp_RA += 32500;
+ 125   2              }
+ 126   1      
+ 127   1         // sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
+ 128   1      
+ 129   1              ValueCount = fFilter_Averaging(iTemp_RA,cFillFilter);
+ 130   1      
+ 131   1         // sprintf(txt,"%f      ",ValueCount);  LCD_GLASS_String(txt,LCD_PESO);      delay_ms(500);  
+ 132   1      
+ 133   1              return ValueCount;
+ 134   1      }
+ 135          
+ 136          volatile unsigned long  ReadHX712(void){ //by ERH
+ 137   1          unsigned int i;
+ 138   1              unsigned long *ptr;     
+ 139   1          unsigned char  dato[4]={0};
+ 140   1          ptr=(unsigned long *)&dato;
+ 141   1      
+ 142   1              if(MISO!=0)return;
+*** WARNING C173 IN LINE 142 OF _WEIGHT\DVR_HX712.C: missing return-expression
+ 143   1              for(i=0;i<24;i++)//24 bits de comunicación
+ 144   1              {    
+ 145   2              SCLK=1;  
+ 146   2              dato[i/8+1]<<=1;//Lectura en flanco negativo
+ 147   2                  SCLK=0; 
+ 148   2              dato[i/8+1]|=MISO&0x01;
+ 149   2              }
+ 150   1              //1 bit de configuración a 10Hz
+ 151   1              SCLK=1;   i<<=5;
+ 152   1              SCLK=0;  
+ 153   1        // sprintf(txt,"%lX",*ptr);  LCD_GLASS_String(txt,LCD_TOTAL); 
+ 154   1         return *ptr;
+ 155   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1493    ----
-   CONSTANT SIZE    =     64    ----
-   XDATA SIZE       =     58      95
+   CODE SIZE        =   1454    ----
+   CONSTANT SIZE    =     24    ----
+   XDATA SIZE       =     89      55
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
