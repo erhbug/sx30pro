@@ -6,6 +6,7 @@
 #include "./_display/dvr_lcd_SDI1621.h"
 #include "./_weight/dvr_HX712.h"
 
+
 unsigned char Key;
 unsigned char lecturaADC[4]= {0};
 static unsigned char cont = 0;
@@ -26,38 +27,43 @@ void init_pwm(void){
 	PWMCON  = 0x04;	//PWM0-P1.4(LCD_LAMP)????(?PWM0=0xff?,?????)
 }
 
+
 void TestEEPROM(void)
 {
-	unsigned int addr=ADDRESS_PLU;
+	unsigned int addr=ADDRESS_PLU+4;
 	float val;
 	unsigned char txt[10]={0};
-	float i=0.12;
+	float i=0.00;
 
 	unsigned int x=0;
  
 	NRM_securty_a = 0xaa;
 	NRM_securty_b = 0x55;
-	
-	flash_write_float32(addr,0.00);
-	flash_write_float32(addr+11,0.00);
+while(1){
+	flash_write_float32(addr,i);
 
-	while(1){	
-	for(x=1;x<11;x++){
-	flash_write_float32(addr+(x*4),i);
+	val = flash_read_float32(addr);
+	sprintf(txt,"%f",val);  LCD_GLASS_String(txt,LCD_PESO); 
+	i+=1.00;
+	}
+/*	while(1){	
+	for(x=0;x<40;x+=4){
 
-	val = flash_read_float32(addr+(x*4)-4);
+	flash_write_float32(addr+x,i);
+
+	val = flash_read_float32(addr+x-4);
 	sprintf(txt,"%f",val);  LCD_GLASS_String(txt,LCD_PESO); 
 
-	val = flash_read_float32(addr+(x*4));
+	val = flash_read_float32(addr+x);
 	sprintf(txt,"%f",val);  LCD_GLASS_String(txt,LCD_TOTAL); 	
 
-	val = flash_read_float32(addr+(x*4)+4);
+	val = flash_read_float32(addr+x+4);
 	sprintf(txt,"%f",val);  LCD_GLASS_String(txt,LCD_PRECIO); 
 
 	i++;
 	delay_ms(1000);
 	}
-}
+}*/
 
 NRM_securty_a = 0x00;
 	NRM_securty_b = 0x00;
@@ -142,6 +148,8 @@ delay_ms(100);
 	}*/
  TCON |= (1<<4);
  iLCD_GLASS_Clear();
+
+ TestEEPROM();
  while(1){   
  /*key_scan();
 	sprintf(txt,"%d  ",(int)(Key));
@@ -150,10 +158,10 @@ delay_ms(100);
 	//sprintf(txt,"%d  ",(int)(KeyState));
 	//LCD_GLASS_String(txt,LCD_PRECIO);
 
-TestEEPROM();	
+	
 	delay_ms(50);
-   
-	//peso=fRead_Adc(0);
+
+	peso=fRead_Adc(0);
 	sprintf(txt,"%f   ",peso);  LCD_GLASS_String(txt,LCD_PESO); 
 
 	P0|= (1<<5);

@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/14/2022 18:31:34 PAGE 1   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/15/2022 11:15:01 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE DVR_LCD_SDI1621
@@ -62,7 +62,7 @@ line level    source
   52                          0x2F,   //      00101111, //E
   53                          0x27,   //      00100111,       //F
   54                          0x6F,   //      01101111,       //G
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/14/2022 18:31:34 PAGE 2   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/15/2022 11:15:01 PAGE 2   
 
   55                          0x76,   //      01110110,       //H
   56                          0x50,   //      01010000,       //I
@@ -126,7 +126,7 @@ line level    source
                               0x17,   //      00010111,       //F
                               0x5F,   //      01011111,       //G
                               0x67,   //      01100111,       //H
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/14/2022 18:31:34 PAGE 3   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/15/2022 11:15:01 PAGE 3   
 
                               0x60,   //      01100000,       //I
                               0x6C,   //      01101000,       //J
@@ -190,7 +190,7 @@ line level    source
  175   1      /* Configurar como salidas
  176   1        LCD_CS_N_Pin
  177   1        LCD_WR_N_Pin
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/14/2022 18:31:34 PAGE 4   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/15/2022 11:15:01 PAGE 4   
 
  178   1        LCD_DATA_Pin
  179   1      */
@@ -254,7 +254,7 @@ line level    source
  237   1                      
  238   1                      LCD_GLASS_Symbols(9,0); //bateria 0/3
  239   1                                      LCD_GLASS_Symbols(8,1);
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/14/2022 18:31:34 PAGE 5   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/15/2022 11:15:01 PAGE 5   
 
  240   1                                      LCD_GLASS_Symbols(7,1);
  241   1                                      LCD_GLASS_Symbols(10,1);
@@ -318,7 +318,7 @@ line level    source
  296   1                              strTimer.iTimerI-=35;                   
  297   1                      }
  298   1              }*/
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/14/2022 18:31:34 PAGE 6   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/15/2022 11:15:01 PAGE 6   
 
  299   1              
  300   1              LCD_CS_N_ON;
@@ -382,7 +382,7 @@ line level    source
  357          
  358          int iLCD_GLASS_DeInit(void){    
  359   1              Display.mode=LCD_DATA;
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/14/2022 18:31:34 PAGE 7   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/15/2022 11:15:01 PAGE 7   
 
  360   1              Display.addr=0;
  361   1              Display.counter=sizeof(Display.LCD_BUF);        
@@ -446,7 +446,7 @@ line level    source
  419          
  420          void LCD_GLASS_Dot(char iNumber_Dot, char cPosition_On_LCD, char cFLag_On){
  421   1              
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/14/2022 18:31:34 PAGE 8   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/15/2022 11:15:01 PAGE 8   
 
  422   1              switch(cPosition_On_LCD){
  423   2                      case LCD_PESO:
@@ -510,7 +510,7 @@ line level    source
  481   2              }
  482   1              
  483   1              LCD_GLASS_Update();
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/14/2022 18:31:34 PAGE 9   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/15/2022 11:15:01 PAGE 9   
 
  484   1      }
  485          
@@ -574,7 +574,7 @@ line level    source
                                       break;          
                               #endif
  545   2                      
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/14/2022 18:31:34 PAGE 10  
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/15/2022 11:15:01 PAGE 10  
 
  546   2                              /*case SYMBOL_TARE:  vSend_String_Usart(&huart1,"SYMBOL_TARE\r\n");
  547   2                              if(cFlag_On == 1)
@@ -638,7 +638,7 @@ line level    source
                     #endif                                    
  606   3                      Display.LCD_BUF[S_ZERO]&=0x7F;
  607   3                      Display.LCD_BUF[S_Y]&=0x7F;
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/14/2022 18:31:34 PAGE 11  
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/15/2022 11:15:01 PAGE 11  
 
  608   3                      Display.LCD_BUF[S_X]&=0x7F;     
  609   3                              }
@@ -702,7 +702,7 @@ line level    source
  667   2                      case 1:
  668   2                              if(cPosition_On_LCD == LCD_TOTAL){
  669   3                                      sprintf(strText_LCD, "%7.1lf", fNumber_To_LCD);
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/14/2022 18:31:34 PAGE 12  
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/15/2022 11:15:01 PAGE 12  
 
  670   3                              }else{
  671   3                                      sprintf(strText_LCD, "%6.1lf", fNumber_To_LCD);
@@ -766,7 +766,7 @@ line level    source
  729   1              if(cPosition_On_LCD==LCD_PESO)    vSend_String_Usart(&huart1,"LCD_PESO=   ");   
  730   1              vSend_String_Usart(&huart1,pCaracter);vSend_String_Usart(&huart1,"\r\n");       
  731   1              */
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/14/2022 18:31:34 PAGE 13  
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/15/2022 11:15:01 PAGE 13  
 
  732   1      
  733   1              if(cPosition_On_LCD==LCD_TOTAL) {Display.LCD_BUF[P_TOTAL_2]&=0x7F;Display.LCD_BUF[P_TOTAL_1]&=0x7F;}
@@ -830,7 +830,7 @@ line level    source
  790   4                               #else
                                               if(iPosicion_Decimal == 4)                                      
                                                       Display.LCD_BUF[P_TOTAL_2]|=0x80;//sprintf(txt,"LCD_BUF[9]= d%d",Display.LCD_BUF[9]);                           
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/14/2022 18:31:34 PAGE 14  
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/15/2022 11:15:01 PAGE 14  
 
                                               if(iPosicion_Decimal == 5)
                                                       Display.LCD_BUF[P_TOTAL_1]|=0x80;//vSend_String_Usart(&huart1,"CC ");                           
@@ -894,7 +894,7 @@ line level    source
  852          
 
 
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/14/2022 18:31:34 PAGE 15  
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/15/2022 11:15:01 PAGE 15  
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
    CODE SIZE        =   1581    ----

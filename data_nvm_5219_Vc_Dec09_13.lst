@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/14/2022 19:15:18 PAGE 1   
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/15/2022 11:23:28 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE DATA_NVM_5219_VC_DEC09_13
@@ -62,7 +62,7 @@ line level    source
   52   2                        *(ptr++) =flash_read_u8(addr++);
   53   2                      }
   54   1                      return(val);
-C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/14/2022 19:15:18 PAGE 2   
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/15/2022 11:23:28 PAGE 2   
 
   55   1      }
   56          
@@ -126,7 +126,7 @@ line level    source
  114   1              //-- 通过安全检验后才能启动 Flash 操作 --
  115   1              if((NRM_securty_a == 0xaa)&&(NRM_securty_b == 0x55))
  116   1                      FLASH_CON = 0x03;
-C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/14/2022 19:15:18 PAGE 3   
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/15/2022 11:23:28 PAGE 3   
 
  117   1              //-- 清除安全码 --
  118   1              FLASH_ENA = 0x00;
@@ -190,7 +190,7 @@ line level    source
  176   1              unsigned char i;
  177   1      
  178   1              /****************************/
-C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/14/2022 19:15:18 PAGE 4   
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/15/2022 11:23:28 PAGE 4   
 
  179   1              float aux;
  180   1              aux=flash_read_float32(addr);
@@ -242,7 +242,7 @@ line level    source
  226   1              EA = ea_save;   
  227   1      }
  228          
- 229           void ClearThisButAll(unsigned int Address, unsigned int IntCount){
+ 229          void ClearThisButAll(unsigned int Address, unsigned int IntCount){
  230   1              unsigned char Aux=0;    
  231   1              unsigned int i=0;
  232   1              unsigned int Page;      
@@ -252,39 +252,81 @@ line level    source
  236   1              Page=Address/SizePage;
  237   1              Page*=SizePage;
  238   1              /**************************************/
- 239   1                              e2rom_erase(ADDRESS_AUX_PAGE);/*Borrar pagina auxiliar*/        
- 240   1              
-C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/14/2022 19:15:18 PAGE 5   
+ 239   1      
+ 240   1              /*Verificar que la pagina auxiliar este limpia, de lo contrario borrarla*/
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/15/2022 11:23:28 PAGE 5   
 
- 241   1              /***********************************************************************/
- 242   1              
- 243   1              /*Copiar de la pagina origen a la auxiliar*/
- 244   1              for(i=0;i<SizePage;i++){
- 245   2                      if(i+Page==Address)/*Copiar SizeToCopy enteros excepto IntCount enteros a partir de Address */
- 246   2                              i+=IntCount;    
- 247   2                              Aux=flash_read_u8(Page + i);
- 248   2                      nvm_data_write_byte(ADDRESS_AUX_PAGE + i, Aux);         
- 249   2        }
- 250   1              /****************************************/      
- 251   1              
- 252   1              /*Borrar pagina de origen*/
- 253   1              e2rom_erase(Page);      
- 254   1              /*************************/
- 255   1      
- 256   1              /*Regresar datos a pagina origen*/
- 257   1              for(i=0;i<SizePage;i++){
- 258   2              Aux=flash_read_u8(ADDRESS_AUX_PAGE + i);
- 259   2                      nvm_data_write_byte(Page + i, Aux);             
- 260   2              }
- 261   1              /********************************/
- 262   1      
- 263   1              
- 264   1      }
- 265          
+ 241   1              for(i=0;i<10;i++){              
+ 242   2                      if(flash_read_u8(ADDRESS_AUX_PAGE+i) != 0xFF)
+ 243   2                              e2rom_erase(ADDRESS_AUX_PAGE);//vSend_String_Usart(&huart1,"Pag Auxiliar Limpia\r\n");          
+ 244   2              }       
+ 245   1              /***********************************************************************/
+ 246   1              
+ 247   1              /*Copiar de la pagina origen a la auxiliar*/
+ 248   1              for(i=0;i<SizePage;i++){
+ 249   2                      if(i+Page==Address)/*Copiar SizeToCopy enteros excepto IntCount enteros a partir de Address */
+ 250   2                              i+=IntCount;    
+ 251   2                      nvm_data_write_byte(ADDRESS_AUX_PAGE + i, flash_read_u8(Page + i));             
+ 252   2        }
+ 253   1              /****************************************/      
+ 254   1              
+ 255   1              /*Borrar pagina de origen*/
+ 256   1              e2rom_erase(Page);      
+ 257   1              /*************************/
+ 258   1      
+ 259   1              /*Regresar datos a pagina origen*/
+ 260   1              for(i=0;i<SizePage;i++){
+ 261   2                      nvm_data_write_byte(Page + i, flash_read_u8(ADDRESS_AUX_PAGE + i));             
+ 262   2              }
+ 263   1              /********************************/
+ 264   1      
+ 265   1              /*Borrar pagina auxiliar*/
+ 266   1              e2rom_erase(ADDRESS_AUX_PAGE);  
+ 267   1              /************************/
+ 268   1      }
+ 269          
+ 270          /*void TestEEPROM(void)
+ 271          {
+ 272                  unsigned int addr=ADDRESS_PLU;
+ 273                  float val;
+ 274                  unsigned char txt[10]={0};
+ 275                  float i=0.12;
+ 276          
+ 277                  unsigned int x=0;
+ 278           
+ 279                  NRM_securty_a = 0xaa;
+ 280                  NRM_securty_b = 0x55;
+ 281                  
+ 282                  flash_write_float32(addr,0.00);
+ 283                  flash_write_float32(addr+11,0.00);
+ 284          
+ 285                  while(1){       
+ 286                  for(x=1;x<11;x++){
+ 287                  flash_write_float32(addr+(x*4),i);
+ 288          
+ 289                  val = flash_read_float32(addr+(x*4)-4);
+ 290                  sprintf(txt,"%f",val);  LCD_GLASS_String(txt,LCD_PESO); 
+ 291          
+ 292                  val = flash_read_float32(addr+(x*4));
+ 293                  sprintf(txt,"%f",val);  LCD_GLASS_String(txt,LCD_TOTAL);        
+ 294          
+ 295                  val = flash_read_float32(addr+(x*4)+4);
+ 296                  sprintf(txt,"%f",val);  LCD_GLASS_String(txt,LCD_PRECIO); 
+ 297          
+ 298                  i++;
+ 299                  delay_ms(1000);
+ 300                  }
+ 301          }
+ 302          
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/15/2022 11:23:28 PAGE 6   
+
+ 303          NRM_securty_a = 0x00;
+ 304                  NRM_securty_b = 0x00;
+ 305          }*/
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1173    ----
+   CODE SIZE        =   1253    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =      2      78
    PDATA SIZE       =   ----    ----

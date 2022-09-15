@@ -226,7 +226,7 @@ void e2rom_erase(unsigned int addr)
 	EA = ea_save;	
 }
 
-void ClearThisButAll(unsigned int Address, unsigned int IntCount){
+ void ClearThisButAll(unsigned int Address, unsigned int IntCount){
 	unsigned char Aux=0;	
 	unsigned int i=0;
 	unsigned int Page;	
@@ -236,19 +236,16 @@ void ClearThisButAll(unsigned int Address, unsigned int IntCount){
 	Page=Address/SizePage;
 	Page*=SizePage;
 	/**************************************/
-
-	/*Verificar que la pagina auxiliar este limpia, de lo contrario borrarla*/
-	for(i=0;i<10;i++){		
-		if(flash_read_u8(ADDRESS_AUX_PAGE+i) != 0xFF)
-			e2rom_erase(ADDRESS_AUX_PAGE);//vSend_String_Usart(&huart1,"Pag Auxiliar Limpia\r\n");		
-	}	
+			e2rom_erase(ADDRESS_AUX_PAGE);/*Borrar pagina auxiliar*/	
+	
 	/***********************************************************************/
 	
 	/*Copiar de la pagina origen a la auxiliar*/
 	for(i=0;i<SizePage;i++){
 		if(i+Page==Address)/*Copiar SizeToCopy enteros excepto IntCount enteros a partir de Address */
 			i+=IntCount;	
-		nvm_data_write_byte(ADDRESS_AUX_PAGE + i, flash_read_u8(Page + i));		
+			Aux=flash_read_u8(Page + i);
+		nvm_data_write_byte(ADDRESS_AUX_PAGE + i, Aux);		
   }
 	/****************************************/	
 	
@@ -258,48 +255,11 @@ void ClearThisButAll(unsigned int Address, unsigned int IntCount){
 
 	/*Regresar datos a pagina origen*/
 	for(i=0;i<SizePage;i++){
-		nvm_data_write_byte(Page + i, flash_read_u8(ADDRESS_AUX_PAGE + i));		
+    	Aux=flash_read_u8(ADDRESS_AUX_PAGE + i);
+		nvm_data_write_byte(Page + i, Aux);		
 	}
 	/********************************/
 
-	/*Borrar pagina auxiliar*/
-	e2rom_erase(ADDRESS_AUX_PAGE);	
-	/************************/
-}
-
-/*void TestEEPROM(void)
-{
-	unsigned int addr=ADDRESS_PLU;
-	float val;
-	unsigned char txt[10]={0};
-	float i=0.12;
-
-	unsigned int x=0;
- 
-	NRM_securty_a = 0xaa;
-	NRM_securty_b = 0x55;
 	
-	flash_write_float32(addr,0.00);
-	flash_write_float32(addr+11,0.00);
-
-	while(1){	
-	for(x=1;x<11;x++){
-	flash_write_float32(addr+(x*4),i);
-
-	val = flash_read_float32(addr+(x*4)-4);
-	sprintf(txt,"%f",val);  LCD_GLASS_String(txt,LCD_PESO); 
-
-	val = flash_read_float32(addr+(x*4));
-	sprintf(txt,"%f",val);  LCD_GLASS_String(txt,LCD_TOTAL); 	
-
-	val = flash_read_float32(addr+(x*4)+4);
-	sprintf(txt,"%f",val);  LCD_GLASS_String(txt,LCD_PRECIO); 
-
-	i++;
-	delay_ms(1000);
-	}
 }
 
-NRM_securty_a = 0x00;
-	NRM_securty_b = 0x00;
-}*/
