@@ -27,6 +27,48 @@ void init_pwm(void){
 	PWMCON  = 0x04;	//PWM0-P1.4(LCD_LAMP)????(?PWM0=0xff?,?????)
 }
 
+
+void TestEEPROM(void)
+{
+	unsigned int addr=ADDRESS_PLU+4;
+	float val;
+	unsigned char txt[10]={0};
+	float i=0.00;
+
+	unsigned int x=0;
+ 
+	NRM_securty_a = 0xaa;
+	NRM_securty_b = 0x55;
+while(1){
+	flash_write_float32(addr,i);
+
+	val = flash_read_float32(addr);
+	sprintf(txt,"%f",val);  LCD_GLASS_String(txt,LCD_PESO); 
+	i+=1.00;
+	}
+/*	while(1){	
+	for(x=0;x<40;x+=4){
+
+	flash_write_float32(addr+x,i);
+
+	val = flash_read_float32(addr+x-4);
+	sprintf(txt,"%f",val);  LCD_GLASS_String(txt,LCD_PESO); 
+
+	val = flash_read_float32(addr+x);
+	sprintf(txt,"%f",val);  LCD_GLASS_String(txt,LCD_TOTAL); 	
+
+	val = flash_read_float32(addr+x+4);
+	sprintf(txt,"%f",val);  LCD_GLASS_String(txt,LCD_PRECIO); 
+
+	i++;
+	delay_ms(1000);
+	}
+}*/
+
+NRM_securty_a = 0x00;
+	NRM_securty_b = 0x00;
+}
+
 void main(void)
 {char txt[5]={0};
  float peso=0, voltaje=0;
@@ -106,6 +148,8 @@ delay_ms(100);
 	}*/
  TCON |= (1<<4);
  iLCD_GLASS_Clear();
+
+ TestEEPROM();
  while(1){   
  /*key_scan();
 	sprintf(txt,"%d  ",(int)(Key));
