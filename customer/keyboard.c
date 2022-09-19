@@ -76,6 +76,7 @@ void key_scan(void) {
     KeyState = 0; //no se ha presionado una tecla
   }
   LastKey = Key;
+  if(Key!=0&&KeyState == PRESS)vBeep_Key();;
 }
 
 

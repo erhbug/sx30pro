@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   KEYBOARD                                                              09/19/2022 16:48:03 PAGE 1   
+C51 COMPILER V7.50   KEYBOARD                                                              09/19/2022 17:52:16 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE KEYBOARD
@@ -62,7 +62,7 @@ line level    source
   52   2          KEY_D0 = 1;
   53   2          KEY_D1 = 1;
   54   2          KEY_D2 = 1;
-C51 COMPILER V7.50   KEYBOARD                                                              09/19/2022 16:48:03 PAGE 2   
+C51 COMPILER V7.50   KEYBOARD                                                              09/19/2022 17:52:16 PAGE 2   
 
   55   2          KEY_D3 = 1;
   56   2          KEY_D4 = 1;
@@ -88,54 +88,55 @@ line level    source
   76   2          KeyState = 0; //no se ha presionado una tecla
   77   2        }
   78   1        LastKey = Key;
-  79   1      }
-  80          
+  79   1        if(Key!=0&&KeyState == PRESS)vBeep_Key();;
+  80   1      }
   81          
-  82          void vBeep_Key(void){
-  83   1      
-  84   1              /*enum digi_key Value_Key_Press;
-  85   1              
-  86   1              if(srFlagScale.bCalidadTest == 2){
-  87   1                      if(stScaleParam.cBacklight){OnBackLight;}
-  88   1              }*/
-  89   1              
-  90   1              if(!strTimer.cFLag_TimerA_On){
-  91   2                      strTimer.cFLag_TimerA_End = 0;
-  92   2                      Beep_On_Key;
-  93   2              }
-  94   1      
+  82          
+  83          void vBeep_Key(void){
+  84   1      
+  85   1              /*enum digi_key Value_Key_Press;
+  86   1              
+  87   1              if(srFlagScale.bCalidadTest == 2){
+  88   1                      if(stScaleParam.cBacklight){OnBackLight;}
+  89   1              }*/
+  90   1              
+  91   1              if(!strTimer.cFLag_TimerA_On){
+  92   2                      strTimer.cFLag_TimerA_End = 0;
+  93   2                      Beep_On_Key;
+  94   2              }
   95   1      
-  96   1              /*while(strTimer.cFLag_TimerA_End == 0){
-  97   1                      //IWDG->KR = IWDG_KEY_REFRESH;
-  98   1              }*/
-  99   1              
- 100   1              /*do{
- 101   1                      Value_Key_Press = vActionKey();         
- 102   1              }while(Value_Key_Press != KEY_NULL);
- 103   1              
- 104   1              if(srFlagScale.bCalidadTest == 2){
- 105   1                      //OffBackLight;
- 106   1              }
- 107   1              
- 108   1              KeyPressed = FALSE;*/
- 109   1      }
- 110          
- 111          void vSound_Saved_Param(void){
- 112   1              unsigned char i = 0;
- 113   1              
- 114   1              for(i=0; i<3; i++){
- 115   2                      
- 116   2                      vBeep_Key();
-C51 COMPILER V7.50   KEYBOARD                                                              09/19/2022 16:48:03 PAGE 3   
+  96   1      
+  97   1              /*while(strTimer.cFLag_TimerA_End == 0){
+  98   1                      //IWDG->KR = IWDG_KEY_REFRESH;
+  99   1              }*/
+ 100   1              
+ 101   1              /*do{
+ 102   1                      Value_Key_Press = vActionKey();         
+ 103   1              }while(Value_Key_Press != KEY_NULL);
+ 104   1              
+ 105   1              if(srFlagScale.bCalidadTest == 2){
+ 106   1                      //OffBackLight;
+ 107   1              }
+ 108   1              
+ 109   1              KeyPressed = FALSE;*/
+ 110   1      }
+ 111          
+ 112          void vSound_Saved_Param(void){
+ 113   1              unsigned char i = 0;
+ 114   1              
+ 115   1              for(i=0; i<3; i++){
+ 116   2                      
+C51 COMPILER V7.50   KEYBOARD                                                              09/19/2022 17:52:16 PAGE 3   
 
- 117   2                      
- 118   2                      delay_ms(250);
- 119   2              }       
- 120   1      }
+ 117   2                      vBeep_Key();
+ 118   2                      
+ 119   2                      delay_ms(250);
+ 120   2              }       
+ 121   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    263    ----
+   CODE SIZE        =    275    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =      9    ----
    PDATA SIZE       =   ----    ----

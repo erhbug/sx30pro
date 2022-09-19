@@ -9,6 +9,7 @@
 
 #include "./_scale/dvr_def.h"
 #include "./_scale/dvr_scale.h"
+#include <stdio.h>
 
 unsigned char lecturaADC[4]= {0};
 static unsigned char cont = 0;
@@ -47,12 +48,12 @@ init_pwm();
 
  iLCD_GLASS_Clear();
  while(1){   
- /*key_scan();
+    key_scan();
 	sprintf(txt,"%d  ",(int)(Key));
-	LCD_GLASS_String(txt,LCD_TOTAL)*/
+	LCD_GLASS_String(txt,LCD_TOTAL);
 
-	//sprintf(txt,"%d  ",(int)(KeyState));
-	//LCD_GLASS_String(txt,LCD_PRECIO);
+//	sprintf(txt,"%d  ",(int)(KeyState));
+	LCD_GLASS_String(txt,LCD_PRECIO);
 
 	
 	delay_ms(50);
@@ -64,7 +65,7 @@ init_pwm();
 	voltaje=convertidorADC()*(3.3/255);
 //	LCD_GLASS_Float(peso, 2,  LCD_TOTAL);
 //	LCD_GLASS_Float(voltaje, 2, LCD_PESO);
-TestEEPROM();
+//TestEEPROM();
 }
 
 }
