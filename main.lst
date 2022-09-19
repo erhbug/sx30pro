@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   MAIN                                                                  09/19/2022 16:06:57 PAGE 1   
+C51 COMPILER V7.50   MAIN                                                                  09/19/2022 16:43:15 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
@@ -50,9 +50,9 @@ line level    source
   40   1      init_pwm();
   41   1      
   42   1              iLCD_GLASS_Init(); 
-  43   1              LCD_GLASS_String("TORR",LCD_PESO);vBeep_Key();
+  43   1              LCD_GLASS_String("TORR",LCD_PESO);vSound_Saved_Param();
   44   1              delay_ms(300);  
-  45   1              LCD_GLASS_String("EY",LCD_PRECIO);vBeep_Key();
+  45   1              LCD_GLASS_String("EY",LCD_PRECIO); 
   46   1              delay_ms(300);                  
   47   1      
   48   1       iLCD_GLASS_Clear();
@@ -62,7 +62,7 @@ line level    source
   52   2              LCD_GLASS_String(txt,LCD_TOTAL)*/
   53   2      
   54   2              //sprintf(txt,"%d  ",(int)(KeyState));
-C51 COMPILER V7.50   MAIN                                                                  09/19/2022 16:06:57 PAGE 2   
+C51 COMPILER V7.50   MAIN                                                                  09/19/2022 16:43:15 PAGE 2   
 
   55   2              //LCD_GLASS_String(txt,LCD_PRECIO);
   56   2      
@@ -126,7 +126,7 @@ line level    source
  114          {
  115   1          //Config lectura adc Only input
  116   1              P0M0 &= ~(1<<5);
-C51 COMPILER V7.50   MAIN                                                                  09/19/2022 16:06:57 PAGE 3   
+C51 COMPILER V7.50   MAIN                                                                  09/19/2022 16:43:15 PAGE 3   
 
  117   1              P0M1 |= (1<<5);
  118   1              //Salida en 1  para lectura adc
@@ -190,7 +190,7 @@ line level    source
  176   2                      if(strTimer.iTimerA > 0){
  177   3                              strTimer.iTimerA--;
  178   3                      }else{
-C51 COMPILER V7.50   MAIN                                                                  09/19/2022 16:06:57 PAGE 4   
+C51 COMPILER V7.50   MAIN                                                                  09/19/2022 16:43:15 PAGE 4   
 
  179   3                              strTimer.cFLag_TimerA_On = 0;
  180   3                              strTimer.cFLag_TimerA_End = 1;
@@ -201,7 +201,7 @@ line level    source
  185   1      
  186   1              //P0 ^= (1<<1);//P1 ^= (1<<5);
  187   1              TL0 = 0xCF;
- 188   1              TH0 = 0xAF;
+ 188   1              TH0 = 0xb5;
  189   1              TCON |= (1<<4);
  190   1      
  191   1      }
@@ -246,7 +246,7 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    997    ----
+   CODE SIZE        =    994    ----
    CONSTANT SIZE    =     34    ----
    XDATA SIZE       =     13      39
    PDATA SIZE       =   ----    ----
@@ -255,7 +255,7 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 
-C51 COMPILER V7.50   MAIN                                                                  09/19/2022 16:06:57 PAGE 5   
+C51 COMPILER V7.50   MAIN                                                                  09/19/2022 16:43:15 PAGE 5   
 
 
 C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

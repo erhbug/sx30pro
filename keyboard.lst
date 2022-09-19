@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   KEYBOARD                                                              09/19/2022 16:06:58 PAGE 1   
+C51 COMPILER V7.50   KEYBOARD                                                              09/19/2022 16:48:03 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE KEYBOARD
@@ -47,87 +47,98 @@ line level    source
   37          {       
   38   1              unsigned int i,j;
   39   1              for(i= 0;i<num;i++){    //(SDI5219) ??1ms
-  40   2                      for(j=0;j<164;j++)
+  40   2                      for(j=0;j<195;j++)
   41   2                              ;
   42   2      IWDG_KEY_REFRESH; 
-  43   2      }
-  44   1      }
-  45          
-  46          void key_scan(void) {
-  47   1        char k = 0;
-  48   1        Key = 0;
-  49   1      
-  50   1        for (k = 0; k < 5; k++) {
-  51   2          KEY_D0 = 1;
-  52   2          KEY_D1 = 1;
-  53   2          KEY_D2 = 1;
-  54   2          KEY_D3 = 1;
-C51 COMPILER V7.50   KEYBOARD                                                              09/19/2022 16:06:58 PAGE 2   
+  43   2      } 
+  44   1      
+  45   1      }
+  46          
+  47          void key_scan(void) {
+  48   1        char k = 0;
+  49   1        Key = 0;
+  50   1      
+  51   1        for (k = 0; k < 5; k++) {
+  52   2          KEY_D0 = 1;
+  53   2          KEY_D1 = 1;
+  54   2          KEY_D2 = 1;
+C51 COMPILER V7.50   KEYBOARD                                                              09/19/2022 16:48:03 PAGE 2   
 
-  55   2          KEY_D4 = 1;
-  56   2          if (k == 0) KEY_D0 = 0;
-  57   2          if (k == 1) KEY_D1 = 0;
-  58   2          if (k == 2) KEY_D2 = 0;
-  59   2          if (k == 3) KEY_D3 = 0;
-  60   2          if (k == 4) KEY_D4 = 0;
-  61   2          delay_ms(1);
-  62   2          if (KEY_K0 != 1) Key = 1 + (k * 4);
-  63   2          if (KEY_K1 != 1) Key = 2 + (k * 4);
-  64   2          if (KEY_K2 != 1) Key = 3 + (k * 4);
-  65   2          if (KEY_K3 != 1) Key = 4 + (k * 4);
-  66   2        }
-  67   1      
-  68   1        if (LastKey == 0 && Key != 0) {
-  69   2          KeyState = PRESS; //se presiono
-  70   2        } else if (LastKey == Key && Key != 0) {
-  71   2          KeyState = PRESSED; //se mantiene presionado
-  72   2        } else if (LastKey != 0 && Key == 0) {
-  73   2          KeyState = RELEASE; //se solto
-  74   2        } else if (LastKey == 0 && Key == 0) {
-  75   2          KeyState = 0; //no se ha presionado una tecla
-  76   2        }
-  77   1        LastKey = Key;
-  78   1      }
-  79          
+  55   2          KEY_D3 = 1;
+  56   2          KEY_D4 = 1;
+  57   2          if (k == 0) KEY_D0 = 0;
+  58   2          if (k == 1) KEY_D1 = 0;
+  59   2          if (k == 2) KEY_D2 = 0;
+  60   2          if (k == 3) KEY_D3 = 0;
+  61   2          if (k == 4) KEY_D4 = 0;
+  62   2          delay_ms(1);
+  63   2          if (KEY_K0 != 1) Key = 1 + (k * 4);
+  64   2          if (KEY_K1 != 1) Key = 2 + (k * 4);
+  65   2          if (KEY_K2 != 1) Key = 3 + (k * 4);
+  66   2          if (KEY_K3 != 1) Key = 4 + (k * 4);
+  67   2        }
+  68   1      
+  69   1        if (LastKey == 0 && Key != 0) {
+  70   2          KeyState = PRESS; //se presiono
+  71   2        } else if (LastKey == Key && Key != 0) {
+  72   2          KeyState = PRESSED; //se mantiene presionado
+  73   2        } else if (LastKey != 0 && Key == 0) {
+  74   2          KeyState = RELEASE; //se solto
+  75   2        } else if (LastKey == 0 && Key == 0) {
+  76   2          KeyState = 0; //no se ha presionado una tecla
+  77   2        }
+  78   1        LastKey = Key;
+  79   1      }
   80          
-  81          void vBeep_Key(void){
-  82   1      
-  83   1              /*enum digi_key Value_Key_Press;
-  84   1              
-  85   1              if(srFlagScale.bCalidadTest == 2){
-  86   1                      if(stScaleParam.cBacklight){OnBackLight;}
-  87   1              }*/
-  88   1              
-  89   1              if(!strTimer.cFLag_TimerA_On){
-  90   2                      strTimer.cFLag_TimerA_End = 0;
-  91   2                      Beep_On_Key;
-  92   2              }
-  93   1      
+  81          
+  82          void vBeep_Key(void){
+  83   1      
+  84   1              /*enum digi_key Value_Key_Press;
+  85   1              
+  86   1              if(srFlagScale.bCalidadTest == 2){
+  87   1                      if(stScaleParam.cBacklight){OnBackLight;}
+  88   1              }*/
+  89   1              
+  90   1              if(!strTimer.cFLag_TimerA_On){
+  91   2                      strTimer.cFLag_TimerA_End = 0;
+  92   2                      Beep_On_Key;
+  93   2              }
   94   1      
-  95   1              /*while(strTimer.cFLag_TimerA_End == 0){
-  96   1                      //IWDG->KR = IWDG_KEY_REFRESH;
-  97   1              }*/
-  98   1              
-  99   1              /*do{
- 100   1                      Value_Key_Press = vActionKey();         
- 101   1              }while(Value_Key_Press != KEY_NULL);
- 102   1              
- 103   1              if(srFlagScale.bCalidadTest == 2){
- 104   1                      //OffBackLight;
- 105   1              }
- 106   1              
- 107   1              KeyPressed = FALSE;*/
- 108   1      }
- 109          
+  95   1      
+  96   1              /*while(strTimer.cFLag_TimerA_End == 0){
+  97   1                      //IWDG->KR = IWDG_KEY_REFRESH;
+  98   1              }*/
+  99   1              
+ 100   1              /*do{
+ 101   1                      Value_Key_Press = vActionKey();         
+ 102   1              }while(Value_Key_Press != KEY_NULL);
+ 103   1              
+ 104   1              if(srFlagScale.bCalidadTest == 2){
+ 105   1                      //OffBackLight;
+ 106   1              }
+ 107   1              
+ 108   1              KeyPressed = FALSE;*/
+ 109   1      }
+ 110          
+ 111          void vSound_Saved_Param(void){
+ 112   1              unsigned char i = 0;
+ 113   1              
+ 114   1              for(i=0; i<3; i++){
+ 115   2                      
+ 116   2                      vBeep_Key();
+C51 COMPILER V7.50   KEYBOARD                                                              09/19/2022 16:48:03 PAGE 3   
+
+ 117   2                      
+ 118   2                      delay_ms(250);
+ 119   2              }       
+ 120   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    245    ----
+   CODE SIZE        =    263    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =      9    ----
    PDATA SIZE       =   ----    ----
-C51 COMPILER V7.50   KEYBOARD                                                              09/19/2022 16:06:58 PAGE 3   
-
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----

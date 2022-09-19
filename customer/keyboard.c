@@ -37,10 +37,11 @@ void delay_ms(unsigned int num)
 { 	
 	unsigned int i,j;
   	for(i= 0;i<num;i++){	//(SDI5219) ??1ms
-		for(j=0;j<164;j++)
+		for(j=0;j<195;j++)
 			;
 IWDG_KEY_REFRESH; 
-}
+} 
+
 }
 
 void key_scan(void) {
@@ -107,3 +108,13 @@ void vBeep_Key(void){
 	KeyPressed = FALSE;*/
 }
 
+void vSound_Saved_Param(void){
+	unsigned char i = 0;
+	
+	for(i=0; i<3; i++){
+		
+		vBeep_Key();
+		
+		delay_ms(250);
+	}	
+}

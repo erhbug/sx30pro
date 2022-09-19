@@ -40,9 +40,9 @@ void main(void)
 init_pwm();
 
 	iLCD_GLASS_Init(); 
-	LCD_GLASS_String("TORR",LCD_PESO);vBeep_Key();
+	LCD_GLASS_String("TORR",LCD_PESO);vSound_Saved_Param();
 	delay_ms(300); 	
-	LCD_GLASS_String("EY",LCD_PRECIO);vBeep_Key();
+	LCD_GLASS_String("EY",LCD_PRECIO); 
 	delay_ms(300);  		
 
  iLCD_GLASS_Clear();
@@ -185,7 +185,7 @@ static void timer0(void) interrupt 1
 
 	//P0 ^= (1<<1);//P1 ^= (1<<5);
 	TL0 = 0xCF;
-	TH0 = 0xAF;
+	TH0 = 0xb5;
 	TCON |= (1<<4);
 
 }

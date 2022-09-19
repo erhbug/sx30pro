@@ -42,6 +42,7 @@ sbit KEY_D4 = P1^2;
 void key_scan(void);
 void delay_ms(unsigned int num);
 void vBeep_Key(void);
+void vSound_Saved_Param(void);
 
 extern unsigned char KeyState;
 extern unsigned char Key;
