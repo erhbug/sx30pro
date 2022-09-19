@@ -1,38 +1,17 @@
-/*void delay_35u(void);
-int iLCD_GLASS_Init(void);
-void lcd_unit_write(unsigned char d);
-void write_lcd(SOLIDIC Display);
-int iLCD_GLASS_DeInit(void);
-int iLCD_GLASS_Clear(void);
-int iLCD_GLASS_All_On(void);
-int iLCD_GLASS_Blink(char comand_value);
-void LCD_SET_Char(char cCaracter, char cPosition_On_LCD, 
-	char cPosition_Text);
-void LCD_GLASS_Dot(char iNumber_Dot, char cPosition_On_LCD, char cFLag_On);
-void LCD_GLASS_Symbols(char cSymbol, char cFlag_On);
-void LCD_GLASS_Float(float fNumber_To_LCD, char iNumber_Decimal, char cPosition_On_LCD);
-void LCD_GLASS_String(char *pCaracter, char cPosition_On_LCD);
-/* Includes ------------------------------------------------------------------*/
-//#include "app_cfg.h"
-
+//Creado por Eriberto Romero Hernandez
+//Modificado en Sep 22 
 #include "./_display/dvr_lcd_SDI1621.h"
 
 #include <stdio.h>
 #include <string.h>
-//#include "stm32xx_hal.h"
-//#include "dvr_def.h"
-//#include "dvr_lcd.h"
-//#include "dvr_scale.h"
-
-//#include "app_keyboard.h"
-//#include "bsp.h"
-
-//#include "dvr_battery_la.h"
 
 	SOLIDIC Display;
 
+	void write_lcd(SOLIDIC Display);
+	void LCD_GLASS_Update(void);
+
 #if DISPLAY_20400047_EN > 0	
-const char cNumber_LCD[10] = { 
+const unsigned char cNumber_LCD[10] = { 
 		0x5F, //	01011111,  	//0
 		0x50,	//	01010000, 	//1
 		0x3D,	//	00111101,		//2
@@ -44,7 +23,7 @@ const char cNumber_LCD[10] = {
 		0x7F,	//	01111111,		//8
 		0X73};//	01110011		//9
 
-const char cABC_LCD[28] = {
+const unsigned char cABC_LCD[28] = {
 		0x77,	//	01110111,	//A
 		0x6E,	//	01101110,	//b
 		0x0F,	//	00001111,	//C
@@ -90,10 +69,9 @@ const char cABC_LCD[28] = {
 #define P_PRECIO_1  14
 #define S_X         15
 		
-		
-
+	
 #else
-const char cNumber_LCD[10] = { 
+const unsigned char cNumber_LCD[10] = { 
 		0x7D, //	01111101,  	//0
 		0x60,	//	01100000, 	//1
 		0x3E,	//	00111110,		//2
@@ -105,7 +83,7 @@ const char cNumber_LCD[10] = {
 		0x7F,	//	01111111,		//8
 		0x7B};	//	01111011		//9
 
-const char cABC_LCD[28] = {
+const unsigned char cABC_LCD[28] = {
 		0x77,	//	01110111,	//A
 		0x4F,	//	01001111,	//b
 		0x1D,	//	00011101,	//C
@@ -152,31 +130,33 @@ const char cABC_LCD[28] = {
 #define S_NET       13
 
 #endif
-		
 
-
-
-
-//extern UART_HandleTypeDef huart1;
-//extern void vSend_String_Usart(UART_HandleTypeDef *huart,char *pData);
-//extern void vSend_String_USB(char *pData);
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/* Timer handler -------------------------------------------------------------*/
-
-
-// funci車n de retardo 10us
+	// funci車n de retardo 10us
 void delay_35u(void){ 	
 	unsigned int j;
   	for(j= 0;j<5;j++);
+}	
+
+//****************************************************
+// Controlador LCD 1621 bloque compilaci車n condicional ------ comenzar -------
+//****************************************************
+void lcd_unit_write(unsigned char d){
+	unsigned char i;
+	for(i=0;i<8;i++){
+		if( ( d & 0x80 ) == 0 ) LCD_DATA_OFF;
+		else LCD_DATA_ON;
+		LCD_WR_N_OFF;	
+		delay_35u();	
+    LCD_WR_N_ON;			
+		delay_35u();		
+		d <<= 1;		
+	}
 }
+
+
 
 int iLCD_GLASS_Init(void){//int i,j,k;
 
-/* Configurar como salidas
-  LCD_CS_N_Pin
-  LCD_WR_N_Pin
-  LCD_DATA_Pin
-*/
 
 	LCD_CS_N_ON;
 	LCD_WR_N_ON;
@@ -257,21 +237,7 @@ int iLCD_GLASS_Init(void){//int i,j,k;
 	return 0;
 }
 
-//****************************************************
-// Controlador LCD 1621 bloque compilaci車n condicional ------ comenzar -------
-//****************************************************
-void lcd_unit_write(unsigned char d){
-	unsigned char i;
-	for(i=0;i<8;i++){
-		if( ( d & 0x80 ) == 0 ) LCD_DATA_OFF;
-		else LCD_DATA_ON;
-		LCD_WR_N_OFF;	
-		delay_35u();	
-    LCD_WR_N_ON;			
-		delay_35u();		
-		d <<= 1;		
-	}
-}
+
 
 // funci車n de escritura LCD
 // modo:
@@ -398,7 +364,7 @@ int iLCD_GLASS_All_On(void){
 
 
 
-void LCD_SET_Char(char cCaracter, char cPosition_On_LCD, 
+void LCD_SET_Char(unsigned char cCaracter, unsigned char cPosition_On_LCD, 
 	char cPosition_Text){
 		char i=0;
 		#if DISPLAY_20400047_EN > 0			
@@ -417,7 +383,7 @@ void LCD_SET_Char(char cCaracter, char cPosition_On_LCD,
 }
 
 
-void LCD_GLASS_Dot(char iNumber_Dot, char cPosition_On_LCD, char cFLag_On){
+void LCD_GLASS_Dot(unsigned char iNumber_Dot, unsigned char cPosition_On_LCD, unsigned char cFLag_On){
 	
 	switch(cPosition_On_LCD){
 		case LCD_PESO:
@@ -484,7 +450,7 @@ void LCD_GLASS_Dot(char iNumber_Dot, char cPosition_On_LCD, char cFLag_On){
 }
 
 
-void LCD_GLASS_Symbols(char cSymbol, char cFlag_On){
+void LCD_GLASS_Symbols(unsigned char cSymbol, unsigned char cFlag_On){
 	
 	//if(cFlag_On!=0&&cFlag_On!=1)vSend_String_Usart(&huart1,"-------------ERROR------------\r\n");
 

@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   MAIN                                                                  09/15/2022 12:42:32 PAGE 1   
+C51 COMPILER V7.50   MAIN                                                                  09/19/2022 12:19:57 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
@@ -62,7 +62,7 @@ line level    source
   50   1          P0M1 &= ~(1<<1);
   51   1      /*bit KEY_K0 = P0^2;    
   52   1      sbit KEY_K1 = P2^4;     
-C51 COMPILER V7.50   MAIN                                                                  09/15/2022 12:42:32 PAGE 2   
+C51 COMPILER V7.50   MAIN                                                                  09/19/2022 12:19:57 PAGE 2   
 
   53   1      sbit KEY_K2 = P2^0;     
   54   1      sbit KEY_K3 = P1^6;             */
@@ -126,7 +126,7 @@ line level    source
  112   2       /*key_scan();
  113   2              sprintf(txt,"%d  ",(int)(Key));
  114   2              LCD_GLASS_String(txt,LCD_TOTAL)*/
-C51 COMPILER V7.50   MAIN                                                                  09/15/2022 12:42:32 PAGE 3   
+C51 COMPILER V7.50   MAIN                                                                  09/19/2022 12:19:57 PAGE 3   
 
  115   2      
  116   2              //sprintf(txt,"%d  ",(int)(KeyState));
@@ -190,7 +190,7 @@ line level    source
  174          {
  175   1              unsigned int addr=ADDRESS_PLU;
  176   1              float val;
-C51 COMPILER V7.50   MAIN                                                                  09/15/2022 12:42:32 PAGE 4   
+C51 COMPILER V7.50   MAIN                                                                  09/19/2022 12:19:57 PAGE 4   
 
  177   1              unsigned char txt[10]={0};
  178   1              float i=0.12;

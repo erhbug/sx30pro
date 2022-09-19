@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   KEYBOARD                                                              09/15/2022 11:15:01 PAGE 1   
+C51 COMPILER V7.50   KEYBOARD                                                              09/19/2022 12:17:45 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE KEYBOARD
@@ -62,7 +62,7 @@ line level    source
   52   2          if (k == 2) KEY_D2 = 0;
   53   2          if (k == 3) KEY_D3 = 0;
   54   2          if (k == 4) KEY_D4 = 0;
-C51 COMPILER V7.50   KEYBOARD                                                              09/15/2022 11:15:01 PAGE 2   
+C51 COMPILER V7.50   KEYBOARD                                                              09/19/2022 12:17:45 PAGE 2   
 
   55   2          delay_ms(1);
   56   2          if (KEY_K0 != 1) Key = 1 + (k * 4);

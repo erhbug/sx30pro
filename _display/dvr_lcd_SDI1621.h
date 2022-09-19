@@ -66,19 +66,10 @@
 #define Blink_2Hz	    6
 
 
-
-void delay_35u(void);
 int iLCD_GLASS_Init(void);
-void lcd_unit_write(unsigned char d);
-void write_lcd(SOLIDIC Display);
 int iLCD_GLASS_DeInit(void);
 int iLCD_GLASS_Clear(void);
 int iLCD_GLASS_All_On(void);
-void LCD_SET_Char(char cCaracter, char cPosition_On_LCD, 
-	char cPosition_Text);
-void LCD_GLASS_Dot(char iNumber_Dot, char cPosition_On_LCD, char cFLag_On);
-void LCD_GLASS_Symbols(char cSymbol, char cFlag_On);
-void LCD_GLASS_Float(float fNumber_To_LCD, char iNumber_Decimal, char cPosition_On_LCD);
 void LCD_GLASS_String(char *pCaracter, char cPosition_On_LCD);
-void LCD_GLASS_Update(void);
 void LCD_GLASS_Float(float fNumber_To_LCD, char iNumber_Decimal, char cPosition_On_LCD);
+
