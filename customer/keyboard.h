@@ -17,7 +17,7 @@
 #define _KEYBOARD_H_
 
 #include <REG52.H>
-
+#include "./_scale/dvr_scale.h"
 //------------------------------------------------------------------
 
 sbit KEY_K0 = P0^2;	
@@ -35,13 +35,6 @@ sbit KEY_D4 = P1^2;
 #define PRESSED 2
 #define RELEASE  3
 
-enum digi_key{ 																													//Definicion Teclas para LPCRN
-			KEY_NULL,
-			KEY_CERO,KEY_TARA,KEY_M1,KEY_RCL,KEY_CAMBIO,KEY_MAS,KEY_M2,
-			KEY_M,KEY_7,KEY_4,KEY_1,KEY_C,KEY_8,KEY_5,KEY_2,KEY_0,KEY_9,
-			KEY_6,KEY_3,KEY_PUNTO,
-		};
-
 
 //*************************************************************************//
 //----------  º¯ÊýÔ­ÐÍ ---------------
@@ -50,6 +43,8 @@ void key_scan(void);
 void delay_ms(unsigned int num);
 void vBeep_Key(void);
 void vSound_Saved_Param(void);
+enum digi_key vActionKey(void);
+void vScan_Key(void);
 
 extern unsigned char KeyState;
 extern unsigned char Key;

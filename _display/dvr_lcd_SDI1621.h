@@ -66,10 +66,12 @@
 #define Blink_2Hz	    6
 
 
-int iLCD_GLASS_Init(void);
-int iLCD_GLASS_DeInit(void);
-int iLCD_GLASS_Clear(void);
-int iLCD_GLASS_All_On(void);
-void LCD_GLASS_String(char *pCaracter, char cPosition_On_LCD);
-void LCD_GLASS_Float(float fNumber_To_LCD, char iNumber_Decimal, char cPosition_On_LCD);
+unsigned int iLCD_GLASS_Init(void);
+unsigned int iLCD_GLASS_DeInit(void);
+unsigned int iLCD_GLASS_Clear(void);
+unsigned int iLCD_GLASS_All_On(void);
+void LCD_GLASS_String(unsigned char *pCaracter, unsigned char cPosition_On_LCD);
+void LCD_GLASS_Float(float fNumber_To_LCD, unsigned char iNumber_Decimal, unsigned char cPosition_On_LCD);
+void LCD_GLASS_Symbols(unsigned char cSymbol, unsigned char cFlag_On);
+void LCD_GLASS_Dot(unsigned char iNumber_Dot, unsigned char cPosition_On_LCD, unsigned char cFLag_On);
 

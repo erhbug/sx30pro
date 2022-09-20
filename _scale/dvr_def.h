@@ -12,22 +12,24 @@
 #define     BEEPER_EN	P1 |= 0x10
 #define     BEEPER_DIS	P1 &= 0xEF
 
+#define OnBackLight 	srFlagScale.bBacklight_On = 1; P1|= (1<<5);//GPIO_SetBits(GPIOG, BACK_LIGHT)
+#define OffBackLight	srFlagScale.bBacklight_On = 0; P1&= ~(1<<5);//GPIO_ResetBits(GPIOG, BACK_LIGHT)
 
 /* ACCIONES */
 
-/*#define OnBackLight 	srFlagScale.bBacklight_On = 1; P1|= (1<<5);//GPIO_SetBits(GPIOG, BACK_LIGHT)
-#define OffBackLight	srFlagScale.bBacklight_On = 0; P1&= ~(1<<5);//GPIO_ResetBits(GPIOG, BACK_LIGHT)
+/*
 
 #define Number_Count_Sec	7827*/
 
 #define Beep_On_Key						strTimer.cFLag_TimerA_Start = 1
+#define Time_Sleep					strTimer.cFLag_TimerB_Start = 1; strTimer.cFLag_TimerB_End = 0
 
 /*#define Auto_Off_On_15m 				strTimer.iTimerMinuteF = 60*15;	strTimer.cFLag_TimerF_Start = 1
 #define Auto_Off_On_5m 					strTimer.iTimerMinuteF = 60*5;	strTimer.cFLag_TimerF_Start = 1
 #define Auto_Off_On_5m_Restart	srFlagScale.cAuto_Off_Time = 0
 
 #define Restart_Sleep_Time	strTimer.iTimerMinuteG = 30*1; srFlagScale.bActiveSaveBattery = 0; strTimer.cFLag_TimerG_On = 1;
-#define Time_Sleep					strTimer.cFLag_TimerB_Start = 1; strTimer.cFLag_TimerB_End = 0
+
 
 #define ONOFF_uC		GPIO_ReadInputDataBit(GPIOF, ONu)
 
@@ -38,6 +40,39 @@
 #define uOFF_Carga	GPIO_ResetBits(GPIOA, PUSH_SWITCH)*/
 
 #define IWDG_KEY_REFRESH {WD_TA = 0x05; WD_TA = 0x0a;WDCON = 0x1f;}
+
+#define Parameter_Configuration		0
+#define Parameter_Calibration			1
+#define Parameter_Register				2
+#define Parameter_All							3
+#define Parameter_Debug						4
+#define Parameter_IncDivisiones		5
+#define Parameter_Overload				6
+#define Parameter_LinePrinter			7
+#define Parameter_ModeloTeclado		8
+#define Parameter_NumSerieCalidad	9
+#define Parameter_Point_Zero_Calibration 	10
+#define Parameter_Count_Calibration				11
+#define Parameter_Count_Configuration			12
+#define Parameter_Voltages								13
+#define Parameter_Temperature							14
+#define Parameter_Backlight								15
+
+#define ESPANOL 1
+#define ENGLISH	0
+
+#define MONEDA_DLLS			0
+#define MONEDA_PESOS		1
+#define MONEDA_EUROS		2
+#define MONEDA_BSF			3
+
+#define PreConfig15KG 0
+#define PreConfig20KG 1
+#define PreConfig30KG 2
+#define PreConfig40KG 3
+#define PreConfig60LB 4
+#define PreConfig31KG 5
+#define PreConfig32KG 6
 /*
 #define ADC_VIN		ADC_Channel_25
 #define ADC_VREF	ADC_Channel_Vrefint

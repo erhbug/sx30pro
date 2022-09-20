@@ -139,7 +139,7 @@ volatile unsigned long  ReadHX712(void){ //by ERH
     unsigned char  dato[4]={0};
     ptr=(unsigned long *)&dato;
 
-	if(MISO!=0)return;
+	if(MISO!=0)return 0;
 	for(i=0;i<24;i++)//24 bits de comunicación
 	{    
     	SCLK=1;  

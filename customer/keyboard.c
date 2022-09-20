@@ -21,7 +21,7 @@
 //#include "./_solidic/head_file_version.h"
 #include "./customer/keyboard.h"
 #include "./_scale/dvr_def.h"
-#include "./_scale/dvr_scale.h"
+
 
 unsigned char Key;
 unsigned char LastKey;
@@ -107,6 +107,29 @@ void vBeep_Key(void){
 	}
 	
 	KeyPressed = FALSE;*/
+}
+
+void vScan_Key(void){
+}
+
+enum digi_key vActionKey(void){
+	
+/*	vReadKey();
+	
+	if(KeyPressed == TRUE){
+		KeyPressed = FALSE;
+		
+	if(srFlagScale.bBateriaLow == 0){
+	if(stScaleParam.cBacklight){OnBackLight;}
+		strTimer.cFLag_TimerJ_Start = 1;
+		srFlagScale.bBacklight_On = 1;
+	}	
+	
+		return eKeyTouch;
+	}else{
+		return KEY_NULL;
+	}*/
+	return 0;
 }
 
 void vSound_Saved_Param(void){

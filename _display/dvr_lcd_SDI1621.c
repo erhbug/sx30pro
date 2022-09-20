@@ -155,9 +155,7 @@ void lcd_unit_write(unsigned char d){
 
 
 
-int iLCD_GLASS_Init(void){//int i,j,k;
-
-
+unsigned int iLCD_GLASS_Init(void){//int i,j,k;
 	LCD_CS_N_ON;
 	LCD_WR_N_ON;
 	LCD_DATA_ON;
@@ -183,56 +181,6 @@ int iLCD_GLASS_Init(void){//int i,j,k;
 	Display.counter=sizeof(Display.LCD_BUF);
 	memset(Display.LCD_BUF, 0x00, sizeof(Display.LCD_BUF));
 	write_lcd(Display);//Write data to the RAM 
-	/*while(1){
-		memset(Display.LCD_BUF, 0x00, sizeof(Display.LCD_BUF));
-		Display.LCD_BUF[5]=1<<7;write_lcd(Display);
-		HAL_Delay(1000);
-		Display.LCD_BUF[9]=1<<7;write_lcd(Display);
-		HAL_Delay(1000);
-		Display.LCD_BUF[6]=1<<7;write_lcd(Display);
-		HAL_Delay(1000);
-		Display.LCD_BUF[10]=1<<7;write_lcd(Display);
-		HAL_Delay(1000);
-		
-		
-	}*/
-	/*while(1){
-	LCD_GLASS_Symbols(9,0); //bateria 0/3
-				LCD_GLASS_Symbols(8,0);
-				LCD_GLASS_Symbols(7,0);
-				LCD_GLASS_Symbols(10,1);
-		for(i=0;i<1000;i++){
-		IWDG->KR =  IWDG_KEY_REFRESH; 
-			HAL_Delay(1);
-		}
-		
-		LCD_GLASS_Symbols(9,0); //bateria 0/3
-				LCD_GLASS_Symbols(8,0);
-				LCD_GLASS_Symbols(7,1);
-				LCD_GLASS_Symbols(10,1);
-		for(i=0;i<1000;i++){
-		IWDG->KR =  IWDG_KEY_REFRESH; 
-			HAL_Delay(1);
-		}
-		
-		LCD_GLASS_Symbols(9,0); //bateria 0/3
-				LCD_GLASS_Symbols(8,1);
-				LCD_GLASS_Symbols(7,1);
-				LCD_GLASS_Symbols(10,1);
-		for(i=0;i<1000;i++){
-		IWDG->KR =  IWDG_KEY_REFRESH; 
-			HAL_Delay(1);
-		}
-		
-		LCD_GLASS_Symbols(9,1); //bateria 0/3
-				LCD_GLASS_Symbols(8,1);
-				LCD_GLASS_Symbols(7,1);
-				LCD_GLASS_Symbols(10,1);
-		for(i=0;i<1000;i++){
-		IWDG->KR =  IWDG_KEY_REFRESH; 
-			HAL_Delay(1);
-		}
-	}*/
 	
 	return 0;
 }
@@ -321,7 +269,7 @@ void write_lcd(SOLIDIC Display){//char mode,unsigned char cmd,unsigned char addr
 	//HAL_NVIC_EnableIRQ(TIM14_IRQn);	
 }
 
-int iLCD_GLASS_DeInit(void){	
+unsigned int iLCD_GLASS_DeInit(void){	
 	Display.mode=LCD_DATA;
 	Display.addr=0;
 	Display.counter=sizeof(Display.LCD_BUF);	
@@ -342,7 +290,7 @@ int iLCD_GLASS_DeInit(void){
 
 /*
 */
-int iLCD_GLASS_Clear(void){	
+unsigned int iLCD_GLASS_Clear(void){	
 	Display.mode=LCD_DATA;
 	Display.addr=0;
 	Display.counter=sizeof(Display.LCD_BUF);	
@@ -353,7 +301,7 @@ int iLCD_GLASS_Clear(void){
 
 /*
 */
-int iLCD_GLASS_All_On(void){
+unsigned int iLCD_GLASS_All_On(void){
 	Display.mode=LCD_DATA;
 	Display.addr=0;
 	Display.counter=sizeof(Display.LCD_BUF);	

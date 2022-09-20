@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   MAIN                                                                  09/19/2022 17:52:16 PAGE 1   
+C51 COMPILER V7.50   MAIN                                                                  09/20/2022 11:52:27 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
@@ -62,7 +62,7 @@ line level    source
   52   2              sprintf(txt,"%d  ",(int)(Key));
   53   2              LCD_GLASS_String(txt,LCD_TOTAL);
   54   2      
-C51 COMPILER V7.50   MAIN                                                                  09/19/2022 17:52:16 PAGE 2   
+C51 COMPILER V7.50   MAIN                                                                  09/20/2022 11:52:27 PAGE 2   
 
   55   2      //      sprintf(txt,"%d  ",(int)(KeyState));
   56   2              LCD_GLASS_String(txt,LCD_PRECIO);
@@ -126,7 +126,7 @@ line level    source
  114          void adc_init(void)
  115          {
  116   1          //Config lectura adc Only input
-C51 COMPILER V7.50   MAIN                                                                  09/19/2022 17:52:16 PAGE 3   
+C51 COMPILER V7.50   MAIN                                                                  09/20/2022 11:52:27 PAGE 3   
 
  117   1              P0M0 &= ~(1<<5);
  118   1              P0M1 |= (1<<5);
@@ -190,7 +190,7 @@ line level    source
  176   3                      }
  177   2                      if(strTimer.iTimerA > 0){
  178   3                              strTimer.iTimerA--;
-C51 COMPILER V7.50   MAIN                                                                  09/19/2022 17:52:16 PAGE 4   
+C51 COMPILER V7.50   MAIN                                                                  09/20/2022 11:52:27 PAGE 4   
 
  179   3                      }else{
  180   3                              strTimer.cFLag_TimerA_On = 0;
@@ -254,7 +254,7 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
-C51 COMPILER V7.50   MAIN                                                                  09/19/2022 17:52:16 PAGE 5   
+C51 COMPILER V7.50   MAIN                                                                  09/20/2022 11:52:27 PAGE 5   
 
 END OF MODULE INFORMATION.
 
