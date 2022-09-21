@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   DVR_HX712                                                             09/20/2022 11:15:32 PAGE 1   
+C51 COMPILER V7.50   DVR_HX712                                                             09/21/2022 11:36:56 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE DVR_HX712
@@ -62,7 +62,7 @@ line level    source
   50   2              }else if(cFastFill == 1){       //Llena todo el vector de promedios con el mismo valor
   51   2                      iValueOut = 0;          
   52   2                      for(i=0; i<iLenthData_x-1; i++){
-C51 COMPILER V7.50   DVR_HX712                                                             09/20/2022 11:15:32 PAGE 2   
+C51 COMPILER V7.50   DVR_HX712                                                             09/21/2022 11:36:56 PAGE 2   
 
   53   3                              pfData_Filter[i] = iActualWeight;
   54   3                      }
@@ -126,7 +126,7 @@ line level    source
  112   1        //sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
  113   1      
  114   1              iTemp_RA >>= 7; // Elimina los 6 bits menos significativos
-C51 COMPILER V7.50   DVR_HX712                                                             09/20/2022 11:15:32 PAGE 3   
+C51 COMPILER V7.50   DVR_HX712                                                             09/21/2022 11:36:56 PAGE 3   
 
  115   1          
  116   1      

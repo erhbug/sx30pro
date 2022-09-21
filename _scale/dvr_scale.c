@@ -29,48 +29,48 @@
 */
 
 /* --- Direcciones en la EEPROM de los valores */
-const unsigned int	ADDR_SET_CALIBRATE 			= ADDRESS_SCALE_CONFIG_PAGE + 0;	/* 1 byte */
-const unsigned int ADDR_CAPACITY_CALI 			= ADDRESS_SCALE_CONFIG_PAGE + 1;	/* 4 byte */
-const unsigned int ADDR_POINT_ZERO 				= ADDRESS_SCALE_CONFIG_PAGE + 5;	/* 4 byte */
-const unsigned int ADDR_FACTOR_CALIBRATE 	= ADDRESS_SCALE_CONFIG_PAGE + 9;	/* 4 byte */
-const unsigned int ADDR_LENGUAGE 					= ADDRESS_SCALE_CONFIG_PAGE + 13;	/* 1 byte */
-const unsigned int ADDR_UNITS 							= ADDRESS_SCALE_CONFIG_PAGE + 14;	/* 1 byte */
-const unsigned int ADDR_CAPACITY 					= ADDRESS_SCALE_CONFIG_PAGE + 15;	/* 2 byte */
-const unsigned int ADDR_PORC_REF 					= ADDRESS_SCALE_CONFIG_PAGE + 17;	/* 2 byte */
-const unsigned int ADDR_DIVISION_MINIMA		= ADDRESS_SCALE_CONFIG_PAGE + 19;	/* 2 byte */
-const unsigned int ADDR_DECIMAL_TOTAL 			= ADDRESS_SCALE_CONFIG_PAGE + 21;	/* 1 byte */
-const unsigned int ADDR_REDONDEO_TOTAL 		= ADDRESS_SCALE_CONFIG_PAGE + 22;	/* 1 byte */
-const unsigned int ADDR_REDONDEO_VENTA 		= ADDRESS_SCALE_CONFIG_PAGE + 23;	/* 1 byte */
-const unsigned int ADDR_DECIMAL_PRECIO 		= ADDRESS_SCALE_CONFIG_PAGE + 24;	/* 1 byte */
-const unsigned int ADDR_ZERO_TRACKING 			= ADDRESS_SCALE_CONFIG_PAGE + 25;	/* 1 byte */
-const unsigned int ADDR_FORMATO_IMPRESION	= ADDRESS_SCALE_CONFIG_PAGE + 26;	/* 1 byte */
-const unsigned int ADDR_MSG_UNLOAD 				= ADDRESS_SCALE_CONFIG_PAGE + 27;	/* 1 byte */
-const unsigned int ADDR_TIME_OFF 					= ADDRESS_SCALE_CONFIG_PAGE + 28;	/* 1 byte */
+#define	ADDR_SET_CALIBRATE 			ADDRESS_SCALE_CONFIG_PAGE + 0	/* 1 byte */
+#define ADDR_CAPACITY_CALI 			ADDRESS_SCALE_CONFIG_PAGE + 1	/* 4 byte */
+#define ADDR_POINT_ZERO 			ADDRESS_SCALE_CONFIG_PAGE + 5	/* 4 byte */
+#define ADDR_FACTOR_CALIBRATE 	    ADDRESS_SCALE_CONFIG_PAGE + 9	/* 4 byte */
+#define ADDR_LENGUAGE 				ADDRESS_SCALE_CONFIG_PAGE + 13	/* 1 byte */
+#define ADDR_UNITS 					ADDRESS_SCALE_CONFIG_PAGE + 14	/* 1 byte */
+#define ADDR_CAPACITY 				ADDRESS_SCALE_CONFIG_PAGE + 15	/* 2 byte */
+#define ADDR_PORC_REF 				ADDRESS_SCALE_CONFIG_PAGE + 17	/* 2 byte */
+#define ADDR_DIVISION_MINIMA		ADDRESS_SCALE_CONFIG_PAGE + 19	/* 2 byte */
+#define ADDR_DECIMAL_TOTAL 			ADDRESS_SCALE_CONFIG_PAGE + 21	/* 1 byte */
+#define ADDR_REDONDEO_TOTAL 		ADDRESS_SCALE_CONFIG_PAGE + 22	/* 1 byte */
+#define ADDR_REDONDEO_VENTA 		ADDRESS_SCALE_CONFIG_PAGE + 23	/* 1 byte */
+#define ADDR_DECIMAL_PRECIO 		ADDRESS_SCALE_CONFIG_PAGE + 24	/* 1 byte */
+#define ADDR_ZERO_TRACKING 			ADDRESS_SCALE_CONFIG_PAGE + 25	/* 1 byte */
+#define ADDR_FORMATO_IMPRESION	    ADDRESS_SCALE_CONFIG_PAGE + 26	/* 1 byte */
+#define ADDR_MSG_UNLOAD 				 ADDRESS_SCALE_CONFIG_PAGE + 27	/* 1 byte */
+#define ADDR_TIME_OFF 					 ADDRESS_SCALE_CONFIG_PAGE + 28	/* 1 byte */
 
-const unsigned int ADDR_MODELO							= ADDRESS_SCALE_CONFIG_PAGE + 38; /* 1 byte */
-const unsigned int	ADDR_BACKLIGHT					= ADDRESS_SCALE_CONFIG_PAGE + 40; /* 1 byte */
-const unsigned int ADDR_MSGBAT							= ADDRESS_SCALE_CONFIG_PAGE + 42; /* 1 byte */
-const unsigned int ADDR_DEBUG							= ADDRESS_SCALE_CONFIG_PAGE + 43; /* 2 byte */
-const unsigned int ADDR_COUNT_RANGE				= ADDRESS_SCALE_CONFIG_PAGE + 55; /* 2 byte */
-const unsigned int ADDR_MONEDA							= ADDRESS_SCALE_CONFIG_PAGE + 60; /* 1 byte */
+#define ADDR_MODELO							 ADDRESS_SCALE_CONFIG_PAGE + 38 /* 1 byte */
+#define	ADDR_BACKLIGHT					 ADDRESS_SCALE_CONFIG_PAGE + 40 /* 1 byte */
+#define ADDR_MSGBAT							 ADDRESS_SCALE_CONFIG_PAGE + 42 /* 1 byte */
+#define ADDR_DEBUG							 ADDRESS_SCALE_CONFIG_PAGE + 43 /* 2 byte */
+#define ADDR_COUNT_RANGE				 ADDRESS_SCALE_CONFIG_PAGE + 55 /* 2 byte */
+#define ADDR_MONEDA							 ADDRESS_SCALE_CONFIG_PAGE + 60 /* 1 byte */
 
-const unsigned int ADDR_DECIMAL_WEIGHT			= ADDRESS_SCALE_CONFIG_PAGE + 84; /* 2 bytes */
-const unsigned int ADDR_TEMPERATURE				= ADDRESS_SCALE_CONFIG_PAGE + 86;	/* 4 Bytes */
-const unsigned int	ADDR_VOLT_BATT					= ADDRESS_SCALE_CONFIG_PAGE + 90; /* 4 Bytes */
-const unsigned int	ADDR_VOLT_ADAP					= ADDRESS_SCALE_CONFIG_PAGE + 94; /* 4 Bytes */
-const unsigned int ADDR_SAVEBATT						= ADDRESS_SCALE_CONFIG_PAGE + 98; /* 1 byte */
+#define ADDR_DECIMAL_WEIGHT			 ADDRESS_SCALE_CONFIG_PAGE + 84  /* 2 bytes */
+#define ADDR_TEMPERATURE				 ADDRESS_SCALE_CONFIG_PAGE + 86 	/* 4 Bytes */
+#define	ADDR_VOLT_BATT					 ADDRESS_SCALE_CONFIG_PAGE + 90  /* 4 Bytes */
+#define	ADDR_VOLT_ADAP					 ADDRESS_SCALE_CONFIG_PAGE + 94  /* 4 Bytes */
+#define ADDR_SAVEBATT						 ADDRESS_SCALE_CONFIG_PAGE + 98  /* 1 byte */
 
-const unsigned int ADDR_DIVISION_MENOR			= ADDRESS_SCALE_CONFIG_PAGE + 100;	/* 2 bytes */
-const unsigned int ADDR_MULTIRANGO					= ADDRESS_SCALE_CONFIG_PAGE + 102;	/* 1 byte */
+#define ADDR_DIVISION_MENOR			 ADDRESS_SCALE_CONFIG_PAGE + 100 	/* 2 bytes */
+#define ADDR_MULTIRANGO					 ADDRESS_SCALE_CONFIG_PAGE + 102 	/* 1 byte */
 
-const unsigned int ADDR_DIVISION_MENORMENOR = ADDRESS_SCALE_CONFIG_PAGE + 107;	/* 2 bytes */
+#define ADDR_DIVISION_MENORMENOR  ADDRESS_SCALE_CONFIG_PAGE + 107 	/* 2 bytes */
 
-const unsigned int ADDR_COUNTER_CALIBRATION = ADDRESS_QLTY_AND_CNTRS_PAGE + 29;	/* 1 byte */
-const unsigned int ADDR_COUNTER_CONFIGURATION = ADDRESS_QLTY_AND_CNTRS_PAGE + 31;	/* 1 byte */
-const unsigned int ADDR_COUNT_OVERLOAD			= ADDRESS_QLTY_AND_CNTRS_PAGE + 61; /* 2 bytes */
-const unsigned int ADDR_VALUE_OVERLOAD			= ADDRESS_QLTY_AND_CNTRS_PAGE + 63; /* 4 bytes */
-const unsigned int ADDR_ERRORBATT					= ADDRESS_QLTY_AND_CNTRS_PAGE + 99; /* 1 byte */
-const unsigned int ADDR_VENTA_TOTAL				= ADDRESS_QLTY_AND_CNTRS_PAGE + 103;  /* 4 bytes */
+#define ADDR_COUNTER_CALIBRATION  ADDRESS_QLTY_AND_CNTRS_PAGE + 29 	/* 1 byte */
+#define ADDR_COUNTER_CONFIGURATION  ADDRESS_QLTY_AND_CNTRS_PAGE + 31 	/* 1 byte */
+#define ADDR_COUNT_OVERLOAD			 ADDRESS_QLTY_AND_CNTRS_PAGE + 61  /* 2 bytes */
+#define ADDR_VALUE_OVERLOAD			 ADDRESS_QLTY_AND_CNTRS_PAGE + 63  /* 4 bytes */
+#define ADDR_ERRORBATT					 ADDRESS_QLTY_AND_CNTRS_PAGE + 99  /* 1 byte */
+#define ADDR_VENTA_TOTAL				 ADDRESS_QLTY_AND_CNTRS_PAGE + 103   /* 4 bytes */
 
 float fWeightScale = 0;									/* Contiene el valor del peso leido */
 float fWeightScaleBefore = 0;
@@ -569,161 +569,118 @@ void vGetZeroTracking(float fActualWeightScale){
   * Prerequisitos: 
   ******************************************************************************
   */
- void vCalibrate_Scale(void){
-	
-	float fAux_Value = 0;
-	enum 	digi_key Value_Key_Press;
-	float fAuxCountAdcInicial = 0;
-	float fAuxCountAdcFinal = 0;
-	float fAuxCountDif = 0;
-	
-	stScaleParam.iCounter_Calibration++;	/* Aumenta el contador de calibraciones */	
-	vSaveParamScale(Parameter_Calibration);							/*Almacena los parametros en la E2prom*/
-		
-	iLCD_GLASS_Clear();
+void vCalibrate_Scale(void){
+              float xdata fAux_Value = 0;
+              float xdata fAuxCountAdcInicial = 0;
+              float xdata fAuxCountAdcFinal = 0;
+              float xdata fAuxCountDif = 0;
+              
+              stScaleParam.iCounter_Calibration++;  /* Aumenta el contador de calibraciones */ 
+              //CCC  vSaveParamScale(Parameter_Calibration);                                                                                              /*Almacena los parametros en la E2prom*/
+                            
+              iLCD_GLASS_Clear();
 #if DISPLAY_20400047_EN > 0
   LCD_GLASS_String("PRESS", LCD_PESO);
-	LCD_GLASS_String("REF 0", LCD_TOTAL);
-	LCD_GLASS_String("C", LCD_PRECIO);
-#else	
+              LCD_GLASS_String("REF 0", LCD_TOTAL);
+              LCD_GLASS_String("C", LCD_PRECIO);
+#else     
   LCD_GLASS_String("PRESS", LCD_PRECIO);
-	LCD_GLASS_String("REF 0", LCD_PESO);
-	LCD_GLASS_String("C", LCD_TOTAL);
+              LCD_GLASS_String("REF 0", LCD_PESO);
+              LCD_GLASS_String("C", LCD_TOTAL);
 #endif
-	
-	//Auto_Off_On_15m;
-	Value_Key_Press = KEY_NULL;
-	
-	/* Espera a que se oprima 'C' para continuar */
-	while(Value_Key_Press != KEY_C){
-		Value_Key_Press = vActionKey();
-		
-		if(Value_Key_Press != KEY_NULL){
-			//Auto_Off_On_15m;
-			vBeep_Key();
-		}
-		
-		if(srFlagScale.cAuto_Off_Time == 1 && srFlagScale.bScaleOn == 1){
-			srFlagScale.bScaleOn = 0;
-			return;
-		}else if(srFlagScale.bScaleOn == 0){
-			return;
-		}
-		
-		IWDG_KEY_REFRESH;
-		fRead_Adc(0);
-	}
 
-		
-	/* Solicita la referencia de zero */
-	stScaleParam.fPointZeroCali = fStablePoint(5, 1, 0);
-	
-	if(srFlagScale.bScaleOn == 0){
-		return;
-	}
-	
-	fAuxCountAdcInicial = stScaleParam.fPointZeroCali;
+        
+              /* Espera a que se oprima 'C' para continuar */
+              while(Key!= KEY_C)key_scan();
+                          
+                            
 
-	iLCD_GLASS_Clear();
+              
+
+              /* Solicita la referencia de zero */
+              //////////CCC stScaleParam.fPointZeroCali = fStablePoint(5, 1, 0);
+              
+
+              fAuxCountAdcInicial = stScaleParam.fPointZeroCali;
+			  delay_ms(2000);//borrar  //CCC  
+
+              iLCD_GLASS_Clear();
 #if DISPLAY_20400047_EN > 0
-	LCD_GLASS_String("PRESS", LCD_PESO);
-	LCD_GLASS_String(" LOAD", LCD_TOTAL);
-	LCD_GLASS_String("C   ", LCD_PRECIO);
+              LCD_GLASS_String("PRESS", LCD_PESO);
+              LCD_GLASS_String(" LOAD", LCD_TOTAL);
+              LCD_GLASS_String("C   ", LCD_PRECIO);
 #else
-	LCD_GLASS_String("PRESS", LCD_PRECIO);
-	LCD_GLASS_String(" LOAD", LCD_PESO);
-	LCD_GLASS_String("C     ", LCD_TOTAL);
+              LCD_GLASS_String("PRESS", LCD_PRECIO);
+              LCD_GLASS_String(" LOAD", LCD_PESO);
+              LCD_GLASS_String("C     ", LCD_TOTAL);
 #endif
 
-	//Auto_Off_On_15m;
-	Value_Key_Press = KEY_NULL;
-	
-	/* Espera a que se oprima 'C' para continuar */
-	while(Value_Key_Press != KEY_C){
-		Value_Key_Press = vActionKey();
-		
-		if(Value_Key_Press != KEY_NULL){
-			vBeep_Key();
-			//Auto_Off_On_15m;
-		}
-		
-		if(srFlagScale.cAuto_Off_Time == 1 && srFlagScale.bScaleOn == 1){
-			srFlagScale.bScaleOn = 0;
-			return;
-		}else if(srFlagScale.bScaleOn == 0){
-			return;
-		}
-		
-		IWDG_KEY_REFRESH;
-		fRead_Adc(0);
-	}
+ /* Espera a que se oprima 'C' para continuar */
+              while(Key!= KEY_C)key_scan();
 
-	/* Solicita el peso para calibrar y obtiene el Factor de calibracion */
-	stScaleParam.fCapacityCali = fStablePoint(5, 1, 0);
-	
-	if(srFlagScale.bScaleOn == 0){
-		return;
-	}
-	
-	fAuxCountAdcFinal = stScaleParam.fCapacityCali;
-	
-	fAuxCountDif = (fAuxCountAdcFinal - fAuxCountAdcInicial);
-	fAuxCountDif	*= (100/stScaleParam.iLoadPorcRefer);
-	
-	stScaleParam.fCapacityCali -= stScaleParam.fPointZeroCali;
-	stScaleParam.fCapacityCali *= (100/stScaleParam.iLoadPorcRefer);
-	
-	stScaleParam.fFactorCalibrate = (float)(stScaleParam.fCapacityCali);
-	fAux_Value = (float)(stScaleParam.iCapacity);
-	fAux_Value *= pow(10,(int)stScaleParam.cWeightDecimal);
-	fAux_Value = (float)(fAux_Value)/(float)(stScaleParam.iDivisionMinima);
-	stScaleParam.fFactorCalibrate /= fAux_Value;
-	
-	if(stScaleParam.fCapacityCali < 0){
-		stScaleParam.fCapacityCali *= (-1);
-	}
-	
-	iLCD_GLASS_Clear();	
+//CCC   //////////////     stScaleParam.fCapacityCali = fStablePoint(5, 1, 0);
+              
+             /* if(srFlagScale.bScaleOn == 0){
+                            return;
+              }
+              
+              fAuxCountAdcFinal = stScaleParam.fCapacityCali;
+              
+              fAuxCountDif = (fAuxCountAdcFinal - fAuxCountAdcInicial);
+              fAuxCountDif    *= (100/stScaleParam.iLoadPorcRefer);
+              
+              stScaleParam.fCapacityCali -= stScaleParam.fPointZeroCali;
+              stScaleParam.fCapacityCali *= (100/stScaleParam.iLoadPorcRefer);
+              
+              stScaleParam.fFactorCalibrate = (float)(stScaleParam.fCapacityCali);
+              fAux_Value = (float)(stScaleParam.iCapacity);
+              fAux_Value *= pow(10,(int)stScaleParam.cWeightDecimal);
+              fAux_Value = (float)(fAux_Value)/(float)(stScaleParam.iDivisionMinima);
+              stScaleParam.fFactorCalibrate /= fAux_Value;
+              
+              if(stScaleParam.fCapacityCali < 0){
+                            stScaleParam.fCapacityCali *= (-1);
+              }*/
+
+              iLCD_GLASS_Clear();     
 #if DISPLAY_20400047_EN > 0
-	LCD_GLASS_String("  END", LCD_PRECIO);
-	LCD_GLASS_Float(stScaleParam.fFactorCalibrate, 2, LCD_TOTAL);
-	LCD_GLASS_String("R", LCD_TOTAL);
-	LCD_GLASS_Dot(2, LCD_TOTAL, 1);
-	LCD_GLASS_String("FACTO", LCD_PESO);
+              LCD_GLASS_String("FACTO", LCD_PESO);
+			  LCD_GLASS_String("R", LCD_TOTAL);
+			  //LCD_GLASS_Float(stScaleParam.fFactorCalibrate, 2, LCD_TOTAL);
+              LCD_GLASS_Dot(2, LCD_TOTAL, 1);
+              LCD_GLASS_String("  END", LCD_PRECIO);          
 #else
-	LCD_GLASS_String("  END", LCD_PESO);
-	LCD_GLASS_Float(stScaleParam.fFactorCalibrate, 2, LCD_TOTAL);
-	LCD_GLASS_String("R", LCD_TOTAL);
-	LCD_GLASS_Dot(2, LCD_TOTAL, 1);
-	LCD_GLASS_String("FACTO", LCD_PRECIO);
+              LCD_GLASS_String("  END", LCD_PESO);
+			  LCD_GLASS_String("R", LCD_TOTAL);
+              //LCD_GLASS_Float(stScaleParam.fFactorCalibrate, 2, LCD_TOTAL);     
+              LCD_GLASS_Dot(2, LCD_TOTAL, 1);
+              LCD_GLASS_String("FACTO", LCD_PRECIO);
 #endif
-	
-	/*Almacena los parametros en la E2prom*/	
-	vSaveParamScale(Parameter_Calibration);			
-	
-///////////CCCCC/////////////CCCCC/////////////CCCCC/////////////CCCCC/////////////CCCCC//	vSet_Volts_System();	
-	vSaveParamScale(Parameter_Voltages);
-	
-///////////CCCCC//BORRAR DE LA ESTRUCTURA ///////////////////////////////////	stScaleParam.fTemperature = fGet_Temp_Amb_Micro();
-	vSaveParamScale(Parameter_Temperature);
-	
-	vSound_Saved_Param();
-	vSound_Saved_Param();
-	
-	strTimer.cFLag_TimerE_Start = 1;
-	strTimer.cFLag_TimerE_End = 0;
-	
-	while(!strTimer.cFLag_TimerE_End){
-		IWDG_KEY_REFRESH;
-		vActionKey();
-		
-		if(srFlagScale.bScaleOn == 0){			
-			return;
-		}
-	}
-	
-	iLCD_GLASS_Clear();
+
+
+
+
+////////////////////////////////////////////////////////////////////////////              
+              /*Almacena los parametros en la E2prom*/       
+              //CCC vSaveParamScale(Parameter_Calibration);                                        
+              
+///////////CCCCC/////////////CCCCC/////////////CCCCC/////////////CCCCC/////////////CCCCC//              vSet_Volts_System();    
+              //CCC    vSaveParamScale(Parameter_Voltages);
+              
+///////////CCCCC//BORRAR DE LA ESTRUCTURA ///////////////////////////////////           stScaleParam.fTemperature = fGet_Temp_Amb_Micro();
+              //CCC    vSaveParamScale(Parameter_Temperature);
+
+    vSound_Saved_Param();
+              vSound_Saved_Param();
+              
+              strTimer.cFLag_TimerE_Start = 1;
+              strTimer.cFLag_TimerE_End = 0;
+              
+              while(!strTimer.cFLag_TimerE_End)key_scan();
+              
+              iLCD_GLASS_Clear();
 }
+
 
 /**
   ******************************************************************************

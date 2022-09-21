@@ -45,8 +45,8 @@ init_pwm();
 	delay_ms(300); 	
 	LCD_GLASS_String("EY",LCD_PRECIO); 
 	delay_ms(300);  		
-
  iLCD_GLASS_Clear();
+ vCalibrate_Scale();
  while(1){   
     key_scan();
 	sprintf(txt,"%d  ",(int)(Key));
@@ -63,7 +63,7 @@ init_pwm();
 
 	P0|= (1<<5);
 	voltaje=convertidorADC()*(3.3/255);
-//	LCD_GLASS_Float(peso, 2,  LCD_TOTAL);
+	LCD_GLASS_Float(peso, 2,  LCD_TOTAL);
 //	LCD_GLASS_Float(voltaje, 2, LCD_PESO);
 //TestEEPROM();
 }
@@ -162,6 +162,16 @@ static void timer0(void) interrupt 1
 		strTimer.cFLag_TimerA_On = 1;
 		strTimer.cFLag_TimerA_End = 0;
 	}
+
+	/* 5S*/
+	if(strTimer.cFLag_TimerE_Start){
+		strTimer.iTimerE = Number_Count_Sec * 4;
+		strTimer.cFLag_TimerE_Start = 0;
+		strTimer.cFLag_TimerE_On = 1;
+		strTimer.cFLag_TimerE_End = 0;
+	}
+
+
 	/*Accion de desbordamiento del timer */
 	if(strTimer.cFLag_TimerA_On){
 		
@@ -181,6 +191,16 @@ static void timer0(void) interrupt 1
 			strTimer.cFLag_TimerA_End = 1;
 			BEEPER_DIS;
 			//GPIO_ResetBits(GPIOA, BEEPER);
+		}
+	}
+
+	/* timer usado en calibracion */
+	if(strTimer.cFLag_TimerE_On){
+		if(strTimer.iTimerE > 0){
+			strTimer.iTimerE--;
+		}else{
+			strTimer.cFLag_TimerE_On = 0;
+			strTimer.cFLag_TimerE_End = 1;
 		}
 	}
 

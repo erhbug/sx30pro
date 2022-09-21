@@ -30,7 +30,7 @@ unsigned char KeyState=0;
 struct strTimers strTimer;
 
 
-#define KEY_D0_ON				P2 |= 0x02 
+#define KEY_D0_ON			P2 |= 0x02 
 #define KEY_D0_OFF			P2 &= 0xFD 
 
 void delay_ms(unsigned int num)
@@ -76,7 +76,8 @@ void key_scan(void) {
     KeyState = 0; //no se ha presionado una tecla
   }
   LastKey = Key;
-  if(Key!=0&&KeyState == PRESS)vBeep_Key();;
+  if(Key!=0&&KeyState == PRESS)vBeep_Key();
+  IWDG_KEY_REFRESH;
 }
 
 

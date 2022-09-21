@@ -564,46 +564,42 @@ void LCD_GLASS_Symbols(unsigned char cSymbol, unsigned char cFlag_On){
 
 
 
-void LCD_GLASS_Float(float fNumber_To_LCD, char iNumber_Decimal, char cPosition_On_LCD){
-	
-	char strText_LCD[8] = {0,0,0,0,0,0,0,0};
-	
 
-	switch(iNumber_Decimal){
-		case 0:
-			if(cPosition_On_LCD == LCD_TOTAL){
-				sprintf(strText_LCD, "%6.0lf", fNumber_To_LCD);
-			}else{
-				sprintf(strText_LCD, "%5.0lf", fNumber_To_LCD);
-			}
-			break;
-		
-		case 1:
-			if(cPosition_On_LCD == LCD_TOTAL){
-				sprintf(strText_LCD, "%7.1lf", fNumber_To_LCD);
-			}else{
-				sprintf(strText_LCD, "%6.1lf", fNumber_To_LCD);
-			}
-			break;
-		
-		case 2:
-			if(cPosition_On_LCD == LCD_TOTAL){
-				sprintf(strText_LCD, "%7.2lf", fNumber_To_LCD);	
-			}else{
-				sprintf(strText_LCD, "%6.2lf", fNumber_To_LCD);
-			}
-			break;
-		
-		case 3:
-			if(cPosition_On_LCD == LCD_TOTAL){
-				sprintf(strText_LCD, "%7.3lf", fNumber_To_LCD);
-			}else{
-				sprintf(strText_LCD, "%6.3lf", fNumber_To_LCD);
-			}
-			break;
-	}
-	
-	LCD_GLASS_String(strText_LCD, cPosition_On_LCD);
+void LCD_GLASS_Float(float xdata fNumber_To_LCD, unsigned char iNumber_Decimal, unsigned char cPosition_On_LCD) {
+unsigned char xdata strText_LCD[8];  
+
+  if (iNumber_Decimal == 0) {
+    if (cPosition_On_LCD == LCD_TOTAL) {
+      sprintf(strText_LCD, "%6.0f", fNumber_To_LCD);//ok
+    } else 
+      sprintf(strText_LCD, "%5.0f", fNumber_To_LCD);//ok
+    
+  }
+  if (iNumber_Decimal == 1) {
+    if (cPosition_On_LCD == LCD_TOTAL) {
+      //sprintf(strText_LCD, "%7.1f", fNumber_To_LCD);//no ok
+      sprintf(strText_LCD, "FLOAT");//no ok
+    } else 
+      sprintf(strText_LCD, "%6.1f", fNumber_To_LCD);//ok
+    
+  }
+  if (iNumber_Decimal == 2) {
+    if (cPosition_On_LCD == LCD_TOTAL) {
+      sprintf(strText_LCD, "%7.2f", fNumber_To_LCD);//ok
+    } else 
+      sprintf(strText_LCD, "%6.2f", fNumber_To_LCD);//ok
+    
+  }
+  if (iNumber_Decimal == 3) {
+    if (cPosition_On_LCD == LCD_TOTAL) {
+      sprintf(strText_LCD, "%7.3f", fNumber_To_LCD);//ok
+    } else 
+      sprintf(strText_LCD, "%6.3f", fNumber_To_LCD);//ok
+    
+  }
+
+  //IWDG_KEY_REFRESH; 
+  LCD_GLASS_String(strText_LCD, cPosition_On_LCD);
 }
 
 
