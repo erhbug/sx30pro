@@ -41,10 +41,11 @@ void main(void)
 init_pwm();
 
 	iLCD_GLASS_Init(); 
-	LCD_GLASS_String("TORR",LCD_PESO);vSound_Saved_Param();
+	LCD_GLASS_String("FORR",LCD_PESO);vSound_Saved_Param();
 	delay_ms(300); 	
 	LCD_GLASS_String("EY",LCD_PRECIO); 
-	delay_ms(300);  		
+LCD_GLASS_String("FACTO", LCD_TOTAL);
+	delay_ms(3000);  		
  iLCD_GLASS_Clear();
  vCalibrate_Scale();
  while(1){   

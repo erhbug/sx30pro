@@ -310,11 +310,12 @@ struct strTimers{
 	unsigned char cFLag_TimerG_On;*/
 	
 	
-	int iTimerA;						//200mS
+	int iTimerA;
+    unsigned int iTimerE;					//5s						//200mS
 /*	int iTimerB;						//500mS
 	long int iTimerC;					//1s
 	int iTimerD;						//3s
-	long int iTimerE;					//5s
+	
 	int iTimerF;						//1s
 	int iTimerMinuteF;				    //1 minuto
 	int iTimerH;

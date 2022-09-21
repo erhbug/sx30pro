@@ -32,7 +32,7 @@ Options 1,0,0  // Target 'Target 1'
  EnvLib ()
  EnvReg (ÿWinbond\)
  OrgReg (ÿWinbond\)
- TgStat=9
+ TgStat=0
  OutDir (.\)
  OutName (solidic_proj)
  GenApp=1

@@ -591,7 +591,7 @@ void vCalibrate_Scale(void){
 
         
               /* Espera a que se oprima 'C' para continuar */
-              while(Key!= KEY_C)key_scan();
+              Key=0;while(Key!= KEY_C)key_scan();
                           
                             
 
@@ -616,13 +616,10 @@ void vCalibrate_Scale(void){
 #endif
 
  /* Espera a que se oprima 'C' para continuar */
-              while(Key!= KEY_C)key_scan();
+              Key=0;while(Key!= KEY_C)key_scan();
 
 //CCC   //////////////     stScaleParam.fCapacityCali = fStablePoint(5, 1, 0);
-              
-             /* if(srFlagScale.bScaleOn == 0){
-                            return;
-              }
+             
               
               fAuxCountAdcFinal = stScaleParam.fCapacityCali;
               
@@ -640,7 +637,7 @@ void vCalibrate_Scale(void){
               
               if(stScaleParam.fCapacityCali < 0){
                             stScaleParam.fCapacityCali *= (-1);
-              }*/
+              }
 
               iLCD_GLASS_Clear();     
 #if DISPLAY_20400047_EN > 0

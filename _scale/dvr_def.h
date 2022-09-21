@@ -19,7 +19,8 @@
 
 /*
 
-#define Number_Count_Sec	7827*/
+*/
+#define Number_Count_Sec	1000
 
 #define Beep_On_Key						strTimer.cFLag_TimerA_Start = 1
 #define Time_Sleep					strTimer.cFLag_TimerB_Start = 1; strTimer.cFLag_TimerB_End = 0
