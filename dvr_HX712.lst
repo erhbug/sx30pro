@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   DVR_HX712                                                             09/22/2022 14:17:39 PAGE 1   
+C51 COMPILER V7.50   DVR_HX712                                                             09/22/2022 15:01:15 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE DVR_HX712
@@ -62,7 +62,7 @@ line level    source
   51   2                      iValueOut = 0;          
   52   2                      for(i=0; i<iLenthData_x-1; i++){
   53   3                              pfData_Filter[i] = iActualWeight;
-C51 COMPILER V7.50   DVR_HX712                                                             09/22/2022 14:17:39 PAGE 2   
+C51 COMPILER V7.50   DVR_HX712                                                             09/22/2022 15:01:15 PAGE 2   
 
   54   3                      }
   55   2              }else if(cFastFill == 2){       //Indica que es el inicio para tomar referencia a Zero.
@@ -126,7 +126,7 @@ line level    source
  113   1        //sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
  114   1       iTemp_RA >>= 7;        // Elimina los 6 bits menos significativos
  115   1              
-C51 COMPILER V7.50   DVR_HX712                                                             09/22/2022 14:17:39 PAGE 3   
+C51 COMPILER V7.50   DVR_HX712                                                             09/22/2022 15:01:15 PAGE 3   
 
  116   1          
  117   1      

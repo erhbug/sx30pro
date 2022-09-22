@@ -23,6 +23,7 @@ void init_int_timer0(void);
 
 void main(void)
 {
+char txt[5];
 float peso;
   wdt_init();  /// watch dog ///
   gpio_init();
@@ -44,8 +45,8 @@ float peso;
 // vCalibrate_Scale();
  while(1){   
     key_scan();
-//	sprintf(txt,"%d  ",(int)(Key));
-//	LCD_GLASS_String(txt,LCD_TOTAL);
+	sprintf(txt,"%d  ",(int)(Key));
+	LCD_GLASS_String(txt,LCD_TOTAL);
 
 //	sprintf(txt,"%d  ",(int)(KeyState));
 //	LCD_GLASS_String(txt,LCD_PRECIO);

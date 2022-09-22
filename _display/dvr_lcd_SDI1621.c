@@ -544,7 +544,7 @@ void LCD_GLASS_Symbols(unsigned char cSymbol, unsigned char cFlag_On){
 
 
 void LCD_GLASS_Float(float fNumber_To_LCD, unsigned char iNumber_Decimal, unsigned char cPosition_On_LCD) {
-unsigned char strText_LCD[8];  
+unsigned char xdata strText_LCD[8];  
 
   if (iNumber_Decimal == 0) {
     if (cPosition_On_LCD == LCD_TOTAL) {
@@ -591,8 +591,8 @@ unsigned char strText_LCD[8];
 */
 
 void LCD_GLASS_String(unsigned char *pCaracter, unsigned char cPosition_On_LCD){
-    unsigned char iIndex_Text = 5;
-	unsigned char iPosicion_Decimal = 0;
+    unsigned char xdata iIndex_Text = 5;
+	unsigned char xdata iPosicion_Decimal = 0;
 	//char txt[30];
 	/*vSend_String_USB("\r\n");	
 	if(cPosition_On_LCD==LCD_TOTAL)	  vSend_String_USB("LCD_TOTAL=  ");

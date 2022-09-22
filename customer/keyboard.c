@@ -90,10 +90,10 @@ void vBeep_Key(void){
 		if(stScaleParam.cBacklight){OnBackLight;}
 	}*/
 	
-	if(!strTimer.cFLag_TimerA_On){
+//	if(!strTimer.cFLag_TimerA_On){
 		strTimer.cFLag_TimerA_End = 0;
 		Beep_On_Key;
-	}
+//	}
 
 
 	/*while(strTimer.cFLag_TimerA_End == 0){

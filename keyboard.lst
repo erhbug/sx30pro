@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   KEYBOARD                                                              09/22/2022 14:23:59 PAGE 1   
+C51 COMPILER V7.50   KEYBOARD                                                              09/22/2022 15:04:07 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE KEYBOARD
@@ -62,7 +62,7 @@ line level    source
   52   1        for (k = 0; k < 5; k++) {
   53   2          KEY_D0 = 1;
   54   2          KEY_D1 = 1;
-C51 COMPILER V7.50   KEYBOARD                                                              09/22/2022 14:23:59 PAGE 2   
+C51 COMPILER V7.50   KEYBOARD                                                              09/22/2022 15:04:07 PAGE 2   
 
   55   2          KEY_D2 = 1;
   56   2          KEY_D3 = 1;
@@ -102,10 +102,10 @@ line level    source
   90   1                      if(stScaleParam.cBacklight){OnBackLight;}
   91   1              }*/
   92   1              
-  93   1              if(!strTimer.cFLag_TimerA_On){
-  94   2                      strTimer.cFLag_TimerA_End = 0;
-  95   2                      Beep_On_Key;
-  96   2              }
+  93   1      //      if(!strTimer.cFLag_TimerA_On){
+  94   1                      strTimer.cFLag_TimerA_End = 0;
+  95   1                      Beep_On_Key;
+  96   1      //      }
   97   1      
   98   1      
   99   1              /*while(strTimer.cFLag_TimerA_End == 0){
@@ -126,7 +126,7 @@ line level    source
  114          void vScan_Key(void){
  115   1      }
  116          
-C51 COMPILER V7.50   KEYBOARD                                                              09/22/2022 14:23:59 PAGE 3   
+C51 COMPILER V7.50   KEYBOARD                                                              09/22/2022 15:04:07 PAGE 3   
 
  117          enum digi_key vActionKey(void){
  118   1              
@@ -161,7 +161,7 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    281    ----
+   CODE SIZE        =    278    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =     27    ----
    PDATA SIZE       =   ----    ----
