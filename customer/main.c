@@ -11,8 +11,7 @@
 #include "./_scale/dvr_scale.h"
 #include <stdio.h>
 
-unsigned char lecturaADC[4]= {0};
-static unsigned char cont = 0;
+
 
 unsigned int convertidorADC(void);
 void TestEEPROM(void);
@@ -22,12 +21,8 @@ void gpio_init(void);
 void adc_init(void);
 void init_int_timer0(void);
 
-float peso=0, voltaje=0;
 void main(void)
 {
- char txt[7]={0};
-  float peso=0, voltaje=0;
-  unsigned int i=0;
 
   wdt_init();  /// watch dog ///
   gpio_init();
@@ -38,33 +33,32 @@ void main(void)
   // P0M0 |= (1<<1);
   // P0M1 &= ~(1<<1);
   init_int_timer0();
-init_pwm();
 
-	iLCD_GLASS_Init(); 
-	LCD_GLASS_String("FORR",LCD_PESO);vSound_Saved_Param();
-	delay_ms(300); 	
-	LCD_GLASS_String("EY",LCD_PRECIO); 
-LCD_GLASS_String("FACTO", LCD_TOTAL);
-	delay_ms(3000);  		
- iLCD_GLASS_Clear();
+	LCD_GLASS_Init(); 
+	LCD_GLASS_String("-----",LCD_PESO);
+	LCD_GLASS_String("-----",LCD_PRECIO); 
+    LCD_GLASS_String("-----", LCD_TOTAL);
+	// vSound_Saved_Param();
+	 delay_ms(1000); 		
+ LCD_GLASS_Clear();
  vCalibrate_Scale();
  while(1){   
     key_scan();
-	sprintf(txt,"%d  ",(int)(Key));
-	LCD_GLASS_String(txt,LCD_TOTAL);
+//	sprintf(txt,"%d  ",(int)(Key));
+//	LCD_GLASS_String(txt,LCD_TOTAL);
 
 //	sprintf(txt,"%d  ",(int)(KeyState));
-	LCD_GLASS_String(txt,LCD_PRECIO);
+//	LCD_GLASS_String(txt,LCD_PRECIO);
 
 	
-	delay_ms(50);
+//	delay_ms(50);
    
-	peso=fRead_Adc(0);
-	sprintf(txt,"%f   ",peso);  LCD_GLASS_String(txt,LCD_PESO); 
+//	peso=fRead_Adc(0);
+//	sprintf(txt,"%f   ",peso);  LCD_GLASS_String(txt,LCD_PESO); 
 
 	P0|= (1<<5);
-	voltaje=convertidorADC()*(3.3/255);
-	LCD_GLASS_Float(peso, 2,  LCD_TOTAL);
+//	voltaje=convertidorADC()*(3.3/255);
+//	LCD_GLASS_Float(peso, 2,  LCD_TOTAL);
 //	LCD_GLASS_Float(voltaje, 2, LCD_PESO);
 //TestEEPROM();
 }

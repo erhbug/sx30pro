@@ -35,7 +35,8 @@ struct strTimers strTimer;
 
 void delay_ms(unsigned int num)
 { 	
-	unsigned int i,j;
+	unsigned int i;
+unsigned char j;
   	for(i= 0;i<num;i++){	//(SDI5219) ??1ms
 		for(j=0;j<195;j++)
 			;

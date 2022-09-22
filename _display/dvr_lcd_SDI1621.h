@@ -5,11 +5,9 @@
 /* Define to prevent recursive inclusion -------------------------------------*/
  typedef struct
   {
-    unsigned char mode;
-		unsigned char cmd;
-		unsigned char LCD_BUF[16];
-    unsigned char addr;
-		unsigned char counter;
+      unsigned char mode;
+	  unsigned char cmd;
+	  unsigned char LCD_BUF[16];
   } SOLIDIC;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -66,10 +64,10 @@
 #define Blink_2Hz	    6
 
 
-unsigned int iLCD_GLASS_Init(void);
-unsigned int iLCD_GLASS_DeInit(void);
-unsigned int iLCD_GLASS_Clear(void);
-unsigned int iLCD_GLASS_All_On(void);
+void LCD_GLASS_Init(void);
+void LCD_GLASS_DeInit(void);
+void LCD_GLASS_Clear(void);
+void LCD_GLASS_All_On(void);
 void LCD_GLASS_String(unsigned char *pCaracter, unsigned char cPosition_On_LCD);
 void LCD_GLASS_Float(float fNumber_To_LCD, unsigned char iNumber_Decimal, unsigned char cPosition_On_LCD);
 void LCD_GLASS_Symbols(unsigned char cSymbol, unsigned char cFlag_On);

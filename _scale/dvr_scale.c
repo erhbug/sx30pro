@@ -332,7 +332,7 @@ float fStablePoint(unsigned char cSetCountBack, unsigned char cShowCount, unsign
 			/* Si el dato no esta dentro del rango, se toma una nueva referencia
 				y se reinicia la cuenta regresiva */
 			if(cShowCount == 1){
-				iLCD_GLASS_Clear();
+				LCD_GLASS_Clear();
 				LCD_GLASS_String("   UN", LCD_PRECIO);
 				LCD_GLASS_String("STABLE", LCD_TOTAL);
 				for(cCountBack=0; cCountBack<20000; cCountBack++);
@@ -386,7 +386,7 @@ unsigned char cSetZeroPoint(void){
 				(fWeightPlate < (-1)*(stScaleParam.fCapacityCali * 0.20))){
 			
 			/* Quita los simboloes de unidad de peso y Zero */
-			iLCD_GLASS_Clear();
+			LCD_GLASS_Clear();
 			LCD_GLASS_String("  PLS", LCD_PESO);				
 			LCD_GLASS_String("UNLOAD", LCD_TOTAL);	
 			
@@ -404,7 +404,7 @@ unsigned char cSetZeroPoint(void){
 	if((fWeightPlate >= (stScaleParam.fCapacityCali * 0.50)) && fWeightPlate > 0){
 		
 		/* Quita los simboloes de unidad de peso y Zero */
-		iLCD_GLASS_Clear();	
+		LCD_GLASS_Clear();	
 		LCD_GLASS_String("HELP ", LCD_PRECIO);	
 	
 		//Auto_Off_On_5m;
@@ -578,7 +578,7 @@ void vCalibrate_Scale(void){
               stScaleParam.iCounter_Calibration++;  /* Aumenta el contador de calibraciones */ 
               //CCC  vSaveParamScale(Parameter_Calibration);                                                                                              /*Almacena los parametros en la E2prom*/
                             
-              iLCD_GLASS_Clear();
+              LCD_GLASS_Clear();
 #if DISPLAY_20400047_EN > 0
   LCD_GLASS_String("PRESS", LCD_PESO);
               LCD_GLASS_String("REF 0", LCD_TOTAL);
@@ -604,7 +604,7 @@ void vCalibrate_Scale(void){
               fAuxCountAdcInicial = stScaleParam.fPointZeroCali;
 			  delay_ms(2000);//borrar  //CCC  
 
-              iLCD_GLASS_Clear();
+              LCD_GLASS_Clear();
 #if DISPLAY_20400047_EN > 0
               LCD_GLASS_String("PRESS", LCD_PESO);
               LCD_GLASS_String(" LOAD", LCD_TOTAL);
@@ -639,7 +639,7 @@ void vCalibrate_Scale(void){
                             stScaleParam.fCapacityCali *= (-1);
               }
 
-              iLCD_GLASS_Clear();     
+              LCD_GLASS_Clear();     
 #if DISPLAY_20400047_EN > 0
               LCD_GLASS_String("FACTO", LCD_PESO);
 			  LCD_GLASS_String("R", LCD_TOTAL);
@@ -675,7 +675,7 @@ void vCalibrate_Scale(void){
               
               while(!strTimer.cFLag_TimerE_End)key_scan();
               
-              iLCD_GLASS_Clear();
+              LCD_GLASS_Clear();
 }
 
 
@@ -694,7 +694,7 @@ void vPreConfiguration(unsigned char cPreConfiguration){
 	
 	strTimer.cFLag_TimerD_Start = 1;
 	
-	iLCD_GLASS_Clear();
+	LCD_GLASS_Clear();
 	
 	stScaleParam.cMultirango = 1;
 	stScaleParam.cLenguage = ESPANOL;
@@ -815,7 +815,7 @@ void vPreConfiguration(unsigned char cPreConfiguration){
 	}
 	
 	if(strTimer.cFLag_TimerE_End == 1){
-		iLCD_GLASS_Clear();
+		LCD_GLASS_Clear();
 		LCD_GLASS_String("  OFF", LCD_PRECIO);
 	
 		//Auto_Off_On_5m_Restart;
@@ -836,7 +836,7 @@ void vPreConfiguration(unsigned char cPreConfiguration){
 	
 	if(strTimer.cFLag_TimerE_End == 1){
 		/* Si se salio por tiempo no se configura la bascula */
-		iLCD_GLASS_Clear();
+		LCD_GLASS_Clear();
 	}else{
 		vSaveParamScale(Parameter_Temperature);
 		vSaveParamScale(Parameter_Voltages);
@@ -869,7 +869,7 @@ void vPreConfiguration(unsigned char cPreConfiguration){
 		}
 	}
 	
-	iLCD_GLASS_Clear();
+	LCD_GLASS_Clear();
 	LCD_GLASS_String("  OFF", LCD_PRECIO);
 	
 	//Auto_Off_On_5m_Restart;

@@ -5,13 +5,13 @@
 #include <stdio.h>
 #include <string.h>
 
-	SOLIDIC Display;
+	SOLIDIC xdata Display;
 
 	void write_lcd(SOLIDIC Display);
 	void LCD_GLASS_Update(void);
 
 #if DISPLAY_20400047_EN > 0	
-const unsigned char cNumber_LCD[10] = { 
+const unsigned char xdata cNumber_LCD[10] = { 
 		0x5F, //	01011111,  	//0
 		0x50,	//	01010000, 	//1
 		0x3D,	//	00111101,		//2
@@ -23,7 +23,7 @@ const unsigned char cNumber_LCD[10] = {
 		0x7F,	//	01111111,		//8
 		0X73};//	01110011		//9
 
-const unsigned char cABC_LCD[28] = {
+const unsigned char xdata cABC_LCD[28] = {
 		0x77,	//	01110111,	//A
 		0x6E,	//	01101110,	//b
 		0x0F,	//	00001111,	//C
@@ -71,7 +71,7 @@ const unsigned char cABC_LCD[28] = {
 		
 	
 #else
-const unsigned char cNumber_LCD[10] = { 
+const unsigned char xdata cNumber_LCD[10] = { 
 		0x7D, //	01111101,  	//0
 		0x60,	//	01100000, 	//1
 		0x3E,	//	00111110,		//2
@@ -83,7 +83,7 @@ const unsigned char cNumber_LCD[10] = {
 		0x7F,	//	01111111,		//8
 		0x7B};	//	01111011		//9
 
-const unsigned char cABC_LCD[28] = {
+const unsigned char xdata cABC_LCD[28] = {
 		0x77,	//	01110111,	//A
 		0x4F,	//	01001111,	//b
 		0x1D,	//	00011101,	//C
@@ -133,7 +133,7 @@ const unsigned char cABC_LCD[28] = {
 
 	// función de retardo 10us
 void delay_35u(void){ 	
-	unsigned int j;
+	unsigned char j;
   	for(j= 0;j<5;j++);
 }	
 
@@ -155,7 +155,7 @@ void lcd_unit_write(unsigned char d){
 
 
 
-unsigned int iLCD_GLASS_Init(void){//int i,j,k;
+void LCD_GLASS_Init(void){//int i,j,k;
 	LCD_CS_N_ON;
 	LCD_WR_N_ON;
 	LCD_DATA_ON;
@@ -177,12 +177,10 @@ unsigned int iLCD_GLASS_Init(void){//int i,j,k;
 	write_lcd(Display);//LCD 1/3 bias option 
 		
 	Display.mode=LCD_DATA;
-	Display.addr=0;
-	Display.counter=sizeof(Display.LCD_BUF);
+//	Display.addr=0;
+//	Display.counter=sizeof(Display.LCD_BUF);
 	memset(Display.LCD_BUF, 0x00, sizeof(Display.LCD_BUF));
 	write_lcd(Display);//Write data to the RAM 
-	
-	return 0;
 }
 
 
@@ -196,6 +194,7 @@ unsigned int iLCD_GLASS_Init(void){//int i,j,k;
 
 void write_lcd(SOLIDIC Display){//char mode,unsigned char cmd,unsigned char addr,unsigned char counter)
 	unsigned char i=0;	
+	unsigned char addr=0;	
 	
 	//HAL_NVIC_DisableIRQ(TIM14_IRQn);
 	
@@ -244,17 +243,17 @@ void write_lcd(SOLIDIC Display){//char mode,unsigned char cmd,unsigned char addr
 	}
 	else 
 	{		
-		Display.addr = 0;
+		addr = 0;
 		for(i=0;i<6;i++){	// 数据写入命令,发送首地址  Comando de escritura de datos, enviar la primera dirección
 			LCD_WR_N_OFF;			
-			if( (Display.addr & 0x80) == 0 ) 
+			if( (addr & 0x80) == 0 ) 
 				LCD_DATA_OFF;
 		  else 
 				LCD_DATA_ON;
 			delay_35u();
 			LCD_WR_N_ON;
 			delay_35u();
-			Display.addr <<= 1;
+			addr <<= 1;
 		}		
 		for(i=0;i<16;i++)	// 数据写入命令,发送数据  Comando de escritura de datos, enviar datos
 			lcd_unit_write(Display.LCD_BUF[15 - i]);		
@@ -269,10 +268,10 @@ void write_lcd(SOLIDIC Display){//char mode,unsigned char cmd,unsigned char addr
 	//HAL_NVIC_EnableIRQ(TIM14_IRQn);	
 }
 
-unsigned int iLCD_GLASS_DeInit(void){	
+void LCD_GLASS_DeInit(void){	
 	Display.mode=LCD_DATA;
-	Display.addr=0;
-	Display.counter=sizeof(Display.LCD_BUF);	
+//	Display.addr=0;
+//	Display.counter=sizeof(Display.LCD_BUF);	
 	
 	memset(Display.LCD_BUF, 0x00, sizeof(Display.LCD_BUF));//InitLCDBuf(0);
 	write_lcd(Display);//Write data to the RAM
@@ -284,30 +283,23 @@ unsigned int iLCD_GLASS_DeInit(void){
 	
 	Display.cmd=SYS_DIS;
 	write_lcd(Display);//Turn off system oscillator
-	
-	return 1;
+
 }
 
 /*
 */
-unsigned int iLCD_GLASS_Clear(void){	
-	Display.mode=LCD_DATA;
-	Display.addr=0;
-	Display.counter=sizeof(Display.LCD_BUF);	
+void LCD_GLASS_Clear(void){	
+	Display.mode=LCD_DATA;	
 	memset(Display.LCD_BUF, 0x00, sizeof(Display.LCD_BUF));//InitLCDBuf(0);
 	write_lcd(Display);//Write data to the RAM
-	return 1;
 }
 
 /*
 */
-unsigned int iLCD_GLASS_All_On(void){
-	Display.mode=LCD_DATA;
-	Display.addr=0;
-	Display.counter=sizeof(Display.LCD_BUF);	
+void LCD_GLASS_All_On(void){
+	Display.mode=LCD_DATA;	
 	memset(Display.LCD_BUF, 0xFF, sizeof(Display.LCD_BUF));
 	write_lcd(Display);	
-	return 1;
 }
 
 
@@ -535,8 +527,8 @@ void LCD_GLASS_Symbols(unsigned char cSymbol, unsigned char cFlag_On){
 		}*/
 	
 	Display.mode=LCD_DATA;
-	Display.addr=0;
-	Display.counter=sizeof(Display.LCD_BUF);	
+//	Display.addr=0;
+//	Display.counter=sizeof(Display.LCD_BUF);	
 	LCD_GLASS_Update();
 }
 
@@ -565,8 +557,8 @@ void LCD_GLASS_Symbols(unsigned char cSymbol, unsigned char cFlag_On){
 
 
 
-void LCD_GLASS_Float(float xdata fNumber_To_LCD, unsigned char iNumber_Decimal, unsigned char cPosition_On_LCD) {
-unsigned char xdata strText_LCD[8];  
+void LCD_GLASS_Float(float fNumber_To_LCD, unsigned char iNumber_Decimal, unsigned char cPosition_On_LCD) {
+unsigned char strText_LCD[8];  
 
   if (iNumber_Decimal == 0) {
     if (cPosition_On_LCD == LCD_TOTAL) {
@@ -613,7 +605,6 @@ unsigned char xdata strText_LCD[8];
 
 
 
-
 	
 /**
 	******************************************************************************
@@ -624,9 +615,9 @@ unsigned char xdata strText_LCD[8];
   ***
 */
 
-void LCD_GLASS_String(char *pCaracter, char cPosition_On_LCD){
-	char iIndex_Text = 5;
-	char iPosicion_Decimal = 0;
+void LCD_GLASS_String(unsigned char *pCaracter, unsigned char cPosition_On_LCD){
+    unsigned char iIndex_Text = 5;
+	unsigned char iPosicion_Decimal = 0;
 	//char txt[30];
 	/*vSend_String_USB("\r\n");	
 	if(cPosition_On_LCD==LCD_TOTAL)	  vSend_String_USB("LCD_TOTAL=  ");
@@ -710,8 +701,8 @@ void LCD_GLASS_String(char *pCaracter, char cPosition_On_LCD){
 	}
 	
 	Display.mode=LCD_DATA;
-	Display.addr=0;
-	Display.counter=sizeof(Display.LCD_BUF);	
+//	Display.addr=0;
+//	Display.counter=sizeof(Display.LCD_BUF);	
 	LCD_GLASS_Update();
 }
 
