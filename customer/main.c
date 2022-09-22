@@ -59,9 +59,10 @@ float peso;
 
 	P0|= (1<<5);
 //	voltaje=convertidorADC()*(3.3/255);
-//	LCD_GLASS_Float(peso, 2,  LCD_TOTAL);
+ 	LCD_GLASS_Float(peso, 2,  LCD_TOTAL);
 //	LCD_GLASS_Float(voltaje, 2, LCD_PESO);
-//TestEEPROM();
+ delay_ms(3000); 
+TestEEPROM();
 }
 
 }
@@ -212,7 +213,6 @@ void TestEEPROM(void)
 {
 	unsigned int addr=ADDRESS_PLU;
 	float val;
-	unsigned char txt[10]={0};
 	float i=0.12;
 
 	unsigned int x=0;
@@ -220,21 +220,20 @@ void TestEEPROM(void)
 	NRM_securty_a = 0xaa;
 	NRM_securty_b = 0x55;
 	
-	flash_write_float32(addr,0.00);
-	flash_write_float32(addr+11,0.00);
+
 
 	while(1){	
 	for(x=1;x<11;x++){
 	flash_write_float32(addr+(x*4),i);
 
 	val = flash_read_float32(addr+(x*4)-4);
-	sprintf(txt,"%f",val);  LCD_GLASS_String(txt,LCD_PESO); 
+	LCD_GLASS_Float(val, 2,  LCD_PESO);
 
 	val = flash_read_float32(addr+(x*4));
-	sprintf(txt,"%f",val);  LCD_GLASS_String(txt,LCD_TOTAL); 	
+	LCD_GLASS_Float(val, 2,  LCD_TOTAL);
 
 	val = flash_read_float32(addr+(x*4)+4);
-	sprintf(txt,"%f",val);  LCD_GLASS_String(txt,LCD_PRECIO); 
+	LCD_GLASS_Float(val, 2,  LCD_PRECIO);
 
 	i++;
 	delay_ms(1000);
