@@ -25,6 +25,8 @@ void main(void)
 {
 char txt[5];
 float peso;
+unsigned long iTemp_RA = 0;
+
   wdt_init();  /// watch dog ///
   gpio_init();
   adc_init();
@@ -33,7 +35,7 @@ float peso;
   // para toogle prueba
   // P0M0 |= (1<<1);
   // P0M1 &= ~(1<<1);
-  init_int_timer0();
+ // init_int_timer0();
 
 	LCD_GLASS_Init(); 
 	LCD_GLASS_String("- - -",LCD_PESO);
@@ -46,7 +48,7 @@ float peso;
  while(1){   
     key_scan();
 	sprintf(txt,"%d  ",(int)(Key));
-	LCD_GLASS_String(txt,LCD_TOTAL);
+	LCD_GLASS_String(txt,LCD_PESO);
 
 //	sprintf(txt,"%d  ",(int)(KeyState));
 //	LCD_GLASS_String(txt,LCD_PRECIO);
@@ -54,15 +56,23 @@ float peso;
 	
 //	delay_ms(50);
    
-	peso=fRead_Adc(0);
+//	peso=fRead_Adc(0);
 //	sprintf(txt,"%f   ",peso);  LCD_GLASS_String(txt,LCD_PESO); 
 
 	P0|= (1<<5);
 //	voltaje=convertidorADC()*(3.3/255);
- 	LCD_GLASS_Float(peso, 2,  LCD_TOTAL);
+ //	LCD_GLASS_Float(peso, 2,  LCD_TOTAL);
 //	LCD_GLASS_Float(voltaje, 2, LCD_PESO);
- delay_ms(3000); 
-TestEEPROM();
+
+
+    
+  //iTemp_RA=123456789;	
+	
+	ReadHX712(&iTemp_RA); 
+    sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_TOTAL); 
+
+ //delay_ms(3000); 
+//TestEEPROM();
 }
 
 }

@@ -134,10 +134,10 @@ float fRead_Adc(unsigned char cFillFilter){
 	return ValueCount;
 }
 
-void ReadHX712(unsigned char *ptr	){ //by ERH
-    unsigned char i;
-    unsigned char  dato[4]={0};
-    ptr=(unsigned long *)&dato;
+void ReadHX712(unsigned long *ptr	){ //by ERH
+    unsigned int i;
+    unsigned char  *dato=ptr;//[4]={0};
+    //ptr=(unsigned long *)&dato;
 
 	if(MISO!=0)return;
 	for(i=0;i<24;i++)//24 bits de comunicación
@@ -150,7 +150,7 @@ void ReadHX712(unsigned char *ptr	){ //by ERH
 	//1 bit de configuración a 10Hz
 	SCLK=1;   i<<=5;
 	SCLK=0;  
-	
+	*(ptr) >>= 7;
   // sprintf(txt,"%lX",*ptr);  LCD_GLASS_String(txt,LCD_TOTAL); 
 
 }

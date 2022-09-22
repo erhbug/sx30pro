@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/22/2022 15:07:53 PAGE 1   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/22/2022 16:47:30 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE DVR_LCD_SDI1621
@@ -62,7 +62,7 @@ line level    source
   52                          0x3D,   //      00111101,       //Z
   53                          0x20};//        00100000        //-
   54          
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/22/2022 15:07:53 PAGE 2   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/22/2022 16:47:30 PAGE 2   
 
   55          #define S_ZERO      0
   56          #define P_PESO_3    1
@@ -126,7 +126,7 @@ line level    source
               
               
               
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/22/2022 15:07:53 PAGE 3   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/22/2022 16:47:30 PAGE 3   
 
               #define P_PESO_3    6
               #define P_PESO_2    7
@@ -190,7 +190,7 @@ line level    source
  176   1              Display.cmd=COM_4;      
  177   1              write_lcd(Display);//LCD 1/3 bias option 
  178   1                      
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/22/2022 15:07:53 PAGE 4   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/22/2022 16:47:30 PAGE 4   
 
  179   1              Display.mode=LCD_DATA;
  180   1      //      Display.addr=0;
@@ -254,7 +254,7 @@ line level    source
  235   1              delay_35u();
  236   1      
  237   1              if(Display.mode == 0){
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/22/2022 15:07:53 PAGE 5   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/22/2022 16:47:30 PAGE 5   
 
  238   2                      lcd_unit_write(Display.cmd);            
  239   2                      LCD_WR_N_OFF;
@@ -318,7 +318,7 @@ line level    source
  296          
  297          /*
  298          */
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/22/2022 15:07:53 PAGE 6   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/22/2022 16:47:30 PAGE 6   
 
  299          void LCD_GLASS_All_On(void){
  300   1              Display.mode=LCD_DATA;  
@@ -382,7 +382,7 @@ line level    source
  358   2                              #endif
  359   2                              if(iNumber_Dot == 2){
  360   3              if(cFLag_On == 1)
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/22/2022 15:07:53 PAGE 7   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/22/2022 16:47:30 PAGE 7   
 
  361   3                                        Display.LCD_BUF[P_PRECIO_2]|=0x80;
  362   3                          else
@@ -446,7 +446,7 @@ line level    source
  420   2                                      Display.LCD_BUF[S_44]|=0x80;
  421   2                              else
  422   2                                      Display.LCD_BUF[S_44]&=0x7F;    
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/22/2022 15:07:53 PAGE 8   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/22/2022 16:47:30 PAGE 8   
 
  423   2                              break;  
  424   2                              case SYMBOL_NET:  //vSend_String_Usart(&huart1,"SYMBOL_NET");
@@ -510,7 +510,7 @@ line level    source
  482   2                                                              
  483   2                              
  484   2                      case SYMBOL_ALL:  //vSend_String_Usart(&huart1,"SYMBOL_ALL");   
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/22/2022 15:07:53 PAGE 9   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/22/2022 16:47:30 PAGE 9   
 
  485   2                              if(cFlag_On==1){
  486   3                                #if DISPLAY_20400047_EN > 0   
@@ -574,7 +574,7 @@ line level    source
  544          
  545          
  546          void LCD_GLASS_Float(float fNumber_To_LCD, unsigned char iNumber_Decimal, unsigned char cPosition_On_LCD) 
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/22/2022 15:07:53 PAGE 10  
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/22/2022 16:47:30 PAGE 10  
 
              -{
  547   1      unsigned char xdata strText_LCD[8];  
@@ -638,7 +638,7 @@ line level    source
  605   1              if(cPosition_On_LCD==LCD_PESO)    vSend_String_Usart(&huart1,"LCD_PESO=   ");   
  606   1              vSend_String_Usart(&huart1,pCaracter);vSend_String_Usart(&huart1,"\r\n");       
  607   1              */
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/22/2022 15:07:53 PAGE 11  
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/22/2022 16:47:30 PAGE 11  
 
  608   1      
  609   1              if(cPosition_On_LCD==LCD_TOTAL) {Display.LCD_BUF[P_TOTAL_2]&=0x7F;Display.LCD_BUF[P_TOTAL_1]&=0x7F;}
@@ -702,7 +702,7 @@ line level    source
  666   4                               #else
                                               if(iPosicion_Decimal == 4)                                      
                                                       Display.LCD_BUF[P_TOTAL_2]|=0x80;//sprintf(txt,"LCD_BUF[9]= d%d",Display.LCD_BUF[9]);                           
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/22/2022 15:07:53 PAGE 12  
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/22/2022 16:47:30 PAGE 12  
 
                                               if(iPosicion_Decimal == 5)
                                                       Display.LCD_BUF[P_TOTAL_1]|=0x80;//vSend_String_Usart(&huart1,"CC ");                           
@@ -766,7 +766,7 @@ line level    source
  728          
 
 
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/22/2022 15:07:53 PAGE 13  
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/22/2022 16:47:30 PAGE 13  
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
    CODE SIZE        =   1648    ----
