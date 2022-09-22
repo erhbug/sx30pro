@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   MAIN                                                                  09/22/2022 13:03:49 PAGE 1   
+C51 COMPILER V7.50   MAIN                                                                  09/22/2022 14:38:37 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
@@ -33,7 +33,7 @@ line level    source
   23          
   24          void main(void)
   25          {
-  26   1      
+  26   1      float peso;
   27   1        wdt_init();  /// watch dog ///
   28   1        gpio_init();
   29   1        adc_init();
@@ -45,14 +45,13 @@ line level    source
   35   1        init_int_timer0();
   36   1      
   37   1              LCD_GLASS_Init(); 
-  38   1              LCD_GLASS_String("-----",LCD_PESO);
+  38   1              LCD_GLASS_String("- - -",LCD_PESO);
   39   1              LCD_GLASS_String("-----",LCD_PRECIO); 
-  40   1          LCD_GLASS_String("-----", LCD_TOTAL);
+  40   1          LCD_GLASS_String("------", LCD_TOTAL);
   41   1              // vSound_Saved_Param();
   42   1               delay_ms(1000);                
   43   1       LCD_GLASS_Clear();
-  44   1       vCalibrate_Scale();
-*** WARNING C206 IN LINE 44 OF CUSTOMER\MAIN.C: 'vCalibrate_Scale': missing function-prototype
+  44   1      // vCalibrate_Scale();
   45   1       while(1){   
   46   2          key_scan();
   47   2      //      sprintf(txt,"%d  ",(int)(Key));
@@ -62,11 +61,11 @@ line level    source
   51   2      //      LCD_GLASS_String(txt,LCD_PRECIO);
   52   2      
   53   2              
-C51 COMPILER V7.50   MAIN                                                                  09/22/2022 13:03:49 PAGE 2   
-
   54   2      //      delay_ms(50);
+C51 COMPILER V7.50   MAIN                                                                  09/22/2022 14:38:37 PAGE 2   
+
   55   2         
-  56   2      //      peso=fRead_Adc(0);
+  56   2              peso=fRead_Adc(0);
   57   2      //      sprintf(txt,"%f   ",peso);  LCD_GLASS_String(txt,LCD_PESO); 
   58   2      
   59   2              P0|= (1<<5);
@@ -126,9 +125,9 @@ line level    source
  113   1              P0M1 |= (1<<5);
  114   1              //Salida en 1  para lectura adc
  115   1              P0|= (1<<5);
-C51 COMPILER V7.50   MAIN                                                                  09/22/2022 13:03:49 PAGE 3   
-
  116   1      }
+C51 COMPILER V7.50   MAIN                                                                  09/22/2022 14:38:37 PAGE 3   
+
  117          
  118          void init_int_timer0(void)
  119          {
@@ -190,9 +189,9 @@ line level    source
  175   2                      }else{
  176   2                              GPIO_SetBits(GPIOA, BEEPER);
  177   2                      }*/
-C51 COMPILER V7.50   MAIN                                                                  09/22/2022 13:03:49 PAGE 4   
-
  178   2                      if(strTimer.cFLag_TimerA_Start == 1){
+C51 COMPILER V7.50   MAIN                                                                  09/22/2022 14:38:37 PAGE 4   
+
  179   3                              strTimer.cFLag_TimerA_Start = 0;
  180   3                              BEEPER_EN;
  181   3                      }
@@ -254,9 +253,9 @@ line level    source
  237   3      
  238   3              i++;
  239   3              delay_ms(1000);
-C51 COMPILER V7.50   MAIN                                                                  09/22/2022 13:03:49 PAGE 5   
-
  240   3              }
+C51 COMPILER V7.50   MAIN                                                                  09/22/2022 14:38:37 PAGE 5   
+
  241   2      }
  242   1      
  243   1      NRM_securty_a = 0x00;
@@ -265,9 +264,9 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    919    ----
-   CONSTANT SIZE    =     19    ----
-   XDATA SIZE       =   ----      22
+   CODE SIZE        =    927    ----
+   CONSTANT SIZE    =     32    ----
+   XDATA SIZE       =   ----      26
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
@@ -275,4 +274,4 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

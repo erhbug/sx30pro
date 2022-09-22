@@ -36,7 +36,7 @@ struct strTimers strTimer;
 void delay_ms(unsigned int num)
 { 	
 	unsigned int i;
-unsigned char j;
+    unsigned char j;
   	for(i= 0;i<num;i++){	//(SDI5219) ??1ms
 		for(j=0;j<195;j++)
 			;
@@ -46,7 +46,7 @@ IWDG_KEY_REFRESH;
 }
 
 void key_scan(void) {
-  char k = 0;
+  unsigned char k = 0;
   Key = 0;
 
   for (k = 0; k < 5; k++) {

@@ -23,7 +23,7 @@ void init_int_timer0(void);
 
 void main(void)
 {
-
+float peso;
   wdt_init();  /// watch dog ///
   gpio_init();
   adc_init();
@@ -35,13 +35,13 @@ void main(void)
   init_int_timer0();
 
 	LCD_GLASS_Init(); 
-	LCD_GLASS_String("-----",LCD_PESO);
+	LCD_GLASS_String("- - -",LCD_PESO);
 	LCD_GLASS_String("-----",LCD_PRECIO); 
-    LCD_GLASS_String("-----", LCD_TOTAL);
+    LCD_GLASS_String("------", LCD_TOTAL);
 	// vSound_Saved_Param();
 	 delay_ms(1000); 		
  LCD_GLASS_Clear();
- vCalibrate_Scale();
+// vCalibrate_Scale();
  while(1){   
     key_scan();
 //	sprintf(txt,"%d  ",(int)(Key));
@@ -53,7 +53,7 @@ void main(void)
 	
 //	delay_ms(50);
    
-//	peso=fRead_Adc(0);
+	peso=fRead_Adc(0);
 //	sprintf(txt,"%f   ",peso);  LCD_GLASS_String(txt,LCD_PESO); 
 
 	P0|= (1<<5);

@@ -17,24 +17,24 @@ float ValueCount = 0.0;
 //int iCountFailRead = 0;
 //int iCountFailResponse = 0;
 //unsigned char iSelectFrecuency = 1;
-float arfDataFilter_x[10] = {0.00};
-float arfLowestToHighest[10] = {0.00};
-//float fBeforeValue_x = 0;
-float fAverage_x = 0;
-unsigned char iValueOut = 0;
+
 
 /*
 */
 float fFilter_Averaging(unsigned long iActualWeight, unsigned char cFastFill){	
-	
-	//////////////////////////////////////////float fThreshold = stScaleParam.fFactorCalibrate[stScaleParam.iUnits]/2;
+
+float fAverage_x = 0;
+float xdata arfDataFilter_x[5] = {0.00};
+float xdata arfLowestToHighest[5] = {0.00};
+unsigned char xdata iValueOut = 0;	
+//    float xdata fThreshold = stScaleParam.fFactorCalibrate[stScaleParam.iUnits]/2;
 	float fThreshold = 8.526937/2;
-	float fData_Vector = 0;
-	float *pfData_Filter;
-	float fActualWeight = (float)(iActualWeight);
-	unsigned char iLenthData_x = 6;		// Longitud de los datos a ordenar, original 6, en prueba 10 
-	unsigned char i = 0; 	// Variable para ciclos iterativo 
-    unsigned char j = 0;	// Variable para ciclos iterativo 
+	float xdata fData_Vector = 0;
+	float xdata *pfData_Filter;
+	float xdata fActualWeight = (float)(iActualWeight);
+	unsigned char xdata iLenthData_x = 5;		// Longitud de los datos a ordenar, original 6, en prueba 10 
+	unsigned char xdata i = 0; 	// Variable para ciclos iterativo 
+    unsigned char xdata j = 0;	// Variable para ciclos iterativo 
 	
 	pfData_Filter = arfDataFilter_x;
 	
@@ -90,6 +90,8 @@ float fFilter_Averaging(unsigned long iActualWeight, unsigned char cFastFill){
 	fAverage_x /= (float)(iLenthData_x - 2);
 	
 	//fBeforeValue_x = fAverage_x;
+
+
 	
 	return fAverage_x;
 }
@@ -101,17 +103,16 @@ float fFilter_Averaging(unsigned long iActualWeight, unsigned char cFastFill){
 */
 float fRead_Adc(unsigned char cFillFilter){
 	unsigned long iTemp_RA = 0;
-	unsigned char txt[20]={0};
 
 	if(MISO!=0)return ValueCount;
     
   //iTemp_RA=123456789;	sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
 	
-	iTemp_RA=ReadHX712(); 
+	ReadHX712(&iTemp_RA); 
 
   //sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
-
-	iTemp_RA >>= 7;	// Elimina los 6 bits menos significativos
+ iTemp_RA >>= 7;	// Elimina los 6 bits menos significativos
+	
     
 
     // sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
@@ -133,13 +134,12 @@ float fRead_Adc(unsigned char cFillFilter){
 	return ValueCount;
 }
 
-volatile unsigned long  ReadHX712(void){ //by ERH
-    unsigned int i;
-	unsigned long *ptr;	
+void ReadHX712(unsigned char *ptr	){ //by ERH
+    unsigned char i;
     unsigned char  dato[4]={0};
     ptr=(unsigned long *)&dato;
 
-	if(MISO!=0)return 0;
+	if(MISO!=0)return;
 	for(i=0;i<24;i++)//24 bits de comunicación
 	{    
     	SCLK=1;  
@@ -150,6 +150,7 @@ volatile unsigned long  ReadHX712(void){ //by ERH
 	//1 bit de configuración a 10Hz
 	SCLK=1;   i<<=5;
 	SCLK=0;  
+	
   // sprintf(txt,"%lX",*ptr);  LCD_GLASS_String(txt,LCD_TOTAL); 
-   return *ptr;
+
 }

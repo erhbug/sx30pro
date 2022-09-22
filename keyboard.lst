@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   KEYBOARD                                                              09/22/2022 13:00:25 PAGE 1   
+C51 COMPILER V7.50   KEYBOARD                                                              09/22/2022 14:23:59 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE KEYBOARD
@@ -46,7 +46,7 @@ line level    source
   36          void delay_ms(unsigned int num)
   37          {       
   38   1              unsigned int i;
-  39   1      unsigned char j;
+  39   1          unsigned char j;
   40   1              for(i= 0;i<num;i++){    //(SDI5219) ??1ms
   41   2                      for(j=0;j<195;j++)
   42   2                              ;
@@ -56,13 +56,13 @@ line level    source
   46   1      }
   47          
   48          void key_scan(void) {
-  49   1        char k = 0;
+  49   1        unsigned char k = 0;
   50   1        Key = 0;
   51   1      
   52   1        for (k = 0; k < 5; k++) {
   53   2          KEY_D0 = 1;
   54   2          KEY_D1 = 1;
-C51 COMPILER V7.50   KEYBOARD                                                              09/22/2022 13:00:25 PAGE 2   
+C51 COMPILER V7.50   KEYBOARD                                                              09/22/2022 14:23:59 PAGE 2   
 
   55   2          KEY_D2 = 1;
   56   2          KEY_D3 = 1;
@@ -126,7 +126,7 @@ line level    source
  114          void vScan_Key(void){
  115   1      }
  116          
-C51 COMPILER V7.50   KEYBOARD                                                              09/22/2022 13:00:25 PAGE 3   
+C51 COMPILER V7.50   KEYBOARD                                                              09/22/2022 14:23:59 PAGE 3   
 
  117          enum digi_key vActionKey(void){
  118   1              

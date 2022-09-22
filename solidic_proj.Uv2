@@ -10,7 +10,6 @@ File 1,1,<.\_display\dvr_lcd_SDI1621.c><dvr_lcd_SDI1621.c> 0x0
 File 1,1,<.\customer\keyboard.c><keyboard.c> 0x0 
 File 1,1,<.\_weight\dvr_HX712.c><dvr_HX712.c> 0x0 
 File 1,1,<.\_data_nvm\data_nvm_5219_Vc_Dec09_13.c><data_nvm_5219_Vc_Dec09_13.c> 0x0 
-File 1,1,<.\_scale\dvr_scale.c><dvr_scale.c> 0x0 
 
 
 Options 1,0,0  // Target 'Target 1'

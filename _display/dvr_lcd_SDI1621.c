@@ -304,9 +304,9 @@ void LCD_GLASS_All_On(void){
 
 
 
-void LCD_SET_Char(unsigned char cCaracter, unsigned char cPosition_On_LCD, 
-	char cPosition_Text){
-		char i=0;
+void LCD_SET_Char(unsigned char cCaracter, unsigned char cPosition_On_LCD, unsigned char cPosition_Text)
+{
+unsigned char i=0;
 		#if DISPLAY_20400047_EN > 0			
 		if(cPosition_On_LCD==LCD_PESO)i=0;
 		if(cPosition_On_LCD==LCD_PRECIO)i=11;
@@ -543,20 +543,6 @@ void LCD_GLASS_Symbols(unsigned char cSymbol, unsigned char cFlag_On){
 */
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void LCD_GLASS_Float(float fNumber_To_LCD, unsigned char iNumber_Decimal, unsigned char cPosition_On_LCD) {
 unsigned char strText_LCD[8];  
 
@@ -595,17 +581,6 @@ unsigned char strText_LCD[8];
 }
 
 
-
-
-
-
-
-
-
-
-
-
-	
 /**
 	******************************************************************************
   * Objetivo: Mostrar en LCD texto.
