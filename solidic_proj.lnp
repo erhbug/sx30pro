@@ -2,6 +2,7 @@
 "dvr_lcd_SDI1621.obj",
 "keyboard.obj",
 "dvr_HX712.obj",
-"data_nvm_5219_Vc_Dec09_13.obj" 
+"data_nvm_5219_Vc_Dec09_13.obj",
+"dvr_scale.obj" 
 TO "solidic_proj" 
 RAMSIZE(256) 

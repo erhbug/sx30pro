@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 14:06:07 PAGE 1   
+C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 18:29:55 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE DVR_SCALE
@@ -62,7 +62,7 @@ line level    source
   52          #define ADDR_MSGBAT                                                      ADDRESS_SCALE_CONFIG_PAGE + 42 /* 1 byte */
   53          #define ADDR_DEBUG                                                       ADDRESS_SCALE_CONFIG_PAGE + 43 /* 2 byte */
   54          #define ADDR_COUNT_RANGE                                 ADDRESS_SCALE_CONFIG_PAGE + 55 /* 2 byte */
-C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 14:06:07 PAGE 2   
+C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 18:29:55 PAGE 2   
 
   55          #define ADDR_MONEDA                                                      ADDRESS_SCALE_CONFIG_PAGE + 60 /* 1 byte */
   56          
@@ -126,7 +126,7 @@ line level    source
  113   1              stScaleParam.cLenguage                          = flash_read_u8(ADDR_LENGUAGE);
  114   1              stScaleParam.cUnits                                     = flash_read_u8(ADDR_UNITS);
  115   1              stScaleParam.cFormatoImpresion                          = flash_read_u8(ADDR_FORMATO_IMPRESION);
-C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 14:06:07 PAGE 3   
+C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 18:29:55 PAGE 3   
 
  116   1              stScaleParam.iCapacity                          =       flash_read_u16(ADDR_CAPACITY);
  117   1              stScaleParam.iLoadPorcRefer     = flash_read_u16(ADDR_PORC_REF);
@@ -190,7 +190,7 @@ line level    source
  175            */
  176          void vSaveParamScale(unsigned char cType_Parameter){
  177   1              /* Habilita la escritura/lectura en la EEPROM */
-C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 14:06:07 PAGE 4   
+C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 18:29:55 PAGE 4   
 
  178   1              NRM_securty_a = 0xaa;
  179   1              NRM_securty_b = 0x55;
@@ -254,7 +254,7 @@ line level    source
  237   2                      case Parameter_Overload:
  238   2                              flash_write_u16(ADDR_COUNT_OVERLOAD, stScaleParam.iCountOverload);              
  239   2                              flash_write_float32(ADDR_VALUE_OVERLOAD, stScaleParam.fValueOverload);                                          
-C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 14:06:07 PAGE 5   
+C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 18:29:55 PAGE 5   
 
  240   2                              break;
  241   2                              
@@ -318,7 +318,7 @@ line level    source
  299   2                      /* Verifica si debe mostrar el contador en la LCD */
  300   2                      if(cShowCount == 1){
  301   3                              if(cCountBack == 0){
-C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 14:06:07 PAGE 6   
+C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 18:29:55 PAGE 6   
 
  302   4                                      LCD_GLASS_String("00000", LCD_PESO);
  303   4                                      LCD_GLASS_String("00000", LCD_PRECIO);
@@ -382,7 +382,7 @@ line level    source
  361            * Prerequisitos: Se usan las variables globales
  362                  *                       stScaleParam.cSetCalibrate, stScaleParam.fCapacityCali,  
  363                  *                       arDataDisplayLcd.
-C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 14:06:07 PAGE 7   
+C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 18:29:55 PAGE 7   
 
  364                  *       Modifica las variables globales:
  365                  *                       stScaleParam.fPointZero, arDataDisplayLcd.
@@ -446,7 +446,7 @@ line level    source
  422   1              
  423   1              return 0;
  424   1      }
-C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 14:06:07 PAGE 8   
+C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 18:29:55 PAGE 8   
 
  425          
  426          /**
@@ -510,7 +510,7 @@ line level    source
  484   5                                              if(stScaleParam.fValueTara <= stScaleParam.fCapacityCali*0.2){
  485   6                                                              AuxTara = stScaleParam.fFactorCalibrate / stScaleParam.iDivisionMinima;
  486   6                                                              AuxTara *= stScaleParam.iDivisionMenor;
-C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 14:06:07 PAGE 9   
+C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 18:29:55 PAGE 9   
 
  487   6                                                              fLimite_Inf = fCuentasToPeso(stScaleParam.fValueTara - 3*AuxTara);
  488   6                                                              fLimite_Sup = fCuentasToPeso(stScaleParam.fValueTara + 3*AuxTara);
@@ -574,7 +574,7 @@ line level    source
  546   1              fValor_Limite /= 2; 
  547   1              
  548   1              if(fValor_Limite < 0){
-C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 14:06:07 PAGE 10  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 18:29:55 PAGE 10  
 
  549   2                      fValor_Limite *= (-1);
  550   2              }
@@ -638,7 +638,7 @@ line level    source
  607   1                    LCD_GLASS_Clear();
  608   1      #if DISPLAY_20400047_EN > 0
  609   1                    LCD_GLASS_String("PRESS", LCD_PESO);
-C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 14:06:07 PAGE 11  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 18:29:55 PAGE 11  
 
  610   1                    LCD_GLASS_String(" LOAD", LCD_TOTAL);
  611   1                    LCD_GLASS_String("C   ", LCD_PRECIO);
@@ -702,7 +702,7 @@ line level    source
              -erature = fGet_Temp_Amb_Micro();
  668   1                    //CCC    vSaveParamScale(Parameter_Temperature);
  669   1      
-C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 14:06:07 PAGE 12  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 18:29:55 PAGE 12  
 
  670   1          vSound_Saved_Param();
  671   1                    vSound_Saved_Param();
@@ -766,7 +766,7 @@ line level    source
  729   2              }else if(cPreConfiguration == PreConfig31KG){
  730   2                      stScaleParam.iCapacity = 30;
  731   2                      stScaleParam.iDivisionMinima = 5;
-C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 14:06:07 PAGE 13  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 18:29:55 PAGE 13  
 
  732   2                      stScaleParam.iDivisionMenor = 2;
  733   2                      stScaleParam.iDivisionMenorMenor = 1;
@@ -830,7 +830,7 @@ line level    source
  791   1              stScaleParam.fPointZeroCali = 0;
  792   1              stScaleParam.fFactorCalibrate = 0;
  793   1              srFlagScale.bShowErroBat = 1;
-C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 14:06:07 PAGE 14  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 18:29:55 PAGE 14  
 
  794   1              stScaleParam.fTemperature = 0;
  795   1              
@@ -894,7 +894,7 @@ line level    source
  853   2                      
  854   2                      Value_Key_Press = KEY_NULL;
  855   2                      
-C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 14:06:07 PAGE 15  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 18:29:55 PAGE 15  
 
  856   2                      /* Espera a que se oprima la tecla 'MEM' o que pase el tiempo de 5 seg  */
  857   2                      while((Value_Key_Press != KEY_MEM) && strTimer.cFLag_TimerE_End == 0){
@@ -958,7 +958,7 @@ line level    source
  914   1      ///////////////CCC//////////////////////7777777 vGestorBateria();
  915   1              
  916   1              if(srFlagScale.bMsgBatteryLow == 1){
-C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 14:06:07 PAGE 16  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 18:29:55 PAGE 16  
 
  917   2                      return 0;
  918   2              }
@@ -1022,7 +1022,7 @@ line level    source
  976   2                      if(fWeightScale > -0.0005 && fWeightScale < 0.0005){
  977   3                              LCD_GLASS_Symbols(SYMBOL_ZERO, 1);
  978   3                      }else{
-C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 14:06:07 PAGE 17  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 18:29:55 PAGE 17  
 
  979   3                              LCD_GLASS_Symbols(SYMBOL_ZERO, 0);
  980   3                              //Restart_Sleep_Time;
@@ -1086,7 +1086,7 @@ line level    source
 1036   1              
 1037   1              float fWeightOverload = 0;
 1038   1              
-C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 14:06:07 PAGE 18  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 18:29:55 PAGE 18  
 
 1039   1              float fOverloadUnit =  (float)stScaleParam.iCapacity + 
 1040   1                                              ((float)(stScaleParam.iDivisionMinima)/(float)(pow(10, (int)stScaleParam.cWeightDecimal)))*9;
@@ -1150,7 +1150,7 @@ line level    source
 1097   4                              }
 1098   3                      }
 1099   2                      
-C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 14:06:07 PAGE 19  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 18:29:55 PAGE 19  
 
 1100   2                      if(stScaleParam.fWeightScale != fWeightScaleBefore){
 1101   3                              //Auto_Off_On_15m;
@@ -1214,7 +1214,7 @@ line level    source
 1156   1              if(srFlagScale.bFlagFijarPRecio){
 1157   2                      LCD_GLASS_String("------", LCD_TOTAL);
 1158   2              }else{
-C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 14:06:07 PAGE 20  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 18:29:55 PAGE 20  
 
 1159   2                      stScaleParam.fPrice_Unit = 0;
 1160   2                      stScaleParam.cNumberDecimalPrice = 0;
@@ -1278,7 +1278,7 @@ line level    source
 1218   1              stScaleParam.fWeightScaleTara = fWeightScale;
 1219   1                      
 1220   1              if(srFlagScale.bShowCountADC == 1){
-C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 14:06:07 PAGE 21  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 18:29:55 PAGE 21  
 
 1221   2                      fWeightScale = fCuentasToPeso(stScaleParam.fWeightScaleCount);
 1222   2              }else{
@@ -1342,7 +1342,7 @@ line level    source
 1280   3                              arfFactorMult = (float)(stScaleParam.iDivisionMinima)/pow(10,(int)stScaleParam.cWeightDecimal);
 1281   3                              fPesoAux = fCountADC/stScaleParam.fFactorCalibrate;
 1282   3                      }
-C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 14:06:07 PAGE 22  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 18:29:55 PAGE 22  
 
 1283   2              }
 1284   1              
@@ -1406,7 +1406,7 @@ line level    source
 1342   2                      //Verifica por que salio del Wait
 1343   2                      if(srFlagScale.bScaleOn == 0){ //Si se oprimio la tecla On
 1344   3                              cFlag_Continue = 0;
-C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 14:06:07 PAGE 23  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 18:29:55 PAGE 23  
 
 1345   3                      }else if(strTimer.cFLag_TimerB_End){ //Si ya pasaron 3 segundos
 1346   3                              
@@ -1470,7 +1470,7 @@ line level    source
 1404   4                              }
 1405   3                      }else if(vActionKey() != KEY_NULL){
 1406   3                              cFlag_Continue = 0;
-C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 14:06:07 PAGE 24  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/22/2022 18:29:55 PAGE 24  
 
 1407   3                              vBeep_Key();
 1408   3                      }

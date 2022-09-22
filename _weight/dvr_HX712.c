@@ -1,40 +1,39 @@
 /* Includes ------------------------------------------------------------------*/
 #include "./_weight/dvr_HX712.h"
-//#include <stdio.h>
-//#include <string.h>
+#include <stdio.h>
+#include <string.h>
 #include <REG52.H>
-//#include <math.h>
-//#include "./customer/keyboard.h"
+#include <math.h>
+#include "./customer/keyboard.h"
 //#include "./_display/dvr_lcd_SDI1621.h"
 
 sbit MISO = P0^3;	
 sbit SCLK = P0^4;	
 
-float ValueCount = 0.0;
 
 //--------------------------------------------------------------------------------
+float ValueCount = 0.0;
+int iCountFailRead = 0;
+int iCountFailResponse = 0;
 
-//int iCountFailRead = 0;
-//int iCountFailResponse = 0;
-//unsigned char iSelectFrecuency = 1;
-
+unsigned char iSelectFrecuency = 1;
+float arfDataFilter_x[10] = {0};
+float fBeforeValue_x = 0;
+float fAverage_x = 0;
+unsigned char iValueOut = 0;
 
 /*
 */
 float fFilter_Averaging(unsigned long iActualWeight, unsigned char cFastFill){	
-
-float fAverage_x = 0;
-float xdata arfDataFilter_x[5] = {0.00};
-float xdata arfLowestToHighest[5] = {0.00};
-unsigned char xdata iValueOut = 0;	
-//    float xdata fThreshold = stScaleParam.fFactorCalibrate[stScaleParam.iUnits]/2;
+	float arfLowestToHighest[10] = {0.00};
+	//////////////////////////////////////////float fThreshold = stScaleParam.fFactorCalibrate[stScaleParam.iUnits]/2;
 	float fThreshold = 8.526937/2;
-	float xdata fData_Vector = 0;
-	float xdata *pfData_Filter;
-	float xdata fActualWeight = (float)(iActualWeight);
-	unsigned char xdata iLenthData_x = 5;		// Longitud de los datos a ordenar, original 6, en prueba 10 
-	unsigned char xdata i = 0; 	// Variable para ciclos iterativo 
-    unsigned char xdata j = 0;	// Variable para ciclos iterativo 
+	float fData_Vector = 0;
+	float *pfData_Filter;
+	float fActualWeight = (float)(iActualWeight);
+	unsigned char iLenthData_x = 6;		// Longitud de los datos a ordenar, original 6, en prueba 10 
+	unsigned char i = 0; 	// Variable para ciclos iterativo 
+    unsigned char j = 0;	// Variable para ciclos iterativo 
 	
 	pfData_Filter = arfDataFilter_x;
 	
@@ -89,9 +88,7 @@ unsigned char xdata iValueOut = 0;
 	
 	fAverage_x /= (float)(iLenthData_x - 2);
 	
-	//fBeforeValue_x = fAverage_x;
-
-
+	fBeforeValue_x = fAverage_x;
 	
 	return fAverage_x;
 }
@@ -108,11 +105,11 @@ float fRead_Adc(unsigned char cFillFilter){
     
   //iTemp_RA=123456789;	sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
 	
-	ReadHX712(&iTemp_RA); 
+	iTemp_RA=ReadHX712(); 
 
   //sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
- iTemp_RA >>= 7;	// Elimina los 6 bits menos significativos
-	
+
+	iTemp_RA >>= 7;	// Elimina los 6 bits menos significativos
     
 
     // sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
@@ -134,10 +131,11 @@ float fRead_Adc(unsigned char cFillFilter){
 	return ValueCount;
 }
 
-void ReadHX712(unsigned long *ptr	){ //by ERH
+volatile unsigned long  ReadHX712(void){ //by ERH
     unsigned int i;
-    unsigned char  *dato=ptr;//[4]={0};
-    //ptr=(unsigned long *)&dato;
+	unsigned long *ptr;	
+    unsigned char  dato[4]={0};
+    ptr=(unsigned long *)&dato;
 
 	if(MISO!=0)return;
 	for(i=0;i<24;i++)//24 bits de comunicación
@@ -150,7 +148,6 @@ void ReadHX712(unsigned long *ptr	){ //by ERH
 	//1 bit de configuración a 10Hz
 	SCLK=1;   i<<=5;
 	SCLK=0;  
-	*(ptr) >>= 7;
   // sprintf(txt,"%lX",*ptr);  LCD_GLASS_String(txt,LCD_TOTAL); 
-
+   return *ptr;
 }
