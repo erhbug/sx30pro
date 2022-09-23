@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   KEYBOARD                                                              09/23/2022 12:08:47 PAGE 1   
+C51 COMPILER V7.50   KEYBOARD                                                              09/23/2022 12:18:23 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE KEYBOARD
@@ -62,7 +62,7 @@ line level    source
   52   2          delay_ms(1);
   53   2          if (KEY_K0 != 1) Key = 1 + (k * 4);
   54   2          if (KEY_K1 != 1) Key = 2 + (k * 4);
-C51 COMPILER V7.50   KEYBOARD                                                              09/23/2022 12:08:47 PAGE 2   
+C51 COMPILER V7.50   KEYBOARD                                                              09/23/2022 12:18:23 PAGE 2   
 
   55   2          if (KEY_K2 != 1) Key = 3 + (k * 4);
   56   2          if (KEY_K3 != 1) Key = 4 + (k * 4);
@@ -126,7 +126,7 @@ line level    source
  114   1              if(stScaleParam.cBacklight){OnBackLight;}
  115   1                      strTimer.cFLag_TimerJ_Start = 1;
  116   1                      srFlagScale.bBacklight_On = 1;
-C51 COMPILER V7.50   KEYBOARD                                                              09/23/2022 12:08:47 PAGE 3   
+C51 COMPILER V7.50   KEYBOARD                                                              09/23/2022 12:18:23 PAGE 3   
 
  117   1              }       
  118   1              

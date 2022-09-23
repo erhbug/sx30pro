@@ -40,7 +40,7 @@ struct Parameter{
 	unsigned int iDivisionMinima;
 	unsigned int iDivisionMenor;
 	unsigned int iDivisionMenorMenor;
-	unsigned int iDebug;
+//	unsigned int iDebug;
 	unsigned int iMultiplicador_Producto;
 	unsigned int iNumber_Articulos_Venta;
 		

@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 12:09:03 PAGE 1   
+C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 13:47:27 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE DVR_SCALE
@@ -59,10 +59,10 @@ line level    source
   49          #define ADDR_MODELO                                                      ADDRESS_SCALE_CONFIG_PAGE + 38 /* 1 byte */
   50          #define ADDR_BACKLIGHT                                   ADDRESS_SCALE_CONFIG_PAGE + 40 /* 1 byte */
   51          #define ADDR_MSGBAT                                                      ADDRESS_SCALE_CONFIG_PAGE + 42 /* 1 byte */
-  52          #define ADDR_DEBUG                                                       ADDRESS_SCALE_CONFIG_PAGE + 43 /* 2 byte */
+  52          //#define ADDR_DEBUG                                                     ADDRESS_SCALE_CONFIG_PAGE + 43 /* 2 byte */
   53          #define ADDR_COUNT_RANGE                                 ADDRESS_SCALE_CONFIG_PAGE + 55 /* 2 byte */
   54          #define ADDR_MONEDA                                                      ADDRESS_SCALE_CONFIG_PAGE + 60 /* 1 byte */
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 12:09:03 PAGE 2   
+C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 13:47:27 PAGE 2   
 
   55          
   56          #define ADDR_DECIMAL_WEIGHT                      ADDRESS_SCALE_CONFIG_PAGE + 84  /* 2 bytes */
@@ -126,7 +126,7 @@ line level    source
  113   1              stScaleParam.cUnits                                     = flash_read_u8(ADDR_UNITS);
  114   1              stScaleParam.cFormatoImpresion                          = flash_read_u8(ADDR_FORMATO_IMPRESION);
  115   1              stScaleParam.iCapacity                          =       flash_read_u16(ADDR_CAPACITY);
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 12:09:03 PAGE 3   
+C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 13:47:27 PAGE 3   
 
  116   1              stScaleParam.iLoadPorcRefer     = flash_read_u16(ADDR_PORC_REF);
  117   1              stScaleParam.iDivisionMinima    = flash_read_u16(ADDR_DIVISION_MINIMA);
@@ -161,7 +161,7 @@ line level    source
  146   1              
  147   1              stScaleParam.cShowHighBat                                                       = flash_read_u8(ADDR_MSGBAT); 
  148   1              
- 149   1              stScaleParam.iDebug                                                                     = flash_read_u16(ADDR_DEBUG);
+ 149   1      //      stScaleParam.iDebug                                                                     = flash_read_u16(ADDR_DEBUG);
  150   1      
  151   1              stScaleParam.cCountRange                                                        = flash_read_u8(ADDR_COUNT_RANGE);
  152   1              
@@ -190,7 +190,7 @@ line level    source
  175          void vSaveParamScale(unsigned char cType_Parameter){
  176   1              /* Habilita la escritura/lectura en la EEPROM */
  177   1              NRM_securty_a = 0xaa;
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 12:09:03 PAGE 4   
+C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 13:47:27 PAGE 4   
 
  178   1              NRM_securty_b = 0x55;
  179   1      
@@ -246,15 +246,15 @@ line level    source
  229   2                              flash_write_float32(ADDR_POINT_ZERO, stScaleParam.fPointZeroCali);                      
  230   2                              break;
  231   2                                      
- 232   2                      case Parameter_Debug:
- 233   2                              flash_write_u16(ADDR_DEBUG, stScaleParam.iDebug);
- 234   2                              break;
+ 232   2              //      case Parameter_Debug:
+ 233   2              //              flash_write_u16(ADDR_DEBUG, stScaleParam.iDebug);
+ 234   2              //              break;
  235   2                                      
  236   2                      case Parameter_Overload:
  237   2                              flash_write_u16(ADDR_COUNT_OVERLOAD, stScaleParam.iCountOverload);              
  238   2                              flash_write_float32(ADDR_VALUE_OVERLOAD, stScaleParam.fValueOverload);                                          
  239   2                              break;
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 12:09:03 PAGE 5   
+C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 13:47:27 PAGE 5   
 
  240   2                              
  241   2                      case Parameter_Voltages:
@@ -297,7 +297,7 @@ line level    source
  278   1              long int cCountBack = cSetCountBack;                    /* Contador de regresion */
  279   1              float fActualWeightAdc=0;                                               /* Alamacena el peso actual valores adc */
  280   1              float fWeightAdc = 0;                                                           /* Almacena el valor referencia */
- 281   1              float fLimitRange = 5;//CCC (float)stScaleParam.cCountRange;
+ 281   1              float fLimitRange =  (float)stScaleParam.cCountRange;//5
  282   1              int i=0;
  283   1              
  284   1              cNumber_Count = 0;
@@ -318,7 +318,7 @@ line level    source
  299   2                      /* Verifica si debe mostrar el contador en la LCD */
  300   2                      if(cShowCount == 1){
  301   3                              if(cCountBack == 0){
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 12:09:03 PAGE 6   
+C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 13:47:27 PAGE 6   
 
  302   4                                      LCD_GLASS_String("00000", LCD_PESO);
  303   4                                      LCD_GLASS_String("00000", LCD_PRECIO);
@@ -381,663 +381,665 @@ line level    source
  360                  *                       stScaleParam.fPointZero, arDataDisplayLcd.
  361            ******************************************************************************
  362            */
- 363          unsigned char cSetZeroPoint(void){      
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 12:09:03 PAGE 7   
+ 363          
+C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 13:47:27 PAGE 7   
 
- 364   1      
- 365   1      //////  unsigned char Value_Key_Press;
- 366   1              float fWeightPlate = 0;         /* Calcula el peso del plato en numero de cuentas */
- 367   1              float fPointZero = 0;
- 368   1                      
- 369   1              fPointZero = fStablePoint(0, 0, 0);
- 370   1              
- 371   1              if(srFlagScale.bScaleOn == 0){
- 372   2                      return 2;                               
- 373   2              }
- 374   1      
- 375   1              /*Se encuentra el peso actual del plato respecto al punto cero de calibracion */
- 376   1              fWeightPlate = fPointZero - stScaleParam.fPointZeroCali;
- 377   1              
- 378   1              if(stScaleParam.cMsgUnload){
- 379   2                      /* Verifica los rangos para los distintos avisos */
- 380   2                      if(((fWeightPlate > (stScaleParam.fCapacityCali * 0.20)) && (fWeightPlate < (stScaleParam.fCapacityCali 
+ 364          
+ 365            unsigned char cSetZeroPoint(void){    
+ 366   1      /*
+ 367   1      //////  unsigned char Value_Key_Press;
+ 368   1              float fWeightPlate = 0;         // Calcula el peso del plato en numero de cuentas 
+ 369   1              float fPointZero = 0;
+ 370   1                      
+ 371   1              fPointZero = fStablePoint(0, 0, 0);
+ 372   1              
+ 373   1              if(srFlagScale.bScaleOn == 0){
+ 374   1                      return 2;                               
+ 375   1              }
+ 376   1      
+ 377   1              //Se encuentra el peso actual del plato respecto al punto cero de calibracion 
+ 378   1              fWeightPlate = fPointZero - stScaleParam.fPointZeroCali;
+ 379   1              
+ 380   1              if(stScaleParam.cMsgUnload){
+ 381   1                      // Verifica los rangos para los distintos avisos 
+ 382   1                      if(((fWeightPlate > (stScaleParam.fCapacityCali * 0.20)) && (fWeightPlate < (stScaleParam.fCapacityCali 
              -* 0.50))) ||
- 381   2                                      (fWeightPlate < (-1)*(stScaleParam.fCapacityCali * 0.20))){
- 382   3                              
- 383   3                              /* Quita los simboloes de unidad de peso y Zero */
- 384   3                              LCD_GLASS_Clear();
- 385   3                              LCD_GLASS_String("  PLS", LCD_PESO);                            
- 386   3                              LCD_GLASS_String("UNLOAD", LCD_TOTAL);  
- 387   3                              
- 388   3      ///////////                     //Auto_Off_On_5m;
- 389   3                      
- 390   3                              while(1){
- 391   4                                      IWDG_KEY_REFRESH;
- 392   4                                      if(srFlagScale.cWait_Time_Code || srFlagScale.bScaleOn == 0){
- 393   5                                              return 2;                               
- 394   5                                      }
- 395   4                              }
- 396   3                      }
- 397   2              }
- 398   1              
- 399   1              if((fWeightPlate >= (stScaleParam.fCapacityCali * 0.50)) && fWeightPlate > 0){
- 400   2                      
- 401   2                      /* Quita los simboloes de unidad de peso y Zero */
- 402   2                      LCD_GLASS_Clear();      
- 403   2                      LCD_GLASS_String("HELP ", LCD_PRECIO);  
- 404   2              
- 405   2                      //Auto_Off_On_5m;
- 406   2                      
- 407   2                      while(1){
- 408   3                              IWDG_KEY_REFRESH;
- 409   3                              if(srFlagScale.cWait_Time_Code || srFlagScale.bScaleOn == 0){
- 410   4                                      return 2;                               
- 411   4                              }
- 412   3                      }
- 413   2                                      
- 414   2              }else{
- 415   2                      stScaleParam.fPointZero = fPointZero;
- 416   2              }
- 417   1              
- 418   1              return 0;
- 419   1      }
- 420          
- 421          /**
- 422            ******************************************************************************
- 423            * Objetivo: Activar/Desactivar el uso de la Tara.
- 424            * Parametros entrada: 
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 12:09:03 PAGE 8   
+ 383   1                                      (fWeightPlate < (-1)*(stScaleParam.fCapacityCali * 0.20))){
+ 384   1                              
+ 385   1                              // Quita los simboloes de unidad de peso y Zero 
+ 386   1                              LCD_GLASS_Clear();
+ 387   1                              LCD_GLASS_String("  PLS", LCD_PESO);                            
+ 388   1                              LCD_GLASS_String("UNLOAD", LCD_TOTAL);  
+ 389   1                              
+ 390   1      ///////////                     //Auto_Off_On_5m;
+ 391   1                      
+ 392   1                              while(1){
+ 393   1                                      IWDG_KEY_REFRESH;
+ 394   1                                      if(srFlagScale.cWait_Time_Code || srFlagScale.bScaleOn == 0){
+ 395   1                                              return 2;                               
+ 396   1                                      }
+ 397   1                              }
+ 398   1                      }
+ 399   1              }
+ 400   1              
+ 401   1              if((fWeightPlate >= (stScaleParam.fCapacityCali * 0.50)) && fWeightPlate > 0){
+ 402   1                      
+ 403   1                      // Quita los simboloes de unidad de peso y Zero 
+ 404   1                      LCD_GLASS_Clear();      
+ 405   1                      LCD_GLASS_String("HELP ", LCD_PRECIO);  
+ 406   1              
+ 407   1                      //Auto_Off_On_5m;
+ 408   1                      
+ 409   1                      while(1){
+ 410   1                              IWDG_KEY_REFRESH;
+ 411   1                              if(srFlagScale.cWait_Time_Code || srFlagScale.bScaleOn == 0){
+ 412   1                                      return 2;                               
+ 413   1                              }
+ 414   1                      }
+ 415   1                                      
+ 416   1              }else{
+ 417   1                      stScaleParam.fPointZero = fPointZero;
+ 418   1              }
+ 419   1              
+ 420   1              
+ 421   1      */
+ 422   1      return 0;
+ 423   1      }
+ 424          
+C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 13:47:27 PAGE 8   
 
- 425                  *               cActionTara -> Accion a ejecutar (ON) Activa la Tara, 
- 426            *                                                                                                                                             (OFF) Desactiva la Tara.
- 427                  * Parametros Salida: Retorna
- 428                  *               (0) Para indicar que no se proceso la orden.
- 429                  *               (1) Para indicar que se Desactivo o Activo la Tara.
- 430            * Prerequisitos: Se usan las variables globales
- 431                  *                       stScaleParam.fCapacityCali.
- 432                  *       Modifica las variables globales:
- 433                  *               stScaleParam.fPointZeroTara, stScaleParam.fPointZero.
- 434            ******************************************************************************
- 435            */
- 436          void cOnOffModeTara(float fWeightTara){
- 437   1              
- 438   1              float fAdcCountTara = 0; 
- 439   1              float fLimite_Inf = 0;
- 440   1              float fLimite_Sup = 0;
- 441   1              float fWeightZero = 0;
- 442   1              float AuxTara = 0;
- 443   1              
- 444   1              fWeightZero = fStablePoint(1, 0, 1);
- 445   1              
- 446   1              if(srFlagScale.bFlagStable == 1){
- 447   2              
- 448   2                      if(fWeightTara > 0){
- 449   3                              if(srFlagScale.bTara == 0){     
- 450   4                                      
- 451   4                                      if(stScaleParam.cUnits == UNIT_LB){
- 452   5                                              if(fCuentasToPeso(stScaleParam.fWeightScaleTara) <= stScaleParam.iCapacity){
- 453   6                                                      stScaleParam.fValueTara = stScaleParam.fWeightScaleTara;
- 454   6                                                      srFlagScale.bTara = 1;
- 455   6                                              }
- 456   5                                      }else{
- 457   5                                              if(fCuentasToPeso(stScaleParam.fWeightScaleTara) <= 9.999){
- 458   6                                                      stScaleParam.fValueTara = stScaleParam.fWeightScaleTara;
- 459   6                                                      srFlagScale.bTara = 1;
- 460   6                                              }
- 461   5                                      }
- 462   4                              }else{
- 463   4                                      if(stScaleParam.cUnits == UNIT_LB){
- 464   5                                              if(fCuentasToPeso(stScaleParam.fWeightScaleTara) <= stScaleParam.iCapacity){
- 465   6                                                      stScaleParam.fValueTara = stScaleParam.fWeightScaleTara;
- 466   6                                              }
- 467   5                                      }else{
- 468   5                                              if(fCuentasToPeso(stScaleParam.fWeightScaleTara) < 9.999){
- 469   6                                                      stScaleParam.fValueTara = stScaleParam.fWeightScaleTara;
- 470   6                                              }
- 471   5                                      }
- 472   4                              }
- 473   3                      }else if(fWeightTara < 0){
- 474   3                              
- 475   3                              if(srFlagScale.bTara){
- 476   4                                      fWeightTara *= (-1);
- 477   4                                      
- 478   4                                      if(stScaleParam.cMultirango == 1){
- 479   5                                              if(stScaleParam.fValueTara <= stScaleParam.fCapacityCali*0.2){
- 480   6                                                              AuxTara = stScaleParam.fFactorCalibrate / stScaleParam.iDivisionMinima;
- 481   6                                                              AuxTara *= stScaleParam.iDivisionMenor;
- 482   6                                                              fLimite_Inf = fCuentasToPeso(stScaleParam.fValueTara - 3*AuxTara);
- 483   6                                                              fLimite_Sup = fCuentasToPeso(stScaleParam.fValueTara + 3*AuxTara);
- 484   6                                                      }else{
- 485   6                                                              fLimite_Inf = fCuentasToPeso(stScaleParam.fValueTara - 3*stScaleParam.fFactorCalibrate);
- 486   6                                                              fLimite_Sup = fCuentasToPeso(stScaleParam.fValueTara + 3*stScaleParam.fFactorCalibrate);
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 12:09:03 PAGE 9   
+ 425          
+ 426          /**
+ 427            ******************************************************************************
+ 428            * Objetivo: Activar/Desactivar el uso de la Tara.
+ 429            * Parametros entrada: 
+ 430                  *               cActionTara -> Accion a ejecutar (ON) Activa la Tara, 
+ 431            *                                                                                                                                             (OFF) Desactiva la Tara.
+ 432                  * Parametros Salida: Retorna
+ 433                  *               (0) Para indicar que no se proceso la orden.
+ 434                  *               (1) Para indicar que se Desactivo o Activo la Tara.
+ 435            * Prerequisitos: Se usan las variables globales
+ 436                  *                       stScaleParam.fCapacityCali.
+ 437                  *       Modifica las variables globales:
+ 438                  *               stScaleParam.fPointZeroTara, stScaleParam.fPointZero.
+ 439            ******************************************************************************
+ 440            */
+ 441          void cOnOffModeTara(float fWeightTara){
+ 442   1              
+ 443   1      /*      float fAdcCountTara = 0; 
+ 444   1              float fLimite_Inf = 0;
+ 445   1              float fLimite_Sup = 0;
+ 446   1              float fWeightZero = 0;
+ 447   1              float AuxTara = 0;
+ 448   1              
+ 449   1              fWeightZero = fStablePoint(1, 0, 1);
+ 450   1              
+ 451   1              if(srFlagScale.bFlagStable == 1){
+ 452   1              
+ 453   1                      if(fWeightTara > 0){
+ 454   1                              if(srFlagScale.bTara == 0){     
+ 455   1                                      
+ 456   1                                      if(stScaleParam.cUnits == UNIT_LB){
+ 457   1                                              if(fCuentasToPeso(stScaleParam.fWeightScaleTara) <= stScaleParam.iCapacity){
+ 458   1                                                      stScaleParam.fValueTara = stScaleParam.fWeightScaleTara;
+ 459   1                                                      srFlagScale.bTara = 1;
+ 460   1                                              }
+ 461   1                                      }else{
+ 462   1                                              if(fCuentasToPeso(stScaleParam.fWeightScaleTara) <= 9.999){
+ 463   1                                                      stScaleParam.fValueTara = stScaleParam.fWeightScaleTara;
+ 464   1                                                      srFlagScale.bTara = 1;
+ 465   1                                              }
+ 466   1                                      }
+ 467   1                              }else{
+ 468   1                                      if(stScaleParam.cUnits == UNIT_LB){
+ 469   1                                              if(fCuentasToPeso(stScaleParam.fWeightScaleTara) <= stScaleParam.iCapacity){
+ 470   1                                                      stScaleParam.fValueTara = stScaleParam.fWeightScaleTara;
+ 471   1                                              }
+ 472   1                                      }else{
+ 473   1                                              if(fCuentasToPeso(stScaleParam.fWeightScaleTara) < 9.999){
+ 474   1                                                      stScaleParam.fValueTara = stScaleParam.fWeightScaleTara;
+ 475   1                                              }
+ 476   1                                      }
+ 477   1                              }
+ 478   1                      }else if(fWeightTara < 0){
+ 479   1                              
+ 480   1                              if(srFlagScale.bTara){
+ 481   1                                      fWeightTara *= (-1);
+ 482   1                                      
+ 483   1                                      if(stScaleParam.cMultirango == 1){
+ 484   1                                              if(stScaleParam.fValueTara <= stScaleParam.fCapacityCali*0.2){
+ 485   1                                                              AuxTara = stScaleParam.fFactorCalibrate / stScaleParam.iDivisionMinima;
+ 486   1                                                              AuxTara *= stScaleParam.iDivisionMenor;
+C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 13:47:27 PAGE 9   
 
- 487   6                                                      }
- 488   5                                      }else{
- 489   5                                              fLimite_Inf = fCuentasToPeso(stScaleParam.fValueTara - 3*stScaleParam.fFactorCalibrate);
- 490   5                                              fLimite_Sup = fCuentasToPeso(stScaleParam.fValueTara + 3*stScaleParam.fFactorCalibrate);
- 491   5                                      }
- 492   4                                              
- 493   4                                      if((fWeightTara >= fLimite_Inf) && (fWeightTara <= fLimite_Sup)){
- 494   5                                              LCD_GLASS_Symbols(SYMBOL_NET, 0);
- 495   5                                              stScaleParam.fValueTara = 0;
- 496   5                                              srFlagScale.bTara = 0;
- 497   5                                              stScaleParam.fPointZero = stScaleParam.fWeightScaleCount;
- 498   5                                              fFilter_Averaging(fWeightZero, 1);      /*Ingresa el dato al filtro */
- 499   5                                      }
- 500   4                              }
- 501   3                      }
- 502   2                      
- 503   2              }
- 504   1      }
- 505          
- 506          /**
- 507            ******************************************************************************
- 508            * Objetivo: Establecer el punto Zero
- 509            * Parametros entrada: Ninguno
- 510                  * Parametros Salida: Retorna
- 511            ******************************************************************************
- 512            */
- 513          void vSetZero(void){
- 514   1              float fWeightZero = 0;
- 515   1              
- 516   1              /* Verifica si el peso es estable para volver cero */
- 517   1              fWeightZero = fStablePoint(1, 0, 1);
- 518   1                      
- 519   1              if(srFlagScale.bFlagStable == 1){               
- 520   2                      stScaleParam.fPointZero = fWeightZero;
- 521   2              }
- 522   1      }
- 523          
- 524          /**
- 525            ******************************************************************************
- 526            * Objetivo: Establecer el punto Zero dinamico
- 527            * Parametros entrada: Ninguno
- 528                  * Parametros Salida: Ninguno
- 529            ******************************************************************************
- 530            */
- 531          void vGetZeroTracking(float fActualWeightScale){
- 532   1              float fValor_Limite = 0;
- 533   1              
- 534   1              
- 535   1              if(stScaleParam.cMultirango == 1){
- 536   2                      fValor_Limite = stScaleParam.fFactorCalibrate/stScaleParam.iDivisionMinima;
- 537   2                      fValor_Limite *= stScaleParam.iDivisionMenorMenor;
- 538   2              }else   
- 539   1                      fValor_Limite = stScaleParam.fFactorCalibrate;
- 540   1              
- 541   1              fValor_Limite /= 2; 
- 542   1              
- 543   1              if(fValor_Limite < 0){
- 544   2                      fValor_Limite *= (-1);
- 545   2              }
- 546   1              
- 547   1              if(fActualWeightScale > (stScaleParam.fPointZero - fValor_Limite) &&
- 548   1                      fActualWeightScale < (stScaleParam.fPointZero + fValor_Limite)){
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 12:09:03 PAGE 10  
+ 487   1                                                              fLimite_Inf = fCuentasToPeso(stScaleParam.fValueTara - 3*AuxTara);
+ 488   1                                                              fLimite_Sup = fCuentasToPeso(stScaleParam.fValueTara + 3*AuxTara);
+ 489   1                                                      }else{
+ 490   1                                                              fLimite_Inf = fCuentasToPeso(stScaleParam.fValueTara - 3*stScaleParam.fFactorCalibrate);
+ 491   1                                                              fLimite_Sup = fCuentasToPeso(stScaleParam.fValueTara + 3*stScaleParam.fFactorCalibrate);
+ 492   1                                                      }
+ 493   1                                      }else{
+ 494   1                                              fLimite_Inf = fCuentasToPeso(stScaleParam.fValueTara - 3*stScaleParam.fFactorCalibrate);
+ 495   1                                              fLimite_Sup = fCuentasToPeso(stScaleParam.fValueTara + 3*stScaleParam.fFactorCalibrate);
+ 496   1                                      }
+ 497   1                                              
+ 498   1                                      if((fWeightTara >= fLimite_Inf) && (fWeightTara <= fLimite_Sup)){
+ 499   1                                              LCD_GLASS_Symbols(SYMBOL_NET, 0);
+ 500   1                                              stScaleParam.fValueTara = 0;
+ 501   1                                              srFlagScale.bTara = 0;
+ 502   1                                              stScaleParam.fPointZero = stScaleParam.fWeightScaleCount;
+ 503   1                                              fFilter_Averaging(fWeightZero, 1);      //Ingresa el dato al filtro 
+ 504   1                                      }
+ 505   1                              }
+ 506   1                      }
+ 507   1                      
+ 508   1              }*/
+ 509   1      }
+*** WARNING C280 IN LINE 441 OF _SCALE\DVR_SCALE.C: 'fWeightTara': unreferenced local variable
+ 510          
+ 511          /**
+ 512            ******************************************************************************
+ 513            * Objetivo: Establecer el punto Zero
+ 514            * Parametros entrada: Ninguno
+ 515                  * Parametros Salida: Retorna
+ 516            ******************************************************************************
+ 517            */
+ 518          void vSetZero(void){
+ 519   1              float fWeightZero = 0;
+ 520   1              
+ 521   1              /* Verifica si el peso es estable para volver cero */
+ 522   1              fWeightZero = fStablePoint(1, 0, 1);
+ 523   1                      
+ 524   1              if(srFlagScale.bFlagStable == 1){               
+ 525   2                      stScaleParam.fPointZero = fWeightZero;
+ 526   2              }
+ 527   1      }
+ 528          
+ 529          /**
+ 530            ******************************************************************************
+ 531            * Objetivo: Establecer el punto Zero dinamico
+ 532            * Parametros entrada: Ninguno
+ 533                  * Parametros Salida: Ninguno
+ 534            ******************************************************************************
+ 535            */
+ 536          void vGetZeroTracking(float fActualWeightScale){
+ 537   1      /*      float fValor_Limite = 0;
+ 538   1              
+ 539   1              
+ 540   1              if(stScaleParam.cMultirango == 1){
+ 541   1                      fValor_Limite = stScaleParam.fFactorCalibrate/stScaleParam.iDivisionMinima;
+ 542   1                      fValor_Limite *= stScaleParam.iDivisionMenorMenor;
+ 543   1              }else   
+ 544   1                      fValor_Limite = stScaleParam.fFactorCalibrate;
+ 545   1              
+ 546   1              fValor_Limite /= 2; 
+ 547   1              
+C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 13:47:27 PAGE 10  
 
- 549   2                      
- 550   2                      iCounterZeroTracking++;
- 551   2                      if(iCounterZeroTracking >=15){
- 552   3                              stScaleParam.fPointZero = fActualWeightScale;
- 553   3                      }
- 554   2              }else{
- 555   2                      iCounterZeroTracking = 0;
- 556   2              }
- 557   1      }
- 558          
- 559          /**
- 560            ******************************************************************************
- 561            * Objetivo: Ejecutar el proceso de calibracion de la bascula 
- 562            * Parametros entrada:  
- 563                  * Parametros Salida:
- 564            * Prerequisitos: 
+ 548   1              if(fValor_Limite < 0){
+ 549   1                      fValor_Limite *= (-1);
+ 550   1              }
+ 551   1              
+ 552   1              if(fActualWeightScale > (stScaleParam.fPointZero - fValor_Limite) &&
+ 553   1                      fActualWeightScale < (stScaleParam.fPointZero + fValor_Limite)){
+ 554   1                      
+ 555   1                      iCounterZeroTracking++;
+ 556   1                      if(iCounterZeroTracking >=15){
+ 557   1                              stScaleParam.fPointZero = fActualWeightScale;
+ 558   1                      }
+ 559   1              }else{
+ 560   1                      iCounterZeroTracking = 0;
+ 561   1              }*/
+ 562   1      }
+*** WARNING C280 IN LINE 536 OF _SCALE\DVR_SCALE.C: 'fActualWeightScale': unreferenced local variable
+ 563          
+ 564          /**
  565            ******************************************************************************
- 566            */
- 567          void vCalibrate_Scale(void){
- 568   1                    float xdata fAux_Value = 0;
- 569   1                    float xdata fAuxCountAdcInicial = 0;
- 570   1                    float xdata fAuxCountAdcFinal = 0;
- 571   1                    float xdata fAuxCountDif = 0;
- 572   1                    
- 573   1                    stScaleParam.iCounter_Calibration++;  /* Aumenta el contador de calibraciones */ 
- 574   1                   // vSaveParamScale(Parameter_Calibration);                                                   
-             -                                           /*Almacena los parametros en la E2prom*/
- 575   1                                  
- 576   1                    LCD_GLASS_Clear();
- 577   1      #if DISPLAY_20400047_EN > 0
- 578   1        LCD_GLASS_String("PRESS", LCD_PESO);
- 579   1                    LCD_GLASS_String("REF 0", LCD_TOTAL);
- 580   1                    LCD_GLASS_String("C", LCD_PRECIO);
- 581   1      #else     
+ 566            * Objetivo: Ejecutar el proceso de calibracion de la bascula 
+ 567            * Parametros entrada:  
+ 568                  * Parametros Salida:
+ 569            * Prerequisitos: 
+ 570            ******************************************************************************
+ 571            */
+ 572          void vCalibrate_Scale(void){
+ 573   1                    float xdata fAux_Value = 0;
+ 574   1                    float xdata fAuxCountAdcInicial = 0;
+ 575   1                    float xdata fAuxCountAdcFinal = 0;
+ 576   1                    float xdata fAuxCountDif = 0;
+ 577   1                    
+ 578   1                    stScaleParam.iCounter_Calibration++;  /* Aumenta el contador de calibraciones */ 
+ 579   1                    vSaveParamScale(Parameter_Calibration);                                                     
+             -                                         /*Almacena los parametros en la E2prom*/
+ 580   1                                  
+ 581   1                    LCD_GLASS_Clear();
+ 582   1      #if DISPLAY_20400047_EN > 0
+ 583   1        LCD_GLASS_String("PRESS", LCD_PESO);
+ 584   1                    LCD_GLASS_String("REF 0", LCD_TOTAL);
+ 585   1                    LCD_GLASS_String("C", LCD_PRECIO);
+ 586   1      #else     
                 LCD_GLASS_String("PRESS", LCD_PRECIO);
                             LCD_GLASS_String("REF 0", LCD_PESO);
                             LCD_GLASS_String("C", LCD_TOTAL);
               #endif
- 586   1              
- 587   1                    /* Espera a que se oprima 'C' para continuar */
- 588   1                    Key=0;while(Key!= KEY_C)key_scan();
- 589   1                                Key=0;while(Key== KEY_C)key_scan();
- 590   1                    delay_ms(500);            
- 591   1      
- 592   1                    /* Solicita la referencia de zero */
- 593   1                    stScaleParam.fPointZeroCali = fStablePoint(5, 1, 0);
- 594   1                                LCD_GLASS_Float(stScaleParam.fPointZeroCali, 2, LCD_TOTAL);delay_ms(5000);
- 595   1                    
- 596   1                    fAuxCountAdcInicial = stScaleParam.fPointZeroCali;
- 597   1                                //borrar  //CCC  
- 598   1      
- 599   1                    LCD_GLASS_Clear();
- 600   1      #if DISPLAY_20400047_EN > 0
- 601   1                    LCD_GLASS_String("PRESS", LCD_PESO);
- 602   1                    LCD_GLASS_String(" LOAD", LCD_TOTAL);
- 603   1                    LCD_GLASS_String("C   ", LCD_PRECIO);
- 604   1      #else
+ 591   1              
+ 592   1                    /* Espera a que se oprima 'C' para continuar */
+ 593   1                    Key=0;while(Key!= KEY_C)key_scan();
+ 594   1                                Key=0;while(Key== KEY_C)key_scan();
+ 595   1                    delay_ms(500);            
+ 596   1      
+ 597   1                    /* Solicita la referencia de zero */
+ 598   1                    stScaleParam.fPointZeroCali = fStablePoint(5, 1, 0);
+ 599   1                                LCD_GLASS_Float(stScaleParam.fPointZeroCali, 2, LCD_TOTAL);delay_ms(5000);
+ 600   1                    
+ 601   1                    fAuxCountAdcInicial = stScaleParam.fPointZeroCali;
+ 602   1                                //borrar  //CCC  
+ 603   1      
+ 604   1                    LCD_GLASS_Clear();
+ 605   1      #if DISPLAY_20400047_EN > 0
+ 606   1                    LCD_GLASS_String("PRESS", LCD_PESO);
+ 607   1                    LCD_GLASS_String(" LOAD", LCD_TOTAL);
+C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 13:47:27 PAGE 11  
+
+ 608   1                    LCD_GLASS_String("C   ", LCD_PRECIO);
+ 609   1      #else
                             LCD_GLASS_String("PRESS", LCD_PRECIO);
                             LCD_GLASS_String(" LOAD", LCD_PESO);
                             LCD_GLASS_String("C     ", LCD_TOTAL);
               #endif
- 609   1      
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 12:09:03 PAGE 11  
-
- 610   1       /* Espera a que se oprima 'C' para continuar */
- 611   1                    Key=0;while(Key!= KEY_C)key_scan();
- 612   1      
- 613   1                    stScaleParam.fCapacityCali = fStablePoint(5, 1, 0);
- 614   1                                LCD_GLASS_Float(stScaleParam.fCapacityCali, 2, LCD_TOTAL);delay_ms(5000);
- 615   1                   
- 616   1                    
- 617   1                    fAuxCountAdcFinal = stScaleParam.fCapacityCali;
- 618   1                    
- 619   1                    fAuxCountDif = (fAuxCountAdcFinal - fAuxCountAdcInicial);
- 620   1                    fAuxCountDif    *= (100/stScaleParam.iLoadPorcRefer);
+ 614   1      
+ 615   1       /* Espera a que se oprima 'C' para continuar */
+ 616   1                    Key=0;while(Key!= KEY_C)key_scan();
+ 617   1      
+ 618   1                    stScaleParam.fCapacityCali = fStablePoint(5, 1, 0);
+ 619   1                                LCD_GLASS_Float(stScaleParam.fCapacityCali, 2, LCD_TOTAL);delay_ms(5000);
+ 620   1                   
  621   1                    
- 622   1                    stScaleParam.fCapacityCali -= stScaleParam.fPointZeroCali;
- 623   1                    stScaleParam.fCapacityCali *= (100/stScaleParam.iLoadPorcRefer);
- 624   1                    
- 625   1                    stScaleParam.fFactorCalibrate = (float)(stScaleParam.fCapacityCali);
- 626   1                    fAux_Value = (float)(stScaleParam.iCapacity);
- 627   1                    fAux_Value *= pow(10,(int)stScaleParam.cWeightDecimal);
- 628   1                    fAux_Value = (float)(fAux_Value)/(float)(stScaleParam.iDivisionMinima);
- 629   1                    stScaleParam.fFactorCalibrate /= fAux_Value;
- 630   1                    
- 631   1                    if(stScaleParam.fCapacityCali < 0){
- 632   2                                  stScaleParam.fCapacityCali *= (-1);
- 633   2                    }
- 634   1      
- 635   1                    LCD_GLASS_Clear();     
- 636   1      #if DISPLAY_20400047_EN > 0
- 637   1                    LCD_GLASS_String("FACTO", LCD_PESO);
- 638   1                                LCD_GLASS_Float(stScaleParam.fFactorCalibrate, 2, LCD_TOTAL);
- 639   1                                LCD_GLASS_String("R", LCD_TOTAL);
- 640   1                    LCD_GLASS_Dot(2, LCD_TOTAL, 1);
- 641   1                    LCD_GLASS_String("  END", LCD_PRECIO);          
- 642   1      #else
+ 622   1                    fAuxCountAdcFinal = stScaleParam.fCapacityCali;
+ 623   1                    
+ 624   1                    fAuxCountDif = (fAuxCountAdcFinal - fAuxCountAdcInicial);
+ 625   1                    fAuxCountDif    *= (100/stScaleParam.iLoadPorcRefer);
+ 626   1                    
+ 627   1                    stScaleParam.fCapacityCali -= stScaleParam.fPointZeroCali;
+ 628   1                    stScaleParam.fCapacityCali *= (100/stScaleParam.iLoadPorcRefer);
+ 629   1                    
+ 630   1                    stScaleParam.fFactorCalibrate = (float)(stScaleParam.fCapacityCali);
+ 631   1                    fAux_Value = (float)(stScaleParam.iCapacity);
+ 632   1                    fAux_Value *= pow(10,(int)stScaleParam.cWeightDecimal);
+ 633   1                    fAux_Value = (float)(fAux_Value)/(float)(stScaleParam.iDivisionMinima);
+ 634   1                    stScaleParam.fFactorCalibrate /= fAux_Value;
+ 635   1                    
+ 636   1                    if(stScaleParam.fCapacityCali < 0){
+ 637   2                                  stScaleParam.fCapacityCali *= (-1);
+ 638   2                    }
+ 639   1      
+ 640   1                    LCD_GLASS_Clear();     
+ 641   1      #if DISPLAY_20400047_EN > 0
+ 642   1                    LCD_GLASS_String("FACTO", LCD_PESO);
+ 643   1                                LCD_GLASS_Float(stScaleParam.fFactorCalibrate, 2, LCD_TOTAL);
+ 644   1                                LCD_GLASS_String("R", LCD_TOTAL);
+ 645   1                    LCD_GLASS_Dot(2, LCD_TOTAL, 1);
+ 646   1                    LCD_GLASS_String("  END", LCD_PRECIO);          
+ 647   1      #else
                             LCD_GLASS_String("  END", LCD_PESO);
                             LCD_GLASS_Float(stScaleParam.fFactorCalibrate, 2, LCD_TOTAL);     
                                         LCD_GLASS_String("R", LCD_TOTAL);
                             LCD_GLASS_Dot(2, LCD_TOTAL, 1);
                             LCD_GLASS_String("FACTO", LCD_PRECIO);
               #endif
- 649   1      
- 650   1      
- 651   1      
- 652   1      
- 653   1      ////////////////////////////////////////////////////////////////////////////              
- 654   1                    /*Almacena los parametros en la E2prom*/       
- 655   1                    vSaveParamScale(Parameter_Calibration);                                        
- 656   1                    
- 657   1      ///////////CCCCC/////////////CCCCC/////////////CCCCC/////////////CCCCC/////////////CCCCC//              vS
+ 654   1      
+ 655   1      
+ 656   1      
+ 657   1      
+ 658   1      ////////////////////////////////////////////////////////////////////////////              
+ 659   1                    /*Almacena los parametros en la E2prom*/       
+ 660   1                    vSaveParamScale(Parameter_Calibration);                                        
+ 661   1                    
+ 662   1      ///////////CCCCC/////////////CCCCC/////////////CCCCC/////////////CCCCC/////////////CCCCC//              vS
              -et_Volts_System();    
- 658   1                    vSaveParamScale(Parameter_Voltages);
- 659   1                    
- 660   1      ///////////CCCCC//BORRAR DE LA ESTRUCTURA ///////////////////////////////////           stScaleParam.fTemp
+ 663   1                    vSaveParamScale(Parameter_Voltages);
+ 664   1                    
+ 665   1      ///////////CCCCC//BORRAR DE LA ESTRUCTURA ///////////////////////////////////           stScaleParam.fTemp
              -erature = fGet_Temp_Amb_Micro();
- 661   1      //              vSaveParamScale(Parameter_Temperature);
- 662   1      
- 663   1          vSound_Saved_Param();
- 664   1                    vSound_Saved_Param();
- 665   1                    
- 666   1                    //strTimer.cFLag_TimerE_Start = 1;
- 667   1                   // strTimer.cFLag_TimerE_End = 0;
- 668   1                    
- 669   1                    //while(!strTimer.cFLag_TimerE_End)key_scan();
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 12:09:03 PAGE 12  
+ 666   1      //              vSaveParamScale(Parameter_Temperature);
+ 667   1      
+C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 13:47:27 PAGE 12  
 
- 670   1                                delay_ms(5000);
- 671   1      
- 672   1                                //Key=0;while(Key!= KEY_C)key_scan();
+ 668   1          vSound_Saved_Param();
+ 669   1                    vSound_Saved_Param();
+ 670   1                    
+ 671   1                    //strTimer.cFLag_TimerE_Start = 1;
+ 672   1                   // strTimer.cFLag_TimerE_End = 0;
  673   1                    
- 674   1                    LCD_GLASS_Clear();
- 675   1      }
- 676          
- 677          
- 678          /**
- 679            ******************************************************************************
- 680            * Objetivo: Configurar valores por default.
- 681            * Parametros entrada:  
- 682                  * Parametros Salida:
- 683            * Prerequisitos: 
+ 674   1                    //while(!strTimer.cFLag_TimerE_End)key_scan();
+ 675   1                                delay_ms(5000);
+ 676   1      
+ 677   1                                //Key=0;while(Key!= KEY_C)key_scan();
+ 678   1                    
+ 679   1                    LCD_GLASS_Clear();
+ 680   1      }
+ 681          
+ 682          
+ 683          /**
  684            ******************************************************************************
- 685            */
- 686          void vPreConfiguration(unsigned char cPreConfiguration){
- 687   1              
- 688   1      //      enum    digi_key Value_Key_Press;
- 689   1              unsigned char cIndex = 0;
- 690   1              
- 691   1      //      strTimer.cFLag_TimerD_Start = 1;
+ 685            * Objetivo: Configurar valores por default.
+ 686            * Parametros entrada:  
+ 687                  * Parametros Salida:
+ 688            * Prerequisitos: 
+ 689            ******************************************************************************
+ 690            */
+ 691          void vPreConfiguration(unsigned char cPreConfiguration){
  692   1              
- 693   1              LCD_GLASS_Clear();
- 694   1              
- 695   1              stScaleParam.cMultirango = 1;
- 696   1              stScaleParam.cLenguage = ESPANOL;
+ 693   1      //      enum    digi_key Value_Key_Press;
+ 694   1              unsigned char cIndex = 0;
+ 695   1              
+ 696   1      //      strTimer.cFLag_TimerD_Start = 1;
  697   1              
- 698   1              if(cPreConfiguration == PreConfig15KG){
- 699   2                      stScaleParam.iCapacity = 15;
- 700   2                      stScaleParam.iDivisionMinima = 5;
- 701   2                      stScaleParam.iDivisionMenor = 2;
- 702   2                      stScaleParam.iDivisionMenorMenor = 1;
- 703   2                      stScaleParam.cWeightDecimal = 3;
- 704   2                      stScaleParam.cUnits = UNIT_KG;
- 705   2                      LCD_GLASS_Symbols(SYMBOL_KG, 1);
- 706   2                      stScaleParam.cMoneda = MONEDA_PESOS;
- 707   2              }else if(cPreConfiguration == PreConfig20KG){
- 708   2                      stScaleParam.iCapacity = 20;
- 709   2                      stScaleParam.iDivisionMinima = 5;
- 710   2                      stScaleParam.iDivisionMenor = 2;
- 711   2                      stScaleParam.iDivisionMenorMenor = 1;
- 712   2                      stScaleParam.cWeightDecimal = 3;
- 713   2                      stScaleParam.cUnits = UNIT_KG;
- 714   2                      LCD_GLASS_Symbols(SYMBOL_KG, 1);
- 715   2                      stScaleParam.cMoneda = MONEDA_PESOS;
- 716   2              }else if(cPreConfiguration == PreConfig30KG){
- 717   2                      stScaleParam.iCapacity = 30;
- 718   2                      stScaleParam.iDivisionMinima = 10;
- 719   2                      stScaleParam.iDivisionMenor = 5;
- 720   2                      stScaleParam.iDivisionMenorMenor = 2;
- 721   2                      stScaleParam.cWeightDecimal = 3;
- 722   2                      stScaleParam.cUnits = UNIT_KG;
- 723   2                      LCD_GLASS_Symbols(SYMBOL_KG, 1);
- 724   2                      stScaleParam.cMoneda = MONEDA_PESOS;
- 725   2              }else if(cPreConfiguration == PreConfig31KG){
- 726   2                      stScaleParam.iCapacity = 30;
- 727   2                      stScaleParam.iDivisionMinima = 5;
- 728   2                      stScaleParam.iDivisionMenor = 2;
- 729   2                      stScaleParam.iDivisionMenorMenor = 1;
- 730   2                      stScaleParam.cWeightDecimal = 3;
- 731   2                      stScaleParam.cUnits = UNIT_KG;
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 12:09:03 PAGE 13  
+ 698   1              LCD_GLASS_Clear();
+ 699   1              
+ 700   1              stScaleParam.cMultirango = 1;
+ 701   1              stScaleParam.cLenguage = ESPANOL;
+ 702   1              
+ 703   1              if(cPreConfiguration == PreConfig15KG){
+ 704   2                      stScaleParam.iCapacity = 15;
+ 705   2                      stScaleParam.iDivisionMinima = 5;
+ 706   2                      stScaleParam.iDivisionMenor = 2;
+ 707   2                      stScaleParam.iDivisionMenorMenor = 1;
+ 708   2                      stScaleParam.cWeightDecimal = 3;
+ 709   2                      stScaleParam.cUnits = UNIT_KG;
+ 710   2                      LCD_GLASS_Symbols(SYMBOL_KG, 1);
+ 711   2                      stScaleParam.cMoneda = MONEDA_PESOS;
+ 712   2              }else if(cPreConfiguration == PreConfig20KG){
+ 713   2                      stScaleParam.iCapacity = 20;
+ 714   2                      stScaleParam.iDivisionMinima = 5;
+ 715   2                      stScaleParam.iDivisionMenor = 2;
+ 716   2                      stScaleParam.iDivisionMenorMenor = 1;
+ 717   2                      stScaleParam.cWeightDecimal = 3;
+ 718   2                      stScaleParam.cUnits = UNIT_KG;
+ 719   2                      LCD_GLASS_Symbols(SYMBOL_KG, 1);
+ 720   2                      stScaleParam.cMoneda = MONEDA_PESOS;
+ 721   2              }else if(cPreConfiguration == PreConfig30KG){
+ 722   2                      stScaleParam.iCapacity = 30;
+ 723   2                      stScaleParam.iDivisionMinima = 10;
+ 724   2                      stScaleParam.iDivisionMenor = 5;
+ 725   2                      stScaleParam.iDivisionMenorMenor = 2;
+ 726   2                      stScaleParam.cWeightDecimal = 3;
+ 727   2                      stScaleParam.cUnits = UNIT_KG;
+ 728   2                      LCD_GLASS_Symbols(SYMBOL_KG, 1);
+ 729   2                      stScaleParam.cMoneda = MONEDA_PESOS;
+C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 13:47:27 PAGE 13  
 
- 732   2                      LCD_GLASS_Symbols(SYMBOL_KG, 1);
- 733   2                      stScaleParam.cMoneda = MONEDA_PESOS;            
- 734   2              }else if(cPreConfiguration == PreConfig32KG){
- 735   2                      stScaleParam.iCapacity = 30;
- 736   2                      stScaleParam.iDivisionMinima = 2;
- 737   2                      stScaleParam.iDivisionMenor = 2;
- 738   2                      stScaleParam.iDivisionMenorMenor = 2;
- 739   2                      stScaleParam.cMultirango = 0;
- 740   2                      stScaleParam.cWeightDecimal = 3;
- 741   2                      stScaleParam.cUnits = UNIT_KG;
- 742   2                      LCD_GLASS_Symbols(SYMBOL_KG, 1);
- 743   2                      stScaleParam.cMoneda = MONEDA_PESOS;            
- 744   2              }else if(cPreConfiguration == PreConfig40KG){
- 745   2                      stScaleParam.iCapacity = 40;
- 746   2                      stScaleParam.iDivisionMinima = 10;
- 747   2                      stScaleParam.iDivisionMenor = 5;
- 748   2                      stScaleParam.iDivisionMenorMenor = 2;
- 749   2                      stScaleParam.cWeightDecimal = 3;
- 750   2                      stScaleParam.cUnits = UNIT_KG;
- 751   2                      LCD_GLASS_Symbols(SYMBOL_KG, 1);
- 752   2                      stScaleParam.cMoneda = MONEDA_PESOS;
- 753   2              }else if(cPreConfiguration == PreConfig60LB){
- 754   2                      stScaleParam.iCapacity = 60;
- 755   2                      stScaleParam.iDivisionMinima = 2;
- 756   2                      stScaleParam.cWeightDecimal = 2;
- 757   2                      stScaleParam.cUnits = UNIT_LB;
- 758   2                      stScaleParam.cLenguage = ENGLISH;
- 759   2                      LCD_GLASS_Symbols(SYMBOL_LB, 1);
- 760   2                      stScaleParam.cMoneda = MONEDA_DLLS;
- 761   2                      stScaleParam.cMultirango = 0;
- 762   2              }
- 763   1              
- 764   1              LCD_GLASS_Float(stScaleParam.iCapacity, stScaleParam.cWeightDecimal, LCD_PESO);
- 765   1              
- 766   1              stScaleParam.iLoadPorcRefer = 100;
- 767   1              stScaleParam.cPuntoDecimalTotal = 2;
- 768   1              stScaleParam.cRedondeoCifraTotal = 1;
- 769   1              stScaleParam.cPuntoDecimalPrecio = 3;
- 770   1              stScaleParam.cValorcRedondeoCifraVentaTotal = 0;
- 771   1              stScaleParam.cZeroTracking = 1;
- 772   1              stScaleParam.cMsgUnload = 1;
- 773   1              stScaleParam.cTimeAutooff = 1;
- 774   1              stScaleParam.cShowHighBat = 1;
- 775   1              stScaleParam.cModeIncDiv = 0;
- 776   1              stScaleParam.cCountRange = 5;
- 777   1              stScaleParam.iCountOverload = 0;                
- 778   1              stScaleParam.fValueOverload = 0;
- 779   1              stScaleParam.cSaveBattery       = 0;
- 780   1        stScaleParam.cFormatoImpresion = 2; 
- 781   1              stScaleParam.cTypeBeeper = 0;
- 782   1              
- 783   1              stScaleParam.fVoltage_Batt = 0;
- 784   1              stScaleParam.fVoltage_Adap = 0;
- 785   1              
- 786   1              stScaleParam.fCapacityCali = 0;
- 787   1              stScaleParam.fPointZeroCali = 0;
- 788   1              stScaleParam.fFactorCalibrate = 0;
- 789   1              srFlagScale.bShowErroBat = 1;
- 790   1      
- 791   1              
- 792   1              stScaleParam.fVenta_Total_Scale = 0;
- 793   1              stScaleParam.iCounter_Calibration = 0;
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 12:09:03 PAGE 14  
+ 730   2              }else if(cPreConfiguration == PreConfig31KG){
+ 731   2                      stScaleParam.iCapacity = 30;
+ 732   2                      stScaleParam.iDivisionMinima = 5;
+ 733   2                      stScaleParam.iDivisionMenor = 2;
+ 734   2                      stScaleParam.iDivisionMenorMenor = 1;
+ 735   2                      stScaleParam.cWeightDecimal = 3;
+ 736   2                      stScaleParam.cUnits = UNIT_KG;
+ 737   2                      LCD_GLASS_Symbols(SYMBOL_KG, 1);
+ 738   2                      stScaleParam.cMoneda = MONEDA_PESOS;            
+ 739   2              }else if(cPreConfiguration == PreConfig32KG){
+ 740   2                      stScaleParam.iCapacity = 30;
+ 741   2                      stScaleParam.iDivisionMinima = 2;
+ 742   2                      stScaleParam.iDivisionMenor = 2;
+ 743   2                      stScaleParam.iDivisionMenorMenor = 2;
+ 744   2                      stScaleParam.cMultirango = 0;
+ 745   2                      stScaleParam.cWeightDecimal = 3;
+ 746   2                      stScaleParam.cUnits = UNIT_KG;
+ 747   2                      LCD_GLASS_Symbols(SYMBOL_KG, 1);
+ 748   2                      stScaleParam.cMoneda = MONEDA_PESOS;            
+ 749   2              }else if(cPreConfiguration == PreConfig40KG){
+ 750   2                      stScaleParam.iCapacity = 40;
+ 751   2                      stScaleParam.iDivisionMinima = 10;
+ 752   2                      stScaleParam.iDivisionMenor = 5;
+ 753   2                      stScaleParam.iDivisionMenorMenor = 2;
+ 754   2                      stScaleParam.cWeightDecimal = 3;
+ 755   2                      stScaleParam.cUnits = UNIT_KG;
+ 756   2                      LCD_GLASS_Symbols(SYMBOL_KG, 1);
+ 757   2                      stScaleParam.cMoneda = MONEDA_PESOS;
+ 758   2              }else if(cPreConfiguration == PreConfig60LB){
+ 759   2                      stScaleParam.iCapacity = 60;
+ 760   2                      stScaleParam.iDivisionMinima = 2;
+ 761   2                      stScaleParam.cWeightDecimal = 2;
+ 762   2                      stScaleParam.cUnits = UNIT_LB;
+ 763   2                      stScaleParam.cLenguage = ENGLISH;
+ 764   2                      LCD_GLASS_Symbols(SYMBOL_LB, 1);
+ 765   2                      stScaleParam.cMoneda = MONEDA_DLLS;
+ 766   2                      stScaleParam.cMultirango = 0;
+ 767   2              }
+ 768   1              
+ 769   1              LCD_GLASS_Float(stScaleParam.iCapacity, stScaleParam.cWeightDecimal, LCD_PESO);
+ 770   1              
+ 771   1              stScaleParam.iLoadPorcRefer = 100;
+ 772   1              stScaleParam.cPuntoDecimalTotal = 2;
+ 773   1              stScaleParam.cRedondeoCifraTotal = 1;
+ 774   1              stScaleParam.cPuntoDecimalPrecio = 3;
+ 775   1              stScaleParam.cValorcRedondeoCifraVentaTotal = 0;
+ 776   1              stScaleParam.cZeroTracking = 1;
+ 777   1              stScaleParam.cMsgUnload = 1;
+ 778   1              stScaleParam.cTimeAutooff = 1;
+ 779   1              stScaleParam.cShowHighBat = 1;
+ 780   1              stScaleParam.cModeIncDiv = 0;
+ 781   1              stScaleParam.cCountRange = 5;
+ 782   1              stScaleParam.iCountOverload = 0;                
+ 783   1              stScaleParam.fValueOverload = 0;
+ 784   1              stScaleParam.cSaveBattery       = 0;
+ 785   1        stScaleParam.cFormatoImpresion = 2; 
+ 786   1              stScaleParam.cTypeBeeper = 0;
+ 787   1              
+ 788   1              stScaleParam.fVoltage_Batt = 0;
+ 789   1              stScaleParam.fVoltage_Adap = 0;
+ 790   1              
+ 791   1              stScaleParam.fCapacityCali = 0;
+C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 13:47:27 PAGE 14  
 
- 794   1              stScaleParam.iCounter_Configuration = 0;
+ 792   1              stScaleParam.fPointZeroCali = 0;
+ 793   1              stScaleParam.fFactorCalibrate = 0;
+ 794   1              srFlagScale.bShowErroBat = 1;
  795   1      
- 796   1      //      strTimer.cFLag_TimerE_Start = 1;
- 797   1              strTimer.iTimerE=1;
- 798   1              
- 799   1              //Value_Key_Press = vActionKey();
- 800   1              Key_scan();
-*** WARNING C206 IN LINE 800 OF _SCALE\DVR_SCALE.C: 'Key_scan': missing function-prototype
- 801   1              
- 802   1              /* Espera a que se oprima la tecla 'MEM' o que pase el tiempo de 5 seg  */
- 803   1              while((Key != KEY_MEM) && strTimer.iTimerE < TimerEend){
- 804   2                      Key_scan();//Value_Key_Press = vActionKey();
- 805   2              }       
- 806   1              
- 807   1              if(strTimer.iTimerE >= TimerEend){
- 808   2                      LCD_GLASS_Clear();
- 809   2                      return;
- 810   2              }
- 811   1              
- 812   1      
- 813   1      //              vSaveParamScale(Parameter_Temperature);
- 814   1                      vSaveParamScale(Parameter_Voltages);
- 815   1                      vSaveParamScale(Parameter_Configuration);
- 816   1                      vSaveParamScale(Parameter_Calibration);
- 817   1                      vSaveParamScale(Parameter_Register);
- 818   1                      
- 819   1                      LCD_GLASS_String("SAVED", LCD_PRECIO);
- 820   1                      vSound_Saved_Param();
- 821   1                      vSound_Saved_Param();
- 822   1                      
- 823   1      
- 824   1                      Key_scan();
- 825   1                      
- 826   1                      /* Espera a que se oprima la tecla 'MEM' o que pase el tiempo de 5 seg  */
- 827   1                      while((Key != KEY_MEM) && strTimer.iTimerE < TimerEend){
- 828   2                              IWDG_KEY_REFRESH;
- 829   2                              Key_scan();//Value_Key_Press = vActionKey();
- 830   2                              
- 831   2                              if(srFlagScale.bScaleOn == 0){
- 832   3                                      return;
- 833   3                              }
- 834   2                      }
- 835   1                      
- 836   1                      if(Key == KEY_MEM){
- 837   2                      ;
- 838   2      //////////DESCOMENTAR////////////////////////////////////77///////////////////////                      vSpecial_Action(Funci
-             -on_Especial);
- 839   2                      }
- 840   1              
- 841   1              
- 842   1              LCD_GLASS_Clear();
- 843   1              LCD_GLASS_String("  OFF", LCD_PRECIO);
- 844   1      
- 845   1      
- 846   1              strTimer.iTimerE=1;     
- 847   1              /* Espera a que se oprima la tecla 'MEM' o que pase el tiempo de 5 seg  */
- 848   1              while(strTimer.iTimerE < TimerEend){
- 849   2                      Key_scan();//Value_Key_Press = vActionKey();
- 850   2              }       
- 851   1                                      
- 852   1              return;
- 853   1      }
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 12:09:03 PAGE 15  
+ 796   1              
+ 797   1              stScaleParam.fVenta_Total_Scale = 0;
+ 798   1              stScaleParam.iCounter_Calibration = 0;
+ 799   1              stScaleParam.iCounter_Configuration = 0;
+ 800   1      
+ 801   1              strTimer.iTimerE=1;
+ 802   1              Key_scan();
+*** WARNING C206 IN LINE 802 OF _SCALE\DVR_SCALE.C: 'Key_scan': missing function-prototype
+ 803   1              
+ 804   1              /* Espera a que se oprima la tecla 'MEM' o que pase el tiempo de 5 seg  */
+ 805   1              while((Key != KEY_MEM) && strTimer.iTimerE < TimerEend){
+ 806   2                      Key_scan();//Value_Key_Press = vActionKey();
+ 807   2              }       
+ 808   1              
+ 809   1              if(strTimer.iTimerE >= TimerEend){
+ 810   2                      LCD_GLASS_Clear();
+ 811   2                      return;
+ 812   2              }
+ 813   1              
+ 814   1      
+ 815   1      //              vSaveParamScale(Parameter_Temperature);
+ 816   1                      vSaveParamScale(Parameter_Voltages);
+ 817   1                      vSaveParamScale(Parameter_Configuration);
+ 818   1                      vSaveParamScale(Parameter_Calibration);
+ 819   1                      vSaveParamScale(Parameter_Register);
+ 820   1                      
+ 821   1                      LCD_GLASS_String("SAVED", LCD_PRECIO);
+ 822   1                      vSound_Saved_Param();
+ 823   1                      vSound_Saved_Param();
+ 824   1                      
+ 825   1      
+ 826   1                      Key_scan();
+ 827   1                      
+ 828   1                      /* Espera a que se oprima la tecla 'MEM' o que pase el tiempo de 5 seg  */
+ 829   1                      while((Key != KEY_MEM) && strTimer.iTimerE < TimerEend)
+ 830   1                              Key_scan();//Value_Key_Press = vActionKey();
+ 831   1                              
+ 832   1      
+ 833   1                      
+ 834   1                      
+ 835   1                      if(Key == KEY_MEM){
+ 836   2              //      vSpecial_Action(Funcion_Especial);
+ 837   2                      }
+ 838   1              
+ 839   1              
+ 840   1              LCD_GLASS_Clear();
+ 841   1              LCD_GLASS_String("  OFF", LCD_PRECIO);
+ 842   1      
+ 843   1      
+ 844   1              strTimer.iTimerE=1;     
+ 845   1              /* Espera a que se oprima la tecla 'MEM' o que pase el tiempo de 5 seg  */
+ 846   1              while(strTimer.iTimerE < TimerEend){
+ 847   2                      Key_scan();//Value_Key_Press = vActionKey();
+ 848   2              }       
+ 849   1                                      
+ 850   1              return;
+ 851   1      }
+ 852          
+C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 13:47:27 PAGE 15  
 
- 854          
- 855          
- 856          /**
- 857            ******************************************************************************
- 858            * Objetivo: Calcular peso y registrar precio del producto 
- 859            * Parametros entrada:
- 860                  * Parametros Salida:
- 861            * Prerequisitos: 
- 862            ***
- 863                  */
- 864          unsigned char cRun_Scale(unsigned char bEnableKeys){
- 865   1              
- 866   1      //      enum    digi_key Value_Key_Press;
- 867   1              
- 868   1              /* Lee teclado y ejecuta las acciones correspondientes */
- 869   1              if(bEnableKeys == 1){
- 870   2                      vScan_Key();
- 871   2              }
- 872   1                      
- 873   1              if(srFlagScale.cAuto_Off_Time == 1 && stScaleParam.cTimeAutooff == 1){
- 874   2                      srFlagScale.bScaleOn = 0;
- 875   2                      return 0;
- 876   2              }
- 877   1              
- 878   1      ///////////////CCC//////////////////////7777777 vGestorBateria();
- 879   1              
- 880   1              if(srFlagScale.bMsgBatteryLow == 1){
- 881   2                      return 0;
- 882   2              }
- 883   1      
- 884   1              if(srFlagScale.bOverLoad ==0){
- 885   2                      if(srFlagScale.bSourceVoltage ==  SOURCE_ADAPTER){
- 886   3                              LCD_GLASS_Symbols(SYMBOL_Y, 1);
- 887   3                      }else{
- 888   3                              LCD_GLASS_Symbols(SYMBOL_Y, 0);
- 889   3                      }
- 890   2              }
- 891   1                                      
- 892   1              srFlagScale.bFlagWeightNeg = 0;                 /* Clarea indicador de peso negativo */
- 893   1      
- 894   1      ///////////7CCCCCC //CCC        //CCC vCalculate_Weight();
- 895   1      
- 896   1              if(srFlagScale.bErrorResponseAdc == 1 || srFlagScale.bErrorReadAdc == 1){               
- 897   2                      LCD_GLASS_String("-----", LCD_PESO);
- 898   2                      LCD_GLASS_String("    -", LCD_PRECIO);
- 899   2                      LCD_GLASS_String("     -", LCD_TOTAL);
- 900   2                      LCD_GLASS_Symbols(SYMBOL_ALL, 0);               
- 901   2                      return 0;
- 902   2              }
- 903   1              
- 904   1                      if(srFlagScale.bErrorNoiseAdc == 1){            
- 905   2                      LCD_GLASS_String("-----", LCD_PESO);
- 906   2                      LCD_GLASS_String("  ---", LCD_PRECIO);
- 907   2                      LCD_GLASS_String("   ---", LCD_TOTAL);
- 908   2                      LCD_GLASS_Symbols(SYMBOL_ALL, 0);               
- 909   2                      return 0;
- 910   2              }
- 911   1              
- 912   1              if(srFlagScale.bOverLoad ==0){
- 913   2                      
- 914   2                      if(srFlagScale.bActiveSaveBattery == 1 && stScaleParam.cZeroTracking == 1 && 
- 915   2                              fWeightScale == 0 && stScaleParam.cSaveBattery == 1 &&
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 12:09:03 PAGE 16  
+ 853          
+ 854          /**
+ 855            ******************************************************************************
+ 856            * Objetivo: Calcular peso y registrar precio del producto 
+ 857            * Parametros entrada:
+ 858                  * Parametros Salida:
+ 859            * Prerequisitos: 
+ 860            ***
+ 861                  */
+ 862          unsigned char cRun_Scale(unsigned char bEnableKeys){
+ 863   1              
+ 864   1      /*
+ 865   1      //      enum    digi_key Value_Key_Press;
+ 866   1              
+ 867   1              // Lee teclado y ejecuta las acciones correspondientes 
+ 868   1              if(bEnableKeys == 1){
+ 869   1                      vScan_Key();
+ 870   1              }
+ 871   1                      
+ 872   1              if(srFlagScale.cAuto_Off_Time == 1 && stScaleParam.cTimeAutooff == 1){
+ 873   1                      srFlagScale.bScaleOn = 0;
+ 874   1                      return 0;
+ 875   1              }
+ 876   1              
+ 877   1      ///////////////CCC//////////////////////7777777 vGestorBateria();
+ 878   1              
+ 879   1              if(srFlagScale.bMsgBatteryLow == 1){
+ 880   1                      return 0;
+ 881   1              }
+ 882   1      
+ 883   1              if(srFlagScale.bOverLoad ==0){
+ 884   1                      if(srFlagScale.bSourceVoltage ==  SOURCE_ADAPTER){
+ 885   1                              LCD_GLASS_Symbols(SYMBOL_Y, 1);
+ 886   1                      }else{
+ 887   1                              LCD_GLASS_Symbols(SYMBOL_Y, 0);
+ 888   1                      }
+ 889   1              }
+ 890   1                                      
+ 891   1              srFlagScale.bFlagWeightNeg = 0;                 // Clarea indicador de peso negativo 
+ 892   1      
+ 893   1      ///////////7CCCCCC //CCC        //CCC vCalculate_Weight();
+ 894   1      
+ 895   1              if(srFlagScale.bErrorResponseAdc == 1 || srFlagScale.bErrorReadAdc == 1){               
+ 896   1                      LCD_GLASS_String("-----", LCD_PESO);
+ 897   1                      LCD_GLASS_String("    -", LCD_PRECIO);
+ 898   1                      LCD_GLASS_String("     -", LCD_TOTAL);
+ 899   1                      LCD_GLASS_Symbols(SYMBOL_ALL, 0);               
+ 900   1                      return 0;
+ 901   1              }
+ 902   1              
+ 903   1                      if(srFlagScale.bErrorNoiseAdc == 1){            
+ 904   1                      LCD_GLASS_String("-----", LCD_PESO);
+ 905   1                      LCD_GLASS_String("  ---", LCD_PRECIO);
+ 906   1                      LCD_GLASS_String("   ---", LCD_TOTAL);
+ 907   1                      LCD_GLASS_Symbols(SYMBOL_ALL, 0);               
+ 908   1                      return 0;
+ 909   1              }
+ 910   1              
+ 911   1              if(srFlagScale.bOverLoad ==0){
+ 912   1                      
+ 913   1                      if(srFlagScale.bActiveSaveBattery == 1 && stScaleParam.cZeroTracking == 1 && 
+ 914   1                              fWeightScale == 0 && stScaleParam.cSaveBattery == 1 &&
+C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 13:47:27 PAGE 16  
 
- 916   2                                      srFlagScale.bSourceVoltage !=  SOURCE_ADAPTER && srFlagScale.bTara == 0){
- 917   3                              fSleep_Run();
- 918   3                              
- 919   3                              //CCC vCalculate_Weight();
- 920   3                              
- 921   3                              if(srFlagScale.bScaleOn == 0){
- 922   4                                      return 0;
- 923   4                              }
- 924   3                      }
- 925   2                      
- 926   2                      // Verifica si esta la opcion fijar precio para mostrar indicador
- 927   2                      if(srFlagScale.bFlagFijarPRecio){
- 928   3                              LCD_GLASS_Symbols(SYMBOL_X, 1);
- 929   3                      }else{
- 930   3                              LCD_GLASS_Symbols(SYMBOL_X, 0);
- 931   3                      }
- 932   2                      
- 933   2                      // Verfica el tipo de unidades a mostrar
- 934   2                      if(stScaleParam.cUnits == UNIT_KG){
- 935   3                              LCD_GLASS_Symbols(SYMBOL_KG, 1);
- 936   3                      }else if(stScaleParam.cUnits == UNIT_LB){
- 937   3                              LCD_GLASS_Symbols(SYMBOL_LB, 1);
- 938   3                      }
- 939   2                      
- 940   2                      if(fWeightScale > -0.0005 && fWeightScale < 0.0005){
- 941   3                              LCD_GLASS_Symbols(SYMBOL_ZERO, 1);
- 942   3                      }else{
- 943   3                              LCD_GLASS_Symbols(SYMBOL_ZERO, 0);
- 944   3                              //Restart_Sleep_Time;
- 945   3                      }
- 946   2              }
- 947   1                      
- 948   1              srFlagScale.bFlagNeg = 0;       
- 949   1              
- 950   1              if(srFlagScale.bShowCountADC){
- 951   2                      
- 952   2                      vWeight_Positive();
- 953   2                      
- 954   2              }else{
- 955   2                      // Verifica si el peso es negativo
- 956   2                      if(fWeightScale < 0){
- 957   3                              vWeight_Negative();                     
- 958   3                      }else{                  
- 959   3                              vWeight_Positive();                     
- 960   3                      }
- 961   2              }
- 962   1              
- 963   1                      if(srFlagScale.bTara){
- 964   2                              if((fWeightLight >= stScaleParam.fValueTara+20*stScaleParam.fFactorCalibrate) && srFlagScale.bBateriaLo
+ 915   1                                      srFlagScale.bSourceVoltage !=  SOURCE_ADAPTER && srFlagScale.bTara == 0){
+ 916   1                              fSleep_Run();
+ 917   1                              
+ 918   1                              //CCC vCalculate_Weight();
+ 919   1                              
+ 920   1                              if(srFlagScale.bScaleOn == 0){
+ 921   1                                      return 0;
+ 922   1                              }
+ 923   1                      }
+ 924   1                      
+ 925   1                      // Verifica si esta la opcion fijar precio para mostrar indicador
+ 926   1                      if(srFlagScale.bFlagFijarPRecio){
+ 927   1                              LCD_GLASS_Symbols(SYMBOL_X, 1);
+ 928   1                      }else{
+ 929   1                              LCD_GLASS_Symbols(SYMBOL_X, 0);
+ 930   1                      }
+ 931   1                      
+ 932   1                      // Verfica el tipo de unidades a mostrar
+ 933   1                      if(stScaleParam.cUnits == UNIT_KG){
+ 934   1                              LCD_GLASS_Symbols(SYMBOL_KG, 1);
+ 935   1                      }else if(stScaleParam.cUnits == UNIT_LB){
+ 936   1                              LCD_GLASS_Symbols(SYMBOL_LB, 1);
+ 937   1                      }
+ 938   1                      
+ 939   1                      if(fWeightScale > -0.0005 && fWeightScale < 0.0005){
+ 940   1                              LCD_GLASS_Symbols(SYMBOL_ZERO, 1);
+ 941   1                      }else{
+ 942   1                              LCD_GLASS_Symbols(SYMBOL_ZERO, 0);
+ 943   1                              //Restart_Sleep_Time;
+ 944   1                      }
+ 945   1              }
+ 946   1                      
+ 947   1              srFlagScale.bFlagNeg = 0;       
+ 948   1              
+ 949   1              if(srFlagScale.bShowCountADC){
+ 950   1                      
+ 951   1                      vWeight_Positive();
+ 952   1                      
+ 953   1              }else{
+ 954   1                      // Verifica si el peso es negativo
+ 955   1                      if(fWeightScale < 0){
+ 956   1                              vWeight_Negative();                     
+ 957   1                      }else{                  
+ 958   1                              vWeight_Positive();                     
+ 959   1                      }
+ 960   1              }
+ 961   1              
+ 962   1                      if(srFlagScale.bTara){
+ 963   1                              if((fWeightLight >= stScaleParam.fValueTara+20*stScaleParam.fFactorCalibrate) && srFlagScale.bBateriaLo
              -w == 0){
- 965   3                                      if(stScaleParam.cBacklight){OnBackLight;}
- 966   3                                      strTimer.iTimerJ = 1;
- 967   3                                      srFlagScale.bBacklight_On = 1;
- 968   3                              }else{
- 969   3                                      if(srFlagScale.bSourceVoltage != SOURCE_ADAPTER && strTimer.iTimerJ >= TimerJend){
- 970   4                                              OffBackLight;
- 971   4                                              srFlagScale.bBacklight_On = 0;
- 972   4                                      }
- 973   3                              }
- 974   2                              
- 975   2                      }else{
- 976   2                              if((fWeightLight >= stScaleParam.fPointZero+20*stScaleParam.fFactorCalibrate) && srFlagScale.bBateriaLo
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 12:09:03 PAGE 17  
+ 964   1                                      if(stScaleParam.cBacklight){OnBackLight;}
+ 965   1                                      strTimer.iTimerJ = 1;
+ 966   1                                      srFlagScale.bBacklight_On = 1;
+ 967   1                              }else{
+ 968   1                                      if(srFlagScale.bSourceVoltage != SOURCE_ADAPTER && strTimer.iTimerJ >= TimerJend){
+ 969   1                                              OffBackLight;
+ 970   1                                              srFlagScale.bBacklight_On = 0;
+ 971   1                                      }
+ 972   1                              }
+ 973   1                              
+ 974   1                      }else{
+ 975   1                              if((fWeightLight >= stScaleParam.fPointZero+20*stScaleParam.fFactorCalibrate) && srFlagScale.bBateriaLo
+C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 13:47:27 PAGE 17  
 
              -w == 0){
- 977   3                                              if(stScaleParam.cBacklight){OnBackLight;}
- 978   3                                              strTimer.iTimerJ = 1;
- 979   3                                              srFlagScale.bBacklight_On = 1;
- 980   3                                      }else{
- 981   3                                              if(srFlagScale.bSourceVoltage != SOURCE_ADAPTER && strTimer.iTimerJ >= TimerJend){
- 982   4                                                      OffBackLight;
- 983   4                                                      srFlagScale.bBacklight_On = 0;
- 984   4                                      }
- 985   3                              }
- 986   2                      } 
- 987   1              
+ 976   1                                              if(stScaleParam.cBacklight){OnBackLight;}
+ 977   1                                              strTimer.iTimerJ = 1;
+ 978   1                                              srFlagScale.bBacklight_On = 1;
+ 979   1                                      }else{
+ 980   1                                              if(srFlagScale.bSourceVoltage != SOURCE_ADAPTER && strTimer.iTimerJ >= TimerJend){
+ 981   1                                                      OffBackLight;
+ 982   1                                                      srFlagScale.bBacklight_On = 0;
+ 983   1                                      }
+ 984   1                              }
+ 985   1                      } 
+ 986   1              
+ 987   1      */
  988   1              return 0;
  989   1      }
+*** WARNING C280 IN LINE 862 OF _SCALE\DVR_SCALE.C: 'bEnableKeys': unreferenced local variable
  990          
  991          /**
  992            ******************************************************************************
@@ -1049,7 +1051,7 @@ line level    source
  998                  */
  999          void vWeight_Positive(void){
 1000   1              
-1001   1              float fWeightOverload = 0;
+1001   1      /*      float fWeightOverload = 0;
 1002   1              
 1003   1              float fOverloadUnit =  (float)stScaleParam.iCapacity + 
 1004   1                                              ((float)(stScaleParam.iDivisionMinima)/(float)(pow(10, (int)stScaleParam.cWeightDecimal)))*9;
@@ -1059,99 +1061,99 @@ line level    source
 1007   1              
 1008   1              fWeightOverload = stScaleParam.fWeightScaleCount-stScaleParam.fPointZeroInitial;
 1009   1              
-1010   1              /* Verifca que no exista la condicion de sobrepeso */
+1010   1              // Verifca que no exista la condicion de sobrepeso 
 1011   1              if((fWeightOverload > stScaleParam.fWeightOverload || stScaleParam.fWeightScale > fOverloadUnit)  &&
 1012   1                              srFlagScale.bTopeSobrePeso == 0){
-1013   2                              
-1014   2                      if(srFlagScale.bOverLoad == 0){
-1015   3                              stScaleParam.iCountOverload++;          
-1016   3                              vSaveParamScale(Parameter_Overload);
-1017   3                      }
-1018   2                      
-1019   2                      srFlagScale.bOverLoad = 1;
-1020   2                      
-1021   2                      vGestorBateria();
-1022   2                      
-1023   2                      /* Cuando existe sobrepeso lo indica en la LCD*/
-1024   2                      LCD_GLASS_Symbols(SYMBOL_ALL, 0);
-1025   2                      LCD_GLASS_String("      ", LCD_TOTAL);
-1026   2                      
-1027   2                      if(stScaleParam.cLenguage == ESPANOL){
-1028   3                              LCD_GLASS_String("SOBRE", LCD_PESO);
-1029   3                              LCD_GLASS_String(" PESO", LCD_PRECIO);
-1030   3                      }else{
-1031   3                              LCD_GLASS_String("OVER ", LCD_PESO);
-1032   3                              LCD_GLASS_String(" LOAD", LCD_PRECIO);
-1033   3                      }
-1034   2                      
-1035   2                      strTimer.iTimerA= 1;
-1036   2                      while(strTimer.iTimerA<TimerAend){
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 12:09:03 PAGE 18  
+1013   1                              
+1014   1                      if(srFlagScale.bOverLoad == 0){
+1015   1                              stScaleParam.iCountOverload++;          
+1016   1                              vSaveParamScale(Parameter_Overload);
+1017   1                      }
+1018   1                      
+1019   1                      srFlagScale.bOverLoad = 1;
+1020   1                      
+1021   1                      vGestorBateria();
+1022   1                      
+1023   1                      // Cuando existe sobrepeso lo indica en la LCD
+1024   1                      LCD_GLASS_Symbols(SYMBOL_ALL, 0);
+1025   1                      LCD_GLASS_String("      ", LCD_TOTAL);
+1026   1                      
+1027   1                      if(stScaleParam.cLenguage == ESPANOL){
+1028   1                              LCD_GLASS_String("SOBRE", LCD_PESO);
+1029   1                              LCD_GLASS_String(" PESO", LCD_PRECIO);
+1030   1                      }else{
+1031   1                              LCD_GLASS_String("OVER ", LCD_PESO);
+1032   1                              LCD_GLASS_String(" LOAD", LCD_PRECIO);
+1033   1                      }
+1034   1                      
+C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 13:47:27 PAGE 18  
 
-1037   3                              IWDG_KEY_REFRESH;
-1038   3                      }       
-1039   2                      
-1040   2                      if(stScaleParam.fWeightScaleCount-stScaleParam.fPointZeroInitial > stScaleParam.fValueOverload){
-1041   3                              stScaleParam.fValueOverload = stScaleParam.fWeightScaleCount-stScaleParam.fPointZeroInitial;
-1042   3                              vSaveParamScale(Parameter_Overload);
-1043   3                      }
-1044   2                      
-1045   2                      //Restart_Sleep_Time;
-1046   2                      
-1047   2              }else{
-1048   2                      srFlagScale.bOverLoad = 0;
-1049   2                      
-1050   2                      // Despliega el peso registrado
-1051   2                      LCD_GLASS_Float(stScaleParam.fWeightScale, (int)stScaleParam.cWeightDecimal, LCD_PESO);
-1052   2                                              
-1053   2                      // Verifica si la opcion fijar precio no esta activada
-1054   2                      if(!srFlagScale.bFlagFijarPRecio){
-1055   3                              if(stScaleParam.fWeightScale == 0 && fWeightScaleBefore > 0){
-1056   4                                      stScaleParam.fPrice_Unit = 0;
-1057   4                                      stScaleParam.cNumberDecimalPrice = 0;
-1058   4                                      srFlagScale.bDotDecimalPrice = 0;
-1059   4                                      stScaleParam.cNumberDecimalPrice = 0;
-1060   4                              }
-1061   3                      }
-1062   2                      
-1063   2                      if(stScaleParam.fWeightScale != fWeightScaleBefore){
-1064   3                              //Auto_Off_On_15m;
-1065   3                              //Restart_Sleep_Time;
-1066   3                      }
-1067   2                              
-1068   2                      fWeightScaleBefore = stScaleParam.fWeightScale;
-1069   2                      
-1070   2                      // Muestra el precio x unidad del producto
-1071   2                      if(stScaleParam.fWeightScale == 0 && srFlagScale.bFlagFijarPRecio == 0 && srFlagScale.bPrecioCero == 0){
-1072   3                              srFlagScale.bPrecioCero = 1;
-1073   3                      }
-1074   2                      
-1075   2                      if(stScaleParam.cPuntoDecimalPrecio < 3){
-1076   3                              LCD_GLASS_Float(stScaleParam.fPrice_Unit, stScaleParam.cPuntoDecimalPrecio, LCD_PRECIO);
-1077   3                      }else{
-1078   3                              LCD_GLASS_Float(stScaleParam.fPrice_Unit, stScaleParam.cNumberDecimalPrice, LCD_PRECIO);
-1079   3                      }
-1080   2                      
-1081   2                      stScaleParam.fTotal_Venta = stScaleParam.fPrice_Unit * stScaleParam.fWeightScale;
-1082   2                                              
-1083   2              /////////CCC/////////CCC/////////CCC/////////CCC/////////CCC stScaleParam.fTotal_Venta = fRoundFlo
+1035   1                      strTimer.iTimerA= 1;
+1036   1                      while(strTimer.iTimerA<TimerAend){
+1037   1                              IWDG_KEY_REFRESH;
+1038   1                      }       
+1039   1                      
+1040   1                      if(stScaleParam.fWeightScaleCount-stScaleParam.fPointZeroInitial > stScaleParam.fValueOverload){
+1041   1                              stScaleParam.fValueOverload = stScaleParam.fWeightScaleCount-stScaleParam.fPointZeroInitial;
+1042   1                              vSaveParamScale(Parameter_Overload);
+1043   1                      }
+1044   1                      
+1045   1                      //Restart_Sleep_Time;
+1046   1                      
+1047   1              }else{
+1048   1                      srFlagScale.bOverLoad = 0;
+1049   1                      
+1050   1                      // Despliega el peso registrado
+1051   1                      LCD_GLASS_Float(stScaleParam.fWeightScale, (int)stScaleParam.cWeightDecimal, LCD_PESO);
+1052   1                                              
+1053   1                      // Verifica si la opcion fijar precio no esta activada
+1054   1                      if(!srFlagScale.bFlagFijarPRecio){
+1055   1                              if(stScaleParam.fWeightScale == 0 && fWeightScaleBefore > 0){
+1056   1                                      stScaleParam.fPrice_Unit = 0;
+1057   1                                      stScaleParam.cNumberDecimalPrice = 0;
+1058   1                                      srFlagScale.bDotDecimalPrice = 0;
+1059   1                                      stScaleParam.cNumberDecimalPrice = 0;
+1060   1                              }
+1061   1                      }
+1062   1                      
+1063   1                      if(stScaleParam.fWeightScale != fWeightScaleBefore){
+1064   1                              //Auto_Off_On_15m;
+1065   1                              //Restart_Sleep_Time;
+1066   1                      }
+1067   1                              
+1068   1                      fWeightScaleBefore = stScaleParam.fWeightScale;
+1069   1                      
+1070   1                      // Muestra el precio x unidad del producto
+1071   1                      if(stScaleParam.fWeightScale == 0 && srFlagScale.bFlagFijarPRecio == 0 && srFlagScale.bPrecioCero == 0){
+1072   1                              srFlagScale.bPrecioCero = 1;
+1073   1                      }
+1074   1                      
+1075   1                      if(stScaleParam.cPuntoDecimalPrecio < 3){
+1076   1                              LCD_GLASS_Float(stScaleParam.fPrice_Unit, stScaleParam.cPuntoDecimalPrecio, LCD_PRECIO);
+1077   1                      }else{
+1078   1                              LCD_GLASS_Float(stScaleParam.fPrice_Unit, stScaleParam.cNumberDecimalPrice, LCD_PRECIO);
+1079   1                      }
+1080   1                      
+1081   1                      stScaleParam.fTotal_Venta = stScaleParam.fPrice_Unit * stScaleParam.fWeightScale;
+1082   1                                              
+1083   1              /////////CCC/////////CCC/////////CCC/////////CCC/////////CCC stScaleParam.fTotal_Venta = fRoundFlo
              -at(stScaleParam.fTotal_Venta, 
-1084   2                       /////////CCC/////////CCC/////////CCC/////////CCC//////  stScaleParam.cPuntoDecimalTotal, stScaleParam.c
+1084   1                       /////////CCC/////////CCC/////////CCC/////////CCC//////  stScaleParam.cPuntoDecimalTotal, stScaleParam.c
              -ValorRedondeoCifraTotal);
-1085   2                      
-1086   2                      /*Verifica si el valor del total excede el limite a mostrar en la LCD*/
-1087   2                      if(stScaleParam.fTotal_Venta > (999999 / (float)(pow(10,stScaleParam.cPuntoDecimalTotal)))){
-1088   3                              LCD_GLASS_String("------", LCD_TOTAL);
-1089   3                      }else{
-1090   3                              if(stScaleParam.fTotal_Venta > 0){
-1091   4                                      LCD_GLASS_Float(stScaleParam.fTotal_Venta, stScaleParam.cPuntoDecimalTotal, LCD_TOTAL);
-1092   4                              }else{
-1093   4                                      LCD_GLASS_Float(0, 0, LCD_TOTAL);
-1094   4                              }
-1095   3                      }
-1096   2              }
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 12:09:03 PAGE 19  
+1085   1                      
+1086   1                      //Verifica si el valor del total excede el limite a mostrar en la LCD
+1087   1                      if(stScaleParam.fTotal_Venta > (999999 / (float)(pow(10,stScaleParam.cPuntoDecimalTotal)))){
+1088   1                              LCD_GLASS_String("------", LCD_TOTAL);
+1089   1                      }else{
+1090   1                              if(stScaleParam.fTotal_Venta > 0){
+1091   1                                      LCD_GLASS_Float(stScaleParam.fTotal_Venta, stScaleParam.cPuntoDecimalTotal, LCD_TOTAL);
+1092   1                              }else{
+1093   1                                      LCD_GLASS_Float(0, 0, LCD_TOTAL);
+1094   1                              }
+C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 13:47:27 PAGE 19  
 
+1095   1                      }
+1096   1              }*/
 1097   1      }
 1098          
 1099          /**
@@ -1164,34 +1166,34 @@ line level    source
 1106                  */
 1107          void vWeight_Negative(void){
 1108   1              
-1109   1              srFlagScale.bFlagNeg = 1;
+1109   1      /*      srFlagScale.bFlagNeg = 1;
 1110   1              srFlagScale.bOverLoad = 0;
 1111   1              
-1112   1              /* En caso de un peso negativo verifica que no sea menor al peso tarado*/
+1112   1              //En caso de un peso negativo verifica que no sea menor al peso tarado
 1113   1              if((srFlagScale.bTara == 1) && ((-1)*stScaleParam.fWeightScale <= fCuentasToPeso(stScaleParam.fValueTara)
              -)){                
-1114   2                      LCD_GLASS_Float(stScaleParam.fWeightScale, (int)stScaleParam.cWeightDecimal, LCD_PESO);
-1115   2              }else{
-1116   2                      LCD_GLASS_String("-----", LCD_PESO);
-1117   2              }
+1114   1                      LCD_GLASS_Float(stScaleParam.fWeightScale, (int)stScaleParam.cWeightDecimal, LCD_PESO);
+1115   1              }else{
+1116   1                      LCD_GLASS_String("-----", LCD_PESO);
+1117   1              }
 1118   1              
 1119   1              if(srFlagScale.bFlagFijarPRecio){
-1120   2                      LCD_GLASS_String("------", LCD_TOTAL);
-1121   2              }else{
-1122   2                      stScaleParam.fPrice_Unit = 0;
-1123   2                      stScaleParam.cNumberDecimalPrice = 0;
-1124   2                      stScaleParam.fTotal_Venta = 0;
-1125   2                      LCD_GLASS_String("     0", LCD_TOTAL);
-1126   2              }
+1120   1                      LCD_GLASS_String("------", LCD_TOTAL);
+1121   1              }else{
+1122   1                      stScaleParam.fPrice_Unit = 0;
+1123   1                      stScaleParam.cNumberDecimalPrice = 0;
+1124   1                      stScaleParam.fTotal_Venta = 0;
+1125   1                      LCD_GLASS_String("     0", LCD_TOTAL);
+1126   1              }
 1127   1                      
 1128   1              if(stScaleParam.cPuntoDecimalPrecio < 3){
-1129   2                      LCD_GLASS_Float(stScaleParam.fPrice_Unit, stScaleParam.cPuntoDecimalPrecio, LCD_PRECIO);
-1130   2              }else{
-1131   2                      LCD_GLASS_Float(stScaleParam.fPrice_Unit, stScaleParam.cNumberDecimalPrice, LCD_PRECIO);
-1132   2              }
+1129   1                      LCD_GLASS_Float(stScaleParam.fPrice_Unit, stScaleParam.cPuntoDecimalPrecio, LCD_PRECIO);
+1130   1              }else{
+1131   1                      LCD_GLASS_Float(stScaleParam.fPrice_Unit, stScaleParam.cNumberDecimalPrice, LCD_PRECIO);
+1132   1              }
 1133   1              
-1134   1              /* Elimina el indicador de cero al presentar peso negativo */
-1135   1              LCD_GLASS_Symbols(SYMBOL_ZERO, 0);                      
+1134   1              // Elimina el indicador de cero al presentar peso negativo 
+1135   1              LCD_GLASS_Symbols(SYMBOL_ZERO, 0);      */              
 1136   1      }
 1137          
 1138          /**
@@ -1208,30 +1210,30 @@ line level    source
 1149   1      Se toman 3 lecturas para garantizar el peso al realizar las sumas c/precio fijo, 
 1150   1      si no hay precio fijo realiza solo una lectura de forma natural.
 1151   1      ******************/     
-1152   1              char i = 0, cCountPrecioFijo = 0;
+1152   1              /*char i = 0, cCountPrecioFijo = 0;
 1153   1      
 1154   1              if(srFlagScale.bFlagFijarPRecio){       
-1155   2                      cCountPrecioFijo = 3;                                           
-1156   2              }
-1157   1              else{
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 12:09:03 PAGE 20  
+1155   1                      cCountPrecioFijo = 3;                                           
+C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 13:47:27 PAGE 20  
 
-1158   2                      cCountPrecioFijo = 1;                   
-1159   2              }
+1156   1              }
+1157   1              else{
+1158   1                      cCountPrecioFijo = 1;                   
+1159   1              }
 1160   1      
 1161   1              for(i=0; i < cCountPrecioFijo; i++){
-1162   2                      fWeightScale = fRead_Adc(1);                                    /* Solicita el peso actual */
-1163   2              }
+1162   1                      fWeightScale = fRead_Adc(1);                                    // Solicita el peso actual 
+1163   1              }
 1164   1              
 1165   1              if(srFlagScale.bErrorResponseAdc == 1 || srFlagScale.bErrorReadAdc == 1){
-1166   2                      LCD_GLASS_String(" -E- ", LCD_PESO);
-1167   2                      return;
-1168   2              }
+1166   1                      LCD_GLASS_String(" -E- ", LCD_PESO);
+1167   1                      return;
+1168   1              }
 1169   1              
 1170   1              // Si esta la funcion ZeroTracking la ejecuta
 1171   1              if(stScaleParam.cZeroTracking == 1 && srFlagScale.bTara == 0){
-1172   2                      vGetZeroTracking(fWeightScale);
-1173   2              }
+1172   1                      vGetZeroTracking(fWeightScale);
+1173   1              }
 1174   1              
 1175   1              stScaleParam.fWeightScaleCount = fWeightScale;
 1176   1              
@@ -1242,26 +1244,26 @@ line level    source
 1181   1              stScaleParam.fWeightScaleTara = fWeightScale;
 1182   1                      
 1183   1              if(srFlagScale.bShowCountADC == 1){
-1184   2                      fWeightScale = fCuentasToPeso(stScaleParam.fWeightScaleCount);
-1185   2              }else{
-1186   2                              /* Verifica si esta la opcion de tara activada para mostrar indicador NET */
-1187   2                      if(srFlagScale.bTara == 1){
-1188   3                              fWeightLight = fWeightScale; 
-1189   3                              fWeightScale -= stScaleParam.fValueTara;                        
-1190   3                              if(srFlagScale.bOverLoad ==0){
-1191   4                                      LCD_GLASS_Symbols(SYMBOL_NET, 1);
-1192   4                              }
-1193   3                      }               
-1194   2                      fWeightScale = fCuentasToPeso(fWeightScale);            
-1195   2              }
+1184   1                      fWeightScale = fCuentasToPeso(stScaleParam.fWeightScaleCount);
+1185   1              }else{
+1186   1                              // Verifica si esta la opcion de tara activada para mostrar indicador NET 
+1187   1                      if(srFlagScale.bTara == 1){
+1188   1                              fWeightLight = fWeightScale; 
+1189   1                              fWeightScale -= stScaleParam.fValueTara;                        
+1190   1                              if(srFlagScale.bOverLoad ==0){
+1191   1                                      LCD_GLASS_Symbols(SYMBOL_NET, 1);
+1192   1                              }
+1193   1                      }               
+1194   1                      fWeightScale = fCuentasToPeso(fWeightScale);            
+1195   1              }
 1196   1              
 1197   1              if(fWeightScale < 0 && srFlagScale.bShowCountADC == 0){
-1198   2                      srFlagScale.bFlagWeightNeg = 1;
-1199   2              }else if(fWeightScale == 0){
-1200   2                      srFlagScale.bFlagWeightNeg = 0;
-1201   2              }
+1198   1                      srFlagScale.bFlagWeightNeg = 1;
+1199   1              }else if(fWeightScale == 0){
+1200   1                      srFlagScale.bFlagWeightNeg = 0;
+1201   1              }
 1202   1              
-1203   1              stScaleParam.fWeightScale = fWeightScale;
+1203   1              stScaleParam.fWeightScale = fWeightScale;*/
 1204   1      }
 1205          
 1206          /**
@@ -1276,10 +1278,10 @@ line level    source
 1215   1              float fAuxFactorC = 0;
 1216   1              float fPesoFinal = 0; 
 1217   1              float fPesoAux = 0;
+C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 13:47:27 PAGE 21  
+
 1218   1              long iAuxPeso = 0;
 1219   1              float arfFactorMult = 0;
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 12:09:03 PAGE 21  
-
 1220   1              char cFlagNeg = 0;
 1221   1              
 1222   1              if(fCountADC < 0){
@@ -1327,9 +1329,9 @@ line level    source
 1264            ******************************************************************************
 1265                  */
 1266          float fSleep_Run(void){
-1267   1              
-1268   1              float fWeightScale = 0;
-1269   1              float fValueReturn = 0;
+1267   1      float fValueReturn = 0; 
+1268   1      /*      float fWeightScale = 0;
+1269   1              
 1270   1              float fLimite = 0;
 1271   1              int i = 0 ;     
 1272   1              unsigned char cFlag_Continue = 1;       //Flag para 
@@ -1340,10 +1342,10 @@ line level    source
 1277   1              unsigned char strBatt[7] = {0,0,0,0,0,0,0};
 1278   1              unsigned char cDataTemp = 0;
 1279   1              unsigned char cDataTemp1 = 0;
+C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 13:47:27 PAGE 22  
+
 1280   1              unsigned char bStatus_Battery = 0;
 1281   1      
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 12:09:03 PAGE 22  
-
 1282   1              
 1283   1              strcpy(strMsgSaveBatt, "---------- ");
 1284   1              
@@ -1352,12 +1354,12 @@ line level    source
 1287   1              Time_Sleep;     //Reinicia el contador para realizar lectura del ADC
 1288   1              
 1289   1              for(i=0; i<11; i++){
-1290   2                      if(i<5){
-1291   3                              strSave[i] = strMsgSaveBatt[i];
-1292   3                      }else if(i<11){
-1293   3                              strBatt[i-5] = strMsgSaveBatt[i];
-1294   3                      }
-1295   2              }
+1290   1                      if(i<5){
+1291   1                              strSave[i] = strMsgSaveBatt[i];
+1292   1                      }else if(i<11){
+1293   1                              strBatt[i-5] = strMsgSaveBatt[i];
+1294   1                      }
+1295   1              }
 1296   1              
 1297   1              OffBackLight;//GPIO_ResetBits(GPIOA, BACK_LIGHT);       //Off BackLight
 1298   1                                      
@@ -1367,107 +1369,109 @@ line level    source
 1302   1              LCD_GLASS_Float(0, 0, LCD_PESO);
 1303   1              
 1304   1              while(cFlag_Continue){
-1305   2                      //Verifica por que salio del Wait
-1306   2                      if(srFlagScale.bScaleOn == 0){ //Si se oprimio la tecla On
-1307   3                              cFlag_Continue = 0;
-1308   3                      }else if(strTimer.iTimerB<TimerBend){ //Si ya pasaron 3 segundos
-1309   3                              
-1310   3                              fWeightScale = fRead_Adc(0);
-1311   3                              
-1312   3                              // Si esta la funcion ZeroTracking la ejecuta
-1313   3                              if(stScaleParam.cZeroTracking == 1 && srFlagScale.bTara == 0){
-1314   4                                      vGetZeroTracking(fWeightScale);
-1315   4                              }
-1316   3                              
-1317   3                              stScaleParam.fWeightScaleCount = fWeightScale;
-1318   3                              
-1319   3                              // Calcula peso bruto (numero de cuentas ADC del peso)
-1320   3                              fWeightScale -= stScaleParam.fPointZero;
-1321   3                              fValueReturn = fWeightScale;
-1322   3                              fWeightScale = fCuentasToPeso(fWeightScale);
-1323   3                              
-1324   3                              if(fWeightScale >= fLimite || fWeightScale < (-1)*(fLimite)){
-1325   4                                      cFlag_Continue = 0;
-1326   4                              }else if(vActionKey() != KEY_NULL){
-1327   4                                      cFlag_Continue = 0;
-1328   4                                      vBeep_Key();
-1329   4                              }                               
-1330   3                              
-1331   3                              if(cFlag_Continue){                             
-1332   4                                      
-1333   4                                      //Verifica si ya esta conectado el elimnador para salir de bajo consumo
-1334   4                                      bStatus_Battery = uGet_Status_Volt();
-1335   4                                      
-1336   4                                      if(bStatus_Battery != SOURCE_ADAPTER){ 
-1337   5                                              vGestorBateria();
-1338   5                                      }else{
-1339   5                                              cFlag_Continue = 0;
-1340   5                                      }
-1341   4                                      
-1342   4                                      if(srFlagScale.bMsgBatteryLow == 0){
-1343   5                                              //Muestra animacion de lineas 
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 12:09:03 PAGE 23  
+1305   1                      //Verifica por que salio del Wait
+1306   1                      if(srFlagScale.bScaleOn == 0){ //Si se oprimio la tecla On
+1307   1                              cFlag_Continue = 0;
+1308   1                      }else if(strTimer.iTimerB<TimerBend){ //Si ya pasaron 3 segundos
+1309   1                              
+1310   1                              fWeightScale = fRead_Adc(0);
+1311   1                              
+1312   1                              // Si esta la funcion ZeroTracking la ejecuta
+1313   1                              if(stScaleParam.cZeroTracking == 1 && srFlagScale.bTara == 0){
+1314   1                                      vGetZeroTracking(fWeightScale);
+1315   1                              }
+1316   1                              
+1317   1                              stScaleParam.fWeightScaleCount = fWeightScale;
+1318   1                              
+1319   1                              // Calcula peso bruto (numero de cuentas ADC del peso)
+1320   1                              fWeightScale -= stScaleParam.fPointZero;
+1321   1                              fValueReturn = fWeightScale;
+1322   1                              fWeightScale = fCuentasToPeso(fWeightScale);
+1323   1                              
+1324   1                              if(fWeightScale >= fLimite || fWeightScale < (-1)*(fLimite)){
+1325   1                                      cFlag_Continue = 0;
+1326   1                              }else if(vActionKey() != KEY_NULL){
+1327   1                                      cFlag_Continue = 0;
+1328   1                                      vBeep_Key();
+1329   1                              }                               
+1330   1                              
+1331   1                              if(cFlag_Continue){                             
+1332   1                                      
+1333   1                                      //Verifica si ya esta conectado el elimnador para salir de bajo consumo
+1334   1                                      bStatus_Battery = uGet_Status_Volt();
+1335   1                                      
+1336   1                                      if(bStatus_Battery != SOURCE_ADAPTER){ 
+1337   1                                              vGestorBateria();
+1338   1                                      }else{
+1339   1                                              cFlag_Continue = 0;
+1340   1                                      }
+1341   1                                      
+C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 13:47:27 PAGE 23  
 
-1344   5                                              
-1345   5                                              cDataTemp = strMsgSaveBatt[0];
-1346   5                                              
-1347   5                                              for(i=0; i<14; i++){
-1348   6                                                      strMsgSaveBatt[i] = strMsgSaveBatt[i+1];
-1349   6                                              }
-1350   5                                              
-1351   5                                              strMsgSaveBatt[10] = cDataTemp;
-1352   5                                              
-1353   5                                              for(i=0; i<11; i++){
-1354   6                                                      if(i<5){
-1355   7                                                              strSave[i] = strMsgSaveBatt[i];
-1356   7                                                      }else if(i<11){
-1357   7                                                              strBatt[i-5] = strMsgSaveBatt[i];
-1358   7                                                      }
-1359   6                                              }
-1360   5                                              
-1361   5                                              LCD_GLASS_String("    0", LCD_PESO);
-1362   5                                              LCD_GLASS_String(strSave, LCD_PRECIO);
-1363   5                                              LCD_GLASS_String(strBatt, LCD_TOTAL);
-1364   5                                      }
-1365   4                                      
-1366   4                                      Time_Sleep;
-1367   4                              }
-1368   3                      }else if(vActionKey() != KEY_NULL){
-1369   3                              cFlag_Continue = 0;
-1370   3                              vBeep_Key();
-1371   3                      }
-1372   2                      
-1373   2                      if(srFlagScale.bScaleOn == 0){
-1374   3                              cFlag_Continue = 0;
-1375   3                      }
-1376   2                      
-1377   2                      if(srFlagScale.cAuto_Off_Time == 1 && stScaleParam.cTimeAutooff == 1){
-1378   3                              srFlagScale.bScaleOn = 0;
-1379   3                              cFlag_Continue = 0;
-1380   3                      }
-1381   2              }       
+1342   1                                      if(srFlagScale.bMsgBatteryLow == 0){
+1343   1                                              //Muestra animacion de lineas 
+1344   1                                              
+1345   1                                              cDataTemp = strMsgSaveBatt[0];
+1346   1                                              
+1347   1                                              for(i=0; i<14; i++){
+1348   1                                                      strMsgSaveBatt[i] = strMsgSaveBatt[i+1];
+1349   1                                              }
+1350   1                                              
+1351   1                                              strMsgSaveBatt[10] = cDataTemp;
+1352   1                                              
+1353   1                                              for(i=0; i<11; i++){
+1354   1                                                      if(i<5){
+1355   1                                                              strSave[i] = strMsgSaveBatt[i];
+1356   1                                                      }else if(i<11){
+1357   1                                                              strBatt[i-5] = strMsgSaveBatt[i];
+1358   1                                                      }
+1359   1                                              }
+1360   1                                              
+1361   1                                              LCD_GLASS_String("    0", LCD_PESO);
+1362   1                                              LCD_GLASS_String(strSave, LCD_PRECIO);
+1363   1                                              LCD_GLASS_String(strBatt, LCD_TOTAL);
+1364   1                                      }
+1365   1                                      
+1366   1                                      Time_Sleep;
+1367   1                              }
+1368   1                      }else if(vActionKey() != KEY_NULL){
+1369   1                              cFlag_Continue = 0;
+1370   1                              vBeep_Key();
+1371   1                      }
+1372   1                      
+1373   1                      if(srFlagScale.bScaleOn == 0){
+1374   1                              cFlag_Continue = 0;
+1375   1                      }
+1376   1                      
+1377   1                      if(srFlagScale.cAuto_Off_Time == 1 && stScaleParam.cTimeAutooff == 1){
+1378   1                              srFlagScale.bScaleOn = 0;
+1379   1                              cFlag_Continue = 0;
+1380   1                      }
+1381   1              }       
 1382   1              
 1383   1              if(srFlagScale.bBacklight_On){
-1384   2                      if(stScaleParam.cBacklight){OnBackLight;}
-1385   2              }
+1384   1                      if(stScaleParam.cBacklight){OnBackLight;}
+1385   1              }
 1386   1              
 1387   1      ///////CCC///////CCC    CLK_PeripheralClockConfig(CLK_Peripheral_ADC1, ENABLE);
 1388   1              //Restart_Sleep_Time;
 1389   1              //Auto_Off_On_15m;
-1390   1              
+1390   1              */
 1391   1              return fValueReturn;
 1392   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   9149    ----
-   CONSTANT SIZE    =    204    ----
-   XDATA SIZE       =    193     167
+   CODE SIZE        =   4393    ----
+   CONSTANT SIZE    =     77    ----
+   XDATA SIZE       =    191      79
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 
+C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 13:47:27 PAGE 24  
 
-C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
+
+C51 COMPILATION COMPLETE.  4 WARNING(S),  0 ERROR(S)

@@ -46,7 +46,7 @@
 #define Parameter_Calibration			1
 #define Parameter_Register				2
 #define Parameter_All							3
-#define Parameter_Debug						4
+//#define Parameter_Debug						4
 #define Parameter_IncDivisiones		5
 #define Parameter_Overload				6
 #define Parameter_LinePrinter			7

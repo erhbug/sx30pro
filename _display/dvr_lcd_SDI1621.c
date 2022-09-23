@@ -1,5 +1,6 @@
 //Creado por Eriberto Romero Hernandez
 //Modificado en Sep 22 
+
 #include "./_display/dvr_lcd_SDI1621.h"
 
 #include <stdio.h>
@@ -134,10 +135,10 @@ const unsigned char xdata cABC_LCD[] = {
 #endif
 
 	// función de retardo 10us
-void delay_35u(void){ 	
-	unsigned char j;
-  	for(j= 0;j<5;j++);
-}	
+//void delay_35u(void){ 	
+//	unsigned char j;
+ // 	for(j= 0;j<5;j++);
+//}	
 
 //****************************************************
 // Controlador LCD 1621 bloque compilación condicional ------ comenzar -------
@@ -148,9 +149,9 @@ void lcd_unit_write(unsigned char d){
 		if( ( d & 0x80 ) == 0 ) LCD_DATA_OFF;
 		else LCD_DATA_ON;
 		LCD_WR_N_OFF;	
-		delay_35u();	
+		//delay_35u();	
     LCD_WR_N_ON;			
-		delay_35u();		
+	//	delay_35u();		
 		d <<= 1;		
 	}
 }
@@ -161,8 +162,8 @@ void LCD_GLASS_Init(void){//int i,j,k;
 	LCD_CS_N_ON;
 	LCD_WR_N_ON;
 	LCD_DATA_ON;
-	delay_35u();
-	delay_35u();	
+//	delay_35u();
+//	delay_35u();	
 	
 	Display.mode=LCD_COMAND;
 	
@@ -215,33 +216,33 @@ void write_lcd(SOLIDIC Display){//char mode,unsigned char cmd,unsigned char addr
 	LCD_CS_N_ON;
 	LCD_WR_N_ON;
 	LCD_DATA_ON;	
-	delay_35u();		
+	//delay_35u();		
 	LCD_CS_N_OFF;//	LCD_DATA_ON;
-	delay_35u();
+	//delay_35u();
 	LCD_WR_N_OFF;
-	delay_35u();
+	//delay_35u();
 	LCD_WR_N_ON;
-	delay_35u();
+//	delay_35u();
 	LCD_DATA_OFF;
 	LCD_WR_N_OFF;
-	delay_35u();
+	//delay_35u();
 	LCD_WR_N_ON;
-	delay_35u();
+//	delay_35u();
 	if(Display.mode==0)
 	  	LCD_DATA_OFF;
 	else 
 	  	LCD_DATA_ON;
 	LCD_WR_N_OFF;
-	delay_35u();
+	//delay_35u();
 	LCD_WR_N_ON;
-	delay_35u();
+//	delay_35u();
 
 	if(Display.mode == 0){
 		lcd_unit_write(Display.cmd);		
 		LCD_WR_N_OFF;
-		delay_35u();
+	//	delay_35u();
 		LCD_WR_N_ON;
-		delay_35u();
+	//	delay_35u();
 	}
 	else 
 	{		
@@ -252,9 +253,9 @@ void write_lcd(SOLIDIC Display){//char mode,unsigned char cmd,unsigned char addr
 				LCD_DATA_OFF;
 		  else 
 				LCD_DATA_ON;
-			delay_35u();
+		//	delay_35u();
 			LCD_WR_N_ON;
-			delay_35u();
+		//	delay_35u();
 			addr <<= 1;
 		}		
 		for(i=0;i<16;i++)	// 数据写入命令,发送数据  Comando de escritura de datos, enviar datos
@@ -263,7 +264,7 @@ void write_lcd(SOLIDIC Display){//char mode,unsigned char cmd,unsigned char addr
 	LCD_CS_N_ON;
 	LCD_DATA_ON;
 	LCD_WR_N_ON;	
-	delay_35u();
+	//delay_35u();
 	
 	//HAL_GPIO_WritePin(GPIOC, TARA_IN_Pin, GPIO_PIN_RESET);
 	

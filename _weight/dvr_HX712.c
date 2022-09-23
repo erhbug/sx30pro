@@ -10,13 +10,10 @@
 sbit MISO = P0^3;	
 sbit SCLK = P0^4;	
 
-
 //--------------------------------------------------------------------------------
 float ValueCount = 0.0;
 int iCountFailRead = 0;
 int iCountFailResponse = 0;
-
-unsigned char iSelectFrecuency = 1;
 float arfDataFilter_x[5] = {0.00};
 float fBeforeValue_x = 0;
 float fAverage_x = 0;
@@ -26,8 +23,8 @@ unsigned char iValueOut = 0;
 */
 float fFilter_Averaging(unsigned long iActualWeight, unsigned char cFastFill){	
 	float arfLowestToHighest[5] = {0.00};
-	//////////////////////////////////////////float fThreshold = stScaleParam.fFactorCalibrate[stScaleParam.iUnits]/2;
-	float fThreshold = 8.526937/2;
+    float fThreshold = stScaleParam.fFactorCalibrate*0.5;
+	//float fThreshold = 3.327/2;//8.526937/2;
 	float fData_Vector = 0;
 	float *pfData_Filter;
 	float fActualWeight = (float)(iActualWeight);

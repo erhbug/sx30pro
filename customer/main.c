@@ -49,7 +49,7 @@ void main(void)
 	// vSound_Saved_Param();
     vPreConfiguration(PreConfig30KG);
 // fStablePoint(5, 1, 0);
-// vCalibrate_Scale();
+ vCalibrate_Scale();
  
 TestEEPROM();
  while(1){  ; 
