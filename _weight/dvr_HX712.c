@@ -101,8 +101,10 @@ float fFilter_Averaging(unsigned long iActualWeight, unsigned char cFastFill){
 float fRead_Adc(unsigned char cFillFilter){
 	unsigned long iTemp_RA = 0;
 
-	if(MISO!=0)return ValueCount;
-    
+	while(MISO!=0 && iTemp_RA<250){
+      delay_ms(1);        iTemp_RA++;
+    }
+    	if(MISO!=0)return ValueCount;
   //iTemp_RA=123456789;	sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
 	
 	iTemp_RA=ReadHX712(); 

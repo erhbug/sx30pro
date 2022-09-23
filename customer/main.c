@@ -35,7 +35,7 @@ unsigned long iTemp_RA = 0;
   // para toogle prueba
   // P0M0 |= (1<<1);
   // P0M1 &= ~(1<<1);
-  init_int_timer0();
+ // init_int_timer0();
 
 	LCD_GLASS_Init(); 
 	LCD_GLASS_String("- - -",LCD_PESO);
@@ -44,23 +44,24 @@ unsigned long iTemp_RA = 0;
 	// vSound_Saved_Param();
 	 delay_ms(1000); 		
  LCD_GLASS_Clear();
-// vCalibrate_Scale();
+ //vCalibrate_Scale();
 //TestEEPROM();
  while(1){   
-    key_scan();
-	sprintf(txt,"%d ",(int)(Key));
-	LCD_GLASS_String(txt,LCD_PESO);
+  //  key_scan();
+//	sprintf(txt,"%d ",(int)(Key));
+//	LCD_GLASS_String(txt,LCD_PESO);
 
 //	sprintf(txt,"%d  ",(int)(KeyState));
 //	LCD_GLASS_String(txt,LCD_PRECIO);
 
 	
-	delay_ms(50);
+	
    
-	peso=fRead_Adc(0);
-    LCD_GLASS_Float(peso,2,LCD_TOTAL); 
-
-	P0|= (1<<5);
+	//peso=fRead_Adc(0);
+	peso = fStablePoint(5, 1, 0);
+    LCD_GLASS_Float(peso,0,LCD_TOTAL); 
+    //delay_ms(5000);
+//	P0|= (1<<5);
 //	voltaje=convertidorADC()*(3.3/255);
  //	LCD_GLASS_Float(peso, 2,  LCD_TOTAL);
 //	LCD_GLASS_Float(voltaje, 2, LCD_PESO);

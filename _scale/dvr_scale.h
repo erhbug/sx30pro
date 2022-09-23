@@ -357,7 +357,7 @@ void vCalculate_Weight (void);
 void vPrintParameters(void);
 float fCuentasToPeso(float fCountADC);*/
 
-
+float fStablePoint(unsigned char cSetCountBack, unsigned char cShowCount, unsigned char cRunStable);
 
 
 #endif

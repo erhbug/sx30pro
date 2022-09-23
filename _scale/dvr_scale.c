@@ -281,7 +281,7 @@ float fStablePoint(unsigned char cSetCountBack, unsigned char cShowCount, unsign
 	long int cCountBack = cSetCountBack;			/* Contador de regresion */
 	float fActualWeightAdc=0;						/* Alamacena el peso actual valores adc */
 	float fWeightAdc = 0;								/* Almacena el valor referencia */
-	float fLimitRange = (float)stScaleParam.cCountRange;
+	float fLimitRange = 6;//CCC  (float)stScaleParam.cCountRange;
 	int i=0;
 	
 	cNumber_Count = 0;
@@ -290,7 +290,10 @@ float fStablePoint(unsigned char cSetCountBack, unsigned char cShowCount, unsign
 		cNumber_Count = 2;
 	}
 	
-	fWeightAdc = fRead_Adc(cRunStable);	/* Lee el valor actual del peso */
+	fWeightAdc = fRead_Adc(cRunStable);//delay_ms(100);	
+	fWeightAdc = fRead_Adc(cRunStable);//delay_ms(100);
+	fWeightAdc = fRead_Adc(cRunStable);//delay_ms(100);
+	fWeightAdc = fRead_Adc(cRunStable);//delay_ms(100);
 	
 	while(cCountBack > -1){
 		
@@ -308,13 +311,9 @@ float fStablePoint(unsigned char cSetCountBack, unsigned char cShowCount, unsign
 				LCD_GLASS_Float(cCountBack*111111, 0, LCD_TOTAL);
 			}
 		}
-	
+     	
 		fActualWeightAdc = fRead_Adc(cRunStable);
-		
-		if(srFlagScale.bScaleOn == 0){
-			srFlagScale.bFlagStable = 0;
-			return -100;
-		}
+		//delay_ms(100);
 		
 		/* Verica que el ultimo valor leido este dentro del rango del valor 
 			referencia */
@@ -618,7 +617,7 @@ void vCalibrate_Scale(void){
  /* Espera a que se oprima 'C' para continuar */
               Key=0;while(Key!= KEY_C)key_scan();
 
-//CCC   //////////////     stScaleParam.fCapacityCali = fStablePoint(5, 1, 0);
+    stScaleParam.fCapacityCali = fStablePoint(5, 1, 0);
              
               
               fAuxCountAdcFinal = stScaleParam.fCapacityCali;

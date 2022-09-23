@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   DVR_HX712                                                             09/22/2022 17:52:30 PAGE 1   
+C51 COMPILER V7.50   DVR_HX712                                                             09/22/2022 19:26:34 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE DVR_HX712
@@ -62,7 +62,7 @@ line level    source
   50   2                      iValueOut = 0;          
   51   2                      for(i=0; i<iLenthData_x-1; i++){
   52   3                              pfData_Filter[i] = iActualWeight;
-C51 COMPILER V7.50   DVR_HX712                                                             09/22/2022 17:52:30 PAGE 2   
+C51 COMPILER V7.50   DVR_HX712                                                             09/22/2022 19:26:34 PAGE 2   
 
   53   3                      }
   54   2              }else if(cFastFill == 2){       //Indica que es el inicio para tomar referencia a Zero.
@@ -115,63 +115,65 @@ line level    source
  101          float fRead_Adc(unsigned char cFillFilter){
  102   1              unsigned long iTemp_RA = 0;
  103   1      
- 104   1              if(MISO!=0)return ValueCount;
- 105   1          
- 106   1        //iTemp_RA=123456789; sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
- 107   1              
- 108   1              iTemp_RA=ReadHX712(); 
- 109   1      
- 110   1        //sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
+ 104   1              while(MISO!=0 && iTemp_RA<250){
+ 105   2            delay_ms(1);        iTemp_RA++;
+ 106   2          }
+ 107   1              if(MISO!=0)return ValueCount;
+ 108   1        //iTemp_RA=123456789; sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
+ 109   1              
+ 110   1              iTemp_RA=ReadHX712(); 
  111   1      
- 112   1              iTemp_RA >>= 7; // Elimina los 6 bits menos significativos
- 113   1          
- 114   1      
-C51 COMPILER V7.50   DVR_HX712                                                             09/22/2022 17:52:30 PAGE 3   
+ 112   1        //sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
+ 113   1      
+ 114   1              iTemp_RA >>= 7; // Elimina los 6 bits menos significativos
+C51 COMPILER V7.50   DVR_HX712                                                             09/22/2022 19:26:34 PAGE 3   
 
- 115   1          // sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
- 116   1              
- 117   1              if(iTemp_RA == 65535){
- 118   2              }else if(iTemp_RA > 65535){
- 119   2                      iTemp_RA = 131072 - iTemp_RA;
- 120   2                      iTemp_RA = 32500 - iTemp_RA;
- 121   2              }else{
- 122   2                      iTemp_RA += 32500;
- 123   2              }
- 124   1      
- 125   1         // sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
+ 115   1          
+ 116   1      
+ 117   1          // sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
+ 118   1              
+ 119   1              if(iTemp_RA == 65535){
+ 120   2              }else if(iTemp_RA > 65535){
+ 121   2                      iTemp_RA = 131072 - iTemp_RA;
+ 122   2                      iTemp_RA = 32500 - iTemp_RA;
+ 123   2              }else{
+ 124   2                      iTemp_RA += 32500;
+ 125   2              }
  126   1      
- 127   1              ValueCount = fFilter_Averaging(iTemp_RA,cFillFilter);
+ 127   1         // sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
  128   1      
- 129   1         // sprintf(txt,"%f      ",ValueCount);  LCD_GLASS_String(txt,LCD_PESO);      delay_ms(500);  
+ 129   1              ValueCount = fFilter_Averaging(iTemp_RA,cFillFilter);
  130   1      
- 131   1              return ValueCount;
- 132   1      }
- 133          
- 134          volatile unsigned long  ReadHX712(void){ //by ERH
- 135   1          unsigned int i;
- 136   1              unsigned long *ptr;     
- 137   1          unsigned char  dato[4]={0};
- 138   1          ptr=(unsigned long *)&dato;
- 139   1      
- 140   1              if(MISO!=0)return;
-*** WARNING C173 IN LINE 140 OF _WEIGHT\DVR_HX712.C: missing return-expression
- 141   1              for(i=0;i<24;i++)//24 bits de comunicación
- 142   1              {    
- 143   2              SCLK=1;  
- 144   2              dato[i/8+1]<<=1;//Lectura en flanco negativo
- 145   2                  SCLK=0; 
- 146   2              dato[i/8+1]|=MISO&0x01;
- 147   2              }
- 148   1              //1 bit de configuración a 10Hz
- 149   1              SCLK=1;   i<<=5;
- 150   1              SCLK=0;  
- 151   1        // sprintf(txt,"%lX",*ptr);  LCD_GLASS_String(txt,LCD_TOTAL); 
- 152   1         return *ptr;
- 153   1      }
+ 131   1         // sprintf(txt,"%f      ",ValueCount);  LCD_GLASS_String(txt,LCD_PESO);      delay_ms(500);  
+ 132   1      
+ 133   1              return ValueCount;
+ 134   1      }
+ 135          
+ 136          volatile unsigned long  ReadHX712(void){ //by ERH
+ 137   1          unsigned int i;
+ 138   1              unsigned long *ptr;     
+ 139   1          unsigned char  dato[4]={0};
+ 140   1          ptr=(unsigned long *)&dato;
+ 141   1      
+ 142   1              if(MISO!=0)return;
+*** WARNING C173 IN LINE 142 OF _WEIGHT\DVR_HX712.C: missing return-expression
+ 143   1              for(i=0;i<24;i++)//24 bits de comunicación
+ 144   1              {    
+ 145   2              SCLK=1;  
+ 146   2              dato[i/8+1]<<=1;//Lectura en flanco negativo
+ 147   2                  SCLK=0; 
+ 148   2              dato[i/8+1]|=MISO&0x01;
+ 149   2              }
+ 150   1              //1 bit de configuración a 10Hz
+ 151   1              SCLK=1;   i<<=5;
+ 152   1              SCLK=0;  
+ 153   1        // sprintf(txt,"%lX",*ptr);  LCD_GLASS_String(txt,LCD_TOTAL); 
+ 154   1         return *ptr;
+ 155   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1474    ----
+   CODE SIZE        =   1543    ----
    CONSTANT SIZE    =     44    ----
    XDATA SIZE       =     58      75
    PDATA SIZE       =   ----    ----
