@@ -23,9 +23,7 @@ void init_int_timer0(void);
 
 void main(void)
 {
-char txt[4];
-float peso;
-unsigned long iTemp_RA = 0;
+//char txt[4];
 
   wdt_init();  /// watch dog ///
   gpio_init();
@@ -41,14 +39,14 @@ unsigned long iTemp_RA = 0;
 	LCD_GLASS_String("- - -",LCD_PESO);
 	LCD_GLASS_String("-----",LCD_PRECIO); 
     LCD_GLASS_String("------", LCD_TOTAL);
-	vSound_Saved_Param();
+//	vSound_Saved_Param();
 	// vSound_Saved_Param();
-vPreConfiguration(PreConfig30KG);
+//vPreConfiguration(PreConfig30KG);
  vCalibrate_Scale();
  //
 //TestEEPROM();
  while(1){  ; 
-  //  key_scan();
+    key_scan();
 //	sprintf(txt,"%d ",(int)(Key));
 //	LCD_GLASS_String(txt,LCD_PESO);
 
