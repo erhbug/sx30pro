@@ -33,17 +33,6 @@ struct strTimers strTimer;
 #define KEY_D0_ON			P2 |= 0x02 
 #define KEY_D0_OFF			P2 &= 0xFD 
 
-void delay_ms(unsigned int num)
-{ 	
-	unsigned int i;
-    unsigned char j;
-  	for(i= 0;i<num;i++){	//(SDI5219) ??1ms
-		for(j=0;j<195;j++)
-			;
-IWDG_KEY_REFRESH; 
-} 
-
-}
 
 void key_scan(void) {
   unsigned char k = 0;
@@ -137,10 +126,17 @@ enum digi_key vActionKey(void){
 void vSound_Saved_Param(void){
 	unsigned char i = 0;
 	
-	for(i=0; i<3; i++){
-		
-		vBeep_Key();
-		
-		delay_ms(250);
-	}	
+	for(i=0; i<3; i++){vBeep_Key();delay_ms(250);}
 }
+
+void delay_ms(unsigned int num)
+{ 	
+	unsigned int i,j;
+  	for(i= 0;i<num;i++){	//(SDI5219) ??1ms
+	IWDG_KEY_REFRESH; 
+		for(j=0;j<200;j++)
+			;
+    } 
+
+}
+

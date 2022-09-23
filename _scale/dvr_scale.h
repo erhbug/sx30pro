@@ -329,6 +329,7 @@ struct strTimers{
 	int iTimerSegundosJ;     // 15s*/
 	
 };
+#define TimerEend 5000
 
 extern struct strTimers strTimer;
 
@@ -358,6 +359,6 @@ void vPrintParameters(void);
 float fCuentasToPeso(float fCountADC);*/
 
 float fStablePoint(unsigned char cSetCountBack, unsigned char cShowCount, unsigned char cRunStable);
-
+void vPreConfiguration(unsigned char cPreConfiguration);
 
 #endif

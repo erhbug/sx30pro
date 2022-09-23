@@ -18,6 +18,7 @@
 #include "./_solidic/solidic_Vc_Jan10_13.h"							
 #include "./_solidic/SDI5219_Vc_Sep02_15.h"	
 #include "./_data_nvm/data_nvm_5219_Vc_Dec09_13.h"	
+#include "./_scale/dvr_def.h"
 
 unsigned char NRM_securty_a;						// EEPROM °²È«ÂëA
 unsigned char NRM_securty_b;	
@@ -85,6 +86,7 @@ void nvm_data_write_byte(unsigned int addr,unsigned char in_data)
 	bit ea_save;
 	unsigned char i=0;
 
+    IWDG_KEY_REFRESH;
 	flash_addr.i = addr;
    	ea_save  =  EA;            // Save EA
 	EA = 0;

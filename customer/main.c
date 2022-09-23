@@ -35,18 +35,19 @@ unsigned long iTemp_RA = 0;
   // para toogle prueba
   // P0M0 |= (1<<1);
   // P0M1 &= ~(1<<1);
- // init_int_timer0();
+  init_int_timer0();
 
 	LCD_GLASS_Init(); 
 	LCD_GLASS_String("- - -",LCD_PESO);
 	LCD_GLASS_String("-----",LCD_PRECIO); 
     LCD_GLASS_String("------", LCD_TOTAL);
+	vSound_Saved_Param();
 	// vSound_Saved_Param();
-	 delay_ms(1000); 		
- LCD_GLASS_Clear();
- //vCalibrate_Scale();
+vPreConfiguration(PreConfig30KG);
+ vCalibrate_Scale();
+ //
 //TestEEPROM();
- while(1){   
+ while(1){  ; 
   //  key_scan();
 //	sprintf(txt,"%d ",(int)(Key));
 //	LCD_GLASS_String(txt,LCD_PESO);
@@ -58,8 +59,9 @@ unsigned long iTemp_RA = 0;
 	
    
 	//peso=fRead_Adc(0);
-	peso = fStablePoint(5, 1, 0);
-    LCD_GLASS_Float(peso,0,LCD_TOTAL); 
+
+
+	
     //delay_ms(5000);
 //	P0|= (1<<5);
 //	voltaje=convertidorADC()*(3.3/255);
@@ -75,6 +77,9 @@ unsigned long iTemp_RA = 0;
 
  //delay_ms(3000); 
 //
+
+//peso = fStablePoint(5, 1, 0); //ok
+//LCD_GLASS_Float(peso,0,LCD_TOTAL);//ok
 }
 
 }
@@ -173,13 +178,13 @@ static void timer0(void) interrupt 1
 	}
 
 	/* 5S*/
-	if(strTimer.cFLag_TimerE_Start){
+/*	if(strTimer.cFLag_TimerE_Start){
 		strTimer.iTimerE = Number_Count_Sec * 4;
 		strTimer.cFLag_TimerE_Start = 0;
 		strTimer.cFLag_TimerE_On = 1;
 		strTimer.cFLag_TimerE_End = 0;
 	}
-
+*/
 
 	/*Accion de desbordamiento del timer */
 	if(strTimer.cFLag_TimerA_On){
@@ -204,14 +209,16 @@ static void timer0(void) interrupt 1
 	}
 
 	/* timer usado en calibracion */
-	if(strTimer.cFLag_TimerE_On){
+/*	if(strTimer.cFLag_TimerE_On){
 		if(strTimer.iTimerE > 0){
 			strTimer.iTimerE--;
 		}else{
 			strTimer.cFLag_TimerE_On = 0;
 			strTimer.cFLag_TimerE_End = 1;
 		}
-	}
+	}*/
+	if(strTimer.iTimerE>0&&strTimer.iTimerE<TimerEend)
+	strTimer.iTimerE++;
 
 	//P0 ^= (1<<1);//P1 ^= (1<<5);
 	TL0 = 0xCF;

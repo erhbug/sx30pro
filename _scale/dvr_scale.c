@@ -281,7 +281,7 @@ float fStablePoint(unsigned char cSetCountBack, unsigned char cShowCount, unsign
 	long int cCountBack = cSetCountBack;			/* Contador de regresion */
 	float fActualWeightAdc=0;						/* Alamacena el peso actual valores adc */
 	float fWeightAdc = 0;								/* Almacena el valor referencia */
-	float fLimitRange = 6;//CCC (float)stScaleParam.cCountRange;
+	float fLimitRange =  (float)stScaleParam.cCountRange;
 	int i=0;
 	
 	cNumber_Count = 0;
@@ -334,8 +334,7 @@ float fStablePoint(unsigned char cSetCountBack, unsigned char cShowCount, unsign
 				LCD_GLASS_Clear();
 				LCD_GLASS_String("   UN", LCD_PRECIO);
 				LCD_GLASS_String("STABLE", LCD_TOTAL);
-				for(cCountBack=0; cCountBack<20000; cCountBack++);
-				for(cCountBack=0; cCountBack<20000; cCountBack++);
+				for(cCountBack=0; cCountBack<300; cCountBack++)delay_ms(10);
 			}
 			cCountReading = 0;
 			cCountBack = cSetCountBack;
@@ -575,7 +574,7 @@ void vCalibrate_Scale(void){
               float xdata fAuxCountDif = 0;
               
               stScaleParam.iCounter_Calibration++;  /* Aumenta el contador de calibraciones */ 
-              //CCC  vSaveParamScale(Parameter_Calibration);                                                                                              /*Almacena los parametros en la E2prom*/
+              vSaveParamScale(Parameter_Calibration);                                                                                              /*Almacena los parametros en la E2prom*/
                             
               LCD_GLASS_Clear();
 #if DISPLAY_20400047_EN > 0
@@ -587,21 +586,18 @@ void vCalibrate_Scale(void){
               LCD_GLASS_String("REF 0", LCD_PESO);
               LCD_GLASS_String("C", LCD_TOTAL);
 #endif
-
         
               /* Espera a que se oprima 'C' para continuar */
               Key=0;while(Key!= KEY_C)key_scan();
-                          
-                            
-
-              
+			  Key=0;while(Key== KEY_C)key_scan();
+              delay_ms(500);            
 
               /* Solicita la referencia de zero */
-              //////////CCC stScaleParam.fPointZeroCali = fStablePoint(5, 1, 0);
+              stScaleParam.fPointZeroCali = fStablePoint(5, 1, 0);
+			  LCD_GLASS_Float(stScaleParam.fPointZeroCali, 2, LCD_TOTAL);delay_ms(5000);
               
-
               fAuxCountAdcInicial = stScaleParam.fPointZeroCali;
-			  delay_ms(2000);//borrar  //CCC  
+			  //borrar  //CCC  
 
               LCD_GLASS_Clear();
 #if DISPLAY_20400047_EN > 0
@@ -617,7 +613,8 @@ void vCalibrate_Scale(void){
  /* Espera a que se oprima 'C' para continuar */
               Key=0;while(Key!= KEY_C)key_scan();
 
-    stScaleParam.fCapacityCali = fStablePoint(5, 1, 0);
+              stScaleParam.fCapacityCali = fStablePoint(5, 1, 0);
+			  LCD_GLASS_Float(stScaleParam.fCapacityCali, 2, LCD_TOTAL);delay_ms(5000);
              
               
               fAuxCountAdcFinal = stScaleParam.fCapacityCali;
@@ -641,14 +638,14 @@ void vCalibrate_Scale(void){
               LCD_GLASS_Clear();     
 #if DISPLAY_20400047_EN > 0
               LCD_GLASS_String("FACTO", LCD_PESO);
+			  LCD_GLASS_Float(stScaleParam.fFactorCalibrate, 2, LCD_TOTAL);
 			  LCD_GLASS_String("R", LCD_TOTAL);
-			  //LCD_GLASS_Float(stScaleParam.fFactorCalibrate, 2, LCD_TOTAL);
               LCD_GLASS_Dot(2, LCD_TOTAL, 1);
               LCD_GLASS_String("  END", LCD_PRECIO);          
 #else
               LCD_GLASS_String("  END", LCD_PESO);
+              LCD_GLASS_Float(stScaleParam.fFactorCalibrate, 2, LCD_TOTAL);     
 			  LCD_GLASS_String("R", LCD_TOTAL);
-              //LCD_GLASS_Float(stScaleParam.fFactorCalibrate, 2, LCD_TOTAL);     
               LCD_GLASS_Dot(2, LCD_TOTAL, 1);
               LCD_GLASS_String("FACTO", LCD_PRECIO);
 #endif
@@ -658,21 +655,24 @@ void vCalibrate_Scale(void){
 
 ////////////////////////////////////////////////////////////////////////////              
               /*Almacena los parametros en la E2prom*/       
-              //CCC vSaveParamScale(Parameter_Calibration);                                        
+              vSaveParamScale(Parameter_Calibration);                                        
               
 ///////////CCCCC/////////////CCCCC/////////////CCCCC/////////////CCCCC/////////////CCCCC//              vSet_Volts_System();    
-              //CCC    vSaveParamScale(Parameter_Voltages);
+              vSaveParamScale(Parameter_Voltages);
               
 ///////////CCCCC//BORRAR DE LA ESTRUCTURA ///////////////////////////////////           stScaleParam.fTemperature = fGet_Temp_Amb_Micro();
-              //CCC    vSaveParamScale(Parameter_Temperature);
+              vSaveParamScale(Parameter_Temperature);
 
     vSound_Saved_Param();
               vSound_Saved_Param();
               
-              strTimer.cFLag_TimerE_Start = 1;
-              strTimer.cFLag_TimerE_End = 0;
+              //strTimer.cFLag_TimerE_Start = 1;
+             // strTimer.cFLag_TimerE_End = 0;
               
-              while(!strTimer.cFLag_TimerE_End)key_scan();
+              //while(!strTimer.cFLag_TimerE_End)key_scan();
+			  delay_ms(5000);
+
+			  //Key=0;while(Key!= KEY_C)key_scan();
               
               LCD_GLASS_Clear();
 }
@@ -688,7 +688,7 @@ void vCalibrate_Scale(void){
   */
 void vPreConfiguration(unsigned char cPreConfiguration){
 	
-	enum 	digi_key Value_Key_Press;
+//	enum 	digi_key Value_Key_Press;
 	unsigned char cIndex = 0;
 	
 	strTimer.cFLag_TimerD_Start = 1;
@@ -796,47 +796,23 @@ void vPreConfiguration(unsigned char cPreConfiguration){
 	stScaleParam.iCounter_Calibration = 0;
 	stScaleParam.iCounter_Configuration = 0;
 
-	strTimer.cFLag_TimerE_Start = 1;
+//	strTimer.cFLag_TimerE_Start = 1;
+	strTimer.iTimerE=1;
 	
-	Value_Key_Press = vActionKey();
+	//Value_Key_Press = vActionKey();
+	Key_scan();
 	
 	/* Espera a que se oprima la tecla 'MEM' o que pase el tiempo de 5 seg  */
-	while((Value_Key_Press != KEY_MEM) && strTimer.cFLag_TimerE_End == 0){
-		IWDG_KEY_REFRESH;
-		
-		Value_Key_Press = vActionKey();
-		
-		if(srFlagScale.bScaleOn == 0){
-			return;
-		}else if(Value_Key_Press != KEY_NULL){
-			vBeep_Key();
-		}	
-	}
+	while((Key != KEY_MEM) && strTimer.iTimerE < TimerEend){
+		Key_scan();//Value_Key_Press = vActionKey();
+	}	
 	
-	if(strTimer.cFLag_TimerE_End == 1){
+	if(strTimer.iTimerE >= TimerEend){
 		LCD_GLASS_Clear();
-		LCD_GLASS_String("  OFF", LCD_PRECIO);
-	
-		//Auto_Off_On_5m_Restart;
-		//Auto_Off_On_5m;
-	
-		while(!srFlagScale.cWait_Time_Code){
-			IWDG_KEY_REFRESH;
-			vActionKey();
-			
-			if(srFlagScale.bScaleOn == 0){
-				return;
-			}
-		}
-				
-		srFlagScale.bScaleOn = 0;
 		return;
 	}
 	
-	if(strTimer.cFLag_TimerE_End == 1){
-		/* Si se salio por tiempo no se configura la bascula */
-		LCD_GLASS_Clear();
-	}else{
+
 		vSaveParamScale(Parameter_Temperature);
 		vSaveParamScale(Parameter_Voltages);
 		vSaveParamScale(Parameter_Configuration);
@@ -850,40 +826,34 @@ void vPreConfiguration(unsigned char cPreConfiguration){
 		strTimer.cFLag_TimerE_End = 0;
 		strTimer.cFLag_TimerE_Start = 1;
 		
-		Value_Key_Press = KEY_NULL;
+		Key_scan();
 		
 		/* Espera a que se oprima la tecla 'MEM' o que pase el tiempo de 5 seg  */
-		while((Value_Key_Press != KEY_MEM) && strTimer.cFLag_TimerE_End == 0){
+		while((Key != KEY_MEM) && strTimer.cFLag_TimerE_End == 0){
 			IWDG_KEY_REFRESH;
-			Value_Key_Press = vActionKey();
+			Key_scan();//Value_Key_Press = vActionKey();
 			
 			if(srFlagScale.bScaleOn == 0){
 				return;
 			}
 		}
 		
-		if(Value_Key_Press == KEY_MEM){
+		if(Key == KEY_MEM){
 		;
 //////////DESCOMENTAR////////////////////////////////////77///////////////////////			vSpecial_Action(Funcion_Especial);
 		}
-	}
+	
 	
 	LCD_GLASS_Clear();
 	LCD_GLASS_String("  OFF", LCD_PRECIO);
-	
-	//Auto_Off_On_5m_Restart;
-	//Auto_Off_On_5m;
-	
-	while(!srFlagScale.cWait_Time_Code){
-		IWDG_KEY_REFRESH;		
-		vActionKey();
-		
-		if(srFlagScale.bScaleOn == 0){
-			return;
-		}
-	}
+
+
+	strTimer.iTimerE=1;	
+	/* Espera a que se oprima la tecla 'MEM' o que pase el tiempo de 5 seg  */
+	while(strTimer.iTimerE < TimerEend){
+		Key_scan();//Value_Key_Press = vActionKey();
+	}	
 				
-	srFlagScale.bScaleOn = 0;
 	return;
 }
 
