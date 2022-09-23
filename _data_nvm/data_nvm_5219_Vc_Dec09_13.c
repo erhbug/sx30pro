@@ -19,6 +19,8 @@
 #include "./_solidic/SDI5219_Vc_Sep02_15.h"	
 #include "./_data_nvm/data_nvm_5219_Vc_Dec09_13.h"	
 #include "./_scale/dvr_def.h"
+#include "./_display/dvr_lcd_SDI1621.h"
+#include "./customer/keyboard.h"
 
 unsigned char NRM_securty_a;						// EEPROM °²È«ÂëA
 unsigned char NRM_securty_b;	
@@ -115,14 +117,28 @@ void nvm_data_write_byte(unsigned int addr,unsigned char in_data)
 	FLASH_ENB = 0x00;
 	FLASH_ENC = 0x00;
 	EA = ea_save;
+
+	 
+
+/*	if(flash_read_u8(addr)!=in_data)
+	{  
+	  LCD_GLASS_String("-MEM-", LCD_TOTAL);
+	  while(1)delay_ms(1);
+
+	}*/
 }
 
 void flash_write_u8(unsigned int addr,unsigned char in_data)
 {
-  /****************************/
-	if( flash_read_u8(addr)!=0xFF)
-	  ClearThisButAll(addr,1);		
-  /****************************/
+  unsigned char read=0;
+	
+	/****************************/
+	read=flash_read_u8(addr);
+	if( read!=0xff ){
+	  ClearThisButAll(addr,1);	
+	  LCD_GLASS_String("CTBAL1", LCD_TOTAL);delay_ms(3000);
+	  }	
+	/****************************/
 	  nvm_data_write_byte(addr,in_data);	
 }
 
@@ -130,9 +146,21 @@ void flash_write_u16(unsigned int addr,unsigned int in_data)
 {
 	unsigned char *ptr;
 	unsigned char i;
+	unsigned int aux;
+	unsigned char txt[8];
 
 	/****************************/
-	unsigned int aux;
+	aux=flash_read_u16(addr);
+	if( aux!=0xffff ){
+	  ClearThisButAll(addr,2);	
+      sprintf(txt,"%X",addr);
+      LCD_GLASS_String(txt, LCD_PESO);
+	  LCD_GLASS_String("CTBAL2", LCD_TOTAL);
+	  delay_ms(3000);
+	}	
+	/****************************/
+
+	/****************************/	
 	aux=flash_read_u16(addr);
     ptr=(unsigned char *)&aux;
 	if( *(ptr++)!=0xFF || *(ptr++)!=0xFF)
@@ -150,13 +178,14 @@ void flash_write_u32(unsigned int addr,unsigned long in_data)
 {
 	unsigned char *ptr;
 	unsigned char i;
+	unsigned long read=0;
+	read=flash_read_u32(addr);
 
 	/****************************/
-	unsigned long aux;
-	aux=flash_read_u32(addr);
-    ptr=(unsigned char *)&aux;
-	if( *(ptr++)!=0xFF || *(ptr++)!=0xFF || *(ptr++)!=0xFF || *(ptr++)==0xFF )
-	  ClearThisButAll(addr,4);		
+	if( read!=0xffffffff ){
+	  ClearThisButAll(addr,4);
+	LCD_GLASS_String("CTBAL3", LCD_TOTAL);delay_ms(3000);
+	  }		
 	/****************************/
 
 	ptr=(unsigned char *)&in_data;
@@ -170,13 +199,15 @@ void flash_write_float32(unsigned int addr,float in_data)
 {
 	unsigned char *ptr;
 	unsigned char i;
+	float aux;
+	unsigned long read=0;
+	read=flash_read_u32(addr);
 
 	/****************************/
-	float aux;
-	aux=flash_read_float32(addr);
-    ptr=(unsigned char *)&aux;
-	if( *(ptr++)!=0xFF || *(ptr++)!=0xFF || *(ptr++)!=0xFF || *(ptr++)==0xFF )
-	  ClearThisButAll(addr,4);		
+	if( read!=0xffffffff ){
+	  ClearThisButAll(addr,4);	
+	  LCD_GLASS_String("CTBAL4", LCD_TOTAL);delay_ms(3000);
+	  }	
 	/****************************/
 
 	ptr=(unsigned char *)&in_data;
@@ -227,7 +258,7 @@ void ClearThisButAll(unsigned int Address, unsigned int IntCount){
 	unsigned int i=0;
 	unsigned int Page;	
 	//unsigned int SizePage=0x400;
-	
+
 	/*Determinar en que pagina se encuentra*/
 	Page=Address/PAGE_SIZE;
 	Page*=PAGE_SIZE;

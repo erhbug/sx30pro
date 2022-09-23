@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/23/2022 12:18:23 PAGE 1   
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/23/2022 17:43:42 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE DATA_NVM_5219_VC_DEC09_13
@@ -29,266 +29,300 @@ line level    source
   19          #include "./_solidic/SDI5219_Vc_Sep02_15.h"     
   20          #include "./_data_nvm/data_nvm_5219_Vc_Dec09_13.h"      
   21          #include "./_scale/dvr_def.h"
-  22          
-  23          unsigned char NRM_securty_a;                                            // EEPROM 安全码A
-  24          unsigned char NRM_securty_b;    
-  25          
-  26          void ClearThisButAll(unsigned int Address, unsigned int IntCount);
+  22          #include "./_display/dvr_lcd_SDI1621.h"
+  23          #include "./customer/keyboard.h"
+  24          
+  25          unsigned char NRM_securty_a;                                            // EEPROM 安全码A
+  26          unsigned char NRM_securty_b;    
   27          
-  28          volatile void nop(void){
-  29   1       unsigned int x=1;
-  30   1       x<<=1;
-  31   1      }
-  32          
-  33          unsigned char flash_read_u8(unsigned int addr)
-  34          {
-  35   1              unsigned char val;
-  36   1              val = CBYTE[addr];      
-  37   1              return(val);
-  38   1      }
-  39          
-  40          unsigned int  flash_read_u16(unsigned int addr)
-  41          {
-  42   1              unsigned int val;
-  43   1                      unsigned char *ptr;
-  44   1                      unsigned char i;
-  45   1              
-  46   1                      ptr=(unsigned char *)&val;
-  47   1                      for(i=0;i<2;i++)
-  48   1                      {  
-  49   2                        *(ptr++) =flash_read_u8(addr++);
-  50   2                      }
-  51   1                      return(val);
-  52   1      }
-  53          
-  54          unsigned long  flash_read_u32(unsigned int addr)
-C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/23/2022 12:18:23 PAGE 2   
+  28          void ClearThisButAll(unsigned int Address, unsigned int IntCount);
+  29          
+  30          volatile void nop(void){
+  31   1       unsigned int x=1;
+  32   1       x<<=1;
+  33   1      }
+  34          
+  35          unsigned char flash_read_u8(unsigned int addr)
+  36          {
+  37   1              unsigned char val;
+  38   1              val = CBYTE[addr];      
+  39   1              return(val);
+  40   1      }
+  41          
+  42          unsigned int  flash_read_u16(unsigned int addr)
+  43          {
+  44   1              unsigned int val;
+  45   1                      unsigned char *ptr;
+  46   1                      unsigned char i;
+  47   1              
+  48   1                      ptr=(unsigned char *)&val;
+  49   1                      for(i=0;i<2;i++)
+  50   1                      {  
+  51   2                        *(ptr++) =flash_read_u8(addr++);
+  52   2                      }
+  53   1                      return(val);
+  54   1      }
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/23/2022 17:43:42 PAGE 2   
 
-  55          {
-  56   1          unsigned long val;
-  57   1                      unsigned char *ptr;
-  58   1                      unsigned char i;
-  59   1              
-  60   1                      ptr=(unsigned char *)&val;
-  61   1                      for(i=0;i<4;i++)
-  62   1                      {  
-  63   2                        *(ptr++) =flash_read_u8(addr++);
-  64   2                      }
-  65   1                      return(val);
-  66   1      }
-  67          
-  68          float flash_read_float32(unsigned int addr)
-  69                  {
-  70   1                  float val;
-  71   1                      unsigned char *ptr;
-  72   1                      unsigned char i;
-  73   1              
-  74   1                      ptr=(unsigned char *)&val;
-  75   1                      for(i=0;i<4;i++)
-  76   1                      {  
-  77   2                        *(ptr++) =flash_read_u8(addr++);
-  78   2                      }
-  79   1                      return(val);
-  80   1              }
-  81          
-  82          
-  83          void nvm_data_write_byte(unsigned int addr,unsigned char in_data)
-  84          {
-  85   1              union INTpattern flash_addr;
-  86   1              bit ea_save;
-  87   1              unsigned char i=0;
-  88   1      
-  89   1          IWDG_KEY_REFRESH;
-  90   1              flash_addr.i = addr;
-  91   1              ea_save  =  EA;            // Save EA
-  92   1              EA = 0;
-  93   1              //-- 准备地址和数据 --
-  94   1              FLASH_ADDRH = flash_addr.b[0]; // point to the address you want to erase 
-  95   1              FLASH_ADDRL = flash_addr.b[1]; 
-  96   1              FLASH_DATA = in_data;   
-  97   1      
-  98   1              //-- 状态清除 --
-  99   1              FLASH_ENA = 0x00;
- 100   1              FLASH_ENB = 0x00;
- 101   1              FLASH_ENC = 0x00;
- 102   1              //-- 通过安全检验后才能启动 Flash 操作 --
- 103   1              if((NRM_securty_a == 0xaa)&&(NRM_securty_b == 0x55))
- 104   1                      FLASH_CON = 0x03;       //状态清除，执行一次FLASH_CON，将安全状态复位
- 105   1                      nop();  //延时
- 106   1              //-- 写安全码开启Flash操作许可 --               
- 107   1              FLASH_ENA = 0x05;
- 108   1              FLASH_ENB = 0x0a;
- 109   1              FLASH_ENC = 0x09;
- 110   1              //-- 通过安全检验后才能启动 Flash 操作 --
- 111   1              if((NRM_securty_a == 0xaa)&&(NRM_securty_b == 0x55))
- 112   1                      FLASH_CON = 0x03;
- 113   1              //-- 清除安全码 --
- 114   1              FLASH_ENA = 0x00;
- 115   1              FLASH_ENB = 0x00;
- 116   1              FLASH_ENC = 0x00;
-C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/23/2022 12:18:23 PAGE 3   
+  55          
+  56          unsigned long  flash_read_u32(unsigned int addr)
+  57          {
+  58   1          unsigned long val;
+  59   1                      unsigned char *ptr;
+  60   1                      unsigned char i;
+  61   1              
+  62   1                      ptr=(unsigned char *)&val;
+  63   1                      for(i=0;i<4;i++)
+  64   1                      {  
+  65   2                        *(ptr++) =flash_read_u8(addr++);
+  66   2                      }
+  67   1                      return(val);
+  68   1      }
+  69          
+  70          float flash_read_float32(unsigned int addr)
+  71                  {
+  72   1                  float val;
+  73   1                      unsigned char *ptr;
+  74   1                      unsigned char i;
+  75   1              
+  76   1                      ptr=(unsigned char *)&val;
+  77   1                      for(i=0;i<4;i++)
+  78   1                      {  
+  79   2                        *(ptr++) =flash_read_u8(addr++);
+  80   2                      }
+  81   1                      return(val);
+  82   1              }
+  83          
+  84          
+  85          void nvm_data_write_byte(unsigned int addr,unsigned char in_data)
+  86          {
+  87   1              union INTpattern flash_addr;
+  88   1              bit ea_save;
+  89   1              unsigned char i=0;
+  90   1      
+  91   1          IWDG_KEY_REFRESH;
+  92   1              flash_addr.i = addr;
+  93   1              ea_save  =  EA;            // Save EA
+  94   1              EA = 0;
+  95   1              //-- 准备地址和数据 --
+  96   1              FLASH_ADDRH = flash_addr.b[0]; // point to the address you want to erase 
+  97   1              FLASH_ADDRL = flash_addr.b[1]; 
+  98   1              FLASH_DATA = in_data;   
+  99   1      
+ 100   1              //-- 状态清除 --
+ 101   1              FLASH_ENA = 0x00;
+ 102   1              FLASH_ENB = 0x00;
+ 103   1              FLASH_ENC = 0x00;
+ 104   1              //-- 通过安全检验后才能启动 Flash 操作 --
+ 105   1              if((NRM_securty_a == 0xaa)&&(NRM_securty_b == 0x55))
+ 106   1                      FLASH_CON = 0x03;       //状态清除，执行一次FLASH_CON，将安全状态复位
+ 107   1                      nop();  //延时
+ 108   1              //-- 写安全码开启Flash操作许可 --               
+ 109   1              FLASH_ENA = 0x05;
+ 110   1              FLASH_ENB = 0x0a;
+ 111   1              FLASH_ENC = 0x09;
+ 112   1              //-- 通过安全检验后才能启动 Flash 操作 --
+ 113   1              if((NRM_securty_a == 0xaa)&&(NRM_securty_b == 0x55))
+ 114   1                      FLASH_CON = 0x03;
+ 115   1              //-- 清除安全码 --
+ 116   1              FLASH_ENA = 0x00;
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/23/2022 17:43:42 PAGE 3   
 
- 117   1              EA = ea_save;
- 118   1      }
- 119          
- 120          void flash_write_u8(unsigned int addr,unsigned char in_data)
- 121          {
- 122   1        /****************************/
- 123   1              if( flash_read_u8(addr)!=0xFF)
- 124   1                ClearThisButAll(addr,1);              
- 125   1        /****************************/
- 126   1                nvm_data_write_byte(addr,in_data);    
- 127   1      }
- 128          
- 129          void flash_write_u16(unsigned int addr,unsigned int in_data)
- 130          {
- 131   1              unsigned char *ptr;
- 132   1              unsigned char i;
- 133   1      
- 134   1              /****************************/
- 135   1              unsigned int aux;
- 136   1              aux=flash_read_u16(addr);
- 137   1          ptr=(unsigned char *)&aux;
- 138   1              if( *(ptr++)!=0xFF || *(ptr++)!=0xFF)
- 139   1                ClearThisButAll(addr,2);              
- 140   1              /****************************/
- 141   1      
- 142   1              ptr=(unsigned char *)&in_data;
- 143   1              for(i=0;i<2;i++)
- 144   1              {
- 145   2                nvm_data_write_byte(addr++,*(ptr++));
- 146   2              }       
- 147   1      }
- 148          
- 149          void flash_write_u32(unsigned int addr,unsigned long in_data)
- 150          {
- 151   1              unsigned char *ptr;
- 152   1              unsigned char i;
- 153   1      
- 154   1              /****************************/
- 155   1              unsigned long aux;
- 156   1              aux=flash_read_u32(addr);
- 157   1          ptr=(unsigned char *)&aux;
- 158   1              if( *(ptr++)!=0xFF || *(ptr++)!=0xFF || *(ptr++)!=0xFF || *(ptr++)==0xFF )
- 159   1                ClearThisButAll(addr,4);              
- 160   1              /****************************/
- 161   1      
- 162   1              ptr=(unsigned char *)&in_data;
- 163   1              for(i=0;i<4;i++)
- 164   1              {
- 165   2                nvm_data_write_byte(addr++,*(ptr++));
- 166   2              }       
- 167   1      }
- 168          
- 169          void flash_write_float32(unsigned int addr,float in_data)
- 170          {
- 171   1              unsigned char *ptr;
- 172   1              unsigned char i;
- 173   1      
- 174   1              /****************************/
- 175   1              float aux;
- 176   1              aux=flash_read_float32(addr);
- 177   1          ptr=(unsigned char *)&aux;
- 178   1              if( *(ptr++)!=0xFF || *(ptr++)!=0xFF || *(ptr++)!=0xFF || *(ptr++)==0xFF )
-C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/23/2022 12:18:23 PAGE 4   
+ 117   1              FLASH_ENB = 0x00;
+ 118   1              FLASH_ENC = 0x00;
+ 119   1              EA = ea_save;
+ 120   1      
+ 121   1               
+ 122   1      
+ 123   1      /*      if(flash_read_u8(addr)!=in_data)
+ 124   1              {  
+ 125   1                LCD_GLASS_String("-MEM-", LCD_TOTAL);
+ 126   1                while(1)delay_ms(1);
+ 127   1      
+ 128   1              }*/
+ 129   1      }
+ 130          
+ 131          void flash_write_u8(unsigned int addr,unsigned char in_data)
+ 132          {
+ 133   1        unsigned char read=0;
+ 134   1              
+ 135   1              /****************************/
+ 136   1              read=flash_read_u8(addr);
+ 137   1              if( read!=0xff ){
+ 138   2                ClearThisButAll(addr,1);      
+ 139   2                LCD_GLASS_String("CTBAL1", LCD_TOTAL);delay_ms(3000);
+ 140   2                }     
+ 141   1              /****************************/
+ 142   1                nvm_data_write_byte(addr,in_data);    
+ 143   1      }
+ 144          
+ 145          void flash_write_u16(unsigned int addr,unsigned int in_data)
+ 146          {
+ 147   1              unsigned char *ptr;
+ 148   1              unsigned char i;
+ 149   1              unsigned int aux;
+ 150   1              unsigned char txt[8];
+ 151   1      
+ 152   1              /****************************/
+ 153   1              aux=flash_read_u16(addr);
+ 154   1              if( aux!=0xffff ){
+ 155   2                ClearThisButAll(addr,2);      
+ 156   2            sprintf(txt,"%X",addr);
+ 157   2            LCD_GLASS_String(txt, LCD_PESO);
+ 158   2                LCD_GLASS_String("CTBAL2", LCD_TOTAL);
+ 159   2                delay_ms(3000);
+ 160   2              }       
+ 161   1              /****************************/
+ 162   1      
+ 163   1              /****************************/  
+ 164   1              aux=flash_read_u16(addr);
+ 165   1          ptr=(unsigned char *)&aux;
+ 166   1              if( *(ptr++)!=0xFF || *(ptr++)!=0xFF)
+ 167   1                ClearThisButAll(addr,2);              
+ 168   1              /****************************/
+ 169   1      
+ 170   1              ptr=(unsigned char *)&in_data;
+ 171   1              for(i=0;i<2;i++)
+ 172   1              {
+ 173   2                nvm_data_write_byte(addr++,*(ptr++));
+ 174   2              }       
+ 175   1      }
+ 176          
+ 177          void flash_write_u32(unsigned int addr,unsigned long in_data)
+ 178          {
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/23/2022 17:43:42 PAGE 4   
 
- 179   1                ClearThisButAll(addr,4);              
- 180   1              /****************************/
- 181   1      
- 182   1              ptr=(unsigned char *)&in_data;
- 183   1              for(i=0;i<4;i++)
- 184   1              {
- 185   2                nvm_data_write_byte(addr++,*(ptr++));
- 186   2              }       
- 187   1      }
- 188          
- 189          //EEPROM BLOCK(1k) 擦除
- 190          //addr = （0 - 31）* 1024 ,擦除对应的Block地址
- 191          //调用前需要:
- 192          //NRM_securty_a,NRM_securty_b
- 193          //flash操作关闭总中断，操作完后会开启总中断(注意)
- 194          void e2rom_erase(unsigned int addr)
- 195          {unsigned char i=0;
- 196   1              union INTpattern flash_addr;
- 197   1              bit ea_save;
- 198   1              flash_addr.i = addr;
- 199   1              ea_save  =  EA;            // Save EA
- 200   1              EA = 0;
- 201   1              FLASH_ADDRH = flash_addr.b[0]; // point to the address you want to erase 
- 202   1              FLASH_ADDRL = flash_addr.b[1]; 
- 203   1              //-- 状态清除 --
- 204   1              FLASH_ENA = 0x00;
- 205   1              FLASH_ENB = 0x00;
- 206   1              FLASH_ENC = 0x00;
- 207   1              //-- 通过安全检验后才能启动 Flash 操作 --
- 208   1              if((NRM_securty_a == 0xaa)&&(NRM_securty_b == 0x55))
- 209   1                      FLASH_CON = 0x03;       //状态清除，执行一次FLASH_CON，将安全状态复位
- 210   1              nop();
- 211   1              //-- 写安全码开启Flash操作许可 --
- 212   1              FLASH_ENA = 0x05;
- 213   1              FLASH_ENB = 0x0a;
- 214   1              FLASH_ENC = 0x09;
- 215   1              //-- 通过安全检验后才能启动 Flash 操作 --
- 216   1              if((NRM_securty_a == 0xaa)&&(NRM_securty_b == 0x55))
- 217   1                      FLASH_CON = 0x0c;
- 218   1              //-- 清除安全码 --
- 219   1              FLASH_ENA = 0x00;
- 220   1              FLASH_ENB = 0x00;
- 221   1              FLASH_ENC = 0x00;
- 222   1              EA = ea_save;   
- 223   1      }
- 224          
- 225          void ClearThisButAll(unsigned int Address, unsigned int IntCount){
- 226   1              unsigned char Aux=0;    
- 227   1              unsigned int i=0;
- 228   1              unsigned int Page;      
- 229   1              //unsigned int SizePage=0x400;
- 230   1              
- 231   1              /*Determinar en que pagina se encuentra*/
- 232   1              Page=Address/PAGE_SIZE;
- 233   1              Page*=PAGE_SIZE;
- 234   1              /**************************************/
- 235   1      
- 236   1              /*Verificar que la pagina auxiliar este limpia, de lo contrario borrarla*/
- 237   1              for(i=0;i<10;i++){              
- 238   2                      if(flash_read_u8(ADDRESS_AUX_PAGE+i) != 0xFF)
- 239   2                              e2rom_erase(ADDRESS_AUX_PAGE);//vSend_String_Usart(&huart1,"Pag Auxiliar Limpia\r\n");          
- 240   2              }       
-C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/23/2022 12:18:23 PAGE 5   
+ 179   1              unsigned char *ptr;
+ 180   1              unsigned char i;
+ 181   1              unsigned long read=0;
+ 182   1              read=flash_read_u32(addr);
+ 183   1      
+ 184   1              /****************************/
+ 185   1              if( read!=0xffffffff ){
+ 186   2                ClearThisButAll(addr,4);
+ 187   2              LCD_GLASS_String("CTBAL3", LCD_TOTAL);delay_ms(3000);
+ 188   2                }             
+ 189   1              /****************************/
+ 190   1      
+ 191   1              ptr=(unsigned char *)&in_data;
+ 192   1              for(i=0;i<4;i++)
+ 193   1              {
+ 194   2                nvm_data_write_byte(addr++,*(ptr++));
+ 195   2              }       
+ 196   1      }
+ 197          
+ 198          void flash_write_float32(unsigned int addr,float in_data)
+ 199          {
+ 200   1              unsigned char *ptr;
+ 201   1              unsigned char i;
+ 202   1              float aux;
+ 203   1              unsigned long read=0;
+ 204   1              read=flash_read_u32(addr);
+ 205   1      
+ 206   1              /****************************/
+ 207   1              if( read!=0xffffffff ){
+ 208   2                ClearThisButAll(addr,4);      
+ 209   2                LCD_GLASS_String("CTBAL4", LCD_TOTAL);delay_ms(3000);
+ 210   2                }     
+ 211   1              /****************************/
+ 212   1      
+ 213   1              ptr=(unsigned char *)&in_data;
+ 214   1              for(i=0;i<4;i++)
+ 215   1              {
+ 216   2                nvm_data_write_byte(addr++,*(ptr++));
+ 217   2              }       
+ 218   1      }
+*** WARNING C280 IN LINE 202 OF _DATA_NVM\DATA_NVM_5219_VC_DEC09_13.C: 'aux': unreferenced local variable
+ 219          
+ 220          //EEPROM BLOCK(1k) 擦除
+ 221          //addr = （0 - 31）* 1024 ,擦除对应的Block地址
+ 222          //调用前需要:
+ 223          //NRM_securty_a,NRM_securty_b
+ 224          //flash操作关闭总中断，操作完后会开启总中断(注意)
+ 225          void e2rom_erase(unsigned int addr)
+ 226          {unsigned char i=0;
+ 227   1              union INTpattern flash_addr;
+ 228   1              bit ea_save;
+ 229   1              flash_addr.i = addr;
+ 230   1              ea_save  =  EA;            // Save EA
+ 231   1              EA = 0;
+ 232   1              FLASH_ADDRH = flash_addr.b[0]; // point to the address you want to erase 
+ 233   1              FLASH_ADDRL = flash_addr.b[1]; 
+ 234   1              //-- 状态清除 --
+ 235   1              FLASH_ENA = 0x00;
+ 236   1              FLASH_ENB = 0x00;
+ 237   1              FLASH_ENC = 0x00;
+ 238   1              //-- 通过安全检验后才能启动 Flash 操作 --
+ 239   1              if((NRM_securty_a == 0xaa)&&(NRM_securty_b == 0x55))
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/23/2022 17:43:42 PAGE 5   
 
- 241   1              /***********************************************************************/
- 242   1              
- 243   1              /*Copiar de la pagina origen a la auxiliar*/
- 244   1              for(i=0;i<PAGE_SIZE;i++){
- 245   2                      if(i+Page==Address)/*Copiar SizeToCopy enteros excepto IntCount enteros a partir de Address */
- 246   2                              i+=IntCount;    
- 247   2                      nvm_data_write_byte(ADDRESS_AUX_PAGE + i, flash_read_u8(Page + i));             
- 248   2        }
- 249   1              /****************************************/      
- 250   1              
- 251   1              /*Borrar pagina de origen*/
- 252   1              e2rom_erase(Page);      
- 253   1              /*************************/
- 254   1      
- 255   1              /*Regresar datos a pagina origen*/
- 256   1              for(i=0;i<PAGE_SIZE;i++){
- 257   2                      nvm_data_write_byte(Page + i, flash_read_u8(ADDRESS_AUX_PAGE + i));             
- 258   2              }
- 259   1              /********************************/
- 260   1      
- 261   1              /*Borrar pagina auxiliar*/
- 262   1              e2rom_erase(ADDRESS_AUX_PAGE);  
- 263   1              /************************/
- 264   1      }
- 265          
- 266          
- 267          
+ 240   1                      FLASH_CON = 0x03;       //状态清除，执行一次FLASH_CON，将安全状态复位
+ 241   1              nop();
+ 242   1              //-- 写安全码开启Flash操作许可 --
+ 243   1              FLASH_ENA = 0x05;
+ 244   1              FLASH_ENB = 0x0a;
+ 245   1              FLASH_ENC = 0x09;
+ 246   1              //-- 通过安全检验后才能启动 Flash 操作 --
+ 247   1              if((NRM_securty_a == 0xaa)&&(NRM_securty_b == 0x55))
+ 248   1                      FLASH_CON = 0x0c;
+ 249   1              //-- 清除安全码 --
+ 250   1              FLASH_ENA = 0x00;
+ 251   1              FLASH_ENB = 0x00;
+ 252   1              FLASH_ENC = 0x00;
+ 253   1              EA = ea_save;   
+ 254   1      }
+ 255          
+ 256          void ClearThisButAll(unsigned int Address, unsigned int IntCount){
+ 257   1              unsigned char Aux=0;    
+ 258   1              unsigned int i=0;
+ 259   1              unsigned int Page;      
+ 260   1              //unsigned int SizePage=0x400;
+ 261   1      
+ 262   1              /*Determinar en que pagina se encuentra*/
+ 263   1              Page=Address/PAGE_SIZE;
+ 264   1              Page*=PAGE_SIZE;
+ 265   1              /**************************************/
+ 266   1      
+ 267   1              /*Verificar que la pagina auxiliar este limpia, de lo contrario borrarla*/
+ 268   1              for(i=0;i<10;i++){              
+ 269   2                      if(flash_read_u8(ADDRESS_AUX_PAGE+i) != 0xFF)
+ 270   2                              e2rom_erase(ADDRESS_AUX_PAGE);//vSend_String_Usart(&huart1,"Pag Auxiliar Limpia\r\n");          
+ 271   2              }       
+ 272   1              /***********************************************************************/
+ 273   1              
+ 274   1              /*Copiar de la pagina origen a la auxiliar*/
+ 275   1              for(i=0;i<PAGE_SIZE;i++){
+ 276   2                      if(i+Page==Address)/*Copiar SizeToCopy enteros excepto IntCount enteros a partir de Address */
+ 277   2                              i+=IntCount;    
+ 278   2                      nvm_data_write_byte(ADDRESS_AUX_PAGE + i, flash_read_u8(Page + i));             
+ 279   2        }
+ 280   1              /****************************************/      
+ 281   1              
+ 282   1              /*Borrar pagina de origen*/
+ 283   1              e2rom_erase(Page);      
+ 284   1              /*************************/
+ 285   1      
+ 286   1              /*Regresar datos a pagina origen*/
+ 287   1              for(i=0;i<PAGE_SIZE;i++){
+ 288   2                      nvm_data_write_byte(Page + i, flash_read_u8(ADDRESS_AUX_PAGE + i));             
+ 289   2              }
+ 290   1              /********************************/
+ 291   1      
+ 292   1              /*Borrar pagina auxiliar*/
+ 293   1              e2rom_erase(ADDRESS_AUX_PAGE);  
+ 294   1              /************************/
+ 295   1      }
+ 296          
+ 297          
+ 298          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1233    ----
-   CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =      2      76
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/23/2022 17:43:42 PAGE 6   
+
+   CODE SIZE        =   1279    ----
+   CONSTANT SIZE    =     31    ----
+   XDATA SIZE       =      2      88
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
@@ -296,4 +330,4 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

@@ -43,33 +43,29 @@
 #define ADDR_DECIMAL_PRECIO 		ADDRESS_SCALE_CONFIG_PAGE + 24	/* 1 byte */
 #define ADDR_ZERO_TRACKING 			ADDRESS_SCALE_CONFIG_PAGE + 25	/* 1 byte */
 #define ADDR_FORMATO_IMPRESION	    ADDRESS_SCALE_CONFIG_PAGE + 26	/* 1 byte */
-#define ADDR_MSG_UNLOAD 				 ADDRESS_SCALE_CONFIG_PAGE + 27	/* 1 byte */
-#define ADDR_TIME_OFF 					 ADDRESS_SCALE_CONFIG_PAGE + 28	/* 1 byte */
+#define ADDR_MSG_UNLOAD 		    ADDRESS_SCALE_CONFIG_PAGE + 27	/* 1 byte */
+#define ADDR_TIME_OFF 				ADDRESS_SCALE_CONFIG_PAGE + 28	/* 1 byte */
+#define ADDR_MODELO					ADDRESS_SCALE_CONFIG_PAGE + 29 /* 1 byte */
+#define	ADDR_BACKLIGHT				ADDRESS_SCALE_CONFIG_PAGE + 30 /* 1 byte */
+#define ADDR_MSGBAT					ADDRESS_SCALE_CONFIG_PAGE + 31 /* 1 byte */
+//#define ADDR_DEBUG				ADDRESS_SCALE_CONFIG_PAGE + 43 /* 2 byte */
+#define ADDR_COUNT_RANGE			ADDRESS_SCALE_CONFIG_PAGE + 32 /* 2 byte */
+#define ADDR_MONEDA					ADDRESS_SCALE_CONFIG_PAGE + 34 /* 1 byte */
+#define ADDR_DECIMAL_WEIGHT			ADDRESS_SCALE_CONFIG_PAGE + 35  /* 2 bytes */
+#define ADDR_TEMPERATURE			ADDRESS_SCALE_CONFIG_PAGE + 37 	/* 4 Bytes */
+#define	ADDR_VOLT_BATT				ADDRESS_SCALE_CONFIG_PAGE + 41  /* 4 Bytes */
+#define	ADDR_VOLT_ADAP				ADDRESS_SCALE_CONFIG_PAGE + 45  /* 4 Bytes */
+#define ADDR_SAVEBATT				ADDRESS_SCALE_CONFIG_PAGE + 49  /* 1 byte */
+#define ADDR_DIVISION_MENOR			ADDRESS_SCALE_CONFIG_PAGE + 50 	/* 2 bytes */
+#define ADDR_MULTIRANGO				ADDRESS_SCALE_CONFIG_PAGE + 52 	/* 1 byte */
+#define ADDR_DIVISION_MENORMENOR    ADDRESS_SCALE_CONFIG_PAGE + 53 	/* 2 bytes */
 
-#define ADDR_MODELO							 ADDRESS_SCALE_CONFIG_PAGE + 38 /* 1 byte */
-#define	ADDR_BACKLIGHT					 ADDRESS_SCALE_CONFIG_PAGE + 40 /* 1 byte */
-#define ADDR_MSGBAT							 ADDRESS_SCALE_CONFIG_PAGE + 42 /* 1 byte */
-//#define ADDR_DEBUG							 ADDRESS_SCALE_CONFIG_PAGE + 43 /* 2 byte */
-#define ADDR_COUNT_RANGE				 ADDRESS_SCALE_CONFIG_PAGE + 55 /* 2 byte */
-#define ADDR_MONEDA							 ADDRESS_SCALE_CONFIG_PAGE + 60 /* 1 byte */
-
-#define ADDR_DECIMAL_WEIGHT			 ADDRESS_SCALE_CONFIG_PAGE + 84  /* 2 bytes */
-#define ADDR_TEMPERATURE				 ADDRESS_SCALE_CONFIG_PAGE + 86 	/* 4 Bytes */
-#define	ADDR_VOLT_BATT					 ADDRESS_SCALE_CONFIG_PAGE + 90  /* 4 Bytes */
-#define	ADDR_VOLT_ADAP					 ADDRESS_SCALE_CONFIG_PAGE + 94  /* 4 Bytes */
-#define ADDR_SAVEBATT						 ADDRESS_SCALE_CONFIG_PAGE + 98  /* 1 byte */
-
-#define ADDR_DIVISION_MENOR			 ADDRESS_SCALE_CONFIG_PAGE + 100 	/* 2 bytes */
-#define ADDR_MULTIRANGO					 ADDRESS_SCALE_CONFIG_PAGE + 102 	/* 1 byte */
-
-#define ADDR_DIVISION_MENORMENOR  ADDRESS_SCALE_CONFIG_PAGE + 107 	/* 2 bytes */
-
-#define ADDR_COUNTER_CALIBRATION  ADDRESS_QLTY_AND_CNTRS_PAGE + 29 	/* 1 byte */
-#define ADDR_COUNTER_CONFIGURATION  ADDRESS_QLTY_AND_CNTRS_PAGE + 31 	/* 1 byte */
-#define ADDR_COUNT_OVERLOAD			 ADDRESS_QLTY_AND_CNTRS_PAGE + 61  /* 2 bytes */
-#define ADDR_VALUE_OVERLOAD			 ADDRESS_QLTY_AND_CNTRS_PAGE + 63  /* 4 bytes */
-#define ADDR_ERRORBATT					 ADDRESS_QLTY_AND_CNTRS_PAGE + 99  /* 1 byte */
-#define ADDR_VENTA_TOTAL				 ADDRESS_QLTY_AND_CNTRS_PAGE + 103   /* 4 bytes */
+#define ADDR_COUNTER_CALIBRATION    ADDRESS_QLTY_AND_CNTRS_PAGE + 0 	/* 2 byte */
+#define ADDR_COUNTER_CONFIGURATION  ADDRESS_QLTY_AND_CNTRS_PAGE + 2 	/* 2 byte */
+#define ADDR_COUNT_OVERLOAD		    ADDRESS_QLTY_AND_CNTRS_PAGE + 4  /* 2 bytes */
+#define ADDR_VALUE_OVERLOAD		    ADDRESS_QLTY_AND_CNTRS_PAGE + 6  /* 4 bytes */
+#define ADDR_ERRORBATT			    ADDRESS_QLTY_AND_CNTRS_PAGE + 10  /* 1 byte */
+#define ADDR_VENTA_TOTAL		    ADDRESS_QLTY_AND_CNTRS_PAGE + 11   /* 4 bytes */
 
 float fWeightScale = 0;									/* Contiene el valor del peso leido */
 float fWeightScaleBefore = 0;
@@ -173,13 +169,19 @@ void vReadParamScale(void){
   ******************************************************************************
   */
 void vSaveParamScale(unsigned char cType_Parameter){
+
 	/* Habilita la escritura/lectura en la EEPROM */
 	NRM_securty_a = 0xaa;
 	NRM_securty_b = 0x55;
 
+	e2rom_erase(ADDRESS_PAGE_26);
+	e2rom_erase(ADDRESS_PAGE_27);
+	e2rom_erase(ADDRESS_PAGE_28);
+	e2rom_erase(ADDRESS_PAGE_29);
+
 	switch(cType_Parameter){
 
-		case Parameter_Calibration:		
+		case Parameter_Calibration:	//ok	
 			flash_write_u8(ADDR_SET_CALIBRATE, 1);
 			flash_write_float32(ADDR_CAPACITY_CALI, stScaleParam.fCapacityCali);
 			flash_write_float32(ADDR_POINT_ZERO, stScaleParam.fPointZeroCali);
@@ -191,8 +193,7 @@ void vSaveParamScale(unsigned char cType_Parameter){
 			flash_write_u16(ADDR_COUNTER_CALIBRATION, stScaleParam.iCounter_Calibration);		
 			break;
 			
-		case Parameter_Configuration:
-		
+		case Parameter_Configuration:	
 			flash_write_u8(ADDR_LENGUAGE, stScaleParam.cLenguage);
 			flash_write_u8(ADDR_UNITS, stScaleParam.cUnits);		
 			flash_write_u16(ADDR_CAPACITY, stScaleParam.iCapacity);
@@ -211,14 +212,15 @@ void vSaveParamScale(unsigned char cType_Parameter){
 			flash_write_u16(ADDR_COUNTER_CONFIGURATION, stScaleParam.iCounter_Configuration);
 			flash_write_u8(ADDR_COUNT_RANGE, stScaleParam.cCountRange);
 			flash_write_u8(ADDR_MONEDA, stScaleParam.cMoneda);		
-			flash_write_u16(ADDR_COUNT_OVERLOAD, stScaleParam.iCountOverload);		
+			flash_write_u16(ADDR_COUNT_OVERLOAD, stScaleParam.iCountOverload);	
+
 			flash_write_float32(ADDR_VALUE_OVERLOAD, stScaleParam.fValueOverload);	
+
 			flash_write_u8(ADDR_DECIMAL_WEIGHT, stScaleParam.cWeightDecimal);	
 			flash_write_u8(ADDR_SAVEBATT, stScaleParam.cSaveBattery);			
 			flash_write_u8(ADDR_ERRORBATT, srFlagScale.bShowErroBat);
 			flash_write_u8(ADDR_MULTIRANGO, stScaleParam.cMultirango);
-			flash_write_u8(ADDR_FORMATO_IMPRESION, stScaleParam.cFormatoImpresion);
-			
+			flash_write_u8(ADDR_FORMATO_IMPRESION, stScaleParam.cFormatoImpresion);		
 			break;
 	
 		case Parameter_Count_Configuration:
@@ -622,6 +624,9 @@ void vCalibrate_Scale(void){
               fAuxCountAdcFinal = stScaleParam.fCapacityCali;
               
               fAuxCountDif = (fAuxCountAdcFinal - fAuxCountAdcInicial);
+
+			        LCD_GLASS_Float(fAuxCountDif, 2, LCD_TOTAL);delay_ms(5000);
+
               fAuxCountDif    *= (100/stScaleParam.iLoadPorcRefer);
               
               stScaleParam.fCapacityCali -= stScaleParam.fPointZeroCali;
@@ -812,12 +817,12 @@ void vPreConfiguration(unsigned char cPreConfiguration){
 	}
 	
 
-//		vSaveParamScale(Parameter_Temperature);
-		vSaveParamScale(Parameter_Voltages);
-		vSaveParamScale(Parameter_Configuration);
-		vSaveParamScale(Parameter_Calibration);
-		vSaveParamScale(Parameter_Register);
+		vSaveParamScale(Parameter_Voltages); 
 		
+		 vSaveParamScale(Parameter_Calibration);
+	    	vSaveParamScale(Parameter_Register);
+		vSaveParamScale(Parameter_Configuration);
+
 		LCD_GLASS_String("SAVED", LCD_PRECIO);
 		vSound_Saved_Param();
 		vSound_Saved_Param();
@@ -838,14 +843,14 @@ void vPreConfiguration(unsigned char cPreConfiguration){
 	
 	
 	LCD_GLASS_Clear();
-	LCD_GLASS_String("  OFF", LCD_PRECIO);
+	//LCD_GLASS_String("  OFF", LCD_PRECIO);
 
 
-	strTimer.iTimerE=1;	
+//	strTimer.iTimerE=1;	
 	/* Espera a que se oprima la tecla 'MEM' o que pase el tiempo de 5 seg  */
-	while(strTimer.iTimerE < TimerEend){
-		Key_scan();//Value_Key_Press = vActionKey();
-	}	
+//	while(strTimer.iTimerE < TimerEend){
+//		Key_scan();//Value_Key_Press = vActionKey();
+//	}	
 				
 	return;
 }
@@ -1149,7 +1154,7 @@ void vCalculate_Weight (void){
 Se toman 3 lecturas para garantizar el peso al realizar las sumas c/precio fijo, 
 si no hay precio fijo realiza solo una lectura de forma natural.
 ******************/	
-	/*char i = 0, cCountPrecioFijo = 0;
+	char i = 0, cCountPrecioFijo = 0;
 
 	if(srFlagScale.bFlagFijarPRecio){	
 		cCountPrecioFijo = 3;						
@@ -1200,7 +1205,7 @@ si no hay precio fijo realiza solo una lectura de forma natural.
 		srFlagScale.bFlagWeightNeg = 0;
 	}
 	
-	stScaleParam.fWeightScale = fWeightScale;*/
+	stScaleParam.fWeightScale = fWeightScale;
 }
 
 /**

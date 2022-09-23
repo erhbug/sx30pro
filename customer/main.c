@@ -11,7 +11,7 @@
 #include "./_scale/dvr_scale.h"
 #include <stdio.h>
 
-
+extern float fWeightScale;	
 
 unsigned int convertidorADC(void);
 void TestEEPROM(void);
@@ -36,24 +36,36 @@ void main(void)
   init_int_timer0();
 
 	LCD_GLASS_Init(); 
-	vBeep_Key();
-    LCD_GLASS_All_On();
-	delay_ms(1000);
+//	vBeep_Key();
+  //  LCD_GLASS_All_On();
+//	delay_ms(1000);
 	LCD_GLASS_Clear();
-	LCD_GLASS_String("-----",LCD_PRECIO); 
-	LCD_GLASS_String("-----", LCD_PESO);
-    LCD_GLASS_String("------", LCD_TOTAL);
-	delay_ms(1000);
+//	LCD_GLASS_String("-----",LCD_PRECIO); 
+//	LCD_GLASS_String("-----", LCD_PESO);
 //	LCD_GLASS_Float(1234.5,2,LCD_TOTAL);
 //	vSound_Saved_Param();
 	// vSound_Saved_Param();
-    vPreConfiguration(PreConfig30KG);
+
+	delay_ms(5000);
+    vReadParamScale();
+	if(stScaleParam.iCapacity != 30)
+	vPreConfiguration(PreConfig30KG);
+	 if(stScaleParam.fFactorCalibrate<1)
+	 vCalibrate_Scale();
+	 	
+//	LCD_GLASS_Float(stScaleParam.fCapacityCali,2,LCD_TOTAL);
+//vCalibrate_Scale();
+	 
+	// 
+	
 // fStablePoint(5, 1, 0);
- vCalibrate_Scale();
  
-TestEEPROM();
+ 
+//TestEEPROM();
  while(1){  ; 
     key_scan();
+	vCalculate_Weight();
+	LCD_GLASS_Float(fWeightScale, 2,  LCD_PESO);
 //	sprintf(txt,"%d ",(int)(Key));
 //	LCD_GLASS_String(txt,LCD_PESO);
 
@@ -70,7 +82,7 @@ TestEEPROM();
     //delay_ms(5000);
 //	P0|= (1<<5);
 //	voltaje=convertidorADC()*(3.3/255);
- //	LCD_GLASS_Float(peso, 2,  LCD_TOTAL);
+ //	
 //	LCD_GLASS_Float(voltaje, 2, LCD_PESO);
 
 
