@@ -281,7 +281,7 @@ float fStablePoint(unsigned char cSetCountBack, unsigned char cShowCount, unsign
 	long int cCountBack = cSetCountBack;			/* Contador de regresion */
 	float fActualWeightAdc=0;						/* Alamacena el peso actual valores adc */
 	float fWeightAdc = 0;								/* Almacena el valor referencia */
-	float fLimitRange = 6;//CCC  (float)stScaleParam.cCountRange;
+	float fLimitRange = 6;//CCC (float)stScaleParam.cCountRange;
 	int i=0;
 	
 	cNumber_Count = 0;
