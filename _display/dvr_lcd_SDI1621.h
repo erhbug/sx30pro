@@ -33,10 +33,6 @@
 #define LCD_DATA_ON				P2 |= 0x08 
 #define LCD_DATA_OFF			P2 &= 0xF7 
 
-///////////////////////////////////////////////////////////////////////////////
-#define LCD_BufferSize          16
-#define LCD_Address							0x70
-
 #define SYMBOL_ALARM_HI	7
 #define SYMBOL_MENOS		8
 #define SYMBOL_ALARM		9
@@ -56,12 +52,6 @@
 #define SYMBOL_X		4
 #define SYMBOL_Y		5
 #define SYMBOL_ALL	6
-
-
-#define Blink_OFF       0
-#define Blink_500mHz    2
-#define Blink_1Hz       4
-#define Blink_2Hz	    6
 
 
 void LCD_GLASS_Init(void);

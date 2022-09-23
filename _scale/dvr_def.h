@@ -22,8 +22,8 @@
 */
 #define Number_Count_Sec	1000
 
-#define Beep_On_Key						strTimer.cFLag_TimerA_Start = 1
-#define Time_Sleep					strTimer.cFLag_TimerB_Start = 1; strTimer.cFLag_TimerB_End = 0
+#define Beep_On_Key						strTimer.iTimerA = 1
+#define Time_Sleep					strTimer.iTimerB = 1//; strTimer.cFLag_TimerB_End = 0
 
 /*#define Auto_Off_On_15m 				strTimer.iTimerMinuteF = 60*15;	strTimer.cFLag_TimerF_Start = 1
 #define Auto_Off_On_5m 					strTimer.iTimerMinuteF = 60*5;	strTimer.cFLag_TimerF_Start = 1
@@ -56,7 +56,7 @@
 #define Parameter_Count_Calibration				11
 #define Parameter_Count_Configuration			12
 #define Parameter_Voltages								13
-#define Parameter_Temperature							14
+//#define Parameter_Temperature							14
 #define Parameter_Backlight								15
 
 #define ESPANOL 1

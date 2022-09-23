@@ -40,19 +40,18 @@ void main(void)
     LCD_GLASS_All_On();
 	delay_ms(1000);
 	LCD_GLASS_Clear();
-	LCD_GLASS_String("A1 A2",LCD_PRECIO); 
-	LCD_GLASS_String("b.3. .b.4.", LCD_PESO);
-    LCD_GLASS_String(" 1234.5", LCD_TOTAL);
-
-	LCD_GLASS_String("b.3. .b.4.", LCD_PRECIO);
-	delay_ms(5000);
-	LCD_GLASS_Float(1234.5,2,LCD_TOTAL);
+	LCD_GLASS_String("-----",LCD_PRECIO); 
+	LCD_GLASS_String("-----", LCD_PESO);
+    LCD_GLASS_String("------", LCD_TOTAL);
+	delay_ms(1000);
+//	LCD_GLASS_Float(1234.5,2,LCD_TOTAL);
 //	vSound_Saved_Param();
 	// vSound_Saved_Param();
-//vPreConfiguration(PreConfig30KG);
- //vCalibrate_Scale();
- //
-//TestEEPROM();
+    vPreConfiguration(PreConfig30KG);
+// fStablePoint(5, 1, 0);
+// vCalibrate_Scale();
+ 
+TestEEPROM();
  while(1){  ; 
     key_scan();
 //	sprintf(txt,"%d ",(int)(Key));
@@ -176,12 +175,12 @@ static void timer0(void) interrupt 1
 {		
 	
 		/* 200mS*/
-	if(strTimer.cFLag_TimerA_Start){
+/*	if(strTimer.cFLag_TimerA_Start){
 		strTimer.iTimerA = 200;//200;//700; //891
 		//strTimer.cFLag_TimerA_Start = 0;
 		strTimer.cFLag_TimerA_On = 1;
 		strTimer.cFLag_TimerA_End = 0;
-	}
+	}*/
 
 	/* 5S*/
 /*	if(strTimer.cFLag_TimerE_Start){
@@ -193,13 +192,9 @@ static void timer0(void) interrupt 1
 */
 
 	/*Accion de desbordamiento del timer */
-	if(strTimer.cFLag_TimerA_On){
+/*	if(strTimer.cFLag_TimerA_On){
 		
-		/*if(stScaleParam.cTypeBeeper == BEEPER_SMT){
-			GPIO_ToggleBits(GPIOA, BEEPER);
-		}else{
-			GPIO_SetBits(GPIOA, BEEPER);
-		}*/
+
 		if(strTimer.cFLag_TimerA_Start == 1){
 			strTimer.cFLag_TimerA_Start = 0;
 			BEEPER_EN;
@@ -212,6 +207,14 @@ static void timer0(void) interrupt 1
 			BEEPER_DIS;
 			//GPIO_ResetBits(GPIOA, BEEPER);
 		}
+	}*/
+
+	if(strTimer.iTimerA>0&&strTimer.iTimerA<TimerAend)
+	{
+    	if(strTimer.iTimerA==1)BEEPER_EN;
+	  
+	    strTimer.iTimerA++;
+		if(strTimer.iTimerA==TimerAend)BEEPER_DIS;
 	}
 
 	/* timer usado en calibracion */
@@ -223,7 +226,7 @@ static void timer0(void) interrupt 1
 			strTimer.cFLag_TimerE_End = 1;
 		}
 	}*/
-	if(strTimer.iTimerE>0&&strTimer.iTimerE<TimerEend)
+	if(strTimer.iTimerE>0 && strTimer.iTimerE<TimerEend)
 	strTimer.iTimerE++;
 
 	//P0 ^= (1<<1);//P1 ^= (1<<5);

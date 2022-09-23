@@ -226,11 +226,11 @@ void ClearThisButAll(unsigned int Address, unsigned int IntCount){
 	unsigned char Aux=0;	
 	unsigned int i=0;
 	unsigned int Page;	
-	unsigned int SizePage=0x400;
+	//unsigned int SizePage=0x400;
 	
 	/*Determinar en que pagina se encuentra*/
-	Page=Address/SizePage;
-	Page*=SizePage;
+	Page=Address/PAGE_SIZE;
+	Page*=PAGE_SIZE;
 	/**************************************/
 
 	/*Verificar que la pagina auxiliar este limpia, de lo contrario borrarla*/
@@ -241,7 +241,7 @@ void ClearThisButAll(unsigned int Address, unsigned int IntCount){
 	/***********************************************************************/
 	
 	/*Copiar de la pagina origen a la auxiliar*/
-	for(i=0;i<SizePage;i++){
+	for(i=0;i<PAGE_SIZE;i++){
 		if(i+Page==Address)/*Copiar SizeToCopy enteros excepto IntCount enteros a partir de Address */
 			i+=IntCount;	
 		nvm_data_write_byte(ADDRESS_AUX_PAGE + i, flash_read_u8(Page + i));		
@@ -253,7 +253,7 @@ void ClearThisButAll(unsigned int Address, unsigned int IntCount){
 	/*************************/
 
 	/*Regresar datos a pagina origen*/
-	for(i=0;i<SizePage;i++){
+	for(i=0;i<PAGE_SIZE;i++){
 		nvm_data_write_byte(Page + i, flash_read_u8(ADDRESS_AUX_PAGE + i));		
 	}
 	/********************************/

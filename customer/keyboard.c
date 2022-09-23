@@ -80,7 +80,7 @@ void vBeep_Key(void){
 	}*/
 	
 //	if(!strTimer.cFLag_TimerA_On){
-		strTimer.cFLag_TimerA_End = 0;
+//		strTimer.cFLag_TimerA_End = 0;
 		Beep_On_Key;
 //	}
 

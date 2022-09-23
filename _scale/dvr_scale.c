@@ -10,7 +10,6 @@
 //#include "dvr_e2prom.h"	
 //#include "dvr_HX712.h"
 //#include "dvr_keyboard.h"
-#include "dvr_scale.h"
 //#include "dvr_battery.h"
 //#include "dvr_inicio.h"
 
@@ -244,9 +243,7 @@ void vSaveParamScale(unsigned char cType_Parameter){
 			flash_write_float32(ADDR_VOLT_ADAP, stScaleParam.fVoltage_Adap);
 			break;
 		
-		case Parameter_Temperature:
-			flash_write_float32(ADDR_TEMPERATURE, stScaleParam.fTemperature);
-			break;		
+	
 			
 		case Parameter_Register:
 			flash_write_float32(ADDR_VENTA_TOTAL, stScaleParam.fVenta_Total_Scale);
@@ -281,7 +278,7 @@ float fStablePoint(unsigned char cSetCountBack, unsigned char cShowCount, unsign
 	long int cCountBack = cSetCountBack;			/* Contador de regresion */
 	float fActualWeightAdc=0;						/* Alamacena el peso actual valores adc */
 	float fWeightAdc = 0;								/* Almacena el valor referencia */
-	float fLimitRange =  (float)stScaleParam.cCountRange;
+	float fLimitRange = 5;//CCC (float)stScaleParam.cCountRange;
 	int i=0;
 	
 	cNumber_Count = 0;
@@ -661,7 +658,7 @@ void vCalibrate_Scale(void){
               vSaveParamScale(Parameter_Voltages);
               
 ///////////CCCCC//BORRAR DE LA ESTRUCTURA ///////////////////////////////////           stScaleParam.fTemperature = fGet_Temp_Amb_Micro();
-              vSaveParamScale(Parameter_Temperature);
+//              vSaveParamScale(Parameter_Temperature);
 
     vSound_Saved_Param();
               vSound_Saved_Param();
@@ -691,7 +688,7 @@ void vPreConfiguration(unsigned char cPreConfiguration){
 //	enum 	digi_key Value_Key_Press;
 	unsigned char cIndex = 0;
 	
-	strTimer.cFLag_TimerD_Start = 1;
+//	strTimer.cFLag_TimerD_Start = 1;
 	
 	LCD_GLASS_Clear();
 	
@@ -790,7 +787,7 @@ void vPreConfiguration(unsigned char cPreConfiguration){
 	stScaleParam.fPointZeroCali = 0;
 	stScaleParam.fFactorCalibrate = 0;
 	srFlagScale.bShowErroBat = 1;
-	stScaleParam.fTemperature = 0;
+
 	
 	stScaleParam.fVenta_Total_Scale = 0;
 	stScaleParam.iCounter_Calibration = 0;
@@ -813,7 +810,7 @@ void vPreConfiguration(unsigned char cPreConfiguration){
 	}
 	
 
-		vSaveParamScale(Parameter_Temperature);
+//		vSaveParamScale(Parameter_Temperature);
 		vSaveParamScale(Parameter_Voltages);
 		vSaveParamScale(Parameter_Configuration);
 		vSaveParamScale(Parameter_Calibration);
@@ -823,13 +820,11 @@ void vPreConfiguration(unsigned char cPreConfiguration){
 		vSound_Saved_Param();
 		vSound_Saved_Param();
 		
-		strTimer.cFLag_TimerE_End = 0;
-		strTimer.cFLag_TimerE_Start = 1;
-		
+
 		Key_scan();
 		
 		/* Espera a que se oprima la tecla 'MEM' o que pase el tiempo de 5 seg  */
-		while((Key != KEY_MEM) && strTimer.cFLag_TimerE_End == 0){
+		while((Key != KEY_MEM) && strTimer.iTimerE < TimerEend){
 			IWDG_KEY_REFRESH;
 			Key_scan();//Value_Key_Press = vActionKey();
 			
@@ -968,10 +963,10 @@ unsigned char cRun_Scale(unsigned char bEnableKeys){
 		if(srFlagScale.bTara){
 			if((fWeightLight >= stScaleParam.fValueTara+20*stScaleParam.fFactorCalibrate) && srFlagScale.bBateriaLow == 0){
 				if(stScaleParam.cBacklight){OnBackLight;}
-				strTimer.cFLag_TimerJ_Start = 1;
+				strTimer.iTimerJ = 1;
 				srFlagScale.bBacklight_On = 1;
 			}else{
-				if(srFlagScale.bSourceVoltage != SOURCE_ADAPTER && strTimer.cFLag_TimerJ_End == 1){
+				if(srFlagScale.bSourceVoltage != SOURCE_ADAPTER && strTimer.iTimerJ >= TimerJend){
 					OffBackLight;
 					srFlagScale.bBacklight_On = 0;
 				}
@@ -980,10 +975,10 @@ unsigned char cRun_Scale(unsigned char bEnableKeys){
 		}else{
 			if((fWeightLight >= stScaleParam.fPointZero+20*stScaleParam.fFactorCalibrate) && srFlagScale.bBateriaLow == 0){
 					if(stScaleParam.cBacklight){OnBackLight;}
-					strTimer.cFLag_TimerJ_Start = 1;
+					strTimer.iTimerJ = 1;
 					srFlagScale.bBacklight_On = 1;
 				}else{
-					if(srFlagScale.bSourceVoltage != SOURCE_ADAPTER && strTimer.cFLag_TimerJ_End == 1){
+					if(srFlagScale.bSourceVoltage != SOURCE_ADAPTER && strTimer.iTimerJ >= TimerJend){
 						OffBackLight;
 						srFlagScale.bBacklight_On = 0;
 				}
@@ -1037,9 +1032,8 @@ void vWeight_Positive(void){
 			LCD_GLASS_String(" LOAD", LCD_PRECIO);
 		}
 		
-		strTimer.cFLag_TimerA_Start= 1;
-		strTimer.cFLag_TimerA_End = 0;
-		while(!strTimer.cFLag_TimerA_End){
+		strTimer.iTimerA= 1;
+		while(strTimer.iTimerA<TimerAend){
 			IWDG_KEY_REFRESH;
 		}	
 		
@@ -1311,7 +1305,7 @@ float fSleep_Run(void){
 		//Verifica por que salio del Wait
 		if(srFlagScale.bScaleOn == 0){ //Si se oprimio la tecla On
 			cFlag_Continue = 0;
-		}else if(strTimer.cFLag_TimerB_End){ //Si ya pasaron 3 segundos
+		}else if(strTimer.iTimerB<TimerBend){ //Si ya pasaron 3 segundos
 			
 			fWeightScale = fRead_Adc(0);
 			

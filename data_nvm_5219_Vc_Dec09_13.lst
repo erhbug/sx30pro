@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/23/2022 09:42:37 PAGE 1   
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/23/2022 12:08:47 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE DATA_NVM_5219_VC_DEC09_13
@@ -62,7 +62,7 @@ line level    source
   52   1      }
   53          
   54          unsigned long  flash_read_u32(unsigned int addr)
-C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/23/2022 09:42:37 PAGE 2   
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/23/2022 12:08:47 PAGE 2   
 
   55          {
   56   1          unsigned long val;
@@ -126,7 +126,7 @@ line level    source
  114   1              FLASH_ENA = 0x00;
  115   1              FLASH_ENB = 0x00;
  116   1              FLASH_ENC = 0x00;
-C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/23/2022 09:42:37 PAGE 3   
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/23/2022 12:08:47 PAGE 3   
 
  117   1              EA = ea_save;
  118   1      }
@@ -190,7 +190,7 @@ line level    source
  176   1              aux=flash_read_float32(addr);
  177   1          ptr=(unsigned char *)&aux;
  178   1              if( *(ptr++)!=0xFF || *(ptr++)!=0xFF || *(ptr++)!=0xFF || *(ptr++)==0xFF )
-C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/23/2022 09:42:37 PAGE 4   
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/23/2022 12:08:47 PAGE 4   
 
  179   1                ClearThisButAll(addr,4);              
  180   1              /****************************/
@@ -242,11 +242,11 @@ line level    source
  226   1              unsigned char Aux=0;    
  227   1              unsigned int i=0;
  228   1              unsigned int Page;      
- 229   1              unsigned int SizePage=0x400;
+ 229   1              //unsigned int SizePage=0x400;
  230   1              
  231   1              /*Determinar en que pagina se encuentra*/
- 232   1              Page=Address/SizePage;
- 233   1              Page*=SizePage;
+ 232   1              Page=Address/PAGE_SIZE;
+ 233   1              Page*=PAGE_SIZE;
  234   1              /**************************************/
  235   1      
  236   1              /*Verificar que la pagina auxiliar este limpia, de lo contrario borrarla*/
@@ -254,12 +254,12 @@ line level    source
  238   2                      if(flash_read_u8(ADDRESS_AUX_PAGE+i) != 0xFF)
  239   2                              e2rom_erase(ADDRESS_AUX_PAGE);//vSend_String_Usart(&huart1,"Pag Auxiliar Limpia\r\n");          
  240   2              }       
-C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/23/2022 09:42:37 PAGE 5   
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/23/2022 12:08:47 PAGE 5   
 
  241   1              /***********************************************************************/
  242   1              
  243   1              /*Copiar de la pagina origen a la auxiliar*/
- 244   1              for(i=0;i<SizePage;i++){
+ 244   1              for(i=0;i<PAGE_SIZE;i++){
  245   2                      if(i+Page==Address)/*Copiar SizeToCopy enteros excepto IntCount enteros a partir de Address */
  246   2                              i+=IntCount;    
  247   2                      nvm_data_write_byte(ADDRESS_AUX_PAGE + i, flash_read_u8(Page + i));             
@@ -271,7 +271,7 @@ line level    source
  253   1              /*************************/
  254   1      
  255   1              /*Regresar datos a pagina origen*/
- 256   1              for(i=0;i<SizePage;i++){
+ 256   1              for(i=0;i<PAGE_SIZE;i++){
  257   2                      nvm_data_write_byte(Page + i, flash_read_u8(ADDRESS_AUX_PAGE + i));             
  258   2              }
  259   1              /********************************/
@@ -286,9 +286,9 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1262    ----
+   CODE SIZE        =   1233    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =      2      78
+   XDATA SIZE       =      2      76
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----

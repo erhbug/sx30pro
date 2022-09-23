@@ -29,7 +29,7 @@ struct Parameter{
 	float fVoltage_Batt;
 	float fVoltage_Adap;
 	
-	float fTemperature;
+//	float fTemperature;
 	
 	float fVenta_Total_Scale;
 	float fTotal_Venta_Articulos;
@@ -254,7 +254,7 @@ struct FlagScale{
 extern struct FlagScale srFlagScale;
 */
 struct strTimers{
-	unsigned char cFLag_TimerA_Start;
+/*	unsigned char cFLag_TimerA_Start;
 	unsigned char cFLag_TimerA_On;
 	unsigned char cFLag_TimerA_End;
 	unsigned char cFLag_TimerA_Stop;
@@ -277,7 +277,7 @@ struct strTimers{
 	unsigned char cFLag_TimerJ_On;
 	unsigned char cFLag_TimerJ_End;
 	unsigned char cFLag_TimerJ_Stop;
-	unsigned char cFLag_TimerJ_Start;
+	unsigned char cFLag_TimerJ_Start;*/
 
 /*	
 	unsigned char cFLag_TimerC_Start;
@@ -310,27 +310,30 @@ struct strTimers{
 	unsigned char cFLag_TimerG_On;*/
 	
 	
-	int iTimerA;
-    unsigned int iTimerE;					//5s						//200mS
-/*	int iTimerB;						//500mS
-	long int iTimerC;					//1s
-	int iTimerD;						//3s
+	unsigned int iTimerA;//200mS
+   					
+	unsigned int iTimerB;						//500mS 	
+	//unsigned int iTimerC;					//1s
+	//unsigned int iTimerD;						//3s
+	unsigned int iTimerE;					//5
+/*	unsigned int iTimerF;						//1s
+	unsigned int iTimerMinuteF;				    //1 minuto
+	unsigned int iTimerH;
 	
-	int iTimerF;						//1s
-	int iTimerMinuteF;				    //1 minuto
-	int iTimerH;
+	unsigned int iTimerG;					    //1 minuto
+	unsigned int iTimerMinuteG;				//1 minuto
 	
-	int iTimerG;					    //1 minuto
-	int iTimerMinuteG;				//1 minuto
-	
-	int iTimerI;							//1 minuto
-	
-	int iTimerJ;							//  1s
-	int iTimerSegundosJ;     // 15s*/
+	unsigned int iTimerI;							//1 minuto
+*/	
+	unsigned int iTimerJ;							//  1s
+//	unsigned int iTimerSegundosJ;     // 15s
 	
 };
-#define TimerEend 5000
 
+#define TimerAend 200
+#define TimerBend 500
+#define TimerEend 5000
+#define TimerJend 1000
 extern struct strTimers strTimer;
 
 /*

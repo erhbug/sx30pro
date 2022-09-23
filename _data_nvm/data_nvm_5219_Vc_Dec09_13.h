@@ -23,6 +23,7 @@
 #define ADDRESS_PAGE_29 0x7400
 
 #define MINIMUN_ADDRESS_ALLOWED      ADDRESS_PAGE_27
+#define PAGE_SIZE      0X400
 
 #define ADDRESS_AUX_PAGE             ADDRESS_PAGE_26 //No usar esta pagina, se usa como auxiliar 
 #define ADDRESS_SCALE_CONFIG_PAGE    ADDRESS_PAGE_27
