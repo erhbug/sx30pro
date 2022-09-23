@@ -36,13 +36,21 @@ void main(void)
   init_int_timer0();
 
 	LCD_GLASS_Init(); 
-	LCD_GLASS_String("- - -",LCD_PESO);
-	LCD_GLASS_String("-----",LCD_PRECIO); 
-    LCD_GLASS_String("------", LCD_TOTAL);
+	vBeep_Key();
+    LCD_GLASS_All_On();
+	delay_ms(1000);
+	LCD_GLASS_Clear();
+	LCD_GLASS_String("A1 A2",LCD_PRECIO); 
+	LCD_GLASS_String("b.3. .b.4.", LCD_PESO);
+    LCD_GLASS_String(" 1234.5", LCD_TOTAL);
+
+	LCD_GLASS_String("b.3. .b.4.", LCD_PRECIO);
+	delay_ms(5000);
+	LCD_GLASS_Float(1234.5,2,LCD_TOTAL);
 //	vSound_Saved_Param();
 	// vSound_Saved_Param();
 //vPreConfiguration(PreConfig30KG);
- vCalibrate_Scale();
+ //vCalibrate_Scale();
  //
 //TestEEPROM();
  while(1){  ; 

@@ -10,47 +10,49 @@
 	void write_lcd(SOLIDIC Display);
 	void LCD_GLASS_Update(void);
 
-#if DISPLAY_20400047_EN > 0	
-const unsigned char xdata cNumber_LCD[10] = { 
-		0x5F, //	01011111,  	//0
-		0x50,	//	01010000, 	//1
-		0x3D,	//	00111101,		//2
-		0x79,	//	01111001, 	//3
-		0x72,	//	01110010, 	//4
-		0x6B,	//	01101011,		//5
-		0x6F,	//	01101111,		//6
-		0x51,	//	01010001,		//7
-		0x7F,	//	01111111,		//8
-		0X73};//	01110011		//9
 
-const unsigned char xdata cABC_LCD[28] = {
-		0x77,	//	01110111,	//A
-		0x6E,	//	01101110,	//b
-		0x0F,	//	00001111,	//C
-		0x7C,	//	01111100,	//d
-		0x2F,	//	00101111, //E
-		0x27,	//	00100111,	//F
-		0x6F,	//	01101111,	//G
-		0x76,	//	01110110,	//H
-		0x50,	//	01010000,	//I
-		0x5C,	//	01011100,	//J
-		0x36,	//	00110110,	//K
-		0x0E,	//	00001110,	//L
-		0x00,	//	00000000,	//M
-		0x64,	//	01100100,	//n
-		0x5F,	//	01011111,	//O
-		0x37,	//	00110111,	//P
-		0x73,	//	01110011,	//q
-		0x24,	//	00100100,	//r
-		0x6B,	//	01101011,	//S
-		0x2E,	//	00101110,	//T
-		0x5E,	//	01011110,	//U
-		0x4C,	//	01001100,	//V
-		0x00,	//	00000000,	//W
-		0x00,	//	00000000,	//X
-		0x72,	//	01110010,	//Y
-		0x3D,	//	00111101,	//Z
-		0x20};//	00100000	//-
+
+
+#if DISPLAY_20400047_EN > 0	
+
+#define LCD_char_0 0x5F //	01011111   	//0
+#define LCD_char_1 0x50 	//	01010000  	//1
+#define LCD_char_2 0x3D 	//	00111101 #define LCD_char_0 //2
+#define LCD_char_3 0x79 	//	01111001  	//3
+#define LCD_char_4 0x72 	//	01110010  	//4
+#define LCD_char_5 0x6B 	//	01101011 #define LCD_char_0 //5
+#define LCD_char_6 0x6F 	//	01101111 #define LCD_char_0 //6
+#define LCD_char_7 0x51 	//	01010001 #define LCD_char_0 //7
+#define LCD_char_8 0x7F 	//	01111111 #define LCD_char_0 //8
+#define LCD_char_9 0X73//	01110011#define LCD_char_0 //9
+
+#define LCD_char_A 0x77	//	01110111	//A
+#define LCD_char_B 0x6E	//	01101110	//b
+#define LCD_char_C 0x0F	//	00001111	//C
+#define LCD_char_D 0x7C	//	01111100	//d
+#define LCD_char_E 0x2F	//	00101111 //E
+#define LCD_char_F 0x27	//	00100111	//F
+#define LCD_char_G 0x6F	//	01101111	//G
+#define LCD_char_H 0x76	//	01110110	//H
+#define LCD_char_I 0x50	//	01010000	//I
+#define LCD_char_J 0x5C	//	01011100	//J
+#define LCD_char_K 0x36	//	00110110	//K
+#define LCD_char_L 0x0E	//	00001110	//L
+#define LCD_char_M 0x00	//	00000000	//M
+#define LCD_char_N 0x64	//	01100100	//n
+#define LCD_char_O 0x5F	//	01011111	//O
+#define LCD_char_P 0x37	//	00110111	//P
+#define LCD_char_Q 0x73	//	01110011	//q
+#define LCD_char_R 0x24	//	00100100	//r
+#define LCD_char_S 0x6B	//	01101011	//S
+#define LCD_char_T 0x2E	//	00101110	//T
+#define LCD_char_U 0x5E	//	01011110	//U
+#define LCD_char_V 0x4C	//	01001100	//V
+#define LCD_char_W 0x00	//	00000000	//W
+#define LCD_char_X 0x00	//	00000000	//X
+#define LCD_char_Y 0x72	//	01110010	//Y
+#define LCD_char_Z 0x3D	//	00111101	//Z
+#define LCD_char_Guion 0x20 //	00100000	//-
 
 #define S_ZERO      0
 #define P_PESO_3    1
@@ -71,7 +73,7 @@ const unsigned char xdata cABC_LCD[28] = {
 		
 	
 #else
-const unsigned char xdata cNumber_LCD[10] = { 
+/*const unsigned char xdata cNumber_LCD[] = { 
 		0x7D, //	01111101,  	//0
 		0x60,	//	01100000, 	//1
 		0x3E,	//	00111110,		//2
@@ -83,7 +85,7 @@ const unsigned char xdata cNumber_LCD[10] = {
 		0x7F,	//	01111111,		//8
 		0x7B};	//	01111011		//9
 
-const unsigned char xdata cABC_LCD[28] = {
+const unsigned char xdata cABC_LCD[] = {
 		0x77,	//	01110111,	//A
 		0x4F,	//	01001111,	//b
 		0x1D,	//	00011101,	//C
@@ -110,7 +112,7 @@ const unsigned char xdata cABC_LCD[28] = {
 		0x00,	//	00001000,	//X
 		0x27,	//	00100111,	//Y
 		0x3E,	//	00111110,	//Z
-		0x02};//	00000010	//-
+		0x02};//	00000010	//-*/
 
 
 
@@ -589,6 +591,51 @@ unsigned char xdata strText_LCD[8];
   * Prerequisitos: 
   ***
 */
+unsigned char get_lcd_char(unsigned char c){
+
+if(c=='0')return LCD_char_0;
+if(c=='1')return LCD_char_1;
+if(c=='2')return LCD_char_2;
+if(c=='3')return LCD_char_3;
+if(c=='4')return LCD_char_4;
+if(c=='5')return LCD_char_5;
+if(c=='6')return LCD_char_6;
+if(c=='7')return LCD_char_7;
+if(c=='8')return LCD_char_8;
+if(c=='9')return LCD_char_9;
+
+if(c=='a'||c=='A')return LCD_char_A;
+if(c=='b'||c=='B')return LCD_char_B;
+if(c=='c'||c=='C')return LCD_char_C;
+if(c=='d'||c=='D')return LCD_char_D;
+if(c=='e'||c=='E')return LCD_char_E;
+if(c=='f'||c=='F')return LCD_char_F;
+if(c=='g'||c=='G')return LCD_char_G;
+if(c=='h'||c=='H')return LCD_char_H;
+if(c=='i'||c=='I')return LCD_char_I;
+if(c=='j'||c=='J')return LCD_char_J;
+if(c=='k'||c=='K')return LCD_char_K;
+if(c=='l'||c=='L')return LCD_char_L;
+if(c=='m'||c=='M')return LCD_char_M;
+if(c=='n'||c=='N')return LCD_char_N;
+//if(c=='ñ'||c=='Ñ')return LCD_char_Ñ;
+if(c=='o'||c=='O')return LCD_char_O;
+if(c=='p'||c=='P')return LCD_char_P;
+if(c=='q'||c=='Q')return LCD_char_Q;
+if(c=='r'||c=='R')return LCD_char_R;
+if(c=='s'||c=='S')return LCD_char_S;
+if(c=='t'||c=='T')return LCD_char_T;
+if(c=='u'||c=='U')return LCD_char_U;
+if(c=='v'||c=='V')return LCD_char_V;
+if(c=='w'||c=='W')return LCD_char_W;
+if(c=='x'||c=='X')return LCD_char_X;
+if(c=='y'||c=='Y')return LCD_char_Y;
+if(c=='z'||c=='Z')return LCD_char_Z;
+if(c=='-'||c=='_')return LCD_char_Guion;
+if(c==' ')return 0x00;
+
+
+}
 
 void LCD_GLASS_String(unsigned char *pCaracter, unsigned char cPosition_On_LCD){
     unsigned char xdata iIndex_Text = 5;
@@ -614,31 +661,12 @@ void LCD_GLASS_String(unsigned char *pCaracter, unsigned char cPosition_On_LCD){
 	Display.LCD_BUF[P_PRECIO_2]&=0x7F;Display.LCD_BUF[P_PRECIO_1]&=0x7F;}
 	if(cPosition_On_LCD==LCD_PESO)	{Display.LCD_BUF[P_PESO_3]&=0x7F;Display.LCD_BUF[P_PESO_2]&=0x7F;Display.LCD_BUF[P_PESO_1]&=0x7F;}		
 
-	while(*(pCaracter) != 0){
-		
-		if(*(pCaracter) >= '0' && *(pCaracter) <= '9'){			
-			LCD_SET_Char(cNumber_LCD[*(pCaracter)-'0'], cPosition_On_LCD, iIndex_Text--);			
-		}
-		
-		if(*(pCaracter) == '-'){
-			LCD_SET_Char(cABC_LCD[26], cPosition_On_LCD, iIndex_Text--);			
-		}
-		
-		if(*(pCaracter) == ' '){
-			LCD_SET_Char(0x0, cPosition_On_LCD, iIndex_Text);
-			iIndex_Text--;			
-		}
-		
-		if(*(pCaracter) >= 'A' && *(pCaracter) <= 'Z'){
-			LCD_SET_Char(cABC_LCD[*(pCaracter)-'A'], cPosition_On_LCD, iIndex_Text);
-			iIndex_Text--;			
-		}
-		
+	while(*(pCaracter) != 0){	
+		if(*(pCaracter) != '.')
+			LCD_SET_Char(  get_lcd_char(*(pCaracter))  , cPosition_On_LCD, iIndex_Text--);				
+					
 		if(*(pCaracter) == '.'){
 			
-			//sprintf(txt,"PosDec= %d \r\n\r\n",iPosicion_Decimal);				
-				//vSend_String_Usart(&huart1,txt);		
-				
 			if(cPosition_On_LCD == LCD_PRECIO){	
          #if DISPLAY_20400047_EN > 0	
 				if(iPosicion_Decimal == 2)
@@ -674,10 +702,7 @@ void LCD_GLASS_String(unsigned char *pCaracter, unsigned char cPosition_On_LCD){
 		iPosicion_Decimal++;
 		pCaracter++;
 	}
-	
-	Display.mode=LCD_DATA;
-//	Display.addr=0;
-//	Display.counter=sizeof(Display.LCD_BUF);	
+	Display.mode=LCD_DATA;	
 	LCD_GLASS_Update();
 }
 

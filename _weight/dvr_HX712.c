@@ -17,7 +17,7 @@ int iCountFailRead = 0;
 int iCountFailResponse = 0;
 
 unsigned char iSelectFrecuency = 1;
-float arfDataFilter_x[10] = {0};
+float arfDataFilter_x[6] = {0.00};
 float fBeforeValue_x = 0;
 float fAverage_x = 0;
 unsigned char iValueOut = 0;
@@ -25,13 +25,13 @@ unsigned char iValueOut = 0;
 /*
 */
 float fFilter_Averaging(unsigned long iActualWeight, unsigned char cFastFill){	
-	float arfLowestToHighest[10] = {0.00};
+	float arfLowestToHighest[6] = {0.00};
 	//////////////////////////////////////////float fThreshold = stScaleParam.fFactorCalibrate[stScaleParam.iUnits]/2;
 	float fThreshold = 8.526937/2;
 	float fData_Vector = 0;
 	float *pfData_Filter;
 	float fActualWeight = (float)(iActualWeight);
-	unsigned char iLenthData_x = 6;		// Longitud de los datos a ordenar, original 6, en prueba 10 
+	unsigned char iLenthData_x = 5;		// Longitud de los datos a ordenar, original 6, en prueba 10 
 	unsigned char i = 0; 	// Variable para ciclos iterativo 
     unsigned char j = 0;	// Variable para ciclos iterativo 
 	

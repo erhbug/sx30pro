@@ -574,7 +574,7 @@ void vCalibrate_Scale(void){
               float xdata fAuxCountDif = 0;
               
               stScaleParam.iCounter_Calibration++;  /* Aumenta el contador de calibraciones */ 
-              vSaveParamScale(Parameter_Calibration);                                                                                              /*Almacena los parametros en la E2prom*/
+             // vSaveParamScale(Parameter_Calibration);                                                                                              /*Almacena los parametros en la E2prom*/
                             
               LCD_GLASS_Clear();
 #if DISPLAY_20400047_EN > 0
