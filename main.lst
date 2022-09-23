@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   MAIN                                                                  09/23/2022 17:54:07 PAGE 1   
+C51 COMPILER V7.50   MAIN                                                                  09/23/2022 18:10:39 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
@@ -46,269 +46,257 @@ line level    source
   36   1        init_int_timer0();
   37   1      
   38   1              LCD_GLASS_Init(); 
-  39   1      //      vBeep_Key();
-  40   1        //  LCD_GLASS_All_On();
-  41   1      //      delay_ms(1000);
-  42   1              LCD_GLASS_Clear();
-  43   1      //      LCD_GLASS_String("-----",LCD_PRECIO); 
-  44   1      //      LCD_GLASS_String("-----", LCD_PESO);
-  45   1      //      LCD_GLASS_Float(1234.5,2,LCD_TOTAL);
-  46   1      //      vSound_Saved_Param();
-  47   1              // vSound_Saved_Param();
-  48   1      
-  49   1              delay_ms(5000);
-  50   1          vReadParamScale();
-*** WARNING C206 IN LINE 50 OF CUSTOMER\MAIN.C: 'vReadParamScale': missing function-prototype
-  51   1              if(stScaleParam.iCapacity != 30)
-  52   1              vPreConfiguration(PreConfig30KG);
-  53   1               if(stScaleParam.fFactorCalibrate<1)
-C51 COMPILER V7.50   MAIN                                                                  09/23/2022 17:54:07 PAGE 2   
+  39   1          vReadParamScale();
+*** WARNING C206 IN LINE 39 OF CUSTOMER\MAIN.C: 'vReadParamScale': missing function-prototype
+  40   1              if(stScaleParam.iCapacity != 30)
+  41   1              vPreConfiguration(PreConfig30KG);
+  42   1              if(stScaleParam.fFactorCalibrate<1)
+  43   1               vCalibrate_Scale();
+*** WARNING C206 IN LINE 43 OF CUSTOMER\MAIN.C: 'vCalibrate_Scale': missing function-prototype
+  44   1                      
+  45   1      //      LCD_GLASS_Float(stScaleParam.fCapacityCali,2,LCD_TOTAL);
+  46   1      //vCalibrate_Scale();
+  47   1               
+  48   1              // 
+  49   1              
+  50   1      // fStablePoint(5, 1, 0);
+  51   1       
+  52   1       
+C51 COMPILER V7.50   MAIN                                                                  09/23/2022 18:10:39 PAGE 2   
 
-  54   1               vCalibrate_Scale();
-*** WARNING C206 IN LINE 54 OF CUSTOMER\MAIN.C: 'vCalibrate_Scale': missing function-prototype
-  55   1                      
-  56   1      //      LCD_GLASS_Float(stScaleParam.fCapacityCali,2,LCD_TOTAL);
-  57   1      //vCalibrate_Scale();
-  58   1               
-  59   1              // 
-  60   1              
-  61   1      // fStablePoint(5, 1, 0);
-  62   1       
-  63   1       
-  64   1      //TestEEPROM();
-  65   1       while(1){  ; 
-  66   2          key_scan();
-  67   2              vCalculate_Weight();
-*** WARNING C206 IN LINE 67 OF CUSTOMER\MAIN.C: 'vCalculate_Weight': missing function-prototype
-  68   2              LCD_GLASS_Float(fWeightScale, 2,  LCD_PESO);
-  69   2      //      sprintf(txt,"%d ",(int)(Key));
-  70   2      //      LCD_GLASS_String(txt,LCD_PESO);
-  71   2      
-  72   2      //      sprintf(txt,"%d  ",(int)(KeyState));
-  73   2      //      LCD_GLASS_String(txt,LCD_PRECIO);
-  74   2      
-  75   2              
-  76   2              
-  77   2         
-  78   2              //peso=fRead_Adc(0);
-  79   2      
-  80   2      
-  81   2              
-  82   2          //delay_ms(5000);
-  83   2      //      P0|= (1<<5);
-  84   2      //      voltaje=convertidorADC()*(3.3/255);
-  85   2       //     
-  86   2      //      LCD_GLASS_Float(voltaje, 2, LCD_PESO);
-  87   2      
-  88   2      
-  89   2          
-  90   2        //iTemp_RA=123456789; 
-  91   2              
-  92   2      //      ReadHX712(&iTemp_RA); 
-  93   2        //  sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_TOTAL); 
-  94   2      
-  95   2       //delay_ms(3000); 
-  96   2      //
-  97   2      
-  98   2      //peso = fStablePoint(5, 1, 0); //ok
-  99   2      //LCD_GLASS_Float(peso,0,LCD_TOTAL);//ok
- 100   2      }
+  53   1      //TestEEPROM();
+  54   1       while(1){  ; 
+  55   2          key_scan();
+  56   2              //vCalculate_Weight();
+  57   2      //      LCD_GLASS_Float(fWeightScale, 2,  LCD_PESO);
+  58   2      //      sprintf(txt,"%d ",(int)(Key));
+  59   2      //      LCD_GLASS_String(txt,LCD_PESO);
+  60   2      
+  61   2      //      sprintf(txt,"%d  ",(int)(KeyState));
+  62   2      //      LCD_GLASS_String(txt,LCD_PRECIO);
+  63   2      
+  64   2              
+  65   2              
+  66   2         
+  67   2              //peso=fRead_Adc(0);
+  68   2      
+  69   2      
+  70   2              
+  71   2          //delay_ms(5000);
+  72   2      //      P0|= (1<<5);
+  73   2      //      voltaje=convertidorADC()*(3.3/255);
+  74   2       //     
+  75   2      //      LCD_GLASS_Float(voltaje, 2, LCD_PESO);
+  76   2      
+  77   2      
+  78   2          
+  79   2        //iTemp_RA=123456789; 
+  80   2              
+  81   2      //      ReadHX712(&iTemp_RA); 
+  82   2        //  sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_TOTAL); 
+  83   2      
+  84   2       //delay_ms(3000); 
+  85   2      //
+  86   2      
+  87   2      //peso = fStablePoint(5, 1, 0); //ok
+  88   2      //LCD_GLASS_Float(peso,0,LCD_TOTAL);//ok
+  89   2      }
+  90   1      
+  91   1      }
+  92          
+  93          void init_pwm(void){
+  94   1      //apagar bl y beeper
+  95   1              BL_DIS;
+  96   1              BEEPER_DIS;
+  97   1      
+  98   1         //Configuracion salida BL
+  99   1          P1M0 |= (1<<5);
+ 100   1          P1M1 &= ~(1<<5);
  101   1      
- 102   1      }
- 103          
- 104          void init_pwm(void){
- 105   1      //apagar bl y beeper
- 106   1              BL_DIS;
- 107   1              BEEPER_DIS;
- 108   1      
- 109   1         //Configuracion salida BL
- 110   1          P1M0 |= (1<<5);
- 111   1          P1M1 &= ~(1<<5);
- 112   1      
- 113   1          PWMF_H  = 0x00;
-C51 COMPILER V7.50   MAIN                                                                  09/23/2022 17:54:07 PAGE 3   
+ 102   1          PWMF_H  = 0x00;
+ 103   1              PWMF_L  = 0xA0;
+ 104   1              PWM0    = 0X6C;//BEEPER
+ 105   1              PWM1    = 0X50;
+ 106   1              PWMCON  = 0x04; //PWM0-P1.4(LCD_LAMP)????(?PWM0=0xff?,?????)
+ 107   1      
+ 108   1              
+ 109   1      }
+ 110          
+ 111          void wdt_init(void){// watch dog ///
+ 112   1          EA = 0;
+ 113   1          WD_TA = 0x05;
+ 114   1              WD_TA = 0x0a;
+C51 COMPILER V7.50   MAIN                                                                  09/23/2022 18:10:39 PAGE 3   
 
- 114   1              PWMF_L  = 0xA0;
- 115   1              PWM0    = 0X6C;//BEEPER
- 116   1              PWM1    = 0X50;
- 117   1              PWMCON  = 0x04; //PWM0-P1.4(LCD_LAMP)????(?PWM0=0xff?,?????)
- 118   1      
- 119   1              
- 120   1      }
- 121          
- 122          void wdt_init(void){// watch dog ///
- 123   1          EA = 0;
- 124   1          WD_TA = 0x05;
- 125   1              WD_TA = 0x0a;
- 126   1              WDCON = 0x1f; /// 4s?,0.2s ///
- 127   1          EA = 1;
- 128   1              IWDG_KEY_REFRESH;
- 129   1      }
- 130          
- 131          void gpio_init(void)
- 132          {
- 133   1          P0 = 0x0C;//P0 = 0x04;
- 134   1          P1 = 0x40;
- 135   1          P2 = 0x11;
- 136   1      
- 137   1          P0M0 = 0xF0; //0b11111111;
- 138   1          P0M1 = 0x00; //0b00000000;    
- 139   1          P1M0 = 0xBF; //0b10111111;
- 140   1          P1M1 = 0x00; //0b00000000;        
- 141   1          P2M0 = 0xEE; //0b11101110;
- 142   1          P2M1 = 0x00; //0b00000000;
- 143   1      }
- 144          
- 145          void adc_init(void)
- 146          {
- 147   1          //Config lectura adc Only input
- 148   1              P0M0 &= ~(1<<5);
- 149   1              P0M1 |= (1<<5);
- 150   1              //Salida en 1  para lectura adc
- 151   1              P0|= (1<<5);
- 152   1      }
- 153          
- 154          void init_int_timer0(void)
- 155          {
- 156   1              //Interrupcion timer0
- 157   1              IE = 0x82;
- 158   1              IP = 0x02;      
- 159   1              //timer0
- 160   1              TMOD = 0x00;
- 161   1              TL0 = 0x00;
- 162   1              TH0 = 0x7F;
- 163   1              CKCON = 0x04;
- 164   1      
- 165   1          TCON |= (1<<4);//Start timer0
- 166   1      }
- 167          
- 168          unsigned int convertidorADC(){
- 169   1      
- 170   1      unsigned int v=0;
- 171   1      SARCON = 0x09;
- 172   1              if(!(SARCON & 0x04))
- 173   1              {
- 174   2                      SARCON |= 0x04;
- 175   2                      while(SARCON & 0x04)
-C51 COMPILER V7.50   MAIN                                                                  09/23/2022 17:54:07 PAGE 4   
+ 115   1              WDCON = 0x1f; /// 4s?,0.2s ///
+ 116   1          EA = 1;
+ 117   1              IWDG_KEY_REFRESH;
+ 118   1      }
+ 119          
+ 120          void gpio_init(void)
+ 121          {
+ 122   1          P0 = 0x0C;//P0 = 0x04;
+ 123   1          P1 = 0x40;
+ 124   1          P2 = 0x11;
+ 125   1      
+ 126   1          P0M0 = 0xF0; //0b11111111;
+ 127   1          P0M1 = 0x00; //0b00000000;    
+ 128   1          P1M0 = 0xBF; //0b10111111;
+ 129   1          P1M1 = 0x00; //0b00000000;        
+ 130   1          P2M0 = 0xEE; //0b11101110;
+ 131   1          P2M1 = 0x00; //0b00000000;
+ 132   1      }
+ 133          
+ 134          void adc_init(void)
+ 135          {
+ 136   1          //Config lectura adc Only input
+ 137   1              P0M0 &= ~(1<<5);
+ 138   1              P0M1 |= (1<<5);
+ 139   1              //Salida en 1  para lectura adc
+ 140   1              P0|= (1<<5);
+ 141   1      }
+ 142          
+ 143          void init_int_timer0(void)
+ 144          {
+ 145   1              //Interrupcion timer0
+ 146   1              IE = 0x82;
+ 147   1              IP = 0x02;      
+ 148   1              //timer0
+ 149   1              TMOD = 0x00;
+ 150   1              TL0 = 0x00;
+ 151   1              TH0 = 0x7F;
+ 152   1              CKCON = 0x04;
+ 153   1      
+ 154   1          TCON |= (1<<4);//Start timer0
+ 155   1      }
+ 156          
+ 157          unsigned int convertidorADC(){
+ 158   1      
+ 159   1      unsigned int v=0;
+ 160   1      SARCON = 0x09;
+ 161   1              if(!(SARCON & 0x04))
+ 162   1              {
+ 163   2                      SARCON |= 0x04;
+ 164   2                      while(SARCON & 0x04)
+ 165   2                      {
+ 166   3                      }
+ 167   2              }
+ 168   1      v=SARDATA;
+ 169   1      SARCON &= 0xf7;
+ 170   1      return v;
+ 171   1      
+ 172   1      }
+ 173          /////////   Interrups timer0    ////////////////
+ 174          
+ 175          static void timer0(void) interrupt 1
+ 176          {               
+C51 COMPILER V7.50   MAIN                                                                  09/23/2022 18:10:39 PAGE 4   
 
- 176   2                      {
- 177   3                      }
- 178   2              }
- 179   1      v=SARDATA;
- 180   1      SARCON &= 0xf7;
- 181   1      return v;
- 182   1      
- 183   1      }
- 184          /////////   Interrups timer0    ////////////////
- 185          
- 186          static void timer0(void) interrupt 1
- 187          {               
- 188   1              
- 189   1                      /* 200mS*/
- 190   1      /*      if(strTimer.cFLag_TimerA_Start){
- 191   1                      strTimer.iTimerA = 200;//200;//700; //891
- 192   1                      //strTimer.cFLag_TimerA_Start = 0;
- 193   1                      strTimer.cFLag_TimerA_On = 1;
- 194   1                      strTimer.cFLag_TimerA_End = 0;
- 195   1              }*/
- 196   1      
- 197   1              /* 5S*/
- 198   1      /*      if(strTimer.cFLag_TimerE_Start){
- 199   1                      strTimer.iTimerE = Number_Count_Sec * 4;
- 200   1                      strTimer.cFLag_TimerE_Start = 0;
- 201   1                      strTimer.cFLag_TimerE_On = 1;
- 202   1                      strTimer.cFLag_TimerE_End = 0;
- 203   1              }
- 204   1      */
- 205   1      
- 206   1              /*Accion de desbordamiento del timer */
- 207   1      /*      if(strTimer.cFLag_TimerA_On){
- 208   1                      
- 209   1      
- 210   1                      if(strTimer.cFLag_TimerA_Start == 1){
- 211   1                              strTimer.cFLag_TimerA_Start = 0;
- 212   1                              BEEPER_EN;
- 213   1                      }
- 214   1                      if(strTimer.iTimerA > 0){
- 215   1                              strTimer.iTimerA--;
- 216   1                      }else{
- 217   1                              strTimer.cFLag_TimerA_On = 0;
- 218   1                              strTimer.cFLag_TimerA_End = 1;
- 219   1                              BEEPER_DIS;
- 220   1                              //GPIO_ResetBits(GPIOA, BEEPER);
- 221   1                      }
- 222   1              }*/
- 223   1      
- 224   1              if(strTimer.iTimerA>0&&strTimer.iTimerA<TimerAend)
- 225   1              {
- 226   2              if(strTimer.iTimerA==1)BEEPER_EN;
- 227   2                
- 228   2                  strTimer.iTimerA++;
- 229   2                      if(strTimer.iTimerA==TimerAend)BEEPER_DIS;
- 230   2              }
- 231   1      
- 232   1              /* timer usado en calibracion */
- 233   1      /*      if(strTimer.cFLag_TimerE_On){
- 234   1                      if(strTimer.iTimerE > 0){
- 235   1                              strTimer.iTimerE--;
- 236   1                      }else{
- 237   1                              strTimer.cFLag_TimerE_On = 0;
-C51 COMPILER V7.50   MAIN                                                                  09/23/2022 17:54:07 PAGE 5   
+ 177   1              
+ 178   1                      /* 200mS*/
+ 179   1      /*      if(strTimer.cFLag_TimerA_Start){
+ 180   1                      strTimer.iTimerA = 200;//200;//700; //891
+ 181   1                      //strTimer.cFLag_TimerA_Start = 0;
+ 182   1                      strTimer.cFLag_TimerA_On = 1;
+ 183   1                      strTimer.cFLag_TimerA_End = 0;
+ 184   1              }*/
+ 185   1      
+ 186   1              /* 5S*/
+ 187   1      /*      if(strTimer.cFLag_TimerE_Start){
+ 188   1                      strTimer.iTimerE = Number_Count_Sec * 4;
+ 189   1                      strTimer.cFLag_TimerE_Start = 0;
+ 190   1                      strTimer.cFLag_TimerE_On = 1;
+ 191   1                      strTimer.cFLag_TimerE_End = 0;
+ 192   1              }
+ 193   1      */
+ 194   1      
+ 195   1              /*Accion de desbordamiento del timer */
+ 196   1      /*      if(strTimer.cFLag_TimerA_On){
+ 197   1                      
+ 198   1      
+ 199   1                      if(strTimer.cFLag_TimerA_Start == 1){
+ 200   1                              strTimer.cFLag_TimerA_Start = 0;
+ 201   1                              BEEPER_EN;
+ 202   1                      }
+ 203   1                      if(strTimer.iTimerA > 0){
+ 204   1                              strTimer.iTimerA--;
+ 205   1                      }else{
+ 206   1                              strTimer.cFLag_TimerA_On = 0;
+ 207   1                              strTimer.cFLag_TimerA_End = 1;
+ 208   1                              BEEPER_DIS;
+ 209   1                              //GPIO_ResetBits(GPIOA, BEEPER);
+ 210   1                      }
+ 211   1              }*/
+ 212   1      
+ 213   1              if(strTimer.iTimerA>0&&strTimer.iTimerA<TimerAend)
+ 214   1              {
+ 215   2              if(strTimer.iTimerA==1)BEEPER_EN;
+ 216   2                
+ 217   2                  strTimer.iTimerA++;
+ 218   2                      if(strTimer.iTimerA==TimerAend)BEEPER_DIS;
+ 219   2              }
+ 220   1      
+ 221   1              /* timer usado en calibracion */
+ 222   1      /*      if(strTimer.cFLag_TimerE_On){
+ 223   1                      if(strTimer.iTimerE > 0){
+ 224   1                              strTimer.iTimerE--;
+ 225   1                      }else{
+ 226   1                              strTimer.cFLag_TimerE_On = 0;
+ 227   1                              strTimer.cFLag_TimerE_End = 1;
+ 228   1                      }
+ 229   1              }*/
+ 230   1              if(strTimer.iTimerE>0 && strTimer.iTimerE<TimerEend)
+ 231   1              strTimer.iTimerE++;
+ 232   1      
+ 233   1              //P0 ^= (1<<1);//P1 ^= (1<<5);
+ 234   1              TL0 = 0xCF;
+ 235   1              TH0 = 0xb5;
+ 236   1              TCON |= (1<<4);
+ 237   1      
+ 238   1      }
+C51 COMPILER V7.50   MAIN                                                                  09/23/2022 18:10:39 PAGE 5   
 
- 238   1                              strTimer.cFLag_TimerE_End = 1;
- 239   1                      }
- 240   1              }*/
- 241   1              if(strTimer.iTimerE>0 && strTimer.iTimerE<TimerEend)
- 242   1              strTimer.iTimerE++;
- 243   1      
- 244   1              //P0 ^= (1<<1);//P1 ^= (1<<5);
- 245   1              TL0 = 0xCF;
- 246   1              TH0 = 0xb5;
- 247   1              TCON |= (1<<4);
- 248   1      
- 249   1      }
- 250          
- 251          
- 252          void TestEEPROM(void)
- 253          {
- 254   1              unsigned int addr=ADDRESS_PLU;
- 255   1              float val;
- 256   1              float i=0.12;
- 257   1      
- 258   1              unsigned int x=0;
- 259   1       
- 260   1              NRM_securty_a = 0xaa;
- 261   1              NRM_securty_b = 0x55;
- 262   1              
- 263   1      
- 264   1      
- 265   1              while(i<15){    
- 266   2              for(x=1;x<11;x++){
- 267   3              flash_write_float32(addr+(x*4),i);
- 268   3      
- 269   3              val = flash_read_float32(addr+(x*4)-4);
- 270   3              LCD_GLASS_Float(val, 2,  LCD_PESO);
- 271   3      
- 272   3              val = flash_read_float32(addr+(x*4));
- 273   3              LCD_GLASS_Float(val, 2,  LCD_TOTAL);
- 274   3      
- 275   3              val = flash_read_float32(addr+(x*4)+4);
- 276   3              LCD_GLASS_Float(val, 2,  LCD_PRECIO);
- 277   3      
- 278   3              i++;
- 279   3              delay_ms(1000);
- 280   3              }
- 281   2      }
- 282   1      
- 283   1      NRM_securty_a = 0x00;
- 284   1              NRM_securty_b = 0x00;
- 285   1              LCD_GLASS_Clear();
- 286   1      }
+ 239          
+ 240          
+ 241          void TestEEPROM(void)
+ 242          {
+ 243   1              unsigned int addr=ADDRESS_PLU;
+ 244   1              float val;
+ 245   1              float i=0.12;
+ 246   1      
+ 247   1              unsigned int x=0;
+ 248   1       
+ 249   1              NRM_securty_a = 0xaa;
+ 250   1              NRM_securty_b = 0x55;
+ 251   1              
+ 252   1      
+ 253   1      
+ 254   1              while(i<15){    
+ 255   2              for(x=1;x<11;x++){
+ 256   3              flash_write_float32(addr+(x*4),i);
+ 257   3      
+ 258   3              val = flash_read_float32(addr+(x*4)-4);
+ 259   3              LCD_GLASS_Float(val, 2,  LCD_PESO);
+ 260   3      
+ 261   3              val = flash_read_float32(addr+(x*4));
+ 262   3              LCD_GLASS_Float(val, 2,  LCD_TOTAL);
+ 263   3      
+ 264   3              val = flash_read_float32(addr+(x*4)+4);
+ 265   3              LCD_GLASS_Float(val, 2,  LCD_PRECIO);
+ 266   3      
+ 267   3              i++;
+ 268   3              delay_ms(1000);
+ 269   3              }
+ 270   2      }
+ 271   1      
+ 272   1      NRM_securty_a = 0x00;
+ 273   1              NRM_securty_b = 0x00;
+ 274   1              LCD_GLASS_Clear();
+ 275   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    797    ----
+   CODE SIZE        =    758    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----      12
    PDATA SIZE       =   ----    ----
@@ -318,4 +306,4 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  3 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  2 WARNING(S),  0 ERROR(S)

@@ -36,21 +36,10 @@ void main(void)
   init_int_timer0();
 
 	LCD_GLASS_Init(); 
-//	vBeep_Key();
-  //  LCD_GLASS_All_On();
-//	delay_ms(1000);
-	LCD_GLASS_Clear();
-//	LCD_GLASS_String("-----",LCD_PRECIO); 
-//	LCD_GLASS_String("-----", LCD_PESO);
-//	LCD_GLASS_Float(1234.5,2,LCD_TOTAL);
-//	vSound_Saved_Param();
-	// vSound_Saved_Param();
-
-	delay_ms(5000);
     vReadParamScale();
 	if(stScaleParam.iCapacity != 30)
 	vPreConfiguration(PreConfig30KG);
-	 if(stScaleParam.fFactorCalibrate<1)
+	if(stScaleParam.fFactorCalibrate<1)
 	 vCalibrate_Scale();
 	 	
 //	LCD_GLASS_Float(stScaleParam.fCapacityCali,2,LCD_TOTAL);
@@ -64,8 +53,8 @@ void main(void)
 //TestEEPROM();
  while(1){  ; 
     key_scan();
-	vCalculate_Weight();
-	LCD_GLASS_Float(fWeightScale, 2,  LCD_PESO);
+	//vCalculate_Weight();
+//	LCD_GLASS_Float(fWeightScale, 2,  LCD_PESO);
 //	sprintf(txt,"%d ",(int)(Key));
 //	LCD_GLASS_String(txt,LCD_PESO);
 

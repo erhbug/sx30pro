@@ -594,11 +594,11 @@ void vCalibrate_Scale(void){
               /* Espera a que se oprima 'C' para continuar */
               Key=0;while(Key!= KEY_C)key_scan();
 			  Key=0;while(Key== KEY_C)key_scan();
-              delay_ms(500);            
+              delay_ms(1000);            
 
               /* Solicita la referencia de zero */
               stScaleParam.fPointZeroCali = fStablePoint(5, 1, 0);
-			  LCD_GLASS_Float(stScaleParam.fPointZeroCali, 2, LCD_TOTAL);delay_ms(5000);
+			  //LCD_GLASS_Float(stScaleParam.fPointZeroCali, 2, LCD_TOTAL);delay_ms(5000);
               
               fAuxCountAdcInicial = stScaleParam.fPointZeroCali;
 			  //borrar  //CCC  
@@ -618,17 +618,16 @@ void vCalibrate_Scale(void){
               Key=0;while(Key!= KEY_C)key_scan();
 
               stScaleParam.fCapacityCali = fStablePoint(5, 1, 0);
-			  LCD_GLASS_Float(stScaleParam.fCapacityCali, 2, LCD_TOTAL);delay_ms(5000);
+			  //LCD_GLASS_Float(stScaleParam.fCapacityCali, 2, LCD_TOTAL);delay_ms(5000);
              
               
               fAuxCountAdcFinal = stScaleParam.fCapacityCali;
               
               fAuxCountDif = (fAuxCountAdcFinal - fAuxCountAdcInicial);
-
-			        LCD_GLASS_Float(fAuxCountDif, 2, LCD_TOTAL);delay_ms(5000);
-
               fAuxCountDif    *= (100/stScaleParam.iLoadPorcRefer);
-              
+
+              //LCD_GLASS_Float(stScaleParam.iLoadPorcRefer, 2, LCD_TOTAL);delay_ms(5000);
+
               stScaleParam.fCapacityCali -= stScaleParam.fPointZeroCali;
               stScaleParam.fCapacityCali *= (100/stScaleParam.iLoadPorcRefer);
               
