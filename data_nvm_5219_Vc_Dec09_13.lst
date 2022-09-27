@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/27/2022 10:48:19 PAGE 1   
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/27/2022 16:29:56 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE DATA_NVM_5219_VC_DEC09_13
@@ -62,7 +62,7 @@ line level    source
   52   2                      }
   53   1                      return(val);
   54   1      }
-C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/27/2022 10:48:19 PAGE 2   
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/27/2022 16:29:56 PAGE 2   
 
   55          
   56          unsigned long  flash_read_u32(unsigned int addr)
@@ -126,7 +126,7 @@ line level    source
  114   1                      FLASH_CON = 0x03;
  115   1              //-- 清除安全码 --
  116   1              FLASH_ENA = 0x00;
-C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/27/2022 10:48:19 PAGE 3   
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/27/2022 16:29:56 PAGE 3   
 
  117   1              FLASH_ENB = 0x00;
  118   1              FLASH_ENC = 0x00;
@@ -190,7 +190,7 @@ line level    source
 *** WARNING C280 IN LINE 150 OF _DATA_NVM\DATA_NVM_5219_VC_DEC09_13.C: 'txt': unreferenced local variable
  176          
  177          void flash_write_u32(unsigned int addr,unsigned long in_data)
-C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/27/2022 10:48:19 PAGE 4   
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/27/2022 16:29:56 PAGE 4   
 
  178          {
  179   1              unsigned char *ptr;
@@ -254,7 +254,7 @@ line level    source
  236   1              FLASH_ENB = 0x00;
  237   1              FLASH_ENC = 0x00;
  238   1              //-- 通过安全检验后才能启动 Flash 操作 --
-C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/27/2022 10:48:19 PAGE 5   
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/27/2022 16:29:56 PAGE 5   
 
  239   1              if((NRM_securty_a == 0xaa)&&(NRM_securty_b == 0x55))
  240   1                      FLASH_CON = 0x03;       //状态清除，执行一次FLASH_CON，将安全状态复位
@@ -318,7 +318,7 @@ line level    source
  298          
 
 
-C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/27/2022 10:48:19 PAGE 6   
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/27/2022 16:29:56 PAGE 6   
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
    CODE SIZE        =   1057    ----

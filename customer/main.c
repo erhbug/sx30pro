@@ -22,18 +22,17 @@ void adc_init(void);
 void init_int_timer0(void);
 
 void main(void)
-{//char txt[4];
+{
+//char txt[20];float num = 1.3;//12.3;
   wdt_init();  /// watch dog ///
-  gpio_init();
-  adc_init();
+  gpio_init();  
+  adc_init();  
   init_pwm();
   // Configuracion salida pin P0.1 prueba de togle pin interrup timer0. Salida
-  // para toogle prueba
-  // P0M0 |= (1<<1);
-  // P0M1 &= ~(1<<1);
-  init_int_timer0();
-
-	LCD_GLASS_Init(); 
+  // para toogle prueba   // P0M0 |= (1<<1);  // P0M1 &= ~(1<<1);
+  init_int_timer0();	
+  LCD_GLASS_Init(); 
+  delay_ms(500);
     vReadParamScale();
 LCD_GLASS_Float(stScaleParam.iCapacity,2,LCD_TOTAL);
 delay_ms(3000);
@@ -41,20 +40,16 @@ delay_ms(3000);
 	vPreConfiguration(PreConfig30KG);
 	if(stScaleParam.fFactorCalibrate<1)
 	 vCalibrate_Scale();
-	 	
-//	
-//vCalibrate_Scale();
-	 
-	// 
-	
-// fStablePoint(5, 1, 0);
- 
- 
 //TestEEPROM();
+
+
+LCD_GLASS_Clear();
  while(1){  ; 
     key_scan();
-	//vCalculate_Weight();
-//	LCD_GLASS_Float(fWeightScale, 2,  LCD_PESO);
+//	nFloatToStr(num,2,txt);
+//	
+	vCalculate_Weight();
+	LCD_GLASS_Float(fWeightScale, 2,  LCD_PESO);
 //	sprintf(txt,"%d ",(int)(Key));
 //	LCD_GLASS_String(txt,LCD_PESO);
 
@@ -101,7 +96,7 @@ void init_pwm(void){
 
     PWMF_H  = 0x00;
 	PWMF_L  = 0xA0;
-	PWM0  	= 0X6C;//BEEPER
+	PWM0  	= 0X01;//BEEPER correcto 0x6c
 	PWM1  	= 0X50;
 	PWMCON  = 0x04;	//PWM0-P1.4(LCD_LAMP)????(?PWM0=0xff?,?????)
 
@@ -273,3 +268,4 @@ NRM_securty_a = 0x00;
 	NRM_securty_b = 0x00;
 	LCD_GLASS_Clear();
 }
+

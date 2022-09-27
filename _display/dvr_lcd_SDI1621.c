@@ -7,12 +7,8 @@
 #include <string.h>
 
 	volatile SOLIDIC xdata Display;
-
 	void write_lcd(SOLIDIC Display);
 	void LCD_GLASS_Update(void);
-
-
-
 
 #if DISPLAY_20400047_EN > 0	
 
@@ -146,11 +142,11 @@ const unsigned char xdata cABC_LCD[] = {
 void lcd_unit_write(unsigned char d){
 	unsigned char i;
 	for(i=0;i<8;i++){
-		if( ( d & 0x80 ) == 0 ) LCD_DATA_OFF;
-		else LCD_DATA_ON;
-		LCD_WR_N_OFF;	
+		if( ( d & 0x80 ) == 0 ) LCD_DATA_N = 0;
+		else LCD_DATA_N = 1;
+		LCD_WR_N = 0;	
 		//delay_35u();	
-    LCD_WR_N_ON;			
+    LCD_WR_N = 1;			
 	//	delay_35u();		
 		d <<= 1;		
 	}
@@ -159,9 +155,9 @@ void lcd_unit_write(unsigned char d){
 
 
 void LCD_GLASS_Init(void){//int i,j,k;
-	LCD_CS_N_ON;
-	LCD_WR_N_ON;
-	LCD_DATA_ON;
+	LCD_CS_N = 1;
+	LCD_WR_N = 1;
+	LCD_DATA_N = 1;
 //	delay_35u();
 //	delay_35u();	
 	
@@ -182,7 +178,7 @@ void LCD_GLASS_Init(void){//int i,j,k;
 	Display.mode=LCD_DATA;
 //	Display.addr=0;
 //	Display.counter=sizeof(Display.LCD_BUF);
-	memset(Display.LCD_BUF, 0x00, sizeof(Display.LCD_BUF));
+	memset(Display.LCD_BUF, 0xff, sizeof(Display.LCD_BUF));
 	write_lcd(Display);//Write data to the RAM 
 }
 
@@ -213,57 +209,57 @@ void write_lcd(SOLIDIC Display){//char mode,unsigned char cmd,unsigned char addr
 		}
 	}*/
 	
-	LCD_CS_N_ON;
-	LCD_WR_N_ON;
-	LCD_DATA_ON;	
+	LCD_CS_N = 1;
+	LCD_WR_N = 1;
+	LCD_DATA_N = 1;	
 	//delay_35u();		
-	LCD_CS_N_OFF;//	LCD_DATA_ON;
+	LCD_CS_N = 0;//	LCD_DATA_N = 1;
 	//delay_35u();
-	LCD_WR_N_OFF;
+	LCD_WR_N = 0;
 	//delay_35u();
-	LCD_WR_N_ON;
+	LCD_WR_N = 1;
 //	delay_35u();
-	LCD_DATA_OFF;
-	LCD_WR_N_OFF;
+	LCD_DATA_N = 0;
+	LCD_WR_N = 0;
 	//delay_35u();
-	LCD_WR_N_ON;
+	LCD_WR_N = 1;
 //	delay_35u();
 	if(Display.mode==0)
-	  	LCD_DATA_OFF;
+	  	LCD_DATA_N = 0;
 	else 
-	  	LCD_DATA_ON;
-	LCD_WR_N_OFF;
+	  	LCD_DATA_N = 1;
+	LCD_WR_N = 0;
 	//delay_35u();
-	LCD_WR_N_ON;
+	LCD_WR_N = 1;
 //	delay_35u();
 
 	if(Display.mode == 0){
 		lcd_unit_write(Display.cmd);		
-		LCD_WR_N_OFF;
+		LCD_WR_N = 0;
 	//	delay_35u();
-		LCD_WR_N_ON;
+		LCD_WR_N = 1;
 	//	delay_35u();
 	}
 	else 
 	{		
 		addr = 0;
 		for(i=0;i<6;i++){	// 数据写入命令,发送首地址  Comando de escritura de datos, enviar la primera dirección
-			LCD_WR_N_OFF;			
+			LCD_WR_N = 0;			
 			if( (addr & 0x80) == 0 ) 
-				LCD_DATA_OFF;
+				LCD_DATA_N = 0;
 		  else 
-				LCD_DATA_ON;
+				LCD_DATA_N = 1;
 		//	delay_35u();
-			LCD_WR_N_ON;
+			LCD_WR_N = 1;
 		//	delay_35u();
 			addr <<= 1;
 		}		
 		for(i=0;i<16;i++)	// 数据写入命令,发送数据  Comando de escritura de datos, enviar datos
 			lcd_unit_write(Display.LCD_BUF[15 - i]);		
 	}
-	LCD_CS_N_ON;
-	LCD_DATA_ON;
-	LCD_WR_N_ON;	
+	LCD_CS_N = 1;
+	LCD_DATA_N = 1;
+	LCD_WR_N = 1;	
 	//delay_35u();
 	
 	//HAL_GPIO_WritePin(GPIOC, TARA_IN_Pin, GPIO_PIN_RESET);
@@ -535,6 +531,60 @@ void LCD_GLASS_Symbols(unsigned char cSymbol, unsigned char cFlag_On){
 	LCD_GLASS_Update();
 }
 
+
+/*
+funcion para convertir de flotante a string
+referencia:
+https://forum.mikroe.com/viewtopic.php?f=88&t=63473&start=0#p252984
+Primer Modificacion: Eriberto Romero Hdz. (27 09 22)
+Parametros:
+f= numero a convertir
+digits= numero de digitos del display torrey que ocupara el string
+p= numero de decimales
+txt= aqui se va poner el nuero en texto
+*/
+const void nFloatToStr(float f, unsigned char digits, unsigned char p, unsigned char *txt) {
+   unsigned long r1;   
+   unsigned long factor = 10;
+   unsigned char i = p, j = 0;
+   unsigned char sign=0;
+   unsigned char digit=0;
+
+if( f < 0 ){ sign=1; f*=-1;  } 
+   while (i--)
+      factor *= 10;
+   r1 = ((unsigned long)(f * factor) + 5) / 10;
+
+   do {
+      txt[j++] = (r1 % 10) + '0';
+      r1 /= 10;
+	  digit++;
+
+      if (--p == 0)
+         txt[j++] = '.';
+
+	} while (r1 > 0 );
+   
+   if (txt[j - 1] == '.'){
+      txt[j++] = '0';digit++;}
+      
+   if (sign){
+      txt[j++] = '-';
+	  digit++;}
+
+
+	while (digit < digits){
+      txt[j++] = ' ';
+	  digit++;
+	} 
+
+
+   txt[j] = '\0';
+
+   for (i = 0, j--; i < j; i++, j--)
+     p = txt[i], txt[i] = txt[j], txt[j] = p;
+}
+
 /**
 	******************************************************************************
   * Objetivo: Mostrar en LCD numero con formato float.
@@ -545,37 +595,35 @@ void LCD_GLASS_Symbols(unsigned char cSymbol, unsigned char cFlag_On){
   ***
 */
 
-
 void LCD_GLASS_Float(float fNumber_To_LCD, unsigned char iNumber_Decimal, unsigned char cPosition_On_LCD) {
 unsigned char xdata strText_LCD[8];  
 
   if (iNumber_Decimal == 0) {
     if (cPosition_On_LCD == LCD_TOTAL) {
-      sprintf(strText_LCD, "%6.0f", fNumber_To_LCD);//ok
+	  nFloatToStr(fNumber_To_LCD,5,0,strText_LCD);//sprintf(strText_LCD, "%6.0f", fNumber_To_LCD);//ok
     } else 
-      sprintf(strText_LCD, "%5.0f", fNumber_To_LCD);//ok
+      nFloatToStr(fNumber_To_LCD,4,0,strText_LCD);//sprintf(strText_LCD, "%5.0f", fNumber_To_LCD);//ok
     
   }
   if (iNumber_Decimal == 1) {
     if (cPosition_On_LCD == LCD_TOTAL) {
-      //sprintf(strText_LCD, "%7.1f", fNumber_To_LCD);//no ok
-      sprintf(strText_LCD, "FLOAT");//no ok
+      nFloatToStr(fNumber_To_LCD,6,1,strText_LCD);////sprintf(strText_LCD, "%7.1f", fNumber_To_LCD);//no ok   sprintf(strText_LCD, "FLOAT");//no ok
     } else 
-      sprintf(strText_LCD, "%6.1f", fNumber_To_LCD);//ok
+      nFloatToStr(fNumber_To_LCD,5,1,strText_LCD);//sprintf(strText_LCD, "%6.1f", fNumber_To_LCD);//ok
     
   }
   if (iNumber_Decimal == 2) {
     if (cPosition_On_LCD == LCD_TOTAL) {
-      sprintf(strText_LCD, "%7.2f", fNumber_To_LCD);//ok
+      nFloatToStr(fNumber_To_LCD,6,2,strText_LCD);//sprintf(strText_LCD, "%7.2f", fNumber_To_LCD);//ok
     } else 
-      sprintf(strText_LCD, "%6.2f", fNumber_To_LCD);//ok
+      nFloatToStr(fNumber_To_LCD,5,2,strText_LCD);//sprintf(strText_LCD, "%6.2f", fNumber_To_LCD);//ok
     
   }
   if (iNumber_Decimal == 3) {
     if (cPosition_On_LCD == LCD_TOTAL) {
-      sprintf(strText_LCD, "%7.3f", fNumber_To_LCD);//ok
+      nFloatToStr(fNumber_To_LCD,6,3,strText_LCD);//sprintf(strText_LCD, "%7.3f", fNumber_To_LCD);//ok
     } else 
-      sprintf(strText_LCD, "%6.3f", fNumber_To_LCD);//ok
+      nFloatToStr(fNumber_To_LCD,5,3,strText_LCD);//sprintf(strText_LCD, "%6.3f", fNumber_To_LCD);//ok
     
   }
 
