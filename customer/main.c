@@ -1,9 +1,9 @@
 //#pragma code symbols debug oe
 //#define EXTERN
+#include "./_display/dvr_lcd_SDI1621.h"
 #include <REG52.H>
 //#include <math.h>
 #include "./_solidic/head_file_version.h"
-#include "./_display/dvr_lcd_SDI1621.h"
 #include "./_weight/dvr_HX712.h"
 #include "./customer/keyboard.h"
 
@@ -11,7 +11,7 @@
 #include "./_scale/dvr_scale.h"
 #include <stdio.h>
 
-extern float fWeightScale;	
+extern float xdata fWeightScale;	
 
 unsigned int convertidorADC(void);
 void TestEEPROM(void);
@@ -23,6 +23,7 @@ void init_int_timer0(void);
 
 void main(void)
 {
+LCD_GLASS_Init(); 
 //char txt[20];float num = 1.3;//12.3;
   wdt_init();  /// watch dog ///
   gpio_init();  
@@ -33,9 +34,11 @@ void main(void)
   init_int_timer0();	
   LCD_GLASS_Init(); 
   delay_ms(500);
+
+
     vReadParamScale();
 LCD_GLASS_Float(stScaleParam.iCapacity,2,LCD_TOTAL);
-delay_ms(3000);
+delay_ms(2000);
 	if(stScaleParam.iCapacity != 30)
 	vPreConfiguration(PreConfig30KG);
 	if(stScaleParam.fFactorCalibrate<1)
@@ -48,7 +51,7 @@ LCD_GLASS_Clear();
     key_scan();
 //	nFloatToStr(num,2,txt);
 //	
-	vCalculate_Weight();
+	vCalculate_Weight();delay_ms(50);
 	LCD_GLASS_Float(fWeightScale, 2,  LCD_PESO);
 //	sprintf(txt,"%d ",(int)(Key));
 //	LCD_GLASS_String(txt,LCD_PESO);
@@ -63,7 +66,7 @@ LCD_GLASS_Clear();
 
 
 	
-    //delay_ms(5000);
+    
 //	P0|= (1<<5);
 //	voltaje=convertidorADC()*(3.3/255);
  //	
@@ -151,7 +154,7 @@ void init_int_timer0(void)
 
 unsigned int convertidorADC(){
 
-unsigned int v=0;
+unsigned int xdata v=0;
 SARCON = 0x09;
 	if(!(SARCON & 0x04))
 	{
@@ -235,11 +238,11 @@ static void timer0(void) interrupt 1
 
 void TestEEPROM(void)
 {
-	unsigned int addr=ADDRESS_PLU;
-	float val;
-	float i=0.12;
+	unsigned int xdata addr=ADDRESS_PLU;
+	float xdata val;
+	float xdata i=0.12;
 
-	unsigned int x=0;
+	unsigned int xdata  x=0;
  
 	NRM_securty_a = 0xaa;
 	NRM_securty_b = 0x55;

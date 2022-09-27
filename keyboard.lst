@@ -1,10 +1,10 @@
-C51 COMPILER V7.50   KEYBOARD                                                              09/27/2022 15:48:26 PAGE 1   
+C51 COMPILER V7.50   KEYBOARD                                                              09/27/2022 18:11:36 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE KEYBOARD
 OBJECT MODULE PLACED IN keyboard.obj
-COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE customer\keyboard.c LARGE BROWSE DEBUG OBJECTEXTEND PRINT(.\keyboard.lst) O
-                    -BJECT(keyboard.obj)
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE customer\keyboard.c BROWSE DEBUG OBJECTEXTEND PRINT(.\keyboard.lst) OBJECT(
+                    -keyboard.obj)
 
 line level    source
 
@@ -33,11 +33,11 @@ line level    source
   23          #include "./_scale/dvr_def.h"
   24          
   25          
-  26          unsigned char Key;
-  27          unsigned char LastKey;
-  28          unsigned char KeyState=0;
+  26          unsigned char xdata Key;
+  27          unsigned char xdata LastKey;
+  28          unsigned char xdata KeyState=0;
   29          
-  30          struct strTimers strTimer;
+  30          strTimers xdata strTimer;
   31          
   32          
   33          #define KEY_D0_ON                       P2 |= 0x02 
@@ -45,7 +45,7 @@ line level    source
   35          
   36          
   37          void key_scan(void) {
-  38   1        unsigned char k = 0;
+  38   1        unsigned char xdata k = 0;
   39   1        Key = 0;
   40   1      
   41   1        for (k = 0; k < 5; k++) {
@@ -62,7 +62,7 @@ line level    source
   52   2          delay_ms(1);
   53   2          if (KEY_K0 != 1) Key = 1 + (k * 4);
   54   2          if (KEY_K1 != 1) Key = 2 + (k * 4);
-C51 COMPILER V7.50   KEYBOARD                                                              09/27/2022 15:48:26 PAGE 2   
+C51 COMPILER V7.50   KEYBOARD                                                              09/27/2022 18:11:36 PAGE 2   
 
   55   2          if (KEY_K2 != 1) Key = 3 + (k * 4);
   56   2          if (KEY_K3 != 1) Key = 4 + (k * 4);
@@ -126,7 +126,7 @@ line level    source
  114   1              if(stScaleParam.cBacklight){OnBackLight;}
  115   1                      strTimer.cFLag_TimerJ_Start = 1;
  116   1                      srFlagScale.bBacklight_On = 1;
-C51 COMPILER V7.50   KEYBOARD                                                              09/27/2022 15:48:26 PAGE 3   
+C51 COMPILER V7.50   KEYBOARD                                                              09/27/2022 18:11:36 PAGE 3   
 
  117   1              }       
  118   1              
@@ -138,14 +138,14 @@ line level    source
  124   1      }
  125          
  126          void vSound_Saved_Param(void){
- 127   1              unsigned char i = 0;
+ 127   1              unsigned char xdata  i = 0;
  128   1              
  129   1              for(i=0; i<3; i++){vBeep_Key();delay_ms(250);}
  130   1      }
  131          
  132          void delay_ms(unsigned int num)
  133          {       
- 134   1              unsigned int i,j;
+ 134   1              unsigned int xdata i,j;
  135   1              for(i= 0;i<num;i++){    //(SDI5219) ??1ms
  136   2              IWDG_KEY_REFRESH; 
  137   2                      for(j=0;j<200;j++)
@@ -157,9 +157,9 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    326    ----
+   CODE SIZE        =    364    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =     11       2
+   XDATA SIZE       =     11       6
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----

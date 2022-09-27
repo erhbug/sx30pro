@@ -10,12 +10,12 @@ enum UnitScale{
 	UNIT_LB, UNIT_KG, UNIT_OZ 
 };
 
-struct Parameter{
+typedef struct {
 	float fWeightScale;
 	float fWeightScaleCount;
 	float fWeightOverload;
-	float fPrice_Unit;
-	float fTotal_Venta;
+	//float fPrice_Unit;
+	//float fTotal_Venta;
 	float fValueTara;						/* Valor actual de la tara */
 	float fWeightScaleTara;
 	float	fPointZeroCali;
@@ -23,7 +23,7 @@ struct Parameter{
 	float fFactorCalibrate;			/* Factor de Calibracion */	
 	float fPointZero;
 	float fPointZeroInitial;
-	float fAddress_Plus;
+	//float fAddress_Plus;
 	float fValueOverload;
 	
 	float fVoltage_Batt;
@@ -70,13 +70,13 @@ struct Parameter{
 	unsigned char strNumSerieCalidad[11];	
 	unsigned char cSaveBattery;
 	
-	unsigned char cFormatoImpresion;
+	//unsigned char cFormatoImpresion;
 	unsigned char cMoneda;
 	
 	unsigned char cSpecialAction;
 	unsigned char cBacklight;
-};
-extern struct Parameter stScaleParam;
+}Parameter;
+extern Parameter xdata stScaleParam;
 
 enum digi_key{ 
 		KEY_NULL,
@@ -86,86 +86,85 @@ enum digi_key{
 		KEY_A, KEY_B, KEY_C1, KEY_D, KEY_E, KEY_F, KEY_G, KEY_H,
 	};	
 
-struct FlagScale{
-	unsigned char bScaleOn;			/* Indica si la bascula esta encendida o apagada */
-	unsigned char bReadBattery;	/* Indica que ya se puede leer el valor de la bateria */
-	unsigned char bBateriaLow;		/* Indica el estado de la bateria */
-	unsigned char bMsgBatteryLow;
-	unsigned char bBateriaCount;
-	unsigned char bSourceVoltage; /* Indica de donde procede el voltaje de alimentacion
-												bateria o eliminador */
-	unsigned char bZeroTracking;	/* Inidica si la funcion ZeroTrcking esta activada */
+typedef struct {
+//	unsigned char bScaleOn;			/* Indica si la bascula esta encendida o apagada */
+//	unsigned char bReadBattery;	/* Indica que ya se puede leer el valor de la bateria */
+//	unsigned char bBateriaLow;		/* Indica el estado de la bateria */
+//	unsigned char bMsgBatteryLow;
+//	unsigned char bBateriaCount;
+//	unsigned char bSourceVoltage; /* Indica de donde procede el voltaje de alimentacion	bateria o eliminador */
+//	unsigned char bZeroTracking;	/* Inidica si la funcion ZeroTrcking esta activada */
 	unsigned char bTara;					/* 1 -> Tara Activada, 0 -> Desactivada */
-	unsigned char bZero;					/* Inidica si el sistema debe tomar una nueva referncia
-												a cero */
+//	unsigned char bZero;					/* Inidica si el sistema debe tomar una nueva referncia	a cero */
 	unsigned char bFlagFijarPRecio;
 	unsigned char bOverLoad;
 	unsigned char bFlagWeightNeg;
 	
-	unsigned char bCodeConfiguration;
-	unsigned char bMultirango_Off;
-	unsigned char bBacklight_On;
+//	unsigned char bCodeConfiguration;
+//	unsigned char bMultirango_Off;
+//	unsigned char bBacklight_On;
 	
-	unsigned char cWait_Time_Code;
-	unsigned char cAuto_Off_Time;
+//	unsigned char cWait_Time_Code;
+//	unsigned char cAuto_Off_Time;
 		
-	unsigned char bReadPlus;
-	unsigned char bWritePlus;
+//	unsigned char bReadPlus;
+//	unsigned char bWritePlus;
 	
-	unsigned char bDotDecimalPrice;
+//	unsigned char bDotDecimalPrice;
 	
-	unsigned char bTopeSobrePeso;
+//	unsigned char bTopeSobrePeso;
 	unsigned char bShowCountADC;
 	
-	unsigned char bBL_Lpcr;
+//	unsigned char bBL_Lpcr;
 	
-	unsigned char bActiveSaveBattery;	
-	unsigned char bPWM_Duty_On;
+//	unsigned char bActiveSaveBattery;	
+	//unsigned char bPWM_Duty_On;
 
-	unsigned char bFlagNeg;
+//	unsigned char bFlagNeg;
 		
-	unsigned char bEliminadorOn;
-	unsigned char bShowErrorBat;
+//	unsigned char bEliminadorOn;
+//	unsigned char bShowErrorBat;
 	
-	unsigned char bIwdgConfig;
-	unsigned char bStateBatDown;	//1 -> estado de bater?a muy bajo p/trabajar
+//	unsigned char bIwdgConfig;
+//	unsigned char bStateBatDown;	//1 -> estado de bater?a muy bajo p/trabajar
 										//0 -> estado OK de bater?a p/trabajar. EMP		
 
 	unsigned char bErrorReadAdc;
 	unsigned char bErrorResponseAdc;
-	unsigned char bErrorNoiseAdc;
+
+//	unsigned char bErrorNoiseAdc;
 		
-	unsigned char bTestZeroTracking;
+//	unsigned char bTestZeroTracking;
 	
-	unsigned char bFunctionFactory;
+//	unsigned char bFunctionFactory;
 	
-	unsigned char bPrecioCero;
+//	unsigned char bPrecioCero;
 	
 	unsigned char bFlagStable;
-	unsigned char bCalidadTest;
+//	unsigned char bCalidadTest;
 	
 	unsigned char bShowErroBat;
 	
-	unsigned char bPressVarios;
-	unsigned char bPlsUnload_Enable;	//1 -> presente PLS UNLOAD, EMP
-	unsigned char bAdd_Articulos;	// 1 -> modo de suma de articulos EMP
-	unsigned char bArticulosTotalCero;	//1 -> permite saber que $Total y
+//	unsigned char bPressVarios;
+//	unsigned char bPlsUnload_Enable;	//1 -> presente PLS UNLOAD, EMP
+//	unsigned char bAdd_Articulos;	// 1 -> modo de suma de articulos EMP
+//	unsigned char bArticulosTotalCero;	//1 -> permite saber que $Total y
 													// #Artculos son cero
 	
-	unsigned char bMultiplicar_Producto;
-	unsigned char bAdd_Producto_Sin_Peso;
+	//unsigned char bMultiplicar_Producto;
+	//unsigned char bAdd_Producto_Sin_Peso;
 	
-	unsigned char bPrinter;
+	//unsigned char bPrinter;
 	
-	unsigned char bStatusVoltajeRef;
+	//unsigned char bStatusVoltajeRef;
 	
-	unsigned char bAhorroBateria;
+	//unsigned char bAhorroBateria;
 	
 	enum digi_key bFlagKeyNumber;
 	
-};  
+}FlagScale;  
 
-extern struct FlagScale srFlagScale;
+extern FlagScale xdata srFlagScale;
 
 /* Global variables ----------------------------------------------------------*/
 /*
@@ -253,7 +252,7 @@ struct FlagScale{
 
 extern struct FlagScale srFlagScale;
 */
-struct strTimers{
+typedef struct {
 /*	unsigned char cFLag_TimerA_Start;
 	unsigned char cFLag_TimerA_On;
 	unsigned char cFLag_TimerA_End;
@@ -328,13 +327,13 @@ struct strTimers{
 	unsigned int iTimerJ;							//  1s
 //	unsigned int iTimerSegundosJ;     // 15s
 	
-};
+}strTimers;
 
 #define TimerAend 200
 #define TimerBend 500
 #define TimerEend 5000
 #define TimerJend 1000
-extern struct strTimers strTimer;
+extern strTimers xdata strTimer;
 
 /*
 enum ActionScale{ 

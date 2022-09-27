@@ -11,26 +11,26 @@ sbit MISO = P0^3;
 sbit SCLK = P0^4;	
 
 //--------------------------------------------------------------------------------
-float ValueCount = 0.0;
-int iCountFailRead = 0;
-int iCountFailResponse = 0;
-float arfDataFilter_x[5] = {0.00};
-float fBeforeValue_x = 0;
-float fAverage_x = 0;
-unsigned char iValueOut = 0;
+float xdata ValueCount = 0.0;
+int xdata iCountFailRead = 0;
+int xdata iCountFailResponse = 0;
+float xdata arfDataFilter_x[5] = {0.00};
+float xdata fBeforeValue_x = 0;
+float xdata fAverage_x = 0;
+unsigned char xdata iValueOut = 0;
 
 /*
 */
 float fFilter_Averaging(unsigned long iActualWeight, unsigned char cFastFill){	
-	float arfLowestToHighest[5] = {0.00};
-    float fThreshold = stScaleParam.fFactorCalibrate*0.5;
+	float xdata arfLowestToHighest[5] = {0.00};
+    float xdata fThreshold = stScaleParam.fFactorCalibrate*0.5;
 	//float fThreshold = 3.327/2;//8.526937/2;
-	float fData_Vector = 0;
-	float *pfData_Filter;
-	float fActualWeight = (float)(iActualWeight);
-	unsigned char iLenthData_x = 5;		// Longitud de los datos a ordenar, original 6, en prueba 10 
-	unsigned char i = 0; 	// Variable para ciclos iterativo 
-    unsigned char j = 0;	// Variable para ciclos iterativo 
+	float xdata fData_Vector = 0;
+	float xdata *pfData_Filter;
+	float xdata fActualWeight = (float)(iActualWeight);
+	unsigned char xdata iLenthData_x = 5;		// Longitud de los datos a ordenar, original 6, en prueba 10 
+	unsigned char xdata i = 0; 	// Variable para ciclos iterativo 
+    unsigned char xdata j = 0;	// Variable para ciclos iterativo 
 	
 	pfData_Filter = arfDataFilter_x;
 	
@@ -96,7 +96,7 @@ float fFilter_Averaging(unsigned long iActualWeight, unsigned char cFastFill){
 /*
 */
 float fRead_Adc(unsigned char cFillFilter){
-	unsigned long iTemp_RA = 0;
+	unsigned long xdata iTemp_RA = 0;
 
 	while(MISO!=0 && iTemp_RA<250){
       delay_ms(1);        iTemp_RA++;
@@ -131,9 +131,9 @@ float fRead_Adc(unsigned char cFillFilter){
 }
 
 volatile unsigned long  ReadHX712(void){ //by ERH
-    unsigned int i;
-	unsigned long *ptr;	
-    unsigned char  dato[4]={0};
+    unsigned int xdata i;
+	unsigned long xdata *ptr;	
+    unsigned char  xdata dato[4]={0};
     ptr=(unsigned long *)&dato;
 
 	if(MISO!=0)return;

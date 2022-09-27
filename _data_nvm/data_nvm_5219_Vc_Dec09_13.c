@@ -22,28 +22,28 @@
 #include "./_display/dvr_lcd_SDI1621.h"
 #include "./customer/keyboard.h"
 
-unsigned char NRM_securty_a;						// EEPROM 安全码A
-unsigned char NRM_securty_b;	
+unsigned char xdata NRM_securty_a;						// EEPROM 安全码A
+unsigned char xdata NRM_securty_b;	
 
 void ClearThisButAll(unsigned int Address, unsigned int IntCount);
 
 volatile void nop(void){
- unsigned int x=1;
+ unsigned int xdata  x=1;
  x<<=1;
 }
 
 unsigned char flash_read_u8(unsigned int addr)
 {
-	unsigned char val;
+	unsigned char xdata val;
 	val = CBYTE[addr];	
 	return(val);
 }
 
 unsigned int  flash_read_u16(unsigned int addr)
 {
-	unsigned int val;
-		unsigned char *ptr;
-		unsigned char i;
+	unsigned int xdata val;
+		unsigned char xdata *ptr;
+		unsigned char xdata i;
 	
 		ptr=(unsigned char *)&val;
 		for(i=0;i<2;i++)
@@ -55,9 +55,9 @@ unsigned int  flash_read_u16(unsigned int addr)
 
 unsigned long  flash_read_u32(unsigned int addr)
 {
-    unsigned long val;
-		unsigned char *ptr;
-		unsigned char i;
+    unsigned long xdata val;
+		unsigned char xdata *ptr;
+		unsigned char xdata i;
 	
 		ptr=(unsigned char *)&val;
 		for(i=0;i<4;i++)
@@ -69,9 +69,9 @@ unsigned long  flash_read_u32(unsigned int addr)
 
 float flash_read_float32(unsigned int addr)
 	{
-	    float val;
-		unsigned char *ptr;
-		unsigned char i;
+	    float xdata val;
+		unsigned char xdata *ptr;
+		unsigned char xdata i;
 	
 		ptr=(unsigned char *)&val;
 		for(i=0;i<4;i++)
@@ -86,7 +86,7 @@ void nvm_data_write_byte(unsigned int addr,unsigned char in_data)
 {
 	union INTpattern flash_addr;
 	bit ea_save;
-	unsigned char i=0;
+	unsigned char xdata i=0;
 
     IWDG_KEY_REFRESH;
 	flash_addr.i = addr;
@@ -130,7 +130,7 @@ void nvm_data_write_byte(unsigned int addr,unsigned char in_data)
 
 void flash_write_u8(unsigned int addr,unsigned char in_data)
 {
-  unsigned char read=0;
+  unsigned char xdata read=0;
 	
 	/****************************/
 	read=flash_read_u8(addr);
@@ -144,10 +144,10 @@ void flash_write_u8(unsigned int addr,unsigned char in_data)
 
 void flash_write_u16(unsigned int addr,unsigned int in_data)
 {
-	unsigned char *ptr;
-	unsigned char i;
-	unsigned int aux;
-	unsigned char txt[8];
+	unsigned char xdata *ptr;
+	unsigned char xdata i;
+	unsigned int xdata aux;
+	unsigned char xdata txt[8];
 
 	/****************************/
 	aux=flash_read_u16(addr);
@@ -176,9 +176,9 @@ void flash_write_u16(unsigned int addr,unsigned int in_data)
 
 void flash_write_u32(unsigned int addr,unsigned long in_data)
 {
-	unsigned char *ptr;
-	unsigned char i;
-	unsigned long read=0;
+	unsigned char xdata *ptr;
+	unsigned char xdata i;
+	unsigned long xdata read=0;
 	read=flash_read_u32(addr);
 
 	/****************************/
@@ -197,10 +197,10 @@ void flash_write_u32(unsigned int addr,unsigned long in_data)
 
 void flash_write_float32(unsigned int addr,float in_data)
 {
-	unsigned char *ptr;
-	unsigned char i;
-	float aux;
-	unsigned long read=0;
+	unsigned char xdata *ptr;
+	unsigned char xdata i;
+	float xdata aux;
+	unsigned long xdata read=0;
 	read=flash_read_u32(addr);
 
 	/****************************/
@@ -223,7 +223,7 @@ void flash_write_float32(unsigned int addr,float in_data)
 //NRM_securty_a,NRM_securty_b
 //flash操作关闭总中断，操作完后会开启总中断(注意)
 void e2rom_erase(unsigned int addr)
-{unsigned char i=0;
+{unsigned char xdata i=0;
 	union INTpattern flash_addr;
 	bit ea_save;
 	flash_addr.i = addr;
@@ -254,9 +254,9 @@ void e2rom_erase(unsigned int addr)
 }
 
 void ClearThisButAll(unsigned int Address, unsigned int IntCount){
-	unsigned char Aux=0;	
-	unsigned int i=0;
-	unsigned int Page;	
+	unsigned char xdata Aux=0;	
+	unsigned int xdata i=0;
+	unsigned int xdata Page;	
 	//unsigned int SizePage=0x400;
 
 	/*Determinar en que pagina se encuentra*/

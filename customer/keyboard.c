@@ -23,11 +23,11 @@
 #include "./_scale/dvr_def.h"
 
 
-unsigned char Key;
-unsigned char LastKey;
-unsigned char KeyState=0;
+unsigned char xdata Key;
+unsigned char xdata LastKey;
+unsigned char xdata KeyState=0;
 
-struct strTimers strTimer;
+strTimers xdata strTimer;
 
 
 #define KEY_D0_ON			P2 |= 0x02 
@@ -35,7 +35,7 @@ struct strTimers strTimer;
 
 
 void key_scan(void) {
-  unsigned char k = 0;
+  unsigned char xdata k = 0;
   Key = 0;
 
   for (k = 0; k < 5; k++) {
@@ -124,14 +124,14 @@ enum digi_key vActionKey(void){
 }
 
 void vSound_Saved_Param(void){
-	unsigned char i = 0;
+	unsigned char xdata  i = 0;
 	
 	for(i=0; i<3; i++){vBeep_Key();delay_ms(250);}
 }
 
 void delay_ms(unsigned int num)
 { 	
-	unsigned int i,j;
+	unsigned int xdata i,j;
   	for(i= 0;i<num;i++){	//(SDI5219) ??1ms
 	IWDG_KEY_REFRESH; 
 		for(j=0;j<200;j++)

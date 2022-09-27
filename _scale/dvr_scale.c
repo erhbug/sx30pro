@@ -42,7 +42,7 @@
 #define ADDR_REDONDEO_VENTA 		ADDRESS_SCALE_CONFIG_PAGE + 23	/* 1 byte */
 #define ADDR_DECIMAL_PRECIO 		ADDRESS_SCALE_CONFIG_PAGE + 24	/* 1 byte */
 #define ADDR_ZERO_TRACKING 			ADDRESS_SCALE_CONFIG_PAGE + 25	/* 1 byte */
-#define ADDR_FORMATO_IMPRESION	    ADDRESS_SCALE_CONFIG_PAGE + 26	/* 1 byte */
+//#define ADDR_FORMATO_IMPRESION	    ADDRESS_SCALE_CONFIG_PAGE + 26	/* 1 byte */
 #define ADDR_MSG_UNLOAD 		    ADDRESS_SCALE_CONFIG_PAGE + 27	/* 1 byte */
 #define ADDR_TIME_OFF 				ADDRESS_SCALE_CONFIG_PAGE + 28	/* 1 byte */
 #define ADDR_MODELO					ADDRESS_SCALE_CONFIG_PAGE + 29 /* 1 byte */
@@ -67,16 +67,16 @@
 #define ADDR_ERRORBATT			    ADDRESS_QLTY_AND_CNTRS_PAGE + 10  /* 1 byte */
 #define ADDR_VENTA_TOTAL		    ADDRESS_QLTY_AND_CNTRS_PAGE + 11   /* 4 bytes */
 
-float fWeightScale = 0;									/* Contiene el valor del peso leido */
-float fWeightScaleBefore = 0;
-float fWeightLight = 0;
-struct Parameter stScaleParam;	/* Contiene los parametros de uso de la Bascula*/
-struct FlagScale srFlagScale;		/* Contiene las banderas del sistema */
+float xdata fWeightScale = 0;									/* Contiene el valor del peso leido */
+float xdata fWeightScaleBefore = 0;
+float xdata fWeightLight = 0;
+ Parameter xdata stScaleParam;	/* Contiene los parametros de uso de la Bascula*/
+ FlagScale xdata srFlagScale;		/* Contiene las banderas del sistema */
 
-int iCounterZeroTracking = 0;
+int xdata iCounterZeroTracking = 0;
 
-extern int iCountFailRead;
-extern int iCountFailResponse;
+extern int xdata iCountFailRead;
+extern int xdata iCountFailResponse;
 
 /* --- Prototype Function ----------------------------------------------------*/
 void vSaveParamScale(unsigned char cType_Parameter);
@@ -107,7 +107,7 @@ void vReadParamScale(void){
 	stScaleParam.cMultirango	= flash_read_u8(ADDR_MULTIRANGO);
 	stScaleParam.cLenguage				= flash_read_u8(ADDR_LENGUAGE);
 	stScaleParam.cUnits 					= flash_read_u8(ADDR_UNITS);
-	stScaleParam.cFormatoImpresion				= flash_read_u8(ADDR_FORMATO_IMPRESION);
+//	stScaleParam.cFormatoImpresion				= flash_read_u8(ADDR_FORMATO_IMPRESION);
 	stScaleParam.iCapacity				=	flash_read_u16(ADDR_CAPACITY);
 	stScaleParam.iLoadPorcRefer 	= flash_read_u16(ADDR_PORC_REF);
 	stScaleParam.iDivisionMinima 	= flash_read_u16(ADDR_DIVISION_MINIMA);
@@ -220,7 +220,7 @@ void vSaveParamScale(unsigned char cType_Parameter){
 			flash_write_u8(ADDR_SAVEBATT, stScaleParam.cSaveBattery);			
 			flash_write_u8(ADDR_ERRORBATT, srFlagScale.bShowErroBat);
 			flash_write_u8(ADDR_MULTIRANGO, stScaleParam.cMultirango);
-			flash_write_u8(ADDR_FORMATO_IMPRESION, stScaleParam.cFormatoImpresion);		
+//			flash_write_u8(ADDR_FORMATO_IMPRESION, stScaleParam.cFormatoImpresion);		
 			break;
 	
 		case Parameter_Count_Configuration:
@@ -275,12 +275,12 @@ void vSaveParamScale(unsigned char cType_Parameter){
   */
 float fStablePoint(unsigned char cSetCountBack, unsigned char cShowCount, unsigned char cRunStable){	
 
-	unsigned char cCountReading = 0;		/* Contador de lecturas */
-	unsigned char cNumber_Count = 0;
-	long int cCountBack = cSetCountBack;			/* Contador de regresion */
-	float fActualWeightAdc=0;						/* Alamacena el peso actual valores adc */
-	float fWeightAdc = 0;								/* Almacena el valor referencia */
-	float fLimitRange =  (float)stScaleParam.cCountRange;//5
+	unsigned char xdata cCountReading = 0;		/* Contador de lecturas */
+	unsigned char xdata cNumber_Count = 0;
+	long int xdata cCountBack = cSetCountBack;			/* Contador de regresion */
+	float xdata fActualWeightAdc=0;						/* Alamacena el peso actual valores adc */
+	float xdata fWeightAdc = 0;								/* Almacena el valor referencia */
+	float xdata fLimitRange =  (float)stScaleParam.cCountRange;//5
 	int i=0;
 	
 	cNumber_Count = 0;
@@ -518,7 +518,7 @@ void cOnOffModeTara(float fWeightTara){
   ******************************************************************************
   */
 void vSetZero(void){
-	float fWeightZero = 0;
+	float xdata fWeightZero = 0;
 	
 	/* Verifica si el peso es estable para volver cero */
 	fWeightZero = fStablePoint(1, 0, 1);
@@ -695,7 +695,7 @@ void vCalibrate_Scale(void){
 void vPreConfiguration(unsigned char cPreConfiguration){
 	
 //	enum 	digi_key Value_Key_Press;
-	unsigned char cIndex = 0;
+	unsigned char xdata cIndex = 0;
 	
 //	strTimer.cFLag_TimerD_Start = 1;
 	
@@ -786,7 +786,7 @@ void vPreConfiguration(unsigned char cPreConfiguration){
 	stScaleParam.iCountOverload = 0;		
 	stScaleParam.fValueOverload = 0;
 	stScaleParam.cSaveBattery	= 0;
-  stScaleParam.cFormatoImpresion = 2; 
+//  stScaleParam.cFormatoImpresion = 2; 
 	stScaleParam.cTypeBeeper = 0;
 	
 	stScaleParam.fVoltage_Batt = 0;
@@ -1153,7 +1153,7 @@ void vCalculate_Weight (void){
 Se toman 3 lecturas para garantizar el peso al realizar las sumas c/precio fijo, 
 si no hay precio fijo realiza solo una lectura de forma natural.
 ******************/	
-	char i = 0, cCountPrecioFijo = 0;
+	char xdata i = 0, cCountPrecioFijo = 0;
 
 	if(srFlagScale.bFlagFijarPRecio){	
 		cCountPrecioFijo = 3;						
@@ -1216,12 +1216,12 @@ si no hay precio fijo realiza solo una lectura de forma natural.
   */
 float fCuentasToPeso(float fCountADC){
 	
-	float fAuxFactorC = 0;
-	float fPesoFinal = 0; 
-	float fPesoAux = 0;
-	long iAuxPeso = 0;
-	float arfFactorMult = 0;
-	char cFlagNeg = 0;
+	float xdata fAuxFactorC = 0;
+	float xdata fPesoFinal = 0; 
+	float xdata fPesoAux = 0;
+	long xdata iAuxPeso = 0;
+	float xdata arfFactorMult = 0;
+	char xdata cFlagNeg = 0;
 	
 	if(fCountADC < 0){
 		cFlagNeg = 1;
@@ -1268,7 +1268,7 @@ float fCuentasToPeso(float fCountADC){
   ******************************************************************************
 	*/
 float fSleep_Run(void){
-float fValueReturn = 0;	
+float xdata fValueReturn = 0;	
 /*	float fWeightScale = 0;
 	
 	float fLimite = 0;

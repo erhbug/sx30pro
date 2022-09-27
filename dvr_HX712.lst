@@ -1,10 +1,10 @@
-C51 COMPILER V7.50   DVR_HX712                                                             09/27/2022 15:48:27 PAGE 1   
+C51 COMPILER V7.50   DVR_HX712                                                             09/27/2022 18:11:17 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE DVR_HX712
 OBJECT MODULE PLACED IN dvr_HX712.obj
-COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE _weight\dvr_HX712.c LARGE BROWSE DEBUG OBJECTEXTEND PRINT(.\dvr_HX712.lst) 
-                    -OBJECT(dvr_HX712.obj)
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE _weight\dvr_HX712.c BROWSE DEBUG OBJECTEXTEND PRINT(.\dvr_HX712.lst) OBJECT
+                    -(dvr_HX712.obj)
 
 line level    source
 
@@ -21,26 +21,26 @@ line level    source
   11          sbit SCLK = P0^4;       
   12          
   13          //--------------------------------------------------------------------------------
-  14          float ValueCount = 0.0;
-  15          int iCountFailRead = 0;
-  16          int iCountFailResponse = 0;
-  17          float arfDataFilter_x[5] = {0.00};
-  18          float fBeforeValue_x = 0;
-  19          float fAverage_x = 0;
-  20          unsigned char iValueOut = 0;
+  14          float xdata ValueCount = 0.0;
+  15          int xdata iCountFailRead = 0;
+  16          int xdata iCountFailResponse = 0;
+  17          float xdata arfDataFilter_x[5] = {0.00};
+  18          float xdata fBeforeValue_x = 0;
+  19          float xdata fAverage_x = 0;
+  20          unsigned char xdata iValueOut = 0;
   21          
   22          /*
   23          */
   24          float fFilter_Averaging(unsigned long iActualWeight, unsigned char cFastFill){  
-  25   1              float arfLowestToHighest[5] = {0.00};
-  26   1          float fThreshold = stScaleParam.fFactorCalibrate*0.5;
+  25   1              float xdata arfLowestToHighest[5] = {0.00};
+  26   1          float xdata fThreshold = stScaleParam.fFactorCalibrate*0.5;
   27   1              //float fThreshold = 3.327/2;//8.526937/2;
-  28   1              float fData_Vector = 0;
-  29   1              float *pfData_Filter;
-  30   1              float fActualWeight = (float)(iActualWeight);
-  31   1              unsigned char iLenthData_x = 5;         // Longitud de los datos a ordenar, original 6, en prueba 10 
-  32   1              unsigned char i = 0;    // Variable para ciclos iterativo 
-  33   1          unsigned char j = 0;        // Variable para ciclos iterativo 
+  28   1              float xdata fData_Vector = 0;
+  29   1              float xdata *pfData_Filter;
+  30   1              float xdata fActualWeight = (float)(iActualWeight);
+  31   1              unsigned char xdata iLenthData_x = 5;           // Longitud de los datos a ordenar, original 6, en prueba 10 
+  32   1              unsigned char xdata i = 0;      // Variable para ciclos iterativo 
+  33   1          unsigned char xdata j = 0;  // Variable para ciclos iterativo 
   34   1              
   35   1              pfData_Filter = arfDataFilter_x;
   36   1              
@@ -62,7 +62,7 @@ line level    source
   51   2              }else if(cFastFill == 2){       //Indica que es el inicio para tomar referencia a Zero.
   52   2                      for(i=0; i<iLenthData_x-1; i++){
   53   3                              pfData_Filter[i] = pfData_Filter[i+1];
-C51 COMPILER V7.50   DVR_HX712                                                             09/27/2022 15:48:27 PAGE 2   
+C51 COMPILER V7.50   DVR_HX712                                                             09/27/2022 18:11:17 PAGE 2   
 
   54   3                      }
   55   2              }else{          // Agrega nuevo valor al vector para promedio           
@@ -109,7 +109,7 @@ line level    source
   96          /*
   97          */
   98          float fRead_Adc(unsigned char cFillFilter){
-  99   1              unsigned long iTemp_RA = 0;
+  99   1              unsigned long xdata iTemp_RA = 0;
  100   1      
  101   1              while(MISO!=0 && iTemp_RA<250){
  102   2            delay_ms(1);        iTemp_RA++;
@@ -126,7 +126,7 @@ line level    source
  113   1      
  114   1          // sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
  115   1              
-C51 COMPILER V7.50   DVR_HX712                                                             09/27/2022 15:48:27 PAGE 3   
+C51 COMPILER V7.50   DVR_HX712                                                             09/27/2022 18:11:17 PAGE 3   
 
  116   1              if(iTemp_RA == 65535){
  117   2              }else if(iTemp_RA > 65535){
@@ -146,9 +146,9 @@ line level    source
  131   1      }
  132          
  133          volatile unsigned long  ReadHX712(void){ //by ERH
- 134   1          unsigned int i;
- 135   1              unsigned long *ptr;     
- 136   1          unsigned char  dato[4]={0};
+ 134   1          unsigned int xdata i;
+ 135   1              unsigned long xdata *ptr;       
+ 136   1          unsigned char  xdata dato[4]={0};
  137   1          ptr=(unsigned long *)&dato;
  138   1      
  139   1              if(MISO!=0)return;
@@ -169,11 +169,11 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1562    ----
+   CODE SIZE        =   1527    ----
    CONSTANT SIZE    =     24    ----
-   XDATA SIZE       =     37      55
+   XDATA SIZE       =     37      45
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----    ----
+   DATA SIZE        =   ----       8
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.

@@ -46,7 +46,7 @@ void vSound_Saved_Param(void);
 enum digi_key vActionKey(void);
 void vScan_Key(void);
 
-extern unsigned char KeyState;
-extern unsigned char Key;
+extern unsigned char xdata KeyState;
+extern unsigned char xdata Key;
 
 #endif
