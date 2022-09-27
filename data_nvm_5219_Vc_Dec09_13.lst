@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/23/2022 17:43:42 PAGE 1   
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/27/2022 10:48:19 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE DATA_NVM_5219_VC_DEC09_13
@@ -62,7 +62,7 @@ line level    source
   52   2                      }
   53   1                      return(val);
   54   1      }
-C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/23/2022 17:43:42 PAGE 2   
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/27/2022 10:48:19 PAGE 2   
 
   55          
   56          unsigned long  flash_read_u32(unsigned int addr)
@@ -126,7 +126,7 @@ line level    source
  114   1                      FLASH_CON = 0x03;
  115   1              //-- 清除安全码 --
  116   1              FLASH_ENA = 0x00;
-C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/23/2022 17:43:42 PAGE 3   
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/27/2022 10:48:19 PAGE 3   
 
  117   1              FLASH_ENB = 0x00;
  118   1              FLASH_ENC = 0x00;
@@ -150,7 +150,7 @@ line level    source
  136   1              read=flash_read_u8(addr);
  137   1              if( read!=0xff ){
  138   2                ClearThisButAll(addr,1);      
- 139   2                LCD_GLASS_String("CTBAL1", LCD_TOTAL);delay_ms(3000);
+ 139   2                //LCD_GLASS_String("CTBAL1", LCD_TOTAL);delay_ms(3000);
  140   2                }     
  141   1              /****************************/
  142   1                nvm_data_write_byte(addr,in_data);    
@@ -167,18 +167,18 @@ line level    source
  153   1              aux=flash_read_u16(addr);
  154   1              if( aux!=0xffff ){
  155   2                ClearThisButAll(addr,2);      
- 156   2            sprintf(txt,"%X",addr);
- 157   2            LCD_GLASS_String(txt, LCD_PESO);
- 158   2                LCD_GLASS_String("CTBAL2", LCD_TOTAL);
- 159   2                delay_ms(3000);
+ 156   2            //sprintf(txt,"%X",addr);
+ 157   2           // LCD_GLASS_String(txt, LCD_PESO);
+ 158   2               // LCD_GLASS_String("CTBAL2", LCD_TOTAL);
+ 159   2                //delay_ms(3000);
  160   2              }       
  161   1              /****************************/
  162   1      
  163   1              /****************************/  
- 164   1              aux=flash_read_u16(addr);
+ 164   1              /*aux=flash_read_u16(addr);
  165   1          ptr=(unsigned char *)&aux;
  166   1              if( *(ptr++)!=0xFF || *(ptr++)!=0xFF)
- 167   1                ClearThisButAll(addr,2);              
+ 167   1                ClearThisButAll(addr,2);      */      
  168   1              /****************************/
  169   1      
  170   1              ptr=(unsigned char *)&in_data;
@@ -187,11 +187,12 @@ line level    source
  173   2                nvm_data_write_byte(addr++,*(ptr++));
  174   2              }       
  175   1      }
+*** WARNING C280 IN LINE 150 OF _DATA_NVM\DATA_NVM_5219_VC_DEC09_13.C: 'txt': unreferenced local variable
  176          
  177          void flash_write_u32(unsigned int addr,unsigned long in_data)
- 178          {
-C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/23/2022 17:43:42 PAGE 4   
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/27/2022 10:48:19 PAGE 4   
 
+ 178          {
  179   1              unsigned char *ptr;
  180   1              unsigned char i;
  181   1              unsigned long read=0;
@@ -200,7 +201,7 @@ line level    source
  184   1              /****************************/
  185   1              if( read!=0xffffffff ){
  186   2                ClearThisButAll(addr,4);
- 187   2              LCD_GLASS_String("CTBAL3", LCD_TOTAL);delay_ms(3000);
+ 187   2      //      LCD_GLASS_String("CTBAL3", LCD_TOTAL);delay_ms(3000);
  188   2                }             
  189   1              /****************************/
  190   1      
@@ -222,7 +223,7 @@ line level    source
  206   1              /****************************/
  207   1              if( read!=0xffffffff ){
  208   2                ClearThisButAll(addr,4);      
- 209   2                LCD_GLASS_String("CTBAL4", LCD_TOTAL);delay_ms(3000);
+ 209   2               // LCD_GLASS_String("CTBAL4", LCD_TOTAL);delay_ms(3000);
  210   2                }     
  211   1              /****************************/
  212   1      
@@ -253,9 +254,9 @@ line level    source
  236   1              FLASH_ENB = 0x00;
  237   1              FLASH_ENC = 0x00;
  238   1              //-- 通过安全检验后才能启动 Flash 操作 --
- 239   1              if((NRM_securty_a == 0xaa)&&(NRM_securty_b == 0x55))
-C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/23/2022 17:43:42 PAGE 5   
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/27/2022 10:48:19 PAGE 5   
 
+ 239   1              if((NRM_securty_a == 0xaa)&&(NRM_securty_b == 0x55))
  240   1                      FLASH_CON = 0x03;       //状态清除，执行一次FLASH_CON，将安全状态复位
  241   1              nop();
  242   1              //-- 写安全码开启Flash操作许可 --
@@ -317,12 +318,12 @@ line level    source
  298          
 
 
-MODULE INFORMATION:   STATIC OVERLAYABLE
-C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/23/2022 17:43:42 PAGE 6   
+C51 COMPILER V7.50   DATA_NVM_5219_VC_DEC09_13                                             09/27/2022 10:48:19 PAGE 6   
 
-   CODE SIZE        =   1279    ----
-   CONSTANT SIZE    =     31    ----
-   XDATA SIZE       =      2      88
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1057    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =      2      86
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
@@ -330,4 +331,4 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  2 WARNING(S),  0 ERROR(S)

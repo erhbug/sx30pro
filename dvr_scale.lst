@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 18:07:15 PAGE 1   
+C51 COMPILER V7.50   DVR_SCALE                                                             09/27/2022 10:48:19 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE DVR_SCALE
@@ -62,7 +62,7 @@ line level    source
   52          #define ADDR_COUNT_RANGE                        ADDRESS_SCALE_CONFIG_PAGE + 32 /* 2 byte */
   53          #define ADDR_MONEDA                                     ADDRESS_SCALE_CONFIG_PAGE + 34 /* 1 byte */
   54          #define ADDR_DECIMAL_WEIGHT                     ADDRESS_SCALE_CONFIG_PAGE + 35  /* 2 bytes */
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 18:07:15 PAGE 2   
+C51 COMPILER V7.50   DVR_SCALE                                                             09/27/2022 10:48:19 PAGE 2   
 
   55          #define ADDR_TEMPERATURE                        ADDRESS_SCALE_CONFIG_PAGE + 37  /* 4 Bytes */
   56          #define ADDR_VOLT_BATT                          ADDRESS_SCALE_CONFIG_PAGE + 41  /* 4 Bytes */
@@ -126,7 +126,7 @@ line level    source
  113   1              stScaleParam.iDivisionMinima    = flash_read_u16(ADDR_DIVISION_MINIMA);
  114   1              stScaleParam.iDivisionMenor     = flash_read_u16(ADDR_DIVISION_MENOR);
  115   1              stScaleParam.iDivisionMenorMenor        = flash_read_u16(ADDR_DIVISION_MENORMENOR);
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 18:07:15 PAGE 3   
+C51 COMPILER V7.50   DVR_SCALE                                                             09/27/2022 10:48:19 PAGE 3   
 
  116   1              stScaleParam.cPuntoDecimalTotal         = flash_read_u8(ADDR_DECIMAL_TOTAL);
  117   1              stScaleParam.cRedondeoCifraTotal        = flash_read_u8(ADDR_REDONDEO_TOTAL);
@@ -189,12 +189,12 @@ line level    source
  174   1              NRM_securty_a = 0xaa;
  175   1              NRM_securty_b = 0x55;
  176   1      
- 177   1              e2rom_erase(ADDRESS_PAGE_26);
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 18:07:15 PAGE 4   
+ 177   1              /*e2rom_erase(ADDRESS_PAGE_26);
+C51 COMPILER V7.50   DVR_SCALE                                                             09/27/2022 10:48:19 PAGE 4   
 
  178   1              e2rom_erase(ADDRESS_PAGE_27);
  179   1              e2rom_erase(ADDRESS_PAGE_28);
- 180   1              e2rom_erase(ADDRESS_PAGE_29);
+ 180   1              e2rom_erase(ADDRESS_PAGE_29);*/ 
  181   1      
  182   1              switch(cType_Parameter){
  183   2      
@@ -254,7 +254,7 @@ line level    source
  237   2                                      
  238   2                      case Parameter_Overload:
  239   2                              flash_write_u16(ADDR_COUNT_OVERLOAD, stScaleParam.iCountOverload);              
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 18:07:15 PAGE 5   
+C51 COMPILER V7.50   DVR_SCALE                                                             09/27/2022 10:48:19 PAGE 5   
 
  240   2                              flash_write_float32(ADDR_VALUE_OVERLOAD, stScaleParam.fValueOverload);                                          
  241   2                              break;
@@ -318,7 +318,7 @@ line level    source
  299   2          vActionKey();
  300   2                      
  301   2                      /* Verifica si debe mostrar el contador en la LCD */
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 18:07:15 PAGE 6   
+C51 COMPILER V7.50   DVR_SCALE                                                             09/27/2022 10:48:19 PAGE 6   
 
  302   2                      if(cShowCount == 1){
  303   3                              if(cCountBack == 0){
@@ -354,7 +354,7 @@ line level    source
  333   4                                      LCD_GLASS_Clear();
  334   4                                      LCD_GLASS_String("   UN", LCD_PRECIO);
  335   4                                      LCD_GLASS_String("STABLE", LCD_TOTAL);
- 336   4                                      for(cCountBack=0; cCountBack<300; cCountBack++)delay_ms(10);
+ 336   4                                      for(cCountBack=0; cCountBack<500; cCountBack++)delay_ms(1);
  337   4                              }
  338   3                              cCountReading = 0;
  339   3                              cCountBack = cSetCountBack;
@@ -382,7 +382,7 @@ line level    source
  361                  *       Modifica las variables globales:
  362                  *                       stScaleParam.fPointZero, arDataDisplayLcd.
  363            ******************************************************************************
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 18:07:15 PAGE 7   
+C51 COMPILER V7.50   DVR_SCALE                                                             09/27/2022 10:48:19 PAGE 7   
 
  364            */
  365          
@@ -446,7 +446,7 @@ line level    source
  422   1              
  423   1      */
  424   1      return 0;
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 18:07:15 PAGE 8   
+C51 COMPILER V7.50   DVR_SCALE                                                             09/27/2022 10:48:19 PAGE 8   
 
  425   1      }
  426          
@@ -510,7 +510,7 @@ line level    source
  484   1                                      
  485   1                                      if(stScaleParam.cMultirango == 1){
  486   1                                              if(stScaleParam.fValueTara <= stScaleParam.fCapacityCali*0.2){
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 18:07:15 PAGE 9   
+C51 COMPILER V7.50   DVR_SCALE                                                             09/27/2022 10:48:19 PAGE 9   
 
  487   1                                                              AuxTara = stScaleParam.fFactorCalibrate / stScaleParam.iDivisionMinima;
  488   1                                                              AuxTara *= stScaleParam.iDivisionMenor;
@@ -574,7 +574,7 @@ line level    source
  545   1              }else   
  546   1                      fValor_Limite = stScaleParam.fFactorCalibrate;
  547   1              
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 18:07:15 PAGE 10  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/27/2022 10:48:19 PAGE 10  
 
  548   1              fValor_Limite /= 2; 
  549   1              
@@ -638,7 +638,7 @@ line level    source
  605   1      
  606   1                    LCD_GLASS_Clear();
  607   1      #if DISPLAY_20400047_EN > 0
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 18:07:15 PAGE 11  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/27/2022 10:48:19 PAGE 11  
 
  608   1                    LCD_GLASS_String("PRESS", LCD_PESO);
  609   1                    LCD_GLASS_String(" LOAD", LCD_TOTAL);
@@ -702,7 +702,7 @@ line level    source
              -et_Volts_System();    
  667   1                    vSaveParamScale(Parameter_Voltages);
  668   1                    
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 18:07:15 PAGE 12  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/27/2022 10:48:19 PAGE 12  
 
  669   1      ///////////CCCCC//BORRAR DE LA ESTRUCTURA ///////////////////////////////////           stScaleParam.fTemp
              -erature = fGet_Temp_Amb_Micro();
@@ -766,7 +766,7 @@ line level    source
  727   2                      stScaleParam.iDivisionMinima = 10;
  728   2                      stScaleParam.iDivisionMenor = 5;
  729   2                      stScaleParam.iDivisionMenorMenor = 2;
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 18:07:15 PAGE 13  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/27/2022 10:48:19 PAGE 13  
 
  730   2                      stScaleParam.cWeightDecimal = 3;
  731   2                      stScaleParam.cUnits = UNIT_KG;
@@ -830,7 +830,7 @@ line level    source
  789   1        stScaleParam.cFormatoImpresion = 2; 
  790   1              stScaleParam.cTypeBeeper = 0;
  791   1              
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 18:07:15 PAGE 14  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/27/2022 10:48:19 PAGE 14  
 
  792   1              stScaleParam.fVoltage_Batt = 0;
  793   1              stScaleParam.fVoltage_Adap = 0;
@@ -894,7 +894,7 @@ line level    source
  850   1      //      while(strTimer.iTimerE < TimerEend){
  851   1      //              Key_scan();//Value_Key_Press = vActionKey();
  852   1      //      }       
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 18:07:15 PAGE 15  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/27/2022 10:48:19 PAGE 15  
 
  853   1                                      
  854   1              return;
@@ -910,7 +910,7 @@ line level    source
  864            ***
  865                  */
  866          unsigned char cRun_Scale(unsigned char bEnableKeys){
- 867   1              
+ 867   1      
  868   1      /*
  869   1      //      enum    digi_key Value_Key_Press;
  870   1              
@@ -958,7 +958,7 @@ line level    source
  912   1                      return 0;
  913   1              }
  914   1              
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 18:07:15 PAGE 16  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/27/2022 10:48:19 PAGE 16  
 
  915   1              if(srFlagScale.bOverLoad ==0){
  916   1                      
@@ -1022,7 +1022,7 @@ line level    source
  973   1                                              OffBackLight;
  974   1                                              srFlagScale.bBacklight_On = 0;
  975   1                                      }
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 18:07:15 PAGE 17  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/27/2022 10:48:19 PAGE 17  
 
  976   1                              }
  977   1                              
@@ -1086,7 +1086,7 @@ line level    source
 1032   1                              LCD_GLASS_String("SOBRE", LCD_PESO);
 1033   1                              LCD_GLASS_String(" PESO", LCD_PRECIO);
 1034   1                      }else{
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 18:07:15 PAGE 18  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/27/2022 10:48:19 PAGE 18  
 
 1035   1                              LCD_GLASS_String("OVER ", LCD_PESO);
 1036   1                              LCD_GLASS_String(" LOAD", LCD_PRECIO);
@@ -1150,7 +1150,7 @@ line level    source
 1092   1                              LCD_GLASS_String("------", LCD_TOTAL);
 1093   1                      }else{
 1094   1                              if(stScaleParam.fTotal_Venta > 0){
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 18:07:15 PAGE 19  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/27/2022 10:48:19 PAGE 19  
 
 1095   1                                      LCD_GLASS_Float(stScaleParam.fTotal_Venta, stScaleParam.cPuntoDecimalTotal, LCD_TOTAL);
 1096   1                              }else{
@@ -1214,7 +1214,7 @@ line level    source
 1153   1      Se toman 3 lecturas para garantizar el peso al realizar las sumas c/precio fijo, 
 1154   1      si no hay precio fijo realiza solo una lectura de forma natural.
 1155   1      ******************/     
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 18:07:15 PAGE 20  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/27/2022 10:48:19 PAGE 20  
 
 1156   1              char i = 0, cCountPrecioFijo = 0;
 1157   1      
@@ -1278,7 +1278,7 @@ line level    source
 1215            ******************************************************************************
 1216            */
 1217          float fCuentasToPeso(float fCountADC){
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 18:07:15 PAGE 21  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/27/2022 10:48:19 PAGE 21  
 
 1218   1              
 1219   1              float fAuxFactorC = 0;
@@ -1342,7 +1342,7 @@ line level    source
 1277   1              
 1278   1              //Variable para rotar el mensaje
 1279   1              unsigned char strMsgSaveBatt[16];
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 18:07:15 PAGE 22  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/27/2022 10:48:19 PAGE 22  
 
 1280   1              unsigned char strSave[6] = {0,0,0,0,0,0};
 1281   1              unsigned char strBatt[7] = {0,0,0,0,0,0,0};
@@ -1406,7 +1406,7 @@ line level    source
 1339   1                                      
 1340   1                                      if(bStatus_Battery != SOURCE_ADAPTER){ 
 1341   1                                              vGestorBateria();
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 18:07:15 PAGE 23  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/27/2022 10:48:19 PAGE 23  
 
 1342   1                                      }else{
 1343   1                                              cFlag_Continue = 0;
@@ -1466,11 +1466,11 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   4740    ----
+   CODE SIZE        =   4704    ----
    CONSTANT SIZE    =     77    ----
-   XDATA SIZE       =    191      82
+   XDATA SIZE       =    191      81
    PDATA SIZE       =   ----    ----
-C51 COMPILER V7.50   DVR_SCALE                                                             09/23/2022 18:07:15 PAGE 24  
+C51 COMPILER V7.50   DVR_SCALE                                                             09/27/2022 10:48:19 PAGE 24  
 
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----

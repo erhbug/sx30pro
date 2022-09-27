@@ -37,6 +37,8 @@
 #define LCD_DATA_ON				P2 |= 0x08 
 #define LCD_DATA_OFF			P2 &= 0xF7 
 
+//sbit KEY_K0 = P0^2;	
+
 #define SYMBOL_ALARM_HI	7
 #define SYMBOL_MENOS		8
 #define SYMBOL_ALARM		9

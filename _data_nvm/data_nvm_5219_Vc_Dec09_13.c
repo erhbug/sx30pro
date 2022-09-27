@@ -136,7 +136,7 @@ void flash_write_u8(unsigned int addr,unsigned char in_data)
 	read=flash_read_u8(addr);
 	if( read!=0xff ){
 	  ClearThisButAll(addr,1);	
-	  LCD_GLASS_String("CTBAL1", LCD_TOTAL);delay_ms(3000);
+	  //LCD_GLASS_String("CTBAL1", LCD_TOTAL);delay_ms(3000);
 	  }	
 	/****************************/
 	  nvm_data_write_byte(addr,in_data);	
@@ -153,18 +153,18 @@ void flash_write_u16(unsigned int addr,unsigned int in_data)
 	aux=flash_read_u16(addr);
 	if( aux!=0xffff ){
 	  ClearThisButAll(addr,2);	
-      sprintf(txt,"%X",addr);
-      LCD_GLASS_String(txt, LCD_PESO);
-	  LCD_GLASS_String("CTBAL2", LCD_TOTAL);
-	  delay_ms(3000);
+      //sprintf(txt,"%X",addr);
+     // LCD_GLASS_String(txt, LCD_PESO);
+	 // LCD_GLASS_String("CTBAL2", LCD_TOTAL);
+	  //delay_ms(3000);
 	}	
 	/****************************/
 
 	/****************************/	
-	aux=flash_read_u16(addr);
+	/*aux=flash_read_u16(addr);
     ptr=(unsigned char *)&aux;
 	if( *(ptr++)!=0xFF || *(ptr++)!=0xFF)
-	  ClearThisButAll(addr,2);		
+	  ClearThisButAll(addr,2);	*/	
 	/****************************/
 
 	ptr=(unsigned char *)&in_data;
@@ -184,7 +184,7 @@ void flash_write_u32(unsigned int addr,unsigned long in_data)
 	/****************************/
 	if( read!=0xffffffff ){
 	  ClearThisButAll(addr,4);
-	LCD_GLASS_String("CTBAL3", LCD_TOTAL);delay_ms(3000);
+//	LCD_GLASS_String("CTBAL3", LCD_TOTAL);delay_ms(3000);
 	  }		
 	/****************************/
 
@@ -206,7 +206,7 @@ void flash_write_float32(unsigned int addr,float in_data)
 	/****************************/
 	if( read!=0xffffffff ){
 	  ClearThisButAll(addr,4);	
-	  LCD_GLASS_String("CTBAL4", LCD_TOTAL);delay_ms(3000);
+	 // LCD_GLASS_String("CTBAL4", LCD_TOTAL);delay_ms(3000);
 	  }	
 	/****************************/
 

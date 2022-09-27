@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/23/2022 13:58:23 PAGE 1   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/27/2022 10:48:18 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE DVR_LCD_SDI1621
@@ -16,7 +16,7 @@ line level    source
    6          #include <stdio.h>
    7          #include <string.h>
    8          
-   9                  SOLIDIC xdata Display;
+   9                  volatile SOLIDIC xdata Display;
   10          
   11                  void write_lcd(SOLIDIC Display);
   12                  void LCD_GLASS_Update(void);
@@ -62,7 +62,7 @@ line level    source
   52          #define LCD_char_W 0x00 //      00000000        //W
   53          #define LCD_char_X 0x00 //      00000000        //X
   54          #define LCD_char_Y 0x72 //      01110010        //Y
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/23/2022 13:58:23 PAGE 2   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/27/2022 10:48:18 PAGE 2   
 
   55          #define LCD_char_Z 0x3D //      00111101        //Z
   56          #define LCD_char_Guion 0x20 //  00100000        //-
@@ -126,7 +126,7 @@ line level    source
                               0x27,   //      00100111,       //Y
                               0x3E,   //      00111110,       //Z
                               0x02};//        00000010        //-*/
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/23/2022 13:58:23 PAGE 3   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/27/2022 10:48:18 PAGE 3   
 
               
               
@@ -190,7 +190,7 @@ line level    source
  176   1              Display.cmd=BIAS_4;     
  177   1              write_lcd(Display);//LCD 1/2 bias option
  178   1              
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/23/2022 13:58:23 PAGE 4   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/27/2022 10:48:18 PAGE 4   
 
  179   1              Display.cmd=COM_4;      
  180   1              write_lcd(Display);//LCD 1/3 bias option 
@@ -254,7 +254,7 @@ line level    source
  235   1              LCD_WR_N_OFF;
  236   1              //delay_35u();
  237   1              LCD_WR_N_ON;
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/23/2022 13:58:23 PAGE 5   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/27/2022 10:48:18 PAGE 5   
 
  238   1      //      delay_35u();
  239   1      
@@ -318,7 +318,7 @@ line level    source
  296   1              memset(Display.LCD_BUF, 0x00, sizeof(Display.LCD_BUF));//InitLCDBuf(0);
  297   1              write_lcd(Display);//Write data to the RAM
  298   1      }
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/23/2022 13:58:23 PAGE 6   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/27/2022 10:48:18 PAGE 6   
 
  299          
  300          /*
@@ -382,7 +382,7 @@ line level    source
  358   3                            else
  359   3                                          Display.LCD_BUF[P_PRECIO_3]&=0x7F;          
  360   3                                 }
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/23/2022 13:58:23 PAGE 7   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/27/2022 10:48:18 PAGE 7   
 
  361   2                              #endif
  362   2                              if(iNumber_Dot == 2){
@@ -446,7 +446,7 @@ line level    source
  420   2                              break;  
  421   2                              case 9:  //vSend_String_Usart(&huart1,"4/4");
  422   2                              if(cFlag_On == 1)
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/23/2022 13:58:23 PAGE 8   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/27/2022 10:48:18 PAGE 8   
 
  423   2                                      Display.LCD_BUF[S_44]|=0x80;
  424   2                              else
@@ -510,7 +510,7 @@ line level    source
  482   2                                      Display.LCD_BUF[S_Y]&=0x7F;     
  483   2                              break;          
  484   2                      
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/23/2022 13:58:23 PAGE 9   
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/27/2022 10:48:18 PAGE 9   
 
  485   2                                                              
  486   2                              
@@ -574,7 +574,7 @@ line level    source
  544            * Prerequisitos: 
  545            ***
  546          */
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/23/2022 13:58:23 PAGE 10  
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/27/2022 10:48:18 PAGE 10  
 
  547          
  548          
@@ -638,7 +638,7 @@ line level    source
  605   1      if(c=='8')return LCD_char_8;
  606   1      if(c=='9')return LCD_char_9;
  607   1      
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/23/2022 13:58:23 PAGE 11  
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/27/2022 10:48:18 PAGE 11  
 
  608   1      if(c=='a'||c=='A')return LCD_char_A;
  609   1      if(c=='b'||c=='B')return LCD_char_B;
@@ -702,7 +702,7 @@ line level    source
  666   2                      if(*(pCaracter) != '.')
  667   2                              LCD_SET_Char(  get_lcd_char(*(pCaracter))  , cPosition_On_LCD, iIndex_Text--);                          
  668   2                                              
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/23/2022 13:58:23 PAGE 12  
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/27/2022 10:48:18 PAGE 12  
 
  669   2                      if(*(pCaracter) == '.'){
  670   3                              
@@ -766,7 +766,7 @@ line level    source
  728                  A0             A5
  729                  /               /
  730                  /               /
-C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/23/2022 13:58:23 PAGE 13  
+C51 COMPILER V7.50   DVR_LCD_SDI1621                                                       09/27/2022 10:48:18 PAGE 13  
 
  731                    /////A1//////
  732                  /               /

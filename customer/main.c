@@ -22,9 +22,7 @@ void adc_init(void);
 void init_int_timer0(void);
 
 void main(void)
-{
-//char txt[4];
-
+{//char txt[4];
   wdt_init();  /// watch dog ///
   gpio_init();
   adc_init();
@@ -37,12 +35,14 @@ void main(void)
 
 	LCD_GLASS_Init(); 
     vReadParamScale();
+LCD_GLASS_Float(stScaleParam.iCapacity,2,LCD_TOTAL);
+delay_ms(3000);
 	if(stScaleParam.iCapacity != 30)
 	vPreConfiguration(PreConfig30KG);
 	if(stScaleParam.fFactorCalibrate<1)
 	 vCalibrate_Scale();
 	 	
-//	LCD_GLASS_Float(stScaleParam.fCapacityCali,2,LCD_TOTAL);
+//	
 //vCalibrate_Scale();
 	 
 	// 

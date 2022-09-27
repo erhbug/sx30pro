@@ -174,10 +174,10 @@ void vSaveParamScale(unsigned char cType_Parameter){
 	NRM_securty_a = 0xaa;
 	NRM_securty_b = 0x55;
 
-	e2rom_erase(ADDRESS_PAGE_26);
+	/*e2rom_erase(ADDRESS_PAGE_26);
 	e2rom_erase(ADDRESS_PAGE_27);
 	e2rom_erase(ADDRESS_PAGE_28);
-	e2rom_erase(ADDRESS_PAGE_29);
+	e2rom_erase(ADDRESS_PAGE_29);*/ 
 
 	switch(cType_Parameter){
 
@@ -333,7 +333,7 @@ float fStablePoint(unsigned char cSetCountBack, unsigned char cShowCount, unsign
 				LCD_GLASS_Clear();
 				LCD_GLASS_String("   UN", LCD_PRECIO);
 				LCD_GLASS_String("STABLE", LCD_TOTAL);
-				for(cCountBack=0; cCountBack<300; cCountBack++)delay_ms(10);
+				for(cCountBack=0; cCountBack<500; cCountBack++)delay_ms(1);
 			}
 			cCountReading = 0;
 			cCountBack = cSetCountBack;
@@ -864,7 +864,7 @@ void vPreConfiguration(unsigned char cPreConfiguration){
   ***
 	*/
 unsigned char cRun_Scale(unsigned char bEnableKeys){
-	
+
 /*
 //	enum 	digi_key Value_Key_Press;
 	
