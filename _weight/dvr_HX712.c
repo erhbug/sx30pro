@@ -132,8 +132,8 @@ float fRead_Adc(unsigned char cFillFilter){
 
 volatile unsigned long  ReadHX712(void){ //by ERH
     unsigned int xdata i;
-	unsigned long xdata *ptr;	
-    unsigned char  xdata dato[4]={0};
+	unsigned long  *ptr;	
+    unsigned char  dato[4]={0};
     ptr=(unsigned long *)&dato;
 
 	if(MISO!=0)return;

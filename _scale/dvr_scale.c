@@ -676,7 +676,7 @@ void vCalibrate_Scale(void){
              // strTimer.cFLag_TimerE_End = 0;
               
               //while(!strTimer.cFLag_TimerE_End)key_scan();
-			  delay_ms(5000);
+			  delay_ms(3000);
 
 			  //Key=0;while(Key!= KEY_C)key_scan();
               

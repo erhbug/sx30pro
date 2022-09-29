@@ -213,7 +213,7 @@ static void timer0(void) interrupt 1
     	if(strTimer.iTimerA==1)BEEPER_EN;
 	  
 	    strTimer.iTimerA++;
-		if(strTimer.iTimerA==TimerAend)BEEPER_DIS;
+		if(strTimer.iTimerA>=TimerAend)BEEPER_DIS;
 	}
 
 	/* timer usado en calibracion */

@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   DVR_HX712                                                             09/27/2022 18:11:17 PAGE 1   
+C51 COMPILER V7.50   DVR_HX712                                                             09/27/2022 18:48:04 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE DVR_HX712
@@ -62,7 +62,7 @@ line level    source
   51   2              }else if(cFastFill == 2){       //Indica que es el inicio para tomar referencia a Zero.
   52   2                      for(i=0; i<iLenthData_x-1; i++){
   53   3                              pfData_Filter[i] = pfData_Filter[i+1];
-C51 COMPILER V7.50   DVR_HX712                                                             09/27/2022 18:11:17 PAGE 2   
+C51 COMPILER V7.50   DVR_HX712                                                             09/27/2022 18:48:04 PAGE 2   
 
   54   3                      }
   55   2              }else{          // Agrega nuevo valor al vector para promedio           
@@ -126,7 +126,7 @@ line level    source
  113   1      
  114   1          // sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
  115   1              
-C51 COMPILER V7.50   DVR_HX712                                                             09/27/2022 18:11:17 PAGE 3   
+C51 COMPILER V7.50   DVR_HX712                                                             09/27/2022 18:48:04 PAGE 3   
 
  116   1              if(iTemp_RA == 65535){
  117   2              }else if(iTemp_RA > 65535){
@@ -147,8 +147,8 @@ line level    source
  132          
  133          volatile unsigned long  ReadHX712(void){ //by ERH
  134   1          unsigned int xdata i;
- 135   1              unsigned long xdata *ptr;       
- 136   1          unsigned char  xdata dato[4]={0};
+ 135   1              unsigned long  *ptr;    
+ 136   1          unsigned char  dato[4]={0};
  137   1          ptr=(unsigned long *)&dato;
  138   1      
  139   1              if(MISO!=0)return;
@@ -169,11 +169,11 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1527    ----
+   CODE SIZE        =   1512    ----
    CONSTANT SIZE    =     24    ----
-   XDATA SIZE       =     37      45
+   XDATA SIZE       =     37      41
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----       8
+   DATA SIZE        =   ----      15
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.

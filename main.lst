@@ -1,4 +1,4 @@
-C51 COMPILER V7.50   MAIN                                                                  09/27/2022 18:27:49 PAGE 1   
+C51 COMPILER V7.50   MAIN                                                                  09/28/2022 19:14:17 PAGE 1   
 
 
 C51 COMPILER V7.50, COMPILATION OF MODULE MAIN
@@ -62,7 +62,7 @@ line level    source
   50   1       while(1){  ; 
   51   2          key_scan();
   52   2      //      nFloatToStr(num,2,txt);
-C51 COMPILER V7.50   MAIN                                                                  09/27/2022 18:27:49 PAGE 2   
+C51 COMPILER V7.50   MAIN                                                                  09/28/2022 19:14:17 PAGE 2   
 
   53   2      //      
   54   2              vCalculate_Weight();delay_ms(50);
@@ -126,7 +126,7 @@ line level    source
  111   1          WD_TA = 0x05;
  112   1              WD_TA = 0x0a;
  113   1              WDCON = 0x1f; /// 4s?,0.2s ///
-C51 COMPILER V7.50   MAIN                                                                  09/27/2022 18:27:49 PAGE 3   
+C51 COMPILER V7.50   MAIN                                                                  09/28/2022 19:14:17 PAGE 3   
 
  114   1          EA = 1;
  115   1              IWDG_KEY_REFRESH;
@@ -190,7 +190,7 @@ line level    source
  173          static void timer0(void) interrupt 1
  174          {               
  175   1              
-C51 COMPILER V7.50   MAIN                                                                  09/27/2022 18:27:49 PAGE 4   
+C51 COMPILER V7.50   MAIN                                                                  09/28/2022 19:14:17 PAGE 4   
 
  176   1                      /* 200mS*/
  177   1      /*      if(strTimer.cFLag_TimerA_Start){
@@ -232,7 +232,7 @@ line level    source
  213   2              if(strTimer.iTimerA==1)BEEPER_EN;
  214   2                
  215   2                  strTimer.iTimerA++;
- 216   2                      if(strTimer.iTimerA==TimerAend)BEEPER_DIS;
+ 216   2                      if(strTimer.iTimerA>=TimerAend)BEEPER_DIS;
  217   2              }
  218   1      
  219   1              /* timer usado en calibracion */
@@ -254,7 +254,7 @@ line level    source
  235   1      
  236   1      }
  237          
-C51 COMPILER V7.50   MAIN                                                                  09/27/2022 18:27:49 PAGE 5   
+C51 COMPILER V7.50   MAIN                                                                  09/28/2022 19:14:17 PAGE 5   
 
  238          
  239          void TestEEPROM(void)
@@ -296,7 +296,7 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    839    ----
+   CODE SIZE        =    842    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----      14
    PDATA SIZE       =   ----    ----

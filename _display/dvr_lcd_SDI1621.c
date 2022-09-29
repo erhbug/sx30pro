@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 
-	volatile SOLIDIC xdata Display;
+	volatile SOLIDIC Display;
 	void write_lcd(SOLIDIC Display);
 	void LCD_GLASS_Update(void);
 
