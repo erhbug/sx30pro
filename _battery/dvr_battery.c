@@ -64,7 +64,7 @@ struct Time_Battery{
 };
 struct Time_Battery stTime_Battery;
 
-extern enum ActionScale eAccionScale;
+//extern enum ActionScale eAccionScale;
 
 void vGet_Volts_System(void);
 void vGet_Volts_Ref(void);
@@ -162,12 +162,13 @@ void vGestorBateria(void){
 				srFlagScale.bSourceVoltage =  SOURCE_BATTERY;
 				srFlagScale.bBateriaLow = 1;
 				OffBackLight;
-			
+			/* //CCC 
 				if(srFlagScale.bBateriaCount > 8){
 					srFlagScale.bBateriaCount = 0;
 					srFlagScale.bMsgBatteryLow = 0;
 					LCD_BlinkConfig(LCD_BlinkMode_Off,LCD_BlinkFrequency_Div128);
-				}else if(srFlagScale.bBateriaCount >= 7 && srFlagScale.bBateriaCount <= 9 ){				
+				}
+				else if(srFlagScale.bBateriaCount >= 7 && srFlagScale.bBateriaCount <= 9 ){				
 					LCD_BlinkConfig(LCD_BlinkMode_AllSEG_AllCOM,LCD_BlinkFrequency_Div128);				
 					srFlagScale.bMsgBatteryLow = 1;
 					LCD_GLASS_Symbols(SYMBOL_ALL, 0);
@@ -183,7 +184,7 @@ void vGestorBateria(void){
 					LCD_GLASS_Symbols(SYMBOL_ZERO, 0);				
 					LCD_GLASS_Symbols(SYMBOL_X, 0);
 					return;
-				}else{
+				}*/else{
 					srFlagScale.bMsgBatteryLow = 0;
 				}
 				break;
@@ -498,7 +499,7 @@ void vVbatBad(void){
 	
 	int iValue_Adc = 0;
 	float fVoltage_Aux = 0;
-	enum digi_key Value_Key_Press;
+	//enum digi_key Value_Key_Press;
 	
 	LCD_Cmd(ENABLE);		/* Habilita el modulo LCD */	
 	LCD_GLASS_Clear();
@@ -511,15 +512,15 @@ void vVbatBad(void){
 		LCD_GLASS_String("   BAT", LCD_TOTAL);
 	}
 	
-	Value_Key_Press = vActionKey();
+	key_scan();
 	
-	while(fVoltage_Battery < 1 && Value_Key_Press != KEY_RCL){		
+	while(fVoltage_Battery < 1 && key  != KEY_RCL){		
 		uGet_Status_Volt();		
 		vSound_Saved_Param();			
-		Value_Key_Press = vActionKey();		
+		key_scan();	
 	}
 	
-	if(Value_Key_Press == KEY_RCL){
+	if(key  == KEY_RCL){
 		srFlagScale.bShowErroBat = 0;
 	}
 	

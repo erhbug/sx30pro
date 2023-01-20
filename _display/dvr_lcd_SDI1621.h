@@ -3,13 +3,10 @@
 #define __SDI1621_H__
 
 #include <REG52.H>
-#include <stdio.h>
-#include <string.h>
-#include "./_display/app_cfg.h"
+#include "./_scale/app_cfg.h"
 /* Define to prevent recursive inclusion -------------------------------------*/
  typedef struct
   {
-      unsigned char mode;
 	  unsigned char cmd;
 	  unsigned char LCD_BUF[16];
   } SOLIDIC;
@@ -27,15 +24,6 @@
 #define COM_4   0X29//00101001 //LCD 1/3 bias option 2 commons option		
 #define LCD_COMAND  0X00 
 #define LCD_DATA    0X01
-
-/*#define LCD_CS_N_ON				P2 |= 0x02 
-#define LCD_CS_N_OFF			P2 &= 0xFD 
-
-#define LCD_WR_N_ON				P2 |= 0x04 
-#define LCD_WR_N_OFF			P2 &= 0xFB 
-
-#define LCD_DATA_ON				P2 |= 0x08 
-#define LCD_DATA_OFF			P2 &= 0xF7 */
 
 sbit LCD_DATA_N = P2^3;	
 sbit LCD_WR_N = P2^2;
@@ -61,7 +49,6 @@ sbit LCD_CS_N = P2^1;
 #define SYMBOL_Y		5
 #define SYMBOL_ALL	6
 
-
 void LCD_GLASS_Init(void);
 void LCD_GLASS_DeInit(void);
 void LCD_GLASS_Clear(void);
@@ -70,7 +57,7 @@ void LCD_GLASS_String(unsigned char *pCaracter, unsigned char cPosition_On_LCD);
 void LCD_GLASS_Float(float fNumber_To_LCD, unsigned char iNumber_Decimal, unsigned char cPosition_On_LCD);
 void LCD_GLASS_Symbols(unsigned char cSymbol, unsigned char cFlag_On);
 void LCD_GLASS_Dot(unsigned char iNumber_Dot, unsigned char cPosition_On_LCD, unsigned char cFLag_On);
-void nFloatToStr(float f, unsigned char digits, unsigned char p, unsigned char *txt);
+//void nFloatToStr(float f, unsigned char digits, unsigned char p, unsigned char *txt);
 
 #endif
 

@@ -1,36 +1,72 @@
 /* Includes ------------------------------------------------------------------*/
 #include "./_weight/dvr_HX712.h"
-#include <stdio.h>
-#include <string.h>
-#include <REG52.H>
-#include <math.h>
-#include "./customer/keyboard.h"
-//#include "./_display/dvr_lcd_SDI1621.h"
+#include "./_scale/dvr_scale.h"
 
-sbit MISO = P0^3;	
-sbit SCLK = P0^4;	
+unsigned long idata ADcode_pre=0;
+float fAverage_x = 0;
+unsigned char iValueOut = 0;
+float arfDataFilter_x[FILTER_SIZE_BUFF] = {0.00};
+//extern unsigned long idata ADcode_pre;
+//extern float arfDataFilter_x[];
+//extern float fAverage_x;
+//extern unsigned char iValueOut;
+void _nop_(void);
 
-//--------------------------------------------------------------------------------
-float xdata ValueCount = 0.0;
-int xdata iCountFailRead = 0;
-int xdata iCountFailResponse = 0;
-float xdata arfDataFilter_x[5] = {0.00};
-float xdata fBeforeValue_x = 0;
-float xdata fAverage_x = 0;
-unsigned char xdata iValueOut = 0;
 
+void sclk_unit(void)
+{
+	_nop_();
+	SCLK = 1;
+	_nop_();
+	SCLK = 0;
+}
+
+void ReadHX712(void){ //by ERH
+    unsigned char i;
+    MISO = 1;
+    SCLK = 0;
+	while(MISO && i++<105)delay_ms(1);
+    if(MISO){
+       // srFlagScale.bErrorReadAdc=1;
+	    return ;
+    }
+    ADcode_pre=0;
+	for(i=0;i<24;i++)//24 bits de comunicación
+	{        
+		ADcode_pre<<=1;//Lectura en flanco negativo
+		sclk_unit();
+		if(MISO)ADcode_pre++;
+	}
+	//1 bit de configuración a 10Hz
+    ADcode_pre >>= 7;
+	sclk_unit();
+
+    
+	if(ADcode_pre == 65535){
+//	  srFlagScale.bErrorReadAdc=1;
+	}else if(ADcode_pre > 65535){
+		ADcode_pre = 131072 - ADcode_pre;
+		ADcode_pre = 32500 - ADcode_pre;
+	//	srFlagScale.bErrorReadAdc = 0;
+	}else{
+		ADcode_pre += 32500;
+//		srFlagScale.bErrorReadAdc = 0;
+	}
+
+	
+   return ;
+}
 /*
 */
 float fFilter_Averaging(unsigned long iActualWeight, unsigned char cFastFill){	
-	float xdata arfLowestToHighest[5] = {0.00};
-    float xdata fThreshold = stScaleParam.fFactorCalibrate*0.5;
-	//float fThreshold = 3.327/2;//8.526937/2;
-	float xdata fData_Vector = 0;
-	float xdata *pfData_Filter;
-	float xdata fActualWeight = (float)(iActualWeight);
-	unsigned char xdata iLenthData_x = 5;		// Longitud de los datos a ordenar, original 6, en prueba 10 
-	unsigned char xdata i = 0; 	// Variable para ciclos iterativo 
-    unsigned char xdata j = 0;	// Variable para ciclos iterativo 
+	float arfLowestToHighest[FILTER_SIZE_BUFF] = {0.00};
+    float fThreshold = stScaleParam.fFactorCalibrate*0.5;
+	float fData_Vector = 0;
+	float *pfData_Filter;
+	float fActualWeight = (float)(iActualWeight);
+	unsigned char iLenthData_x = FILTER_SIZE_BUFF;		// Longitud de los datos a ordenar, original 6, en prueba 10 
+	unsigned char i = 0; 	// Variable para ciclos iterativo 
+    unsigned char j = 0;	// Variable para ciclos iterativo 		
 	
 	pfData_Filter = arfDataFilter_x;
 	
@@ -58,7 +94,6 @@ float fFilter_Averaging(unsigned long iActualWeight, unsigned char cFastFill){
 			pfData_Filter[i] = pfData_Filter[i+1];
 		}
 	}
-	
 			
 	pfData_Filter[iLenthData_x-1] = fActualWeight;
 	
@@ -83,70 +118,15 @@ float fFilter_Averaging(unsigned long iActualWeight, unsigned char cFastFill){
 		fAverage_x += arfLowestToHighest[i];
 	}
 	
-	fAverage_x /= (float)(iLenthData_x - 2);
-	
-	fBeforeValue_x = fAverage_x;
+	fAverage_x /= (float)(iLenthData_x - 2);	
 	
 	return fAverage_x;
 }
 
-
 /*
 */
-/*
-*/
-float fRead_Adc(unsigned char cFillFilter){
-	unsigned long xdata iTemp_RA = 0;
-
-	while(MISO!=0 && iTemp_RA<250){
-      delay_ms(1);        iTemp_RA++;
-    }
-    	if(MISO!=0)return ValueCount;
-  //iTemp_RA=123456789;	sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
-	
-	iTemp_RA=ReadHX712(); 
-
-  //sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
-
-	iTemp_RA >>= 7;	// Elimina los 6 bits menos significativos
-    
-
-    // sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
-	
-	if(iTemp_RA == 65535){
-	}else if(iTemp_RA > 65535){
-		iTemp_RA = 131072 - iTemp_RA;
-		iTemp_RA = 32500 - iTemp_RA;
-	}else{
-		iTemp_RA += 32500;
-	}
-
-   // sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_PESO); delay_ms(5000);
-
-	ValueCount = fFilter_Averaging(iTemp_RA,cFillFilter);
-
-   // sprintf(txt,"%f      ",ValueCount);  LCD_GLASS_String(txt,LCD_PESO); 	delay_ms(500);	
-
-	return ValueCount;
+float fRead_Adc(unsigned char cFillFilter){	
+	ReadHX712(); 		
+return fFilter_Averaging(ADcode_pre,cFillFilter);
 }
 
-volatile unsigned long  ReadHX712(void){ //by ERH
-    unsigned int xdata i;
-	unsigned long  *ptr;	
-    unsigned char  dato[4]={0};
-    ptr=(unsigned long *)&dato;
-
-	if(MISO!=0)return;
-	for(i=0;i<24;i++)//24 bits de comunicación
-	{    
-    	SCLK=1;  
-    	dato[i/8+1]<<=1;//Lectura en flanco negativo
-	    SCLK=0; 
-        dato[i/8+1]|=MISO&0x01;
-	}
-	//1 bit de configuración a 10Hz
-	SCLK=1;   i<<=5;
-	SCLK=0;  
-  // sprintf(txt,"%lX",*ptr);  LCD_GLASS_String(txt,LCD_TOTAL); 
-   return *ptr;
-}

@@ -6,8 +6,9 @@
 #include <stdio.h>
 #include <string.h>
 
-	volatile SOLIDIC Display;
-	void write_lcd(SOLIDIC Display);
+extern volatile SOLIDIC Display;
+
+	void write_lcd(SOLIDIC Display, unsigned char mode);
 	void LCD_GLASS_Update(void);
 
 #if DISPLAY_20400047_EN > 0	
@@ -131,23 +132,23 @@ const unsigned char xdata cABC_LCD[] = {
 #endif
 
 	// función de retardo 10us
-void delay_35u(void){ 	
-	unsigned char xdata j;
-  	for(j= 0;j<5;j++);
-}	
+//void delay_35u(void){ 	
+//	unsigned char j;
+ // 	for(j= 0;j<5;j++);
+//}	
 
 //****************************************************
 // Controlador LCD 1621 bloque compilación condicional ------ comenzar -------
 //****************************************************
 void lcd_unit_write(unsigned char d){
-	unsigned char xdata i;
+	unsigned char i;
 	for(i=0;i<8;i++){
 		if( ( d & 0x80 ) == 0 ) LCD_DATA_N = 0;
 		else LCD_DATA_N = 1;
 		LCD_WR_N = 0;	
-		delay_35u();	
+		//delay_35u();	
     LCD_WR_N = 1;			
-		delay_35u();		
+	//	delay_35u();		
 		d <<= 1;		
 	}
 }
@@ -158,28 +159,28 @@ void LCD_GLASS_Init(void){//int i,j,k;
 	LCD_CS_N = 1;
 	LCD_WR_N = 1;
 	LCD_DATA_N = 1;
-	delay_35u();
-	delay_35u();	
+//	delay_35u();
+//	delay_35u();	
 	
-	Display.mode=LCD_COMAND;
+	//Display.mode=LCD_COMAND;
 	
 	Display.cmd=SYS_EN;
-	write_lcd(Display);//Turn on system oscillator
+	write_lcd(Display,LCD_COMAND);//Turn on system oscillator
 	
 	Display.cmd=LCD_ON;	
-	write_lcd(Display);//Turn on LCD bias generator		
+	write_lcd(Display,LCD_COMAND);//Turn on LCD bias generator		
 	
 	Display.cmd=BIAS_4;	
-	write_lcd(Display);//LCD 1/2 bias option
+	write_lcd(Display,LCD_COMAND);//LCD 1/2 bias option
 	
 	Display.cmd=COM_4;	
-	write_lcd(Display);//LCD 1/3 bias option 
+	write_lcd(Display,LCD_COMAND);//LCD 1/3 bias option 
 		
-	Display.mode=LCD_DATA;
+	//Display.mode=LCD_DATA;
 //	Display.addr=0;
 //	Display.counter=sizeof(Display.LCD_BUF);
 	memset(Display.LCD_BUF, 0x00, sizeof(Display.LCD_BUF));
-	write_lcd(Display);//Write data to the RAM 
+	write_lcd(Display,LCD_DATA);//Write data to the RAM 
 }
 
 
@@ -190,54 +191,40 @@ void LCD_GLASS_Init(void){//int i,j,k;
 // 1: actualizar todas las áreas
 // cmd: comando de codificación
 // ---- Nota: Mostrar la función de la tecla de interrupción ET0 en la función - (Cuando el programa no necesita abrir la interrupción T0, preste especial atención para evitar que la función de pantalla abra accidentalmente la interrupción T0)
-void write_lcd(SOLIDIC Display){//char mode,unsigned char cmd,unsigned char addr,unsigned char counter)
-	unsigned char xdata i=0;	
-	unsigned char xdata addr=0;	
-	
-	//HAL_NVIC_DisableIRQ(TIM14_IRQn);
-	
-/*	if(strTimer.cFLag_TimerF_On ==  1 && eAccionScale != scalePreOnDc){//contador autoapagado 15m
-		if(strTimer.iTimerF > 36){
-			strTimer.iTimerF-=35;
-		}
-	}
-	
-	if(strTimer.cFLag_TimerI_On && srFlagScale.bSourceVoltage == SOURCE_BATTERY){ //contador apagado backlite 15seg
-		if(strTimer.iTimerI > 36){
-			strTimer.iTimerI-=35;			
-		}
-	}*/
-	
+
+void write_lcd(SOLIDIC Display, unsigned char mode){//char mode,unsigned char cmd,unsigned char addr,unsigned char counter)
+	unsigned char i=0;	
+	unsigned char addr=0;	
 	LCD_CS_N = 1;
 	LCD_WR_N = 1;
 	LCD_DATA_N = 1;	
-	delay_35u();		
+	//delay_35u();		
 	LCD_CS_N = 0;//	LCD_DATA_N = 1;
-	delay_35u();
+	//delay_35u();
 	LCD_WR_N = 0;
-	delay_35u();
+	//delay_35u();
 	LCD_WR_N = 1;
-	delay_35u();
+//	delay_35u();
 	LCD_DATA_N = 0;
 	LCD_WR_N = 0;
-	delay_35u();
+	//delay_35u();
 	LCD_WR_N = 1;
-	delay_35u();
-	if(Display.mode==0)
-	  	LCD_DATA_N = 0;
-	else 
+//	delay_35u();
+	if(mode)
 	  	LCD_DATA_N = 1;
+	else 
+	  	LCD_DATA_N = 0;
 	LCD_WR_N = 0;
-	delay_35u();
+	//delay_35u();
 	LCD_WR_N = 1;
-	delay_35u();
+//	delay_35u();
 
-	if(Display.mode == 0){
+	if(mode == 0){
 		lcd_unit_write(Display.cmd);		
 		LCD_WR_N = 0;
-		delay_35u();
+	//	delay_35u();
 		LCD_WR_N = 1;
-		delay_35u();
+	//	delay_35u();
 	}
 	else 
 	{		
@@ -248,9 +235,9 @@ void write_lcd(SOLIDIC Display){//char mode,unsigned char cmd,unsigned char addr
 				LCD_DATA_N = 0;
 		  else 
 				LCD_DATA_N = 1;
-			delay_35u();
+		//	delay_35u();
 			LCD_WR_N = 1;
-			delay_35u();
+		//	delay_35u();
 			addr <<= 1;
 		}		
 		for(i=0;i<16;i++)	// 数据写入命令,发送数据  Comando de escritura de datos, enviar datos
@@ -259,52 +246,47 @@ void write_lcd(SOLIDIC Display){//char mode,unsigned char cmd,unsigned char addr
 	LCD_CS_N = 1;
 	LCD_DATA_N = 1;
 	LCD_WR_N = 1;	
-	delay_35u();
-	
-	//HAL_GPIO_WritePin(GPIOC, TARA_IN_Pin, GPIO_PIN_RESET);
-	
-	//HAL_NVIC_EnableIRQ(TIM14_IRQn);	
 }
 
 void LCD_GLASS_DeInit(void){	
-	Display.mode=LCD_DATA;
+//	Display.mode=LCD_DATA;
 //	Display.addr=0;
 //	Display.counter=sizeof(Display.LCD_BUF);	
 	
 	memset(Display.LCD_BUF, 0x00, sizeof(Display.LCD_BUF));//InitLCDBuf(0);
-	write_lcd(Display);//Write data to the RAM
+	write_lcd(Display,LCD_DATA);//Write data to the RAM
 	
-	Display.mode=LCD_COMAND;
+//	Display.mode=LCD_COMAND;
 	
 	Display.cmd=LCD_OFF;	
-	write_lcd(Display);//Turn off LCD bias generator	
+	write_lcd(Display,LCD_COMAND);//Turn off LCD bias generator	
 	
 	Display.cmd=SYS_DIS;
-	write_lcd(Display);//Turn off system oscillator
+	write_lcd(Display,LCD_COMAND);//Turn off system oscillator
 
 }
 
 /*
 */
 void LCD_GLASS_Clear(void){	
-	Display.mode=LCD_DATA;	
+	//Display.mode=LCD_DATA;	
 	memset(Display.LCD_BUF, 0x00, sizeof(Display.LCD_BUF));//InitLCDBuf(0);
-	write_lcd(Display);//Write data to the RAM
+	write_lcd(Display,LCD_DATA);//Write data to the RAM
 }
 
 /*
 */
 void LCD_GLASS_All_On(void){
-	Display.mode=LCD_DATA;	
+	//Display.mode=LCD_DATA;	
 	memset(Display.LCD_BUF, 0xFF, sizeof(Display.LCD_BUF));
-	write_lcd(Display);	
+	write_lcd(Display,LCD_DATA);	
 }
 
 
 
 void LCD_SET_Char(unsigned char cCaracter, unsigned char cPosition_On_LCD, unsigned char cPosition_Text)
 {
-unsigned char xdata i=0;
+unsigned char i=0;
 		#if DISPLAY_20400047_EN > 0			
 		if(cPosition_On_LCD==LCD_PESO)i=0;
 		if(cPosition_On_LCD==LCD_PRECIO)i=11;
@@ -389,9 +371,6 @@ void LCD_GLASS_Dot(unsigned char iNumber_Dot, unsigned char cPosition_On_LCD, un
 
 
 void LCD_GLASS_Symbols(unsigned char cSymbol, unsigned char cFlag_On){
-	
-	//if(cFlag_On!=0&&cFlag_On!=1)vSend_String_Usart(&huart1,"-------------ERROR------------\r\n");
-
 	switch(cSymbol){	
 		#if DISPLAY_20400047_EN > 0	
 		
@@ -524,7 +503,7 @@ void LCD_GLASS_Symbols(unsigned char cSymbol, unsigned char cFlag_On){
 			vSend_String_Usart(&huart1,"  off\r\n ");
 		}*/
 	
-	Display.mode=LCD_DATA;
+	//Display.mode=LCD_DATA;
 //	Display.addr=0;
 //	Display.counter=sizeof(Display.LCD_BUF);	
 	LCD_GLASS_Update();
@@ -543,11 +522,11 @@ p= numero de decimales
 txt= aqui se va poner el nuero en texto
 */
 const void nFloatToStr(float f, unsigned char digits, unsigned char p, unsigned char *txt) {
-   unsigned long xdata r1;   
-   unsigned long xdata factor = 10;
-   unsigned char xdata i = p, j = 0;
-   unsigned char xdata sign=0;
-   unsigned char xdata digit=0;
+   unsigned long r1;   
+   unsigned long factor = 10;
+   unsigned char i = p, j = 0;
+   unsigned char sign=0;
+   unsigned char digit=0;
 
 if( f < 0 ){ sign=1; f*=-1;  } 
    while (i--)
@@ -562,7 +541,7 @@ if( f < 0 ){ sign=1; f*=-1;  }
       if (--p == 0)
          txt[j++] = '.';
 
-	} while (r1 > 0 );
+	} while (r1 > 0 && j<=7);//maximo 7 caracteres
    
    if (txt[j - 1] == '.'){
       txt[j++] = '0';digit++;}
@@ -595,8 +574,7 @@ if( f < 0 ){ sign=1; f*=-1;  }
 */
 
 void LCD_GLASS_Float(float fNumber_To_LCD, unsigned char iNumber_Decimal, unsigned char cPosition_On_LCD) {
-unsigned char xdata strText_LCD[10];  
-
+unsigned char strText_LCD[10];
   if (iNumber_Decimal == 0) {
     if (cPosition_On_LCD == LCD_TOTAL) {
 	  nFloatToStr(fNumber_To_LCD,5,0,strText_LCD);//
@@ -633,56 +611,9 @@ unsigned char xdata strText_LCD[10];
 	  //sprintf(strText_LCD, "%6.3f", fNumber_To_LCD);//ok
     
   }
-
-  //IWDG_KEY_REFRESH; 
   LCD_GLASS_String(strText_LCD, cPosition_On_LCD);
 }
 
-
-
-void LCD_GLASS_Float0(float fNumber_To_LCD, unsigned char iNumber_Decimal, unsigned char cPosition_On_LCD) {
-unsigned char xdata strText_LCD[8];  
-
-  if (iNumber_Decimal == 0) {
-    if (cPosition_On_LCD == LCD_TOTAL) {
-	  //nFloatToStr(fNumber_To_LCD,5,0,strText_LCD);//
-	  sprintf(strText_LCD, "%6.0f", fNumber_To_LCD);//ok
-    } else 
-      //nFloatToStr(fNumber_To_LCD,4,0,strText_LCD);//
-	  sprintf(strText_LCD, "%5.0f", fNumber_To_LCD);//ok
-    
-  }
-  if (iNumber_Decimal == 1) {
-    if (cPosition_On_LCD == LCD_TOTAL) {
-      //nFloatToStr(fNumber_To_LCD,6,1,strText_LCD);////
-	  sprintf(strText_LCD, "%7.1f", fNumber_To_LCD);//no ok   sprintf(strText_LCD, "FLOAT");//no ok
-    } else 
-      //nFloatToStr(fNumber_To_LCD,5,1,strText_LCD);//
-	  sprintf(strText_LCD, "%6.1f", fNumber_To_LCD);//ok
-    
-  }
-  if (iNumber_Decimal == 2) {
-    if (cPosition_On_LCD == LCD_TOTAL) {
-      //nFloatToStr(fNumber_To_LCD,6,2,strText_LCD);//
-	  sprintf(strText_LCD, "%7.2f", fNumber_To_LCD);//ok
-    } else 
-      //nFloatToStr(fNumber_To_LCD,5,2,strText_LCD);//
-	  sprintf(strText_LCD, "%6.2f", fNumber_To_LCD);//ok
-    
-  }
-  if (iNumber_Decimal == 3) {
-    if (cPosition_On_LCD == LCD_TOTAL) {
-      //nFloatToStr(fNumber_To_LCD,6,3,strText_LCD);//
-	  sprintf(strText_LCD, "%7.3f", fNumber_To_LCD);//ok
-    } else 
-      //nFloatToStr(fNumber_To_LCD,5,3,strText_LCD);//
-	  sprintf(strText_LCD, "%6.3f", fNumber_To_LCD);//ok
-    
-  }
-
-  //IWDG_KEY_REFRESH; 
-  LCD_GLASS_String(strText_LCD, cPosition_On_LCD);
-}
 
 
 /**
@@ -740,8 +671,8 @@ if(c==' ')return 0x00;
 }
 
 void LCD_GLASS_String(unsigned char *pCaracter, unsigned char cPosition_On_LCD){
-    unsigned char xdata iIndex_Text = 5;
-	unsigned char xdata iPosicion_Decimal = 0;
+    unsigned char iIndex_Text = 5;
+	unsigned char iPosicion_Decimal = 0;
 	//char txt[30];
 	/*vSend_String_USB("\r\n");	
 	if(cPosition_On_LCD==LCD_TOTAL)	  vSend_String_USB("LCD_TOTAL=  ");
@@ -804,21 +735,13 @@ void LCD_GLASS_String(unsigned char *pCaracter, unsigned char cPosition_On_LCD){
 		iPosicion_Decimal++;
 		pCaracter++;
 	}
-	Display.mode=LCD_DATA;	
+	//Display.mode=LCD_DATA;	
 	LCD_GLASS_Update();
 }
 
 void LCD_GLASS_Update(void){
-	//char txt[10];int i;
-	Display.mode=LCD_DATA;	
-	/*for(i=0;i<16;i++){
-	  sprintf(txt, "%02x, ", Display.LCD_BUF[i]);
-		vSend_String_Usart(&huart1,txt);				
-	}
-	vSend_String_Usart(&huart1," \r\n");	
-	vSend_String_Usart(&huart1," \r\n");	*/
-	
-	write_lcd(Display);//Write data to the RAM			
+	//Display.mode=LCD_DATA;	
+	write_lcd(Display,LCD_DATA);//Write data to the RAM			
 }
 /*
 

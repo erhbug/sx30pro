@@ -17,8 +17,6 @@
 #define _KEYBOARD_H_
 
 #include <REG52.H>
-#include "./_scale/dvr_scale.h"
-//------------------------------------------------------------------
 
 sbit KEY_K0 = P0^2;	
 sbit KEY_K1 = P2^4;	
@@ -36,17 +34,15 @@ sbit KEY_D4 = P1^2;
 #define RELEASE  3
 
 
-//*************************************************************************//
-//----------  º¯ÊýÔ­ÐÍ ---------------
-//*************************************************************************//
+extern unsigned char idata KeyState;
+extern unsigned char idata Key;
+
 void key_scan(void);
 void delay_ms(unsigned int num);
-void vBeep_Key(void);
-void vSound_Saved_Param(void);
-enum digi_key vActionKey(void);
 void vScan_Key(void);
-
-extern unsigned char xdata KeyState;
-extern unsigned char xdata Key;
+float vCapture_Valor_Test(unsigned char fNew_Digit, unsigned char cDecimal_Number, float fValue_Capture);
+void vCapture_Valor(float *pfValor, float fNew_Digit, int iNumber_Max_Digit,unsigned char cCounter_Decimal);
+void vActionMemoryPlu(unsigned char cIndexMemory);
+//unsigned char cConvert_Char(unsigned char Key_Num);
 
 #endif

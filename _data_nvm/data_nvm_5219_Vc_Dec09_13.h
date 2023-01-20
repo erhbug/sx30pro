@@ -30,8 +30,7 @@
 #define ADDRESS_QLTY_AND_CNTRS_PAGE  ADDRESS_PAGE_28
 #define ADDRESS_PLU                  ADDRESS_PAGE_29
 
-extern unsigned char xdata NRM_securty_a;						// EEPROM 安全码A
-extern unsigned char xdata NRM_securty_b;						// EEPROM 安全码B
+extern unsigned char NRM_securty;						// EEPROM 安全码A
 
 //**************************
 //EEPROM接口函数
@@ -46,7 +45,7 @@ void flash_write_u8(unsigned int addr,unsigned char in_data);
 void flash_write_u16(unsigned int addr,unsigned int in_data);
 void flash_write_u32(unsigned int addr,unsigned long in_data);
 void flash_write_float32(unsigned int addr,float in_data);
-
 void e2rom_erase(unsigned int addr);
+void vEepromInit(unsigned char en);
 
 #endif

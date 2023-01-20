@@ -23,11 +23,13 @@
 
 #include "./_solidic/solidic_Vc_Jan10_13.h"								//solidic 系统 头文件
 #include "./_solidic/SDI5219_Vc_Sep02_15.h"								//solidic 系统 头文件
-//#include "./customer/ext_data.h"	//(必须放在这个位置)	//客户-程序 全局变量 头文件
-//#include "./customer/func.h"								//客户-程序 函数原形 头文件
-#include "./customer/keyboard.h"							//客户-程序 显示代码 头文件
 //#include "./_adc/adc_0819_Vc_Jan10_13.h"								//驱动-程序 高精度ADC 头文件
 #include "./_data_nvm/data_nvm_5219_Vc_Dec09_13.h"								//solidic 系统 头文件
+
+#include "./_display/dvr_lcd_SDI1621.h"
+#include "./_weight/dvr_HX712.h"
+#include "./customer/keyboard.h"
+#include "./_scale/dvr_scale.h"
 
 
 #endif // _HEAD_FILE_VERSION_H_

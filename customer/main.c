@@ -1,96 +1,91 @@
-//#pragma code symbols debug oe
-//#define EXTERN
-#include "./_display/dvr_lcd_SDI1621.h"
 #include <REG52.H>
-//#include <math.h>
 #include "./_solidic/head_file_version.h"
-#include "./_weight/dvr_HX712.h"
-#include "./customer/keyboard.h"
-
 #include "./_scale/dvr_def.h"
 #include "./_scale/dvr_scale.h"
+#include "./customer/beeper.h"
+#include "./customer/dvr_inicio.h"
 #include <stdio.h>
-
-extern float xdata fWeightScale;	
+#include <string.h>
 
 unsigned int convertidorADC(void);
-void TestEEPROM(void);
 void init_pwm(void);
 void wdt_init(void);
 void gpio_init(void);
 void adc_init(void);
 void init_int_timer0(void);
+Parameter stScaleParam;	/* Contiene los parametros de uso de la Bascula*/
 
-void main(void)
-{
-LCD_GLASS_Init(); 
-//char txt[20];float num = 1.3;//12.3;
-  wdt_init();  /// watch dog ///
-  gpio_init();  
-  adc_init();  
+/*Display*/
+volatile SOLIDIC Display;
+
+
+/*HX712*/
+
+
+/*flash*/
+unsigned char NRM_securty;
+
+/*dvr_scale*/
+float fWeightScale = 0;									/* Contiene el valor del peso leido */
+float fWeightScaleBefore = 0;
+float fWeightLight = 0;
+idata FlagScale srFlagScale;		/* Contiene las banderas del sistema */
+unsigned int iCounterZeroTracking = 0;
+
+///////
+
+
+
+void main(void) {
+  enum ActionScale eAccionScale;
+  wdt_init();
+  gpio_init();
+  adc_init();
   init_pwm();
-  // Configuracion salida pin P0.1 prueba de togle pin interrup timer0. Salida
-  // para toogle prueba   // P0M0 |= (1<<1);  // P0M1 &= ~(1<<1);
-  init_int_timer0();	
-  LCD_GLASS_Init(); 
-  delay_ms(500);
+  init_int_timer0();
+  LCD_GLASS_Init();
+  eAccionScale = ScalePreOn; /* Inicia en el primer estado Off */
+  while (1) {
+    switch (eAccionScale) {
+    case ScalePreOn:
+      IWDG_KEY_REFRESH;
+      memset( & srFlagScale, 0x00, sizeof(srFlagScale));
+      memset( & stScaleParam, 0x00, sizeof(stScaleParam));
+      vReadParamScale(); // Inicia los parametros de la Bascula					
+      LCD_GLASS_Clear();
+      LCD_GLASS_String("-----", LCD_PESO);
+      LCD_GLASS_String("-----", LCD_PRECIO);
+      LCD_GLASS_String("------", LCD_TOTAL); 
+	  
+      vBeep_Key();
+      eAccionScale = ScaleBattery; // Pasa al siguiente estado
+      break;
 
+    case ScaleBattery:
+      eAccionScale = ScaleWait;
+      break;
 
-    vReadParamScale();
-LCD_GLASS_Float(stScaleParam.iCapacity,2,LCD_TOTAL);
-delay_ms(2000);
-	if(stScaleParam.iCapacity != 30)
-	vPreConfiguration(PreConfig30KG);
-	if(stScaleParam.fFactorCalibrate<1)
-	 vCalibrate_Scale();
-//TestEEPROM();
+    case ScaleWait:
 
+      if (cWait_Scale() == 0) {
+        eAccionScale = ScaleRun;
+        LCD_GLASS_Clear();
+      } else
+        eAccionScale = ScalePreOn;
+      break;
 
-LCD_GLASS_Clear();
- while(1){  ; 
-    key_scan();
-//	nFloatToStr(num,2,txt);
-//	
-	vCalculate_Weight();delay_ms(50);
-	LCD_GLASS_Float(fWeightScale, 2,  LCD_PESO);
-//	sprintf(txt,"%d ",(int)(Key));
-//	LCD_GLASS_String(txt,LCD_PESO);
+    case ScaleRun:
+      	// Lee teclado y ejecuta las acciones correspondientes 
+	  vScan_Key();
+      cRun_Scale();
+      break;
 
-//	sprintf(txt,"%d  ",(int)(KeyState));
-//	LCD_GLASS_String(txt,LCD_PRECIO);
-
-	
-	
-   
-	//peso=fRead_Adc(0);
-
-
-	
-    
-//	P0|= (1<<5);
-//	voltaje=convertidorADC()*(3.3/255);
- //	
-//	LCD_GLASS_Float(voltaje, 2, LCD_PESO);
-
-
-    
-  //iTemp_RA=123456789;	
-	
-//	ReadHX712(&iTemp_RA); 
-  //  sprintf(txt,"%ld   ",iTemp_RA);  LCD_GLASS_String(txt,LCD_TOTAL); 
-
- //delay_ms(3000); 
-//
-
-//peso = fStablePoint(5, 1, 0); //ok
-//LCD_GLASS_Float(peso,0,LCD_TOTAL);//ok
-}
-
-}
-
+    } //switch
+  } //while
+} //main
 void init_pwm(void){
 //apagar bl y beeper
-	BL_DIS;
+	BL_EN;
 	BEEPER_DIS;
 
    //Configuracion salida BL
@@ -99,11 +94,9 @@ void init_pwm(void){
 
     PWMF_H  = 0x00;
 	PWMF_L  = 0xA0;
-	PWM0  	= 0X01;//BEEPER correcto 0x6c
+	PWM0  	= 0X6C;//BEEPER correcto 0x6c
 	PWM1  	= 0X50;
-	PWMCON  = 0x04;	//PWM0-P1.4(LCD_LAMP)????(?PWM0=0xff?,?????)
-
-	
+	PWMCON  = 0x04;	//PWM0-P1.4(LCD_LAMP)????(?PWM0=0xff?,?????)	
 }
 
 void wdt_init(void){// watch dog ///
@@ -127,6 +120,9 @@ void gpio_init(void)
     P1M1 = 0x00; //0b00000000;        
     P2M0 = 0xEE; //0b11101110;
     P2M1 = 0x00; //0b00000000;
+	
+    MISO = 1;
+    SCLK = 0;
 }
 
 void adc_init(void)
@@ -148,13 +144,12 @@ void init_int_timer0(void)
 	TL0 = 0x00;
 	TH0 = 0x7F;
 	CKCON = 0x04;
-
     TCON |= (1<<4);//Start timer0
 }
 
 unsigned int convertidorADC(){
 
-unsigned int xdata v=0;
+unsigned int v=0;
 SARCON = 0x09;
 	if(!(SARCON & 0x04))
 	{
@@ -171,104 +166,20 @@ return v;
 /////////   Interrups timer0    ////////////////
 
 static void timer0(void) interrupt 1
-{		
-	
-		/* 200mS*/
-/*	if(strTimer.cFLag_TimerA_Start){
-		strTimer.iTimerA = 200;//200;//700; //891
-		//strTimer.cFLag_TimerA_Start = 0;
-		strTimer.cFLag_TimerA_On = 1;
-		strTimer.cFLag_TimerA_End = 0;
-	}*/
+{	
+    
+    if(strTimer.iTimerA>0){ 
+      if(strTimer.iTimerA==1)BEEPER_EN;	
 
-	/* 5S*/
-/*	if(strTimer.cFLag_TimerE_Start){
-		strTimer.iTimerE = Number_Count_Sec * 4;
-		strTimer.cFLag_TimerE_Start = 0;
-		strTimer.cFLag_TimerE_On = 1;
-		strTimer.cFLag_TimerE_End = 0;
-	}
-*/
-
-	/*Accion de desbordamiento del timer */
-/*	if(strTimer.cFLag_TimerA_On){
-		
-
-		if(strTimer.cFLag_TimerA_Start == 1){
-			strTimer.cFLag_TimerA_Start = 0;
-			BEEPER_EN;
-		}
-		if(strTimer.iTimerA > 0){
-			strTimer.iTimerA--;
-		}else{
-			strTimer.cFLag_TimerA_On = 0;
-			strTimer.cFLag_TimerA_End = 1;
-			BEEPER_DIS;
-			//GPIO_ResetBits(GPIOA, BEEPER);
-		}
-	}*/
-
-	if(strTimer.iTimerA>0&&strTimer.iTimerA<TimerAend)
-	{
-    	if(strTimer.iTimerA==1)BEEPER_EN;
-	  
-	    strTimer.iTimerA++;
+	  strTimer.iTimerA++;
 		if(strTimer.iTimerA>=TimerAend)BEEPER_DIS;
 	}
 
-	/* timer usado en calibracion */
-/*	if(strTimer.cFLag_TimerE_On){
-		if(strTimer.iTimerE > 0){
-			strTimer.iTimerE--;
-		}else{
-			strTimer.cFLag_TimerE_On = 0;
-			strTimer.cFLag_TimerE_End = 1;
-		}
-	}*/
-	if(strTimer.iTimerE>0 && strTimer.iTimerE<TimerEend)
+	if(strTimer.iTimerE>0 )
 	strTimer.iTimerE++;
 
 	//P0 ^= (1<<1);//P1 ^= (1<<5);
 	TL0 = 0xCF;
 	TH0 = 0xb5;
 	TCON |= (1<<4);
-
 }
-
-
-void TestEEPROM(void)
-{
-	unsigned int xdata addr=ADDRESS_PLU;
-	float xdata val;
-	float xdata i=0.12;
-
-	unsigned int xdata  x=0;
- 
-	NRM_securty_a = 0xaa;
-	NRM_securty_b = 0x55;
-	
-
-
-	while(i<15){	
-	for(x=1;x<11;x++){
-	flash_write_float32(addr+(x*4),i);
-
-	val = flash_read_float32(addr+(x*4)-4);
-	LCD_GLASS_Float(val, 2,  LCD_PESO);
-
-	val = flash_read_float32(addr+(x*4));
-	LCD_GLASS_Float(val, 2,  LCD_TOTAL);
-
-	val = flash_read_float32(addr+(x*4)+4);
-	LCD_GLASS_Float(val, 2,  LCD_PRECIO);
-
-	i++;
-	delay_ms(1000);
-	}
-}
-
-NRM_securty_a = 0x00;
-	NRM_securty_b = 0x00;
-	LCD_GLASS_Clear();
-}
-

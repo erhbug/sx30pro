@@ -10,6 +10,9 @@
 
 #define DEF_ENABLED   1
 #define DEF_DISABLED  0
+
+#define ENABLED   1
+#define DISABLED  0
 			 
 /*--------------------------------------------------------------
 								TIPO DE DISPLAY
@@ -29,7 +32,6 @@
 		#define LCD_TOTAL		2
 #endif
 
-
-#define sVersion "22I0"
+//#define sVersion "22I0"
 
 #endif // APP_CFG_H

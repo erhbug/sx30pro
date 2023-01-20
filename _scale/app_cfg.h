@@ -10,6 +10,9 @@
 
 #define DEF_ENABLED   1
 #define DEF_DISABLED  0
+
+#define ENABLE   1
+#define DISABLE  0
 			 
 /*--------------------------------------------------------------
 								TIPO DE DISPLAY

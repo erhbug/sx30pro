@@ -22,7 +22,7 @@
 */
 #define Number_Count_Sec	1000
 
-#define Beep_On_Key						strTimer.iTimerA = 1
+#define Beep_On_Key					strTimer.iTimerA = 1
 #define Time_Sleep					strTimer.iTimerB = 1//; strTimer.cFLag_TimerB_End = 0
 
 /*#define Auto_Off_On_15m 				strTimer.iTimerMinuteF = 60*15;	strTimer.cFLag_TimerF_Start = 1
@@ -57,7 +57,7 @@
 #define Parameter_Count_Configuration			12
 #define Parameter_Voltages								13
 //#define Parameter_Temperature							14
-#define Parameter_Backlight								15
+//#define Parameter_Backlight								15
 
 #define ESPANOL 1
 #define ENGLISH	0
@@ -66,35 +66,6 @@
 #define MONEDA_PESOS		1
 #define MONEDA_EUROS		2
 #define MONEDA_BSF			3
-
-#define PreConfig15KG 0
-#define PreConfig20KG 1
-#define PreConfig30KG 2
-#define PreConfig40KG 3
-#define PreConfig60LB 4
-#define PreConfig31KG 5
-#define PreConfig32KG 6
-/*
-#define ADC_VIN		ADC_Channel_25
-#define ADC_VREF	ADC_Channel_Vrefint
-
-#if DISPLAY_20400047_EN > 0
-		#define LCD_TOTAL   0 
-		#define LCD_PESO    1 
-		#define LCD_PRECIO  2
-#else
-	#define LCD_PESO		0
-	#define LCD_PRECIO	1
-	#define LCD_TOTAL		2
-#endif
-
-#define SYMBOL_KG			0
-#define SYMBOL_LB			1
-#define SYMBOL_ZERO		2
-#define SYMBOL_NET		3
-#define SYMBOL_X			4
-#define SYMBOL_Y			5
-#define SYMBOL_ALL		6
 
 #define PreConfig15KG 0
 #define PreConfig20KG 1
@@ -125,6 +96,37 @@
 #define Function_TestTeclado				23
 #define Function_CalidadTest				24
 #define Function_Backlight					25
+/*
+#define ADC_VIN		ADC_Channel_25
+#define ADC_VREF	ADC_Channel_Vrefint
+
+#if DISPLAY_20400047_EN > 0
+		#define LCD_TOTAL   0 
+		#define LCD_PESO    1 
+		#define LCD_PRECIO  2
+#else
+	#define LCD_PESO		0
+	#define LCD_PRECIO	1
+	#define LCD_TOTAL		2
+#endif
+
+#define SYMBOL_KG			0
+#define SYMBOL_LB			1
+#define SYMBOL_ZERO		2
+#define SYMBOL_NET		3
+#define SYMBOL_X			4
+#define SYMBOL_Y			5
+#define SYMBOL_ALL		6
+
+#define PreConfig15KG 0
+#define PreConfig20KG 1
+#define PreConfig30KG 2
+#define PreConfig40KG 3
+#define PreConfig60LB 4
+#define PreConfig31KG 5
+#define PreConfig32KG 6
+
+
 
 #define Parameter_Configuration		0
 #define Parameter_Calibration			1

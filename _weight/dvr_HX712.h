@@ -1,11 +1,14 @@
 #ifndef _DVR_HX712_H_
 #define _DVR_HX712_H_
 
-extern unsigned char lecturaADC[4];
+#include <REG52.H>
 
-float fRead_Adc(unsigned char cFillFilter);	
-void vSend_Status_Adc(void);
-volatile unsigned long  ReadHX712(void);
-float fFilter_Averaging(unsigned long iActualWeight, unsigned char cFastFill);	
+sbit MISO = P0^3;	
+sbit SCLK = P0^4;	
+
+#define FILTER_SIZE_BUFF 5
+
+float fRead_Adc(unsigned char cFillFilter);
+float fFilter_Averaging(unsigned long iActualWeight, unsigned char cFastFill);
 
 #endif

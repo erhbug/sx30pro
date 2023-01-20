@@ -3,11 +3,14 @@
 #define __DVR_BATTERY
 	
 	#define SOURCE_ADAPTER					0
-	#define SOURCE_BATTERY_OK				1
-	#define SOURCE_BATTERY_HIGH			2
-	#define SOURCE_BATTERY_LOW			3
-	#define SOURCE_BATTERY_VERY_LOW	4
-	#define SOURCE_BATTERY					5
+#define SOURCE_BATTERY			1
+
+
+	#define SOURCE_BATTERY_OK				2
+	#define SOURCE_BATTERY_HIGH			3
+	#define SOURCE_BATTERY_LOW			4
+	#define SOURCE_BATTERY_VERY_LOW	    5
+	
 	#define SOURCE_ADAPTER_HIGH			6
 	#define SOURCE_NO_ON						7
 

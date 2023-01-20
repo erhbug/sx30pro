@@ -10,7 +10,11 @@ File 1,1,<.\_display\dvr_lcd_SDI1621.c><dvr_lcd_SDI1621.c> 0x0
 File 1,1,<.\customer\keyboard.c><keyboard.c> 0x0 
 File 1,1,<.\_weight\dvr_HX712.c><dvr_HX712.c> 0x0 
 File 1,1,<.\_data_nvm\data_nvm_5219_Vc_Dec09_13.c><data_nvm_5219_Vc_Dec09_13.c> 0x0 
+File 1,1,<.\customer\beeper.c><beeper.c> 0x0 
 File 1,1,<.\_scale\dvr_scale.c><dvr_scale.c> 0x0 
+File 1,1,<.\customer\dvr_Inicio.c><dvr_Inicio.c> 0x0 
+File 1,1,<.\customer\dvr_plu.c><dvr_plu.c> 0x0 
+File 1,1,<.\customer\dvr_registradora.c><dvr_registradora.c> 0x0 
 
 
 Options 1,0,0  // Target 'Target 1'
@@ -32,7 +36,7 @@ Options 1,0,0  // Target 'Target 1'
  EnvLib ()
  EnvReg (ÿWinbond\)
  OrgReg (ÿWinbond\)
- TgStat=11
+ TgStat=0
  OutDir (.\)
  OutName (solidic_proj)
  GenApp=1
@@ -49,7 +53,7 @@ Options 1,0,0  // Target 'Target 1'
  BrunUsr 0 0 <>
  BrunUsr 1 0 <>
  SVCSID <>
- MODEL5=0
+ MODEL5=2
  RTOS5=0
  ROMSZ5=2
  DHOLD5=0
@@ -111,9 +115,9 @@ Options 1,0,0  // Target 'Target 1'
  LX51DAS ()
  LX51IDS ()
   OPTDL (S8051.DLL)()(DP51.DLL)(-p52W)(S8051.DLL)()(TP51.DLL)(-p52W)
-  OPTDBG 44029,0,()()()()()()()()()() ()()()()
- FLASH1 { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+  OPTDBG 44029,-1,()()()()()()()()()() (BIN\MON51.DLL)()()()
+ FLASH1 { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
  FLASH2 ()
- FLASH3 ()
+ FLASH3 ("" ())
 EndOpt
 
