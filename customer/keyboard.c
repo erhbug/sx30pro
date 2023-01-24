@@ -2,7 +2,7 @@
 //* Name				:   display_cal.c
 //* Vision				:	V-Nov07_12
 //* Project				:   All project
-//* Function			:   Solidic µç×Ó³Æ ÏÔ´æ¼ÆËãÎÄ¼þ
+//* Function			:   Solidic ï¿½ï¿½ï¿½Ó³ï¿½ ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
 //* $Author				:   superc
 //*
 //* Copyright 2012 by solidic
@@ -16,7 +16,7 @@
 #include <REG52.H>
 //#include <math.h>
 //**************************************************************************
-// -- È«²¿Í·ÎÄ¼þ ¼¯ÖÐ¹ÜÀí ---- £¬°æ±¾ÐÞ¸ÄÎÄ¼þÃû»á±ä¶¯ ---  ±ØÐëÐÞ¸Ä Õâ¸öÎÄ¼þ
+// -- È«ï¿½ï¿½Í·ï¿½Ä¼ï¿½ ï¿½ï¿½ï¿½Ð¹ï¿½ï¿½ï¿½ ---- ï¿½ï¿½ï¿½æ±¾ï¿½Þ¸ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ä¶¯ ---  ï¿½ï¿½ï¿½ï¿½ï¿½Þ¸ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
 //**************************************************************************
 //#include "./_solidic/head_file_version.h"
 #include "./customer/keyboard.h"
@@ -92,14 +92,104 @@ if(Key==18)Key=KEY_6;
 if(Key==19)Key=KEY_3;
 if(Key==20)Key=KEY_PUNTO;
 
+/*
+switch(Key){
+
+	case 0:
+	Key = KEY_NULL;
+	break;
+
+	case 1:
+	Key = KEY_CERO;
+	break;
+
+	case 2:
+	Key = KEY_TARA;
+	break;
+
+	case 3:
+	Key = KEY_M1;
+	break;
+
+	case 4:
+	Key = KEY_RCL;
+	break;
+
+	case 5:
+	Key = KEY_CHG;
+	break;
+
+	case 6:
+	Key = KEY_MAS;
+	break;
+
+	case 7:
+	Key = KEY_M2;
+	break;
+
+	case 8:
+	Key = KEY_MEM;
+	break;
+
+	case 9:
+	Key = KEY_7;
+	break;
+
+	case 10:
+	Key = KEY_4;
+	break;
+
+	case 11:
+	Key = KEY_1;
+	break;
+
+	case 12:
+	Key = KEY_C;
+	break;
+
+	case 13:
+	Key = KEY_8;
+	break;
+
+	case 14:
+	Key = KEY_5;
+	break;
+
+	case 15:
+	Key = KEY_2;
+	break;
+
+	case 16:
+	Key = KEY_0;
+	break;
+
+	case 17:
+	Key = KEY_9;
+	break;
+
+	case 18:
+	Key = KEY_6;
+	break;
+
+	case 19:
+	Key = KEY_3;
+	break;
+
+	case 20:
+	Key = KEY_PUNTO;
+	break;
+}
+
+*/
+
   if (LastKey == 0 && Key != 0) {
     KeyState = PRESS; //se presiono
-    for (k = 0; k < 10; k++);//pequeño delay
+    for (k = 0; k < 10; k++);//pequeï¿½o delay
   } else if (LastKey == Key && Key != 0) {
     KeyState = PRESSED; //se mantiene presionado
   } else if (LastKey != 0 && Key == 0) {
     KeyState = RELEASE; //se solto
-	for (k = 0; k < 10; k++);//pequeño delay
+	for (k = 0; k < 10; k++);//pequeï¿½o delay
   } else if (LastKey == 0 && Key == 0) {
     KeyState = 0; //no se ha presionado una tecla	
   }
