@@ -1,10 +1,18 @@
-#archivos a ignorar
+#Ignoras archivos lst
 *.lst
+#ignorar archivos obj
 *.obj
-*.Bak
-*.lnp
-*.hex
-*.M51
-*.plg
-*.Opt
+#ignorar solidic_proj
 solidic_proj
+#ignorar .bac
+*.bak
+#ignorar Inp
+*.lnp
+#ignorar M51
+*.M51
+#ignorar Opt
+*.Opt
+#ignorar plg
+*.plg
+#Ignorar Hex
+*.Hex

@@ -698,7 +698,7 @@ void vPreConfiguration(unsigned char cPreConfiguration){
   ***
 	*/
 unsigned char cRun_Scale(void){
-	if(srFlagScale.bOverLoad ==0){
+	if(srFlagScale.bOverLoad ==0){//indicador de sobrecarga en la bascula == 0;
 		if(srFlagScale.bSourceVoltage ==  SOURCE_ADAPTER){
 			LCD_GLASS_Symbols(SYMBOL_Y, 1);
 		}else{
@@ -706,7 +706,7 @@ unsigned char cRun_Scale(void){
 		}
 	}			
 	srFlagScale.bFlagWeightNeg = 0;			// Clarea indicador de peso negativo 
-    vCalculate_Weight();
+    vCalculate_Weight();// calculando el peso en la bascula
 //	if( srFlagScale.bErrorReadAdc == 1)	
 //		return 0;	
 //LCD_GLASS_Float(stScaleParam.fWeightScale, stScaleParam.cWeightDecimal, LCD_PESO);

@@ -2,7 +2,7 @@
 //* Name				:   display_cal.c
 //* Vision				:	V-Nov07_12
 //* Project				:   All project
-//* Function			:   Solidic µç×Ó³Æ ÏÔ´æ¼ÆËãÎÄ¼þ
+//* Function			:   Solidic ï¿½ï¿½ï¿½Ó³ï¿½ ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
 //* $Author				:   superc
 //*
 //* Copyright 2012 by solidic
@@ -16,7 +16,7 @@
 #include <REG52.H>
 //#include <math.h>
 //**************************************************************************
-// -- È«²¿Í·ÎÄ¼þ ¼¯ÖÐ¹ÜÀí ---- £¬°æ±¾ÐÞ¸ÄÎÄ¼þÃû»á±ä¶¯ ---  ±ØÐëÐÞ¸Ä Õâ¸öÎÄ¼þ
+// -- È«ï¿½ï¿½Í·ï¿½Ä¼ï¿½ ï¿½ï¿½ï¿½Ð¹ï¿½ï¿½ï¿½ ---- ï¿½ï¿½ï¿½æ±¾ï¿½Þ¸ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ä¶¯ ---  ï¿½ï¿½ï¿½ï¿½ï¿½Þ¸ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
 //**************************************************************************
 //#include "./_solidic/head_file_version.h"
 #include "./customer/keyboard.h"
@@ -92,14 +92,16 @@ if(Key==18)Key=KEY_6;
 if(Key==19)Key=KEY_3;
 if(Key==20)Key=KEY_PUNTO;
 
+
+
   if (LastKey == 0 && Key != 0) {
     KeyState = PRESS; //se presiono
-    for (k = 0; k < 10; k++);//pequeño delay
+    for (k = 0; k < 10; k++);//pequeï¿½o delay
   } else if (LastKey == Key && Key != 0) {
     KeyState = PRESSED; //se mantiene presionado
   } else if (LastKey != 0 && Key == 0) {
     KeyState = RELEASE; //se solto
-	for (k = 0; k < 10; k++);//pequeño delay
+	for (k = 0; k < 10; k++);//pequeï¿½o delay
   } else if (LastKey == 0 && Key == 0) {
     KeyState = 0; //no se ha presionado una tecla	
   }
@@ -443,7 +445,7 @@ float vCapture_Valor_Test(unsigned char fNew_Digit, unsigned char cDecimal_Numbe
 void vCapture_Valor(float *pfValor, float fNew_Digit, int iNumber_Max_Digit, 
 			unsigned char cCounter_Decimal){
 	
-/*	float fValor_Comparacion = 0;
+	float xdata fValor_Comparacion = 0;
 	long int iPotencia;
 	long int i;
 	int iNumeros = 0;
@@ -488,5 +490,5 @@ void vCapture_Valor(float *pfValor, float fNew_Digit, int iNumber_Max_Digit,
 		*(pfValor) = 0;
 		srFlagScale.bDotDecimalPrice = 0;
 		stScaleParam.cNumberDecimalPrice = 0;
-	}*/
+	}
 }

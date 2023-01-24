@@ -2,7 +2,7 @@
 //* Name				:   display_cal.h
 //* Vision				:	V-Nov07_12
 //* Project				:   All project
-//* Function			:   Solidic µç×Ó³Æ ÏÔ´æ¼ÆËãÎÄ¼þ
+//* Function			:   Solidic ï¿½ï¿½ï¿½Ó³ï¿½ ï¿½Ô´ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
 //* $Author				:   superc
 //*
 //* Copyright 2012 by solidic
@@ -27,7 +27,7 @@ sbit KEY_D0 = P0^1;
 sbit KEY_D1 = P0^0;	
 sbit KEY_D2 = P1^0;	
 sbit KEY_D3 = P1^1;	
-sbit KEY_D4 = P1^2;
+sbit KEY_D4 = P0^3;//P1^2;
 
 #define PRESS 1
 #define PRESSED 2
