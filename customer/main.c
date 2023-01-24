@@ -81,7 +81,7 @@ void main(void) {
 
     case ScaleRun:
       	// Lee teclado y ejecuta las acciones correspondientes 
-	  vScan_Key();
+	    vScan_Key();
       cRun_Scale();
       break;
 

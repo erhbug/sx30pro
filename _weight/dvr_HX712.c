@@ -3,9 +3,9 @@
 #include "./_scale/dvr_scale.h"
 
 unsigned long idata ADcode_pre=0;
-float fAverage_x = 0;
+float  xdata fAverage_x = 0;
 unsigned char iValueOut = 0;
-float arfDataFilter_x[FILTER_SIZE_BUFF] = {0.00};
+float xdata arfDataFilter_x[FILTER_SIZE_BUFF] = {0.00};
 //extern unsigned long idata ADcode_pre;
 //extern float arfDataFilter_x[];
 //extern float fAverage_x;
@@ -31,13 +31,13 @@ void ReadHX712(void){ //by ERH
 	    return ;
     }
     ADcode_pre=0;
-	for(i=0;i<24;i++)//24 bits de comunicación
+	for(i=0;i<24;i++)//24 bits de comunicaciï¿½n
 	{        
 		ADcode_pre<<=1;//Lectura en flanco negativo
 		sclk_unit();
 		if(MISO)ADcode_pre++;
 	}
-	//1 bit de configuración a 10Hz
+	//1 bit de configuraciï¿½n a 10Hz
     ADcode_pre >>= 7;
 	sclk_unit();
 
@@ -59,11 +59,11 @@ void ReadHX712(void){ //by ERH
 /*
 */
 float fFilter_Averaging(unsigned long iActualWeight, unsigned char cFastFill){	
-	float arfLowestToHighest[FILTER_SIZE_BUFF] = {0.00};
-    float fThreshold = stScaleParam.fFactorCalibrate*0.5;
-	float fData_Vector = 0;
+	float xdata arfLowestToHighest[FILTER_SIZE_BUFF] = {0.00};
+    float xdata fThreshold = stScaleParam.fFactorCalibrate*0.5;
+	float xdata fData_Vector = 0;
 	float *pfData_Filter;
-	float fActualWeight = (float)(iActualWeight);
+	float xdata fActualWeight = (float)(iActualWeight);
 	unsigned char iLenthData_x = FILTER_SIZE_BUFF;		// Longitud de los datos a ordenar, original 6, en prueba 10 
 	unsigned char i = 0; 	// Variable para ciclos iterativo 
     unsigned char j = 0;	// Variable para ciclos iterativo 		
@@ -125,6 +125,7 @@ float fFilter_Averaging(unsigned long iActualWeight, unsigned char cFastFill){
 
 /*
 */
+//Funcion para leer adc:
 float fRead_Adc(unsigned char cFillFilter){	
 	ReadHX712(); 		
 return fFilter_Averaging(ADcode_pre,cFillFilter);

@@ -92,95 +92,7 @@ if(Key==18)Key=KEY_6;
 if(Key==19)Key=KEY_3;
 if(Key==20)Key=KEY_PUNTO;
 
-/*
-switch(Key){
 
-	case 0:
-	Key = KEY_NULL;
-	break;
-
-	case 1:
-	Key = KEY_CERO;
-	break;
-
-	case 2:
-	Key = KEY_TARA;
-	break;
-
-	case 3:
-	Key = KEY_M1;
-	break;
-
-	case 4:
-	Key = KEY_RCL;
-	break;
-
-	case 5:
-	Key = KEY_CHG;
-	break;
-
-	case 6:
-	Key = KEY_MAS;
-	break;
-
-	case 7:
-	Key = KEY_M2;
-	break;
-
-	case 8:
-	Key = KEY_MEM;
-	break;
-
-	case 9:
-	Key = KEY_7;
-	break;
-
-	case 10:
-	Key = KEY_4;
-	break;
-
-	case 11:
-	Key = KEY_1;
-	break;
-
-	case 12:
-	Key = KEY_C;
-	break;
-
-	case 13:
-	Key = KEY_8;
-	break;
-
-	case 14:
-	Key = KEY_5;
-	break;
-
-	case 15:
-	Key = KEY_2;
-	break;
-
-	case 16:
-	Key = KEY_0;
-	break;
-
-	case 17:
-	Key = KEY_9;
-	break;
-
-	case 18:
-	Key = KEY_6;
-	break;
-
-	case 19:
-	Key = KEY_3;
-	break;
-
-	case 20:
-	Key = KEY_PUNTO;
-	break;
-}
-
-*/
 
   if (LastKey == 0 && Key != 0) {
     KeyState = PRESS; //se presiono
@@ -533,7 +445,7 @@ float vCapture_Valor_Test(unsigned char fNew_Digit, unsigned char cDecimal_Numbe
 void vCapture_Valor(float *pfValor, float fNew_Digit, int iNumber_Max_Digit, 
 			unsigned char cCounter_Decimal){
 	
-/*	float fValor_Comparacion = 0;
+	float xdata fValor_Comparacion = 0;
 	long int iPotencia;
 	long int i;
 	int iNumeros = 0;
@@ -578,5 +490,5 @@ void vCapture_Valor(float *pfValor, float fNew_Digit, int iNumber_Max_Digit,
 		*(pfValor) = 0;
 		srFlagScale.bDotDecimalPrice = 0;
 		stScaleParam.cNumberDecimalPrice = 0;
-	}*/
+	}
 }
