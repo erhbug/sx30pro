@@ -1,0 +1,10 @@
+#archivos a ignorar
+*.lst
+*.obj
+*.Bak
+*.lnp
+*.hex
+*.M51
+*.plg
+*.Opt
+solidic_proj
