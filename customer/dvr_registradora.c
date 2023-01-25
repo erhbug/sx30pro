@@ -24,7 +24,7 @@ void vCalcular_Cambio(void);
 
 /**
   ******************************************************************************
-  * Objetivo: Agregar articulos con peso al total de la venta. Visualiza último artículo y acumulado
+  * Objetivo: Agregar articulos con peso al total de la venta. Visualiza ï¿½ltimo artï¿½culo y acumulado
   * Parametros entrada: Ninguno.
 	* Parametros Salida: Ninguno.
   * Prerequisitos: 

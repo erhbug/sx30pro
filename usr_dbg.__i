@@ -1,0 +1,1 @@
+"customer\usr_dbg.c" LARGE OPTIMIZE (SIZE) BROWSE DEBUG OBJECTEXTEND PRINT(.\usr_dbg.lst) OBJECT(usr_dbg.obj)
