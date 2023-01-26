@@ -194,8 +194,9 @@ void vScan_Key(void){
 				case KEY_C:
 				
 					if(srFlagScale.bAdd_Articulos == 1)
-						
-				
+
+					LCD_GLASS_Clear();	
+					//LCD_GLASS_String("0",LCD_TOTAL);
 					srFlagScale.bMultiplicar_Producto = 0;
 					stScaleParam.iMultiplicador_Producto = 0;
 					stScaleParam.fPrice_Unit = 0;

@@ -557,6 +557,7 @@ if( f < 0 ){ sign=1; f*=-1;  }
 	} 
 
 
+  // txt[j++] = ' ';
    txt[j] = '\0';
 
    for (i = 0, j--; i < j; i++, j--)
@@ -575,41 +576,41 @@ if( f < 0 ){ sign=1; f*=-1;  }
 
 void LCD_GLASS_Float(float fNumber_To_LCD, unsigned char iNumber_Decimal, unsigned char cPosition_On_LCD) {
 unsigned char strText_LCD[10];
+memset(strText_LCD,' ',sizeof(strText_LCD));
   if (iNumber_Decimal == 0) {
     if (cPosition_On_LCD == LCD_TOTAL) {
-	  nFloatToStr(fNumber_To_LCD,5,0,strText_LCD);//
-	  //sprintf(strText_LCD, "%6.0f", fNumber_To_LCD);//ok
+	  //nFloatToStr(fNumber_To_LCD,5,0,strText_LCD);//
+	  sprintf(strText_LCD, "%6.0f", fNumber_To_LCD);//ok
     } else 
-      nFloatToStr(fNumber_To_LCD,4,0,strText_LCD);//
-	  //sprintf(strText_LCD, "%5.0f", fNumber_To_LCD);//ok
+     // nFloatToStr(fNumber_To_LCD,4,0,strText_LCD);//
+	  sprintf(strText_LCD, "%5.0f", fNumber_To_LCD);//ok
     
   }
   if (iNumber_Decimal == 1) {
     if (cPosition_On_LCD == LCD_TOTAL) {
-      nFloatToStr(fNumber_To_LCD,6,1,strText_LCD);////
-	  //sprintf(strText_LCD, "%7.1f", fNumber_To_LCD);//no ok   sprintf(strText_LCD, "FLOAT");//no ok
+      //nFloatToStr(fNumber_To_LCD,6,1,strText_LCD);////
+	  sprintf(strText_LCD, "%7.1f", fNumber_To_LCD);//no ok   sprintf(strText_LCD, "FLOAT");//no ok
     } else 
-      nFloatToStr(fNumber_To_LCD,5,1,strText_LCD);//
-	  //sprintf(strText_LCD, "%6.1f", fNumber_To_LCD);//ok
+      //nFloatToStr(fNumber_To_LCD,5,1,strText_LCD);//
+	  sprintf(strText_LCD, "%6.1f", fNumber_To_LCD);//ok
     
   }
   if (iNumber_Decimal == 2) {
     if (cPosition_On_LCD == LCD_TOTAL) {
-      nFloatToStr(fNumber_To_LCD,6,2,strText_LCD);//
-	  //sprintf(strText_LCD, "%7.2f", fNumber_To_LCD);//ok
+      //nFloatToStr(fNumber_To_LCD,6,2,strText_LCD);//
+	  sprintf(strText_LCD, "%7.2f", fNumber_To_LCD);//ok
     } else 
-      nFloatToStr(fNumber_To_LCD,5,2,strText_LCD);//
-	  //sprintf(strText_LCD, "%6.2f", fNumber_To_LCD);//ok
+      //nFloatToStr(fNumber_To_LCD,5,2,strText_LCD);//
+	  sprintf(strText_LCD, "%6.2f", fNumber_To_LCD);//ok
     
   }
   if (iNumber_Decimal == 3) {
     if (cPosition_On_LCD == LCD_TOTAL) {
-      nFloatToStr(fNumber_To_LCD,6,3,strText_LCD);//
-	  //sprintf(strText_LCD, "%7.3f", fNumber_To_LCD);//ok
+      //nFloatToStr(fNumber_To_LCD,6,3,strText_LCD);//
+	  sprintf(strText_LCD, "%7.3f", fNumber_To_LCD);//ok
     } else 
-      nFloatToStr(fNumber_To_LCD,5,3,strText_LCD);//
-	  //sprintf(strText_LCD, "%6.3f", fNumber_To_LCD);//ok
-    
+      //nFloatToStr(fNumber_To_LCD,5,3,strText_LCD);//
+	  sprintf(strText_LCD, "%6.3f", fNumber_To_LCD);//ok
   }
   LCD_GLASS_String(strText_LCD, cPosition_On_LCD);
 }
