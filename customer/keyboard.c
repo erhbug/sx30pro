@@ -18,7 +18,7 @@
 //**************************************************************************
 // -- ȫ��ͷ�ļ� ���й��� ---- ���汾�޸��ļ�����䶯 ---  �����޸� ����ļ�
 //**************************************************************************
-#include "./_solidic/head_file_version.h"//comentar
+#include "./_solidic/head_file_version.h"
 #include "./customer/keyboard.h"
 #include "./_scale/dvr_def.h"
 #include "./customer/beeper.h"
@@ -194,9 +194,8 @@ void vScan_Key(void){
 				case KEY_C:
 				
 					if(srFlagScale.bAdd_Articulos == 1)
-
-					LCD_GLASS_Clear();	
-					//LCD_GLASS_String("0",LCD_TOTAL);
+						
+				
 					srFlagScale.bMultiplicar_Producto = 0;
 					stScaleParam.iMultiplicador_Producto = 0;
 					stScaleParam.fPrice_Unit = 0;
@@ -414,10 +413,8 @@ void vActionMemoryPlu(unsigned char cIndexMemory){
 	*/
 float vCapture_Valor_Test(unsigned char fNew_Digit, unsigned char cDecimal_Number, 
 		float fValue_Capture){
-/*
 	
-	//long int iValue_Funct = 0;
-	long iValue_Funct = 0;
+/*	long int iValue_Funct = 0;
 	unsigned char *pText_Valor = cValue_Precio;
 	unsigned char i = 0;
 
@@ -438,8 +435,7 @@ float vCapture_Valor_Test(unsigned char fNew_Digit, unsigned char cDecimal_Numbe
 	//Hacer que los valores leídos en el teclado sean el precio del producto
 
 	return (float)(iValue_Funct);
-	
-*/
+	*/
 	return 0.0;
 }
 

@@ -7,8 +7,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <./RS232/RS232.h>
-
 unsigned int convertidorADC(void);
 void init_pwm(void);
 void wdt_init(void);
@@ -38,7 +36,6 @@ unsigned int iCounterZeroTracking = 0;
 
 
 
-
 void main(void) {
   enum ActionScale eAccionScale;
   wdt_init();
@@ -47,8 +44,6 @@ void main(void) {
   init_pwm();
   init_int_timer0();
   LCD_GLASS_Init();
-  SerialEnable();
-  serialTx("Hola mundo");
   eAccionScale = ScalePreOn; /* Inicia en el primer estado Off */
   while (1) {
    switch (eAccionScale) {
@@ -133,22 +128,20 @@ void gpio_init(void)
     P2 = 0x11;
 
     P0M0 = 0xF0; //0b11111111;
-    P0M1 = 0x00; //0b00000000;  
-
+    P0M1 = 0x00; //0b00000000;    
     P1M0 = 0xBF; //0b10111111;
-    P1M1 = 0x00; //0b00000000;   
-
+    P1M1 = 0x00; //0b00000000;        
     P2M0 = 0xEE; //0b11101110;
     P2M1 = 0x00; //0b00000000;
 
-	//d4 keyboard P0.3 d4salida
+	/*d4 keyboard P0.3 d4salida
     P0M0 |= 0x08; //0b11111111;
     P0M1 = 0x00; //0b00000000;  
 
 //config miso //p1.2 miso in
     P1M0 &= 0xFB; //0b11111011;
     P1M1 |= 0x00; //0b00000000;   
-
+*/
     MISO = 1;
     SCLK = 0;
 }

@@ -3,7 +3,7 @@
 
 #include <REG52.H>
 
-sbit MISO = P1^2;//P0^3;	
+sbit MISO = P0^3;	
 sbit SCLK = P0^4;	
 
 #define FILTER_SIZE_BUFF 10
