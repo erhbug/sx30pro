@@ -10,7 +10,7 @@
 #include "./customer/beeper.h"
 #include "./_battery/dvr_battery.h"
 #include "./customer/dvr_registradora.h"
-
+#include "./customer/usr_dbg.h"
 
 //extern bool KeyPressed;
 
@@ -18,32 +18,32 @@ code unsigned char cPASS_BORRAR_VT[3] = {KEY_C, KEY_C};
 //float fValor_Articulo_Sin_Peso = 0;
 
 
-void vFinalizar_Venta(void);
-void vCalcular_Cambio(void);
+//void vFinalizar_Venta(void);
+//void vCalcular_Cambio(void);
 
 
 /**
   ******************************************************************************
-  * Objetivo: Agregar articulos con peso al total de la venta. Visualiza �ltimo art�culo y acumulado
+  * Objetivo: Agregar articulos con peso al total de la venta. Visualiza ultimo articulo y acumulado
   * Parametros entrada: Ninguno.
 	* Parametros Salida: Ninguno.
   * Prerequisitos: 
   ******************************************************************************
   */
 void vAdd_Articulos(float fPrecio_Articulo){
-/*	
 	unsigned char cNumber_Articulos_Venta[6] = { 0 };
 	unsigned char bFlagShowLowBat = 0;
 	unsigned char bFlagShowInfo = 0;
 	unsigned char i = 0;
 
+	usr_dbg("AAA11",1000);
 	stScaleParam.fTotal_Venta_Articulos += fPrecio_Articulo;
 		
 	LCD_GLASS_Clear();
-	
-	while(stScaleParam.fWeightScale == 0 &&Key  == KEY_NULL){
-		
-		vGestorBateria();
+	usr_dbg("AAA",1000);
+	while(stScaleParam.fWeightScale == 0 &&Key  == KEY_NULL){	
+		usr_dbg("BBB",1000);
+		//vGestorBateria();
 		
 		sprintf(cNumber_Articulos_Venta, "%d", stScaleParam.iNumber_Articulos_Venta);
 				
@@ -54,7 +54,7 @@ void vAdd_Articulos(float fPrecio_Articulo){
 			}
 		}
 		
-		if(stScaleParam.cLenguage){
+		if(stScaleParam.cLenguage == ESPANOL){
 			LCD_GLASS_String("ART.  ", LCD_PESO);
 		}else{
 			LCD_GLASS_String("ITENN", LCD_PESO);
@@ -75,20 +75,22 @@ void vAdd_Articulos(float fPrecio_Articulo){
 	}
 	
 	if(stScaleParam.fWeightScale > 0){
+		usr_dbg("CCCC",1000);
 		if(fPrecio_Articulo > 0){
+			usr_dbg("DDD",1000);
 			stScaleParam.iNumber_Articulos_Venta++;
 		}
 	}
 		
-	while(stScaleParam.fWeightScale > 0 &&Key  == KEY_NULL){
-	
-		vGestorBateria();
+//	while(stScaleParam.fWeightScale > 0 &&Key  == KEY_NULL){
+		usr_dbg("EEEE",1000);
+//		vGestorBateria();
 		vCalculate_Weight();
-	
+		usr_dbg("ffff",1000);
 		if(bFlagShowInfo == 0){
 			bFlagShowInfo = 1;
-	
-			if(stScaleParam.cLenguage){
+			usr_dbg("1111",1000);
+			if(stScaleParam.cLenguage == ESPANOL){
 				LCD_GLASS_String("ART.  ", LCD_PESO);
 			}else{
 				LCD_GLASS_String("ITENN", LCD_PESO);
@@ -98,9 +100,10 @@ void vAdd_Articulos(float fPrecio_Articulo){
 				
 				LCD_GLASS_String("------", LCD_TOTAL);
 				stScaleParam.fTotal_Venta_Articulos -= fPrecio_Articulo;
-			}else{
-						
-				
+				delay_ms(9000);
+			}
+			else{
+
 				sprintf(cNumber_Articulos_Venta, "%d", stScaleParam.iNumber_Articulos_Venta);
 				
 				for(i=0; i<5; i++){
@@ -112,12 +115,11 @@ void vAdd_Articulos(float fPrecio_Articulo){
 				
 				LCD_GLASS_String(cNumber_Articulos_Venta, LCD_PRECIO);
 				LCD_GLASS_Float(stScaleParam.fTotal_Venta_Articulos, stScaleParam.cPuntoDecimalTotal, LCD_TOTAL);
-					
+				delay_ms(9000);	
 			}
 		}
-		
 	//	if(srFlagScale.bMsgBatteryLow == 0){
-
+		//usr_dbg("2222",5000);
 			key_scan();
 			
 			if(Key  != KEY_NULL){
@@ -142,7 +144,7 @@ void vAdd_Articulos(float fPrecio_Articulo){
 						srFlagScale.bPlsUnload_Enable = 1;
 						
 					}else{
-						if(stScaleParam.cLenguage){
+						if(stScaleParam.cLenguage == ESPANOL){
 							LCD_GLASS_String("ART.  ", LCD_PESO);
 						}else{
 							LCD_GLASS_String("ITENN", LCD_PESO);
@@ -163,16 +165,16 @@ void vAdd_Articulos(float fPrecio_Articulo){
 		
 
 			
-	}
+//	}
 	
 	if(Key  != KEY_NULL){
 		if((Key  >= KEY_0 && Key <= KEY_9) ||Key  == KEY_M1 ||Key  == KEY_M2){
 					srFlagScale.bFlagKeyNumber =Key ;
 		}
-	}	
-	//KeyPressed = TRUE; */
+	}//usr_dbg("9999A",5000);	
+	//KeyPressed = TRUE; 
 }
-
+//#################################################################################
 /**
   ******************************************************************************
   * Objetivo: Calcular el cambio de la venta
@@ -339,7 +341,7 @@ void vCalcular_Cambio(void){
 			if(bFlagShowInfo == 0){
 				bFlagShowInfo = 1;
 				
-				if(stScaleParam.cLenguage){
+				if(stScaleParam.cLenguage == ESPANOL){
 					LCD_GLASS_String("  CA. ", LCD_PRECIO);
 				}else{
 					LCD_GLASS_String("CHG", LCD_PRECIO);
@@ -421,7 +423,7 @@ void vCalcular_Cambio(void){
 		
 			vGestorBateria();
 			
-			if(stScaleParam.cLenguage){
+			if(stScaleParam.cLenguage == ESPANOL){
 				LCD_GLASS_String("  CA. ", LCD_PRECIO);
 			}else{
 				LCD_GLASS_String("CHG", LCD_PRECIO);
@@ -454,7 +456,7 @@ void vCalcular_Cambio(void){
   */
 void vFinalizar_Venta(void){
 	
-/*	stScaleParam.fTotal_Venta_Articulos = fRoundFloat(stScaleParam.fTotal_Venta_Articulos, 
+	stScaleParam.fTotal_Venta_Articulos = fRoundFloat(stScaleParam.fTotal_Venta_Articulos, 
 							stScaleParam.cPuntoDecimalTotal, stScaleParam.cValorRedondeoCifraTotal);
 							
 	stScaleParam.fVenta_Total_Scale += stScaleParam.fTotal_Venta_Articulos;
@@ -476,7 +478,7 @@ void vFinalizar_Venta(void){
 	
 	LCD_GLASS_Clear();
 	
-	if(stScaleParam.cLenguage){
+	if(stScaleParam.cLenguage == ESPANOL){
 		LCD_GLASS_String("ART  ", LCD_PESO);
 	}else{
 		LCD_GLASS_String("ITENN", LCD_PESO);
@@ -490,7 +492,7 @@ void vFinalizar_Venta(void){
 	
 	while(strTimer.iTimerE < 3000){
 		IWDG_KEY_REFRESH;
-	}*/
+	}
 }
 
 /**
@@ -502,17 +504,16 @@ void vFinalizar_Venta(void){
   ******************************************************************************
   */
 void vMostrar_Venta_Total(void){
-	
-/*
-	unsigned char cText_Venta_Total[13] = "           ";
-	unsigned char cText_Precio[6] = "     ";
-	unsigned char cText_Total[8] = "      ";
-	unsigned char cCode_Borrar_VT[3] = "  ";
+	/*
+	unsigned char xdata cText_Venta_Total[13] = "           ";
+	unsigned char xdata cText_Precio[6] = "     ";
+	unsigned char xdata cText_Total[8] = "      ";
+	unsigned char xdata cCode_Borrar_VT[3] = "  ";
 	int i;
 	
-	LCD_GLASS_Clear();
+	//LCD_GLASS_Clear();
 	
-	if(stScaleParam.cLenguage){
+	if(stScaleParam.cLenguage == ESPANOL){
 		LCD_GLASS_String("TOTAL", LCD_TOTAL);
 	}else{
 		LCD_GLASS_String("   TS", LCD_TOTAL);
