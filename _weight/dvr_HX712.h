@@ -6,9 +6,10 @@
 sbit MISO = P0^3;	
 sbit SCLK = P0^4;	
 
-#define FILTER_SIZE_BUFF 5
+#define FILTER_SIZE_BUFF 10
+#define FILTER_DEPRECIATE_SIZE 3
 
 float fRead_Adc(unsigned char cFillFilter);
 float fFilter_Averaging(unsigned long iActualWeight, unsigned char cFastFill);
-
+volatile void LowPassF(void);
 #endif
