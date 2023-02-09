@@ -11,13 +11,12 @@
 #include "./_battery/dvr_battery.h"
 #include "./customer/dvr_registradora.h"
 #include "./customer/usr_dbg.h"
-
 //extern bool KeyPressed;
 
 code unsigned char cPASS_BORRAR_VT[3] = {KEY_C, KEY_C};
 //float fValor_Articulo_Sin_Peso = 0;
 
-
+#define delaytimeMS 3000
 //void vFinalizar_Venta(void);
 //void vCalcular_Cambio(void);
 
@@ -36,13 +35,13 @@ void vAdd_Articulos(float fPrecio_Articulo){
 	unsigned char bFlagShowInfo = 0;
 	unsigned char i = 0;
 
-	usr_dbg("AAA11",1000);
+	//usr_dbg("AAA11",1000);
 	stScaleParam.fTotal_Venta_Articulos += fPrecio_Articulo;
 		
 	LCD_GLASS_Clear();
-	usr_dbg("AAA",1000);
+	//usr_dbg("AAA",1000);
 	while(stScaleParam.fWeightScale == 0 &&Key  == KEY_NULL){	
-		usr_dbg("BBB",1000);
+		//usr_dbg("BBB",1000);
 		//vGestorBateria();
 		
 		sprintf(cNumber_Articulos_Venta, "%d", stScaleParam.iNumber_Articulos_Venta);
@@ -62,7 +61,13 @@ void vAdd_Articulos(float fPrecio_Articulo){
 		
 		LCD_GLASS_String(cNumber_Articulos_Venta, LCD_PRECIO);
 		LCD_GLASS_Float(stScaleParam.fTotal_Venta_Articulos, stScaleParam.cPuntoDecimalTotal, LCD_TOTAL);
-		key_scan();
+		strTimer.iTimerE= 1;
+	
+		while(strTimer.iTimerE < delaytimeMS){
+			key_scan();
+			//IWDG_KEY_REFRESH;
+			strTimer.iTimerE++;
+		}
 		
 		if(Key  != KEY_NULL){
 			vBeep_Key();
@@ -75,21 +80,21 @@ void vAdd_Articulos(float fPrecio_Articulo){
 	}
 	
 	if(stScaleParam.fWeightScale > 0){
-		usr_dbg("CCCC",1000);
+		//usr_dbg("CCCC",1000);
 		if(fPrecio_Articulo > 0){
-			usr_dbg("DDD",1000);
+			//usr_dbg("DDD",1000);
 			stScaleParam.iNumber_Articulos_Venta++;
 		}
 	}
 		
 //	while(stScaleParam.fWeightScale > 0 &&Key  == KEY_NULL){
-		usr_dbg("EEEE",1000);
+		//usr_dbg("EEEE",1000);
 //		vGestorBateria();
 		vCalculate_Weight();
-		usr_dbg("ffff",1000);
+		//usr_dbg("ffff",1000);
 		if(bFlagShowInfo == 0){
 			bFlagShowInfo = 1;
-			usr_dbg("1111",1000);
+			//usr_dbg("1111",1000);
 			if(stScaleParam.cLenguage == ESPANOL){
 				LCD_GLASS_String("ART.  ", LCD_PESO);
 			}else{
@@ -100,7 +105,14 @@ void vAdd_Articulos(float fPrecio_Articulo){
 				
 				LCD_GLASS_String("------", LCD_TOTAL);
 				stScaleParam.fTotal_Venta_Articulos -= fPrecio_Articulo;
-				delay_ms(9000);
+	
+				strTimer.iTimerE= 1;
+	
+				while(strTimer.iTimerE < delaytimeMS){
+					key_scan();
+					//IWDG_KEY_REFRESH;
+					strTimer.iTimerE++;
+				}
 			}
 			else{
 
@@ -115,7 +127,14 @@ void vAdd_Articulos(float fPrecio_Articulo){
 				
 				LCD_GLASS_String(cNumber_Articulos_Venta, LCD_PRECIO);
 				LCD_GLASS_Float(stScaleParam.fTotal_Venta_Articulos, stScaleParam.cPuntoDecimalTotal, LCD_TOTAL);
-				delay_ms(9000);	
+				//delay_ms(9000);
+				strTimer.iTimerE= 1;
+	
+				while(strTimer.iTimerE < delaytimeMS){
+					key_scan();
+					//IWDG_KEY_REFRESH;
+					strTimer.iTimerE++;
+				}	
 			}
 		}
 	//	if(srFlagScale.bMsgBatteryLow == 0){
