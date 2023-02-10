@@ -16,7 +16,7 @@
 code unsigned char cPASS_BORRAR_VT[3] = {KEY_C, KEY_C};
 //float fValor_Articulo_Sin_Peso = 0;
 
-#define delaytimeMS 3000
+#define delaytimeMS 8000
 //void vFinalizar_Venta(void);
 //void vCalcular_Cambio(void);
 
@@ -40,8 +40,8 @@ void vAdd_Articulos(float fPrecio_Articulo){
 		
 	LCD_GLASS_Clear();
 	//usr_dbg("AAA",1000);
-	while(stScaleParam.fWeightScale == 0 &&Key  == KEY_NULL){	
-		//usr_dbg("BBB",1000);
+	while(stScaleParam.fWeightScale == 0 && Key == KEY_NULL){	
+		usr_dbg("AABB",1000);
 		//vGestorBateria();
 		
 		sprintf(cNumber_Articulos_Venta, "%d", stScaleParam.iNumber_Articulos_Venta);
@@ -79,22 +79,56 @@ void vAdd_Articulos(float fPrecio_Articulo){
 		}
 	}
 	
-	if(stScaleParam.fWeightScale > 0){
+	if(stScaleParam.fWeightScale > 0){ //si la escala de peso es mayor que 0
 		//usr_dbg("CCCC",1000);
-		if(fPrecio_Articulo > 0){
-			//usr_dbg("DDD",1000);
+		if(fPrecio_Articulo > 0){ // si el precio es mayor a 0
+			usr_dbg("BBBB",1000);
 			stScaleParam.iNumber_Articulos_Venta++;
 		}
 	}
+	if(stScaleParam.fWeightScale == 0){
+		if(fPrecio_Articulo > 0){ // si el precio es igual a 0 sumar producto sin peso
+			//usr_dbg("DDD4",1000);
+			stScaleParam.iNumber_Articulos_Venta++;
+		}
+	}
+
+	if(srFlagScale.bAdd_Producto_Sin_Peso == 1){
+				//vCalculate_Weight();
+				//usr_dbg("DD44",4000);
+				if(stScaleParam.fWeightScale >= 4*(float)stScaleParam.iDivisionMinima/1000 || 
+					stScaleParam.fWeightScale <= -4*(float)stScaleParam.iDivisionMinima/1000){
+						LCD_GLASS_Symbols(SYMBOL_ALL, 0);
+						LCD_GLASS_String("  PLS", LCD_PESO);
+						LCD_GLASS_String("UNLOAD", LCD_TOTAL);
+						LCD_GLASS_String("     ", LCD_PRECIO);
+						srFlagScale.bPlsUnload_Enable = 1;
+						
+					}else{
+						if(stScaleParam.cLenguage == ESPANOL){
+							LCD_GLASS_String("ART.  ", LCD_PESO);
+						}else{
+							LCD_GLASS_String("ITENN", LCD_PESO);
+						}
+						LCD_GLASS_String(cNumber_Articulos_Venta, LCD_PRECIO);
+						LCD_GLASS_Float(stScaleParam.fTotal_Venta_Articulos, stScaleParam.cPuntoDecimalTotal, LCD_TOTAL);
+						srFlagScale.bPlsUnload_Enable = 0;
+					}	
+			}else{
+				if(bFlagShowLowBat == 1){
+					bFlagShowLowBat = 0;
+					bFlagShowInfo = 0;
+				}
+			}
 		
 //	while(stScaleParam.fWeightScale > 0 &&Key  == KEY_NULL){
 		//usr_dbg("EEEE",1000);
 //		vGestorBateria();
 		vCalculate_Weight();
 		//usr_dbg("ffff",1000);
-		if(bFlagShowInfo == 0){
+		if(bFlagShowInfo == 0){//muestra el valor
 			bFlagShowInfo = 1;
-			//usr_dbg("1111",1000);
+			//usr_dbg("1111",4000);
 			if(stScaleParam.cLenguage == ESPANOL){
 				LCD_GLASS_String("ART.  ", LCD_PESO);
 			}else{
@@ -148,36 +182,23 @@ void vAdd_Articulos(float fPrecio_Articulo){
 			
 		
 			if (Key  == KEY_CHG){ //Si se oprime CHG para calcular cambio
+				strTimer.iTimerE= 1;
+	
+				while(strTimer.iTimerE < delaytimeMS){
+					key_scan();
+					if(Key == KEY_CHG){
+						stScaleParam.iNumber_Articulos_Venta = 0;
+						stScaleParam.fTotal_Venta_Articulos = 0;
+						break;
+					}
+					//IWDG_KEY_REFRESH;
+					strTimer.iTimerE++;
+				}	
 				vCalcular_Cambio();
 			}
 			
 			
-			if(srFlagScale.bAdd_Producto_Sin_Peso == 1){
-				vCalculate_Weight();
-				if(stScaleParam.fWeightScale >= 4*(float)stScaleParam.iDivisionMinima/1000 || 
-					stScaleParam.fWeightScale <= -4*(float)stScaleParam.iDivisionMinima/1000){
-						LCD_GLASS_Symbols(SYMBOL_ALL, 0);
-						LCD_GLASS_String("  PLS", LCD_PESO);
-						LCD_GLASS_String("UNLOAD", LCD_TOTAL);
-						LCD_GLASS_String("     ", LCD_PRECIO);
-						srFlagScale.bPlsUnload_Enable = 1;
-						
-					}else{
-						if(stScaleParam.cLenguage == ESPANOL){
-							LCD_GLASS_String("ART.  ", LCD_PESO);
-						}else{
-							LCD_GLASS_String("ITENN", LCD_PESO);
-						}
-						LCD_GLASS_String(cNumber_Articulos_Venta, LCD_PRECIO);
-						LCD_GLASS_Float(stScaleParam.fTotal_Venta_Articulos, stScaleParam.cPuntoDecimalTotal, LCD_TOTAL);
-						srFlagScale.bPlsUnload_Enable = 0;
-					}	
-			}else{
-				if(bFlagShowLowBat == 1){
-					bFlagShowLowBat = 0;
-					bFlagShowInfo = 0;
-				}
-			}
+			
 		//}else{
 		//	bFlagShowLowBat = 1;
 	//	}
@@ -193,6 +214,20 @@ void vAdd_Articulos(float fPrecio_Articulo){
 	}//usr_dbg("9999A",5000);	
 	//KeyPressed = TRUE; 
 }
+
+
+	
+/* 
+	if(Key  != KEY_NULL){
+		if((Key  >= KEY_0 && Key <= KEY_9) ||Key  == KEY_M1 ||Key  == KEY_M2){
+					srFlagScale.bFlagKeyNumber =Key ;
+		}
+	}//usr_dbg("9999A",5000);	
+	//KeyPressed = TRUE; */
+
+
+//fin de función 
+
 //#################################################################################
 /**
   ******************************************************************************

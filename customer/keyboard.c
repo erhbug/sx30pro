@@ -48,6 +48,7 @@ volatile void delay_ms(unsigned int num)
 
 }
 
+
 void key_scan(void) {
   unsigned char k = 0;
   Key = 0;
@@ -282,9 +283,9 @@ void vScan_Key(void){
 					break;
 	*/			
 				case KEY_MAS:
-			
+					
 					if(srFlagScale.bFlagWeightNeg == 0 && (stScaleParam.fTotal_Venta > 0 || stScaleParam.cFormatoImpresion == 2)){
-						
+						if(stScaleParam.fWeightScale==0){srFlagScale.bAdd_Producto_Sin_Peso = 1;}
 						fWeightScale = fStablePoint(1, 0, 1);
 
 						if(srFlagScale.bTara == 1)
@@ -305,7 +306,7 @@ void vScan_Key(void){
 						else
 							break;
 						
-						if(srFlagScale.bAdd_Producto_Sin_Peso){
+						if(srFlagScale.bAdd_Producto_Sin_Peso==1){
 							vAdd_Articulos(stScaleParam.fPrice_Unit);
 						}else{
 							vAdd_Articulos(stScaleParam.fTotal_Venta);
@@ -329,7 +330,10 @@ void vScan_Key(void){
 						} 
 						
 					}
-					
+					/*
+					condiciones para llamar a la funcion venta total:
+					peso, precio y total = 0
+					*/
 					break;
 					
 				/* Si la tecla presiona fue cambio inicia el proceso de calcular el cambio 
@@ -411,10 +415,11 @@ void vActionMemoryPlu(unsigned char cIndexMemory){
   * Prerequisitos: 
   ***
 	*/
+/*
 float vCapture_Valor_Test(unsigned char fNew_Digit, unsigned char cDecimal_Number, 
 		float fValue_Capture){
 	
-/*	long int iValue_Funct = 0;
+	long int iValue_Funct = 0;
 	unsigned char *pText_Valor = cValue_Precio;
 	unsigned char i = 0;
 
@@ -435,10 +440,10 @@ float vCapture_Valor_Test(unsigned char fNew_Digit, unsigned char cDecimal_Numbe
 	//Hacer que los valores leídos en el teclado sean el precio del producto
 
 	return (float)(iValue_Funct);
-	*/
+	
 	return 0.0;
 }
-
+*/
 
 /**
   ******************************************************************************
