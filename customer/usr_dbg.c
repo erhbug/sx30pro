@@ -21,6 +21,7 @@
 #include "./_solidic/head_file_version.h"//comentar
 #include "./customer/usr_dbg.h"
 #include "./_scale/dvr_def.h"
+#include "./_scale/dvr_scale.h"
 #include "./customer/beeper.h"
 #include "./customer/dvr_plu.h"
 #include "./customer/dvr_registradora.h"
@@ -31,6 +32,13 @@
 void usr_dbg(char *txt, unsigned int Time){
 	#ifdef USR_DBG
 	LCD_GLASS_String(txt, LCD_TOTAL); 
-	delay_ms(Time);
+
+	strTimer.iTimerDBG=1;
+	while (strTimer.iTimerDBG<Time)
+	{
+		IWDG_KEY_REFRESH; 
+	}strTimer.iTimerDBG=0;
+	
+	//delay_ms(Time);
 	#endif
 }
