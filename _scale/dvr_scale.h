@@ -215,6 +215,7 @@ typedef struct {
 	unsigned char iTimerA;//200mS
 	unsigned int iTimerE;					//5
 	unsigned int iTimerJ;							//  1s
+	unsigned int iTimerDBG;
 }strTimers;
 extern idata strTimers strTimer;
 
