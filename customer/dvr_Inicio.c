@@ -62,7 +62,7 @@ unsigned int TimeEnd=2000;
 		key_scan();
 
 		/* La tecla pulsada se almacena en el vector de pass de configuracion */
-		if( Key != KEY_NULL && KeyState==PRESS ){
+		if( Key != KEY_NULL  ){
 			strTimer.iTimerE=1;		/* Reinicia el contador para permitir
 																		/* escribir todo el codigo */
 			/* Solo permite 7 digitos para el codigo */

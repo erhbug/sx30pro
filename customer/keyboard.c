@@ -94,19 +94,24 @@ if(Key==19)Key=KEY_3;
 if(Key==20)Key=KEY_PUNTO;
 
 
-
+  
   if (LastKey == 0 && Key != 0) {
     KeyState = PRESS; //se presiono
-    for (k = 0; k < 10; k++);//peque�o delay
+	LastKey = Key;
+    for (k = 0; k < 15; k++);//peque�o delay
   } else if (LastKey == Key && Key != 0) {
     KeyState = PRESSED; //se mantiene presionado
+	LastKey = Key;
+	Key=0;
   } else if (LastKey != 0 && Key == 0) {
     KeyState = RELEASE; //se solto
-	for (k = 0; k < 10; k++);//peque�o delay
+	LastKey = Key;
+	Key=0;
+	for (k = 0; k < 15; k++);//peque�o delay
   } else if (LastKey == 0 && Key == 0) {
     KeyState = 0; //no se ha presionado una tecla	
   }
-  LastKey = Key;
+  
   if(Key!=0&&KeyState == PRESS)vBeep_Key();
   IWDG_KEY_REFRESH;
 }
@@ -122,7 +127,7 @@ void vScan_Key(void){
 
 	Key_Press_Operation:
 	
-	if( Key != KEY_NULL && KeyState==PRESS ){
+	if( Key != KEY_NULL ){
 		
 					
 		/* Verifica si el peso es positivo */
@@ -285,7 +290,9 @@ void vScan_Key(void){
 				case KEY_MAS:
 					
 					if(srFlagScale.bFlagWeightNeg == 0 && (stScaleParam.fTotal_Venta > 0 || stScaleParam.cFormatoImpresion == 2)){
+						//pone en uno la bandera de producto sin peso para poder sumar 
 						if(stScaleParam.fWeightScale==0){srFlagScale.bAdd_Producto_Sin_Peso = 1;}
+						
 						fWeightScale = fStablePoint(1, 0, 1);
 
 						if(srFlagScale.bTara == 1)
