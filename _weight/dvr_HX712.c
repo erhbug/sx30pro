@@ -155,7 +155,7 @@ float fRead_Adc(unsigned char cFillFilter){
 }
 
 /*
-Funci�n para filtrar las muestras del adc. 
+Funcion para filtrar las muestras del adc. 
 donde Yn es el dato filtrado y alfa el factor del filtro
 dato1 corresponde a Y(n-1) y dato2 corresponde a Xn
 */
