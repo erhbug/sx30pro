@@ -98,6 +98,7 @@ void vAdd_Articulos(float fPrecio_Articulo){
 		}else{
 			LCD_GLASS_String("ITENN", LCD_PESO);
 		}
+		sprintf(cNumber_Articulos_Venta, "%d", stScaleParam.iNumber_Articulos_Venta);
 		LCD_GLASS_String(cNumber_Articulos_Venta, LCD_PRECIO);
 		LCD_GLASS_Float(stScaleParam.fTotal_Venta_Articulos, stScaleParam.cPuntoDecimalTotal, LCD_TOTAL);
 		srFlagScale.bPlsUnload_Enable = 0;
