@@ -45,6 +45,7 @@ void main(void) {
   init_int_timer0();
   LCD_GLASS_Init();
   eAccionScale = ScalePreOn; /* Inicia en el primer estado Off */
+  //while(1){ReadHX712();}
   while (1) {
    switch (eAccionScale) {
     case ScalePreOn:
@@ -52,7 +53,7 @@ void main(void) {
       memset( & srFlagScale, 0x00, sizeof(srFlagScale));
       memset( & stScaleParam, 0x00, sizeof(stScaleParam));
       vReadParamScale(); // Inicia los parametros de la Bascula					
-    LCD_GLASS_Clear();
+      LCD_GLASS_Clear();
       LCD_GLASS_String("-----", LCD_PESO);
       LCD_GLASS_String("-----", LCD_PRECIO);
       LCD_GLASS_String("------", LCD_TOTAL); 
@@ -76,7 +77,7 @@ void main(void) {
 
     case ScaleRun:
       	// Lee teclado y ejecuta las acciones correspondientes 
-	    vScan_Key();
+	  vScan_Key();
       cRun_Scale();
       break;
 
@@ -95,17 +96,17 @@ void init_pwm(void){
     P1M1 &= ~(1<<5);
 
     PWMF_H  = 0x00;
-	  PWMF_L  = 0xA0;
-	  PWM0  	= 0X6C;//BEEPER correcto 0x6c
-	  PWM1  	= 0X50;
-	  PWMCON  = 0x04;	//PWM0-P1.4(LCD_LAMP)????(?PWM0=0xff?,?????)	
+	PWMF_L  = 0xA0;
+	PWM0  	= 0X6C;//BEEPER correcto 0x6c
+	PWM1  	= 0X50;
+	PWMCON  = 0x04;	//PWM0-P1.4(LCD_LAMP)????(?PWM0=0xff?,?????)	
 }
 
 void wdt_init(void){// watch dog ///
     EA = 0;
     WD_TA = 0x05;
-	  WD_TA = 0x0a;
-	  WDCON = 0x1f; /// 4s?,0.2s ///
+	WD_TA = 0x0a;
+	WDCON = 0x1f; /// 4s?,0.2s ///
     EA = 1;
 	IWDG_KEY_REFRESH;
 }
@@ -198,6 +199,10 @@ static void timer0(void) interrupt 1
 
 	if(strTimer.iTimerE>0 )
 	strTimer.iTimerE++;
+
+	if(strTimer.iTimerDBG>0 )
+	strTimer.iTimerDBG++;
+
 
 	//P0 ^= (1<<1);//P1 ^= (1<<5);
 	TL0 = 0xCF;

@@ -416,7 +416,7 @@ void cOnOffModeTara(float fWeightTara){
 					stScaleParam.fValueTara = 0;
 					srFlagScale.bTara = 0;
 					stScaleParam.fPointZero = stScaleParam.fWeightScaleCount;
-					fFilter_Averaging(fWeightZero, 1); 	//Ingresa el dato al filtro 
+					fFilter_Averaging(fWeightZero,5); 	//Ingresa el dato al filtro 
 				}
 			}
 		}
@@ -502,7 +502,7 @@ void vCalibrate_Scale(void){
               Key=0;while(Key!= KEY_C)key_scan();
 
               /* Solicita la referencia de zero */
-              stScaleParam.fPointZeroCali = fStablePoint(5, 1, 0);
+              stScaleParam.fPointZeroCali =4384;// fStablePoint(5, 1, 0);
               
               fAuxCountAdcInicial = stScaleParam.fPointZeroCali;
 
@@ -514,7 +514,7 @@ void vCalibrate_Scale(void){
  /* Espera a que se oprima 'C' para continuar */
               Key=0;while(Key!= KEY_C)key_scan();
 			  delay_ms(1000);
-              stScaleParam.fCapacityCali = fStablePoint(5, 1, 0);              
+              stScaleParam.fCapacityCali =104962;// fStablePoint(5, 1, 0);              
               fAuxCountAdcFinal = stScaleParam.fCapacityCali;
               
               fAuxCountDif = (fAuxCountAdcFinal - fAuxCountAdcInicial);
@@ -527,7 +527,8 @@ void vCalibrate_Scale(void){
               fAux_Value *= pow(10,(int)stScaleParam.cWeightDecimal);
               fAux_Value = (float)(fAux_Value)/(float)(stScaleParam.iDivisionMinima);
               stScaleParam.fFactorCalibrate /= fAux_Value;
-              
+			  //############Borrar, solo utilizado en pruebas, no en codigo final
+              stScaleParam.fFactorCalibrate = stScaleParam.fFactorCalibrate*2;
               if(stScaleParam.fCapacityCali < 0){
                             stScaleParam.fCapacityCali *= (-1);
               }
@@ -847,6 +848,7 @@ void vWeight_Positive(void){
 		
 		// Despliega el peso registrado
 		LCD_GLASS_Float(stScaleParam.fWeightScale, stScaleParam.cWeightDecimal, LCD_PESO);
+		//Despliega el valor de lectura del adc en Precio:
 					
 		// Verifica si la opcion fijar precio no esta activada
 		if(!srFlagScale.bFlagFijarPRecio){
@@ -951,8 +953,9 @@ si no hay precio fijo realiza solo una lectura de forma natural.
 		fRead_Adc(1);
 		fRead_Adc(1);			
 	}
-   fWeightScale = fRead_Adc(1);
-
+   	fWeightScale = fRead_Adc(1);
+	//LCD_GLASS_Float(fWeightScale,0, LCD_TOTAL);
+	
 /*	if( srFlagScale.bErrorReadAdc == 1)	{
 		LCD_GLASS_String(" -E- ", LCD_PESO);
 		return;

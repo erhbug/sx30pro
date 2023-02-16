@@ -149,7 +149,7 @@ void vScan_Key(void){
 							
 							if(iIndex_Address_Plus == 2){
 								stScaleParam.fPrice_Unit = fFuncionPlus((int)(stScaleParam.fAddress_Plus), 
-									srFlagScale.bReadPlus, srFlagScale.bWritePlus, stScaleParam.fPrice_Unit, stScaleParam.cNumberDecimalPrice);
+										srFlagScale.bReadPlus, srFlagScale.bWritePlus, stScaleParam.fPrice_Unit, stScaleParam.cNumberDecimalPrice);
 								iIndex_Address_Plus = 0;
 								srFlagScale.bWritePlus = 0;
 								srFlagScale.bReadPlus = 0;
@@ -200,8 +200,7 @@ void vScan_Key(void){
 				case KEY_C:
 				
 					if(srFlagScale.bAdd_Articulos == 1)
-						
-				
+
 					srFlagScale.bMultiplicar_Producto = 0;
 					stScaleParam.iMultiplicador_Producto = 0;
 					stScaleParam.fPrice_Unit = 0;
@@ -211,7 +210,7 @@ void vScan_Key(void){
 					srFlagScale.bAdd_Articulos = 0;
 					srFlagScale.bArticulosTotalCero = 0;
 					
-					vBeep_Key();
+					
 					
 					break;
 				
@@ -237,7 +236,6 @@ void vScan_Key(void){
 						break;
 					
 				case KEY_MEM:
-					//CCC srFlagScale.bBL_Lpcr = 1;
 					srFlagScale.bWritePlus = 1;
 					iIndex_Address_Plus = 0;
 					stScaleParam.fAddress_Plus = 0;
@@ -268,25 +266,7 @@ void vScan_Key(void){
 				case KEY_M2:
 					vActionMemoryPlu(2);
 					break;
-	
-	/*			case KEY_M3:
-					vActionMemoryPlu(3);
-					break;
-		
-				case KEY_M4:
-					vActionMemoryPlu(4);
-					break;
-					
-				case KEY_FOCO:
-					if(srFlagScale.bBacklight_On){
-						OffBackLight;
-					}else{
-						if(srFlagScale.bBateriaLow == 0){
-						if(stScaleParam.cBacklight){OnBackLight;}
-						}
-					}
-					break;
-	*/			
+				
 				case KEY_MAS:
 					
 					if(srFlagScale.bFlagWeightNeg == 0 && (stScaleParam.fTotal_Venta > 0 || stScaleParam.cFormatoImpresion == 2)){
@@ -337,10 +317,10 @@ void vScan_Key(void){
 						} 
 						
 					}
-					/*
-					condiciones para llamar a la funcion venta total:
-					peso, precio y total = 0
-					*/
+					
+					// condiciones para llamar a la funcion venta total:
+					// peso, precio y total = 0
+					
 					break;
 					
 				/* Si la tecla presiona fue cambio inicia el proceso de calcular el cambio 
@@ -406,7 +386,7 @@ void vActionMemoryPlu(unsigned char cIndexMemory){
 	}
 			
 	stScaleParam.fPrice_Unit = fFuncionPlus((int)(cIndexMemory), 
-		srFlagScale.bReadPlus, srFlagScale.bWritePlus, stScaleParam.fPrice_Unit, stScaleParam.cNumberDecimalPrice);
+	srFlagScale.bReadPlus, srFlagScale.bWritePlus, stScaleParam.fPrice_Unit, stScaleParam.cNumberDecimalPrice);
 	
 	iIndex_Address_Plus = 0;
 	srFlagScale.bWritePlus = 0;
