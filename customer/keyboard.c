@@ -317,6 +317,10 @@ void vScan_Key(void){
 						} 
 						
 					}
+<<<<<<< HEAD
+=======
+					
+>>>>>>> 81e48a19e2833b392d4f707a4c0670db116e82b9
 					// condiciones para llamar a la funcion venta total:
 					// peso, precio y total = 0
 					
