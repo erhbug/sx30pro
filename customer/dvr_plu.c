@@ -37,83 +37,74 @@
 float fFuncionPlus(int fAddress_Plus, unsigned char cReadPlus, 
 	unsigned char cWritePlus, float fPrice_Save, unsigned char cDecimalDot){
 	
-	float fDataRrta;
-
-	if(fAddress_Plus >=0 && fAddress_Plus < 100){
-	//usr_dbg("AAAAA",Delay_tmr);
+	float fData_rta;
+	unsigned long ULData_rta;
+	
+	if(fAddress_Plus > -1 && fAddress_Plus < 100){
+		
 		//while(!strTimer.iTimerA < TimerAend);
-
+		
 		if(cReadPlus){
-
-		//usr_dbg("BBBBB",Delay_tmr);
 			
-			//fData_rta = fReadFloatEeprom((int)(ADDRES_START_PLUS + (fAddress_Plus*5)));//falla
-			fDataRrta = flash_read_float32((int)(ADDRES_START_PLUS + (fAddress_Plus*5)));
-			//LCD_GLASS_Float(fDataRrta,3,LCD_PRECIO); 
-
-			//if(fDataRrta==0.0)fDataRrta=(float)((int)0);
+			//fData_rta = fReadFloatEeprom((int)(ADDRES_START_PLUS + (fAddress_Plus*5)));
 			
-			if(fDataRrta!=0.0){ //R >= 0.0 && fData_rta <= 99999.0){
+
+			ULData_rta = flash_read_u32((int)(ADDRES_START_PLUS + (fAddress_Plus*5)));
+			if (ULData_rta==0XFFFFFFFF)
+			{vEepromInit(ENABLE);					
+				flash_write_float32((int)(ADDRES_START_PLUS + (fAddress_Plus*5)), 0);
+				flash_write_u8((int)(ADDRES_START_PLUS + (fAddress_Plus*5) + 4), 0);
+				stScaleParam.cNumberDecimalPrice = 0;
+				fData_rta = 0;
+				vEepromInit(DISABLE);	
+			}
+
+			fData_rta = flash_read_float32((int)(ADDRES_START_PLUS + (fAddress_Plus*5)));	
+			
+			if(fData_rta < 0 || fData_rta > 99999){
 				
-				//usr_dbg("DDDDD",Delay_tmr);
-				LCD_GLASS_Float(fDataRrta,3,LCD_PRECIO);
-				stScaleParam.cNumberDecimalPrice = flash_read_u8((int)(ADDRES_START_PLUS + (fAddress_Plus*5) + 4));
-							
-			}else{
-				usr_dbg("CCC",Delay_tmr);
 				//Existe un error en la memoria y se resetea al valor a 0
 				vEepromInit(ENABLE);					
 				flash_write_float32((int)(ADDRES_START_PLUS + (fAddress_Plus*5)), 0);
 				flash_write_u8((int)(ADDRES_START_PLUS + (fAddress_Plus*5) + 4), 0);
 				stScaleParam.cNumberDecimalPrice = 0;
-				fDataRrta = 0;
-				vEepromInit(DISABLE);	
-				}
+				fData_rta = 0;
+				vEepromInit(DISABLE);					
+			}else{
+				stScaleParam.cNumberDecimalPrice = flash_read_u8((int)(ADDRES_START_PLUS + (fAddress_Plus*5) + 4));
+			}
 			
 			if(stScaleParam.cNumberDecimalPrice > 0){
-			usr_dbg("EEEEE",Delay_tmr);
 				srFlagScale.bDotDecimalPrice = 1;
 			}else{
-			usr_dbg("FFFFF",Delay_tmr);
 				srFlagScale.bDotDecimalPrice = 0;
 			}
-			usr_dbg("GGGGG",Delay_tmr);
-			return fDataRrta;
+			
+			return fData_rta;
 			
 		}else if(cWritePlus){
-			usr_dbg("HHHHH",Delay_tmr);
 			vEepromInit(ENABLE);					// Habilita la escritura/lectura en la EEPROM 
 			
 			if(fPrice_Save <= 99999 && cDecimalDot <= 3){
-
-			usr_dbg("11111",Delay_tmr);
 				flash_write_float32((int)(ADDRES_START_PLUS + (fAddress_Plus*5)), fPrice_Save);
-
 				
 				if(stScaleParam.cPuntoDecimalPrecio > 2){
-				usr_dbg("22222",Delay_tmr);
 					flash_write_u8((int)(ADDRES_START_PLUS + (fAddress_Plus*5) + 4), cDecimalDot);
 				}else{
-				usr_dbg("33333",Delay_tmr);
 					flash_write_u8((int)(ADDRES_START_PLUS + (fAddress_Plus*5) + 4), stScaleParam.cPuntoDecimalPrecio);
 				}
-	          usr_dbg("44444",Delay_tmr);		
+			
 				vSound_Saved_Param();
 			}else{
-
-			usr_dbg("55555",Delay_tmr);
 				fPrice_Save = 0;
 			}
 			
-			usr_dbg("66666",Delay_tmr);
 			vEepromInit(DISABLE);
 			
 			return fPrice_Save;
 			
 		}
-		usr_dbg("77777",Delay_tmr);
 	}
-	usr_dbg("--OK--",Delay_tmr);
 	return fPrice_Save;
 }
 
@@ -126,17 +117,17 @@ float fFuncionPlus(int fAddress_Plus, unsigned char cReadPlus,
   */
 void vErase_All_Address_Plus(void){
 	
-/*	int i = 0;
-	
-	while(!strTimer.iTimerA < TimerAend);
+	int i = 0;
+	//strTimer.iTimerA = 1;
+	//while(strTimer.iTimerA < TimerAend);
 	
 	vEepromInit(ENABLE);					// Habilita la escritura/lectura en la EEPROM 
-	
+	LCD_GLASS_String("FORMAT", LCD_TOTAL);
 	for(i=0; i<100; i++){
 		flash_write_float32((int)(ADDRES_START_PLUS + (i*5)), 0);
 		flash_write_u8((int)(ADDRES_START_PLUS + (i*5) + 4), 0);
-		LCD_GLASS_Float(i, 0, LCD_TOTAL);
+		//LCD_GLASS_Float(i, 0, LCD_TOTAL);
 	}
 	
-	vEepromInit(DISABLE);	*/
+	vEepromInit(DISABLE);	
 }
