@@ -347,7 +347,7 @@ void vCalcular_Cambio(void){
 		
 		}
 		
-		if(Key != KEY_C ){
+		if(Key == KEY_CHG ){
 			vFinalizar_Venta();
 		}
 		
@@ -463,6 +463,7 @@ void vMostrar_Venta_Total(void){
 		else if(Key != KEY_NULL){
 			break;
 			}
+		strTimer.iTimerE++;
 	}
 		
 	if(Key  == KEY_C ){
@@ -471,10 +472,13 @@ void vMostrar_Venta_Total(void){
 			LCD_GLASS_String("RESET", LCD_PESO);
 			LCD_GLASS_String("TOTAL", LCD_PRECIO);
 			LCD_GLASS_String("      ", LCD_TOTAL);
+			strTimer.iTimerE =1;
+			key_scan();
 			while(strTimer.iTimerE < TimerEend){
 				IWDG_KEY_REFRESH;
-				key_scan();
-				if(Key  != KEY_NULL){break;}		
+				strTimer.iTimerE++;
+				// key_scan();
+				// if(Key  != KEY_NULL){break;}		
 			}
 	}
 }	
