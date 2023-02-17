@@ -146,15 +146,15 @@ void vScan_Key(void){
 							//delay_ms(10000);
 
 							iIndex_Address_Plus++;
-							
-							if(iIndex_Address_Plus == 2){
-								stScaleParam.fPrice_Unit = fFuncionPlus((int)(stScaleParam.fAddress_Plus), 
-										srFlagScale.bReadPlus, srFlagScale.bWritePlus, stScaleParam.fPrice_Unit, stScaleParam.cNumberDecimalPrice);
-								iIndex_Address_Plus = 0;
-								srFlagScale.bWritePlus = 0;
-								srFlagScale.bReadPlus = 0;
-							} 
 						}
+						if(iIndex_Address_Plus == 2){
+							stScaleParam.fPrice_Unit = fFuncionPlus((int)(stScaleParam.fAddress_Plus), 
+							srFlagScale.bReadPlus, srFlagScale.bWritePlus, stScaleParam.fPrice_Unit, stScaleParam.cNumberDecimalPrice);
+							iIndex_Address_Plus = 0;
+							srFlagScale.bWritePlus = 0;
+							srFlagScale.bReadPlus = 0;
+							} 
+						
 					}else{
 						
 						if(srFlagScale.bDotDecimalPrice){
@@ -181,8 +181,12 @@ void vScan_Key(void){
 					
 					return;
 			
-			}else if(Key == KEY_PUNTO){	
-				if(stScaleParam.cNumberDecimalPrice == 0 && stScaleParam.cPuntoDecimalPrecio > 2){
+			}else if(Key == KEY_PUNTO){
+				if(srFlagScale.bReadPlus ==1){
+					srFlagScale.bReadPlus =0;
+					vMostrar_Venta_Total();
+				}
+				else if(stScaleParam.cNumberDecimalPrice == 0 && stScaleParam.cPuntoDecimalPrecio > 2){
 					srFlagScale.bDotDecimalPrice = 1;
 				}
 				return;
@@ -237,27 +241,17 @@ void vScan_Key(void){
 					
 				case KEY_MEM:
 					srFlagScale.bWritePlus = 1;
+					srFlagScale.bReadPlus = 0;
 					iIndex_Address_Plus = 0;
 					stScaleParam.fAddress_Plus = 0;
 					break;
 				
 				case KEY_RCL:
-				strTimer.iTimerE=1;
-					while(strTimer.iTimerE < 60000){
-						key_scan();
-						if(Key != KEY_PUNTO && Key != KEY_NULL){
-							strTimer.iTimerE = 60000;
-							srFlagScale.bReadPlus = 1;
-							iIndex_Address_Plus = 0;
-							stScaleParam.fAddress_Plus = 0;
-							
-						}else if(Key == KEY_PUNTO){
-							vMostrar_Venta_Total();
-							srFlagScale.bAdd_Articulos = 0;
-						}
-					}
-					//strTimer.cFLag_TimerI_End=0;
-					break;
+				srFlagScale.bWritePlus = 0;
+				srFlagScale.bReadPlus = 1;//condiciones para 0??
+				iIndex_Address_Plus = 0;
+				stScaleParam.fAddress_Plus = 0;
+				break;
 				
 				case KEY_M1:
 					vActionMemoryPlu(1);				
@@ -333,6 +327,7 @@ void vScan_Key(void){
 		}	
 }
 
+
 /**
   ******************************************************************************
   * Objetivo: Asignar valor decimal a tecla pulsada si esta entre 0 y 9.
@@ -385,9 +380,14 @@ void vActionMemoryPlu(unsigned char cIndexMemory){
 	stScaleParam.fPrice_Unit = fFuncionPlus((int)(cIndexMemory), 
 	srFlagScale.bReadPlus, srFlagScale.bWritePlus, stScaleParam.fPrice_Unit, stScaleParam.cNumberDecimalPrice);
 	
+	srFlagScale.bWritePlus = 0;
 	iIndex_Address_Plus = 0;
 	srFlagScale.bWritePlus = 0;
 	srFlagScale.bReadPlus = 0;
+
+	// srFlagScale.bWritePlus = 1;
+	// iIndex_Address_Plus = 0;
+	// stScaleParam.fAddress_Plus = 0;
 }
 
 

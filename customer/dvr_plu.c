@@ -24,7 +24,7 @@
 
 #define ADDRES_START_PLUS	ADDRESS_PLU //200
 
-
+#define Delay_tmr 1000
 
 /**
   ******************************************************************************
@@ -37,78 +37,83 @@
 float fFuncionPlus(int fAddress_Plus, unsigned char cReadPlus, 
 	unsigned char cWritePlus, float fPrice_Save, unsigned char cDecimalDot){
 	
-	float xdata fData_rta;
+	float fDataRrta;
 
-	if(fAddress_Plus > -1 && fAddress_Plus < 100){
-	usr_dbg("AAAAA",10000);
+	if(fAddress_Plus >=0 && fAddress_Plus < 100){
+	//usr_dbg("AAAAA",Delay_tmr);
 		//while(!strTimer.iTimerA < TimerAend);
 
 		if(cReadPlus){
 
-		usr_dbg("BBBBB",10000);
+		//usr_dbg("BBBBB",Delay_tmr);
 			
 			//fData_rta = fReadFloatEeprom((int)(ADDRES_START_PLUS + (fAddress_Plus*5)));//falla
-			fData_rta = flash_read_float32((int)(ADDRES_START_PLUS + (fAddress_Plus*5)));
+			fDataRrta = flash_read_float32((int)(ADDRES_START_PLUS + (fAddress_Plus*5)));
+			//LCD_GLASS_Float(fDataRrta,3,LCD_PRECIO); 
+
+			//if(fDataRrta==0.0)fDataRrta=(float)((int)0);
 			
-			
-			if(fData_rta < 0 || fData_rta > 99999){
-				usr_dbg("CCCCC",10000);
+			if(fDataRrta!=0.0){ //R >= 0.0 && fData_rta <= 99999.0){
+				
+				//usr_dbg("DDDDD",Delay_tmr);
+				LCD_GLASS_Float(fDataRrta,3,LCD_PRECIO);
+				stScaleParam.cNumberDecimalPrice = flash_read_u8((int)(ADDRES_START_PLUS + (fAddress_Plus*5) + 4));
+							
+			}else{
+				usr_dbg("CCC",Delay_tmr);
 				//Existe un error en la memoria y se resetea al valor a 0
 				vEepromInit(ENABLE);					
 				flash_write_float32((int)(ADDRES_START_PLUS + (fAddress_Plus*5)), 0);
 				flash_write_u8((int)(ADDRES_START_PLUS + (fAddress_Plus*5) + 4), 0);
 				stScaleParam.cNumberDecimalPrice = 0;
-				fData_rta = 0;
-				vEepromInit(DISABLE);					
-			}else{
-				usr_dbg("DDDDD",10000);
-				stScaleParam.cNumberDecimalPrice = flash_read_u8((int)(ADDRES_START_PLUS + (fAddress_Plus*5) + 4));
-			}
+				fDataRrta = 0;
+				vEepromInit(DISABLE);	
+				}
 			
 			if(stScaleParam.cNumberDecimalPrice > 0){
-			usr_dbg("EEEEE",10000);
+			usr_dbg("EEEEE",Delay_tmr);
 				srFlagScale.bDotDecimalPrice = 1;
 			}else{
-			usr_dbg("FFFFF",10000);
+			usr_dbg("FFFFF",Delay_tmr);
 				srFlagScale.bDotDecimalPrice = 0;
 			}
-			usr_dbg("GGGGG",10000);
-			return fData_rta;
+			usr_dbg("GGGGG",Delay_tmr);
+			return fDataRrta;
 			
 		}else if(cWritePlus){
-			usr_dbg("HHHHH",10000);
+			usr_dbg("HHHHH",Delay_tmr);
 			vEepromInit(ENABLE);					// Habilita la escritura/lectura en la EEPROM 
 			
 			if(fPrice_Save <= 99999 && cDecimalDot <= 3){
 
-			usr_dbg("11111",10000);
+			usr_dbg("11111",Delay_tmr);
 				flash_write_float32((int)(ADDRES_START_PLUS + (fAddress_Plus*5)), fPrice_Save);
 
 				
 				if(stScaleParam.cPuntoDecimalPrecio > 2){
-				usr_dbg("22222",10000);
+				usr_dbg("22222",Delay_tmr);
 					flash_write_u8((int)(ADDRES_START_PLUS + (fAddress_Plus*5) + 4), cDecimalDot);
 				}else{
-				usr_dbg("33333",10000);
+				usr_dbg("33333",Delay_tmr);
 					flash_write_u8((int)(ADDRES_START_PLUS + (fAddress_Plus*5) + 4), stScaleParam.cPuntoDecimalPrecio);
 				}
-	          usr_dbg("44444",10000);		
+	          usr_dbg("44444",Delay_tmr);		
 				vSound_Saved_Param();
 			}else{
 
-			usr_dbg("55555",10000);
+			usr_dbg("55555",Delay_tmr);
 				fPrice_Save = 0;
 			}
 			
-			usr_dbg("66666",10000);
+			usr_dbg("66666",Delay_tmr);
 			vEepromInit(DISABLE);
 			
 			return fPrice_Save;
 			
 		}
-		usr_dbg("77777",10000);
+		usr_dbg("77777",Delay_tmr);
 	}
-	usr_dbg("--OK--",10000);
+	usr_dbg("--OK--",Delay_tmr);
 	return fPrice_Save;
 }
 
