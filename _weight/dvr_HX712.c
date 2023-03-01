@@ -60,7 +60,7 @@ void ReadHX712(void){ //by ERH
 	sclk_unit();
 	
 	//LCD_GLASS_Float(ADcode_pre, 0, LCD_TOTAL); 
- /*  
+   
 	if(ADcode_pre == 262143){
 //	  srFlagScale.bErrorReadAdc=1;
 	}else if(ADcode_pre > 262143){
@@ -72,7 +72,7 @@ void ReadHX712(void){ //by ERH
 //		srFlagScale.bErrorReadAdc = 0;
 	}
 	//LCD_GLASS_Float(ADcode_pre, 0, LCD_TOTAL); 
-*/
+
    return ;
 }
 
