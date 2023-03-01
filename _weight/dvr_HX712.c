@@ -148,8 +148,8 @@ float fFilter_Averaging(unsigned long iActualWeight, unsigned char cFastFill){
 float fRead_Adc(unsigned char cFillFilter){	
 	float result;	
 	//ReadHX712();			
-    LowPassF();
-	result = fFilter_Averaging(ADcode_pre,cFillFilter);
+    //LowPassF();
+	result = fFilter_Averaging(LowPassF(),cFillFilter);
 	//LCD_GLASS_Float(ADcode_pre,0, LCD_TOTAL);
 	return result;
 }
@@ -159,14 +159,14 @@ Funcion para filtrar las muestras del adc.
 donde Yn es el dato filtrado y alfa el factor del filtro
 dato1 corresponde a Y(n-1) y dato2 corresponde a Xn
 */
-volatile void LowPassF(void){
+float LowPassF(void){
 	float a = 0.003;
-	long X1,X2;	
+	long X1,X2, LowPassOut;	
 	ReadHX712();
 	X1 = ADcode_pre;
 	ReadHX712();
 	X2 = ADcode_pre; 
-	ADcode_pre = X1 + a*(X2 - X1);
+	LowPassOut = X1 + a*(X2 - X1);
 	//LCD_GLASS_Float(ADcode_pre,0, LCD_TOTAL);
-
+	return LowPassOut;
 }

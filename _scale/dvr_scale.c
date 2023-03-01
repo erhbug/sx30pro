@@ -750,7 +750,7 @@ unsigned char cRun_Scale(void){
 			LCD_GLASS_Symbols(SYMBOL_LB, 1);
 		}
 		
-		if(fWeightScale > -0.0005 && fWeightScale < 0.0005){	 
+		if(fWeightScale > -0.001 && fWeightScale < 0.0001){	 
 			LCD_GLASS_Symbols(SYMBOL_ZERO, 1);
 		}else{	
 			LCD_GLASS_Symbols(SYMBOL_ZERO, 0);
@@ -767,7 +767,7 @@ unsigned char cRun_Scale(void){
 		
 	}else{	
 		// Verifica si el peso es negativo
-		if(fWeightScale < 0){	
+		if(fWeightScale < -1){	
 			vWeight_Negative();			
 		}else{		
 			vWeight_Positive();			
@@ -861,7 +861,11 @@ void vWeight_Positive(void){
 		srFlagScale.bOverLoad = 0;
 		
 		// Despliega el peso registrado
-		LCD_GLASS_Float(stScaleParam.fWeightScale, stScaleParam.cWeightDecimal, LCD_PESO);
+		if(stScaleParam.fWeightScale>0.001){		
+		LCD_GLASS_Float(stScaleParam.fWeightScale, stScaleParam.cWeightDecimal, LCD_PESO);	
+		}else if(stScaleParam.fWeightScale<0.001){
+			LCD_GLASS_Float(0, stScaleParam.cWeightDecimal, LCD_PESO);
+		}//LCD_GLASS_Float(stScaleParam.fWeightScale, stScaleParam.cWeightDecimal, LCD_PESO);
 		//Despliega el valor de lectura del adc en Precio:
 					
 		// Verifica si la opcion fijar precio no esta activada
@@ -924,7 +928,7 @@ void vWeight_Negative(void){
 	srFlagScale.bOverLoad = 0;
 	
 	//En caso de un peso negativo verifica que no sea menor al peso tarado
-	if((srFlagScale.bTara == 1) && ((-1)*stScaleParam.fWeightScale <= fCuentasToPeso(stScaleParam.fValueTara))){		
+	if((srFlagScale.bTara == 1) && ((-1)*(stScaleParam.fWeightScale) <= fCuentasToPeso(stScaleParam.fValueTara))){		
 		LCD_GLASS_Float(stScaleParam.fWeightScale, (int)stScaleParam.cWeightDecimal, LCD_PESO);
 	}else{
 		LCD_GLASS_String("-----", LCD_PESO);

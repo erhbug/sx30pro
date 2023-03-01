@@ -282,7 +282,7 @@ void vCalcular_Cambio(void){
 				
 				switch(stScaleParam.cPuntoDecimalTotal){
 					case 0:
-					usr_dbg("a",1000);
+					//usr_dbg("a",1000);
 						if(fValor_Cliente > 0){
 							LCD_GLASS_Float(fValor_Cliente, stScaleParam.cPuntoDecimalTotal, LCD_TOTAL);
 						}else{
@@ -291,7 +291,7 @@ void vCalcular_Cambio(void){
 						break;
 					
 					case 1:		
-					usr_dbg("b",1000);			
+					//usr_dbg("b",1000);			
 						if(fValor_Cliente > 99999.9){
 							LCD_GLASS_Float(fValor_Cliente, 0, LCD_TOTAL);
 						}else{
@@ -306,19 +306,19 @@ void vCalcular_Cambio(void){
 					case 2:
 						if(fValor_Cliente > 9999.99){
 							if(fValor_Cliente > 99999.9){
-								usr_dbg("1",1000);
+								//usr_dbg("1",1000);
 								LCD_GLASS_Float(fValor_Cliente, 0, LCD_TOTAL);								
 							}else{
-								usr_dbg("2",1000);
+								//usr_dbg("2",1000);
 								LCD_GLASS_Float(fValor_Cliente, 1, LCD_TOTAL);
 							}
 						}else{
 							if(fValor_Cliente > 0){
-								usr_dbg("3",1000);
+								//usr_dbg("3",1000);
 								LCD_GLASS_Float(fValor_Cliente, stScaleParam.cPuntoDecimalTotal, LCD_TOTAL);
 							}else{
 								LCD_GLASS_Float(0, 0, LCD_TOTAL);
-								usr_dbg("4",1000);
+								//usr_dbg("4",1000);
 							}
 						}						
 						break;
