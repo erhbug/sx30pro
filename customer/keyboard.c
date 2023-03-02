@@ -118,9 +118,9 @@ if(Key==20)Key=KEY_PUNTO;
 
 
 void vScan_Key(void){
-	int idata iMultiplicador_Producto = 0;
-	float idata fMultiplicador_Producto = 0;
-	float idata fWeightScale = 0;
+	int iMultiplicador_Producto = 0;
+	float fMultiplicador_Producto = 0;
+	float fWeightScale = 0;
 	unsigned char idata fBeep_Key_Off = 0; 
 	
 	key_scan();

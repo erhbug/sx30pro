@@ -816,7 +816,7 @@ void vWeight_Positive(void){
 	float fOverloadUnit =  (float)stScaleParam.iCapacity + 
 					((float)(stScaleParam.iDivisionMinima)/(float)(pow(10, (int)stScaleParam.cWeightDecimal)))*9;
 	
-	fOverloadUnit = fRoundFloat(fOverloadUnit, (int)stScaleParam.cWeightDecimal, stScaleParam.iDivisionMinima);
+	fOverloadUnit = fRoundFloat(fOverloadUnit, (int)stScaleParam.cWeightDecimal, stScaleParam.iDivisionMinima-1);
 	
 	fWeightOverload = stScaleParam.fWeightScaleCount-stScaleParam.fPointZeroInitial;
 	
@@ -895,9 +895,12 @@ void vWeight_Positive(void){
 		}else{
 			LCD_GLASS_Float(stScaleParam.fPrice_Unit, stScaleParam.cNumberDecimalPrice, LCD_PRECIO);
 		}
-		
+		if(stScaleParam.fWeightScale >0.001){
 		stScaleParam.fTotal_Venta = stScaleParam.fPrice_Unit * stScaleParam.fWeightScale;
-					
+		}
+		else{
+			stScaleParam.fTotal_Venta = 0;
+		}			
          stScaleParam.fTotal_Venta = fRoundFloat(stScaleParam.fTotal_Venta, 
 		   stScaleParam.cPuntoDecimalTotal, stScaleParam.cValorRedondeoCifraTotal);
 		
@@ -971,7 +974,7 @@ si no hay precio fijo realiza solo una lectura de forma natural.
 		fRead_Adc(1);
 		fRead_Adc(1);			
 	}
-   	fWeightScale = fRead_Adc(1);
+   	fWeightScale = fRead_Adc(5);
 	//LCD_GLASS_Float(fWeightScale,0, LCD_TOTAL);
 	
 /*	if( srFlagScale.bErrorReadAdc == 1)	{
