@@ -15,6 +15,7 @@ File 1,1,<.\_scale\dvr_scale.c><dvr_scale.c> 0x0
 File 1,1,<.\customer\dvr_Inicio.c><dvr_Inicio.c> 0x0 
 File 1,1,<.\customer\dvr_plu.c><dvr_plu.c> 0x0 
 File 1,1,<.\customer\dvr_registradora.c><dvr_registradora.c> 0x0 
+File 1,1,<.\customer\usr_dbg.c><usr_dbg.c> 0x0 
 
 
 Options 1,0,0  // Target 'Target 1'
@@ -69,7 +70,7 @@ Options 1,0,0  // Target 'Target 1'
  IRA51 { 0,0,0,0,0,0,1,0,0 }
  XRA51 { 0,0,0,0,0,0,0,0,0 }
  XRA512 { 0,0,0,0,0,0,0,0,0 }
- C51FL=21630224
+ C51FL=17435920
  C51VA=0
  C51MSC ()
  C51DEF ()
@@ -119,5 +120,29 @@ Options 1,0,0  // Target 'Target 1'
  FLASH1 { 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
  FLASH2 ()
  FLASH3 ("" ())
+EndOpt
+
+Options 1,1,0  // Group 'Source Group 1'
+ PropFld { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 }
+ IncBld=2
+ AlwaysBuild=2
+ GenAsm=2
+ AsmAsm=2
+ PublicsOnly=2
+ StopCode=11
+ CustArgs ()
+ LibMods ()
+ BankNo=65535
+ C51FL=168698538
+ C51VA=0
+ C51MSC ()
+ C51DEF ()
+ C51UDF ()
+ INCC5 ()
+ AX51FL=170
+ AX51MSC ()
+ AX51SET ()
+ AX51RST ()
+ INCA5 ()
 EndOpt
 

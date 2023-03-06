@@ -16,3 +16,16 @@ solidic_proj
 *.plg
 #Ignorar Hex
 *.Hex
+#ignorar _i
+*.__i
+dvr_Inicio.__i
+.gitignore
+.gitignore
+usr_dbg.__i
+.gitignore
+.gitignore
+.gitignore
+dvr_registradora.__i
+.gitignore
+.gitignore
+testing.c

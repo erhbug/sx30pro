@@ -57,7 +57,7 @@ void LCD_GLASS_String(unsigned char *pCaracter, unsigned char cPosition_On_LCD);
 void LCD_GLASS_Float(float fNumber_To_LCD, unsigned char iNumber_Decimal, unsigned char cPosition_On_LCD);
 void LCD_GLASS_Symbols(unsigned char cSymbol, unsigned char cFlag_On);
 void LCD_GLASS_Dot(unsigned char iNumber_Dot, unsigned char cPosition_On_LCD, unsigned char cFLag_On);
-//void nFloatToStr(float f, unsigned char digits, unsigned char p, unsigned char *txt);
+void nFloatToStr(float f, unsigned char digits, unsigned char p, unsigned char *txt);
 
 #endif
 

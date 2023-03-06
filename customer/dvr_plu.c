@@ -20,9 +20,11 @@
 #include "./customer/beeper.h"
 #include "./_battery/dvr_battery.h"
 #include "./customer/dvr_registradora.h"
+#include "./customer/usr_dbg.h"
 
 #define ADDRES_START_PLUS	ADDRESS_PLU //200
 
+#define Delay_tmr 1000
 
 /**
   ******************************************************************************
@@ -35,17 +37,29 @@
 float fFuncionPlus(int fAddress_Plus, unsigned char cReadPlus, 
 	unsigned char cWritePlus, float fPrice_Save, unsigned char cDecimalDot){
 	
-/*	float fData_rta;
+	float fData_rta;
+	unsigned long ULData_rta;
 	
 	if(fAddress_Plus > -1 && fAddress_Plus < 100){
 		
-		while(!strTimer.iTimerA < TimerAend);
+		//while(!strTimer.iTimerA < TimerAend);
 		
 		if(cReadPlus){
 			
 			//fData_rta = fReadFloatEeprom((int)(ADDRES_START_PLUS + (fAddress_Plus*5)));
-			fData_rta = flash_read_float32((int)(ADDRES_START_PLUS + (fAddress_Plus*5)));
 			
+
+			ULData_rta = flash_read_u32((int)(ADDRES_START_PLUS + (fAddress_Plus*5)));
+			if (ULData_rta==0XFFFFFFFF)
+			{vEepromInit(ENABLE);					
+				flash_write_float32((int)(ADDRES_START_PLUS + (fAddress_Plus*5)), 0);
+				flash_write_u8((int)(ADDRES_START_PLUS + (fAddress_Plus*5) + 4), 0);
+				stScaleParam.cNumberDecimalPrice = 0;
+				fData_rta = 0;
+				vEepromInit(DISABLE);	
+			}
+
+			fData_rta = flash_read_float32((int)(ADDRES_START_PLUS + (fAddress_Plus*5)));	
 			
 			if(fData_rta < 0 || fData_rta > 99999){
 				
@@ -90,7 +104,7 @@ float fFuncionPlus(int fAddress_Plus, unsigned char cReadPlus,
 			return fPrice_Save;
 			
 		}
-	}*/
+	}
 	return fPrice_Save;
 }
 
@@ -103,17 +117,17 @@ float fFuncionPlus(int fAddress_Plus, unsigned char cReadPlus,
   */
 void vErase_All_Address_Plus(void){
 	
-/*	int i = 0;
-	
-	while(!strTimer.iTimerA < TimerAend);
+	int i = 0;
+	//strTimer.iTimerA = 1;
+	//while(strTimer.iTimerA < TimerAend);
 	
 	vEepromInit(ENABLE);					// Habilita la escritura/lectura en la EEPROM 
-	
+	LCD_GLASS_String("FORMAT", LCD_TOTAL);
 	for(i=0; i<100; i++){
 		flash_write_float32((int)(ADDRES_START_PLUS + (i*5)), 0);
 		flash_write_u8((int)(ADDRES_START_PLUS + (i*5) + 4), 0);
-		LCD_GLASS_Float(i, 0, LCD_TOTAL);
+		//LCD_GLASS_Float(i, 0, LCD_TOTAL);
 	}
 	
-	vEepromInit(DISABLE);	*/
+	vEepromInit(DISABLE);	
 }

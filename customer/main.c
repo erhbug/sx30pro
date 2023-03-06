@@ -7,8 +7,6 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <./RS232/RS232.h>
-
 unsigned int convertidorADC(void);
 void init_pwm(void);
 void wdt_init(void);
@@ -38,7 +36,6 @@ unsigned int iCounterZeroTracking = 0;
 
 
 
-
 void main(void) {
   enum ActionScale eAccionScale;
   wdt_init();
@@ -47,9 +44,8 @@ void main(void) {
   init_pwm();
   init_int_timer0();
   LCD_GLASS_Init();
-  SerialEnable();
-  serialTx("Hola mundo");
   eAccionScale = ScalePreOn; /* Inicia en el primer estado Off */
+  //while(1){ReadHX712();}
   while (1) {
    switch (eAccionScale) {
     case ScalePreOn:
@@ -57,7 +53,7 @@ void main(void) {
       memset( & srFlagScale, 0x00, sizeof(srFlagScale));
       memset( & stScaleParam, 0x00, sizeof(stScaleParam));
       vReadParamScale(); // Inicia los parametros de la Bascula					
-    LCD_GLASS_Clear();
+      LCD_GLASS_Clear();
       LCD_GLASS_String("-----", LCD_PESO);
       LCD_GLASS_String("-----", LCD_PRECIO);
       LCD_GLASS_String("------", LCD_TOTAL); 
@@ -81,7 +77,7 @@ void main(void) {
 
     case ScaleRun:
       	// Lee teclado y ejecuta las acciones correspondientes 
-	    vScan_Key();
+	  vScan_Key();
       cRun_Scale();
       break;
 
@@ -100,17 +96,17 @@ void init_pwm(void){
     P1M1 &= ~(1<<5);
 
     PWMF_H  = 0x00;
-	  PWMF_L  = 0xA0;
-	  PWM0  	= 0X6C;//BEEPER correcto 0x6c
-	  PWM1  	= 0X50;
-	  PWMCON  = 0x04;	//PWM0-P1.4(LCD_LAMP)????(?PWM0=0xff?,?????)	
+	PWMF_L  = 0xA0;
+	PWM0  	= 0X6C;//BEEPER correcto 0x6c
+	PWM1  	= 0X50;
+	PWMCON  = 0x04;	//PWM0-P1.4(LCD_LAMP)????(?PWM0=0xff?,?????)	
 }
 
 void wdt_init(void){// watch dog ///
     EA = 0;
     WD_TA = 0x05;
-	  WD_TA = 0x0a;
-	  WDCON = 0x1f; /// 4s?,0.2s ///
+	WD_TA = 0x0a;
+	WDCON = 0x1f; /// 4s?,0.2s ///
     EA = 1;
 	IWDG_KEY_REFRESH;
 }
@@ -133,22 +129,20 @@ void gpio_init(void)
     P2 = 0x11;
 
     P0M0 = 0xF0; //0b11111111;
-    P0M1 = 0x00; //0b00000000;  
-
+    P0M1 = 0x00; //0b00000000;    
     P1M0 = 0xBF; //0b10111111;
-    P1M1 = 0x00; //0b00000000;   
-
+    P1M1 = 0x00; //0b00000000;        
     P2M0 = 0xEE; //0b11101110;
     P2M1 = 0x00; //0b00000000;
 
-	//d4 keyboard P0.3 d4salida
+	/*d4 keyboard P0.3 d4salida
     P0M0 |= 0x08; //0b11111111;
     P0M1 = 0x00; //0b00000000;  
 
 //config miso //p1.2 miso in
     P1M0 &= 0xFB; //0b11111011;
     P1M1 |= 0x00; //0b00000000;   
-
+*/
     MISO = 1;
     SCLK = 0;
 }
@@ -205,6 +199,10 @@ static void timer0(void) interrupt 1
 
 	if(strTimer.iTimerE>0 )
 	strTimer.iTimerE++;
+
+	if(strTimer.iTimerDBG>0 )
+	strTimer.iTimerDBG++;
+
 
 	//P0 ^= (1<<1);//P1 ^= (1<<5);
 	TL0 = 0xCF;
