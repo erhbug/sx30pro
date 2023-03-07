@@ -225,7 +225,7 @@ float fStablePoint(unsigned char cSetCountBack, unsigned char cShowCount, unsign
 
 	strTimer.iTimerE=1;
 	while(strTimer.iTimerE < 1000)
-	    fWeightAdc = fRead_Adc(cRunStable);
+	    fWeightAdc = (unsigned long)fRead_Adc(cRunStable);
 
 	while(cCountBack > -1){
 		delay_ms(150);
@@ -416,7 +416,7 @@ void cOnOffModeTara(float fWeightTara){
 					stScaleParam.fValueTara = 0;
 					srFlagScale.bTara = 0;
 					stScaleParam.fPointZero = stScaleParam.fWeightScaleCount;
-					fFilter_Averaging(fWeightZero, 1); 	//Ingresa el dato al filtro 
+					fFilter_Averaging(fWeightZero,5); 	//Ingresa el dato al filtro 
 				}
 			}
 		}
@@ -490,9 +490,7 @@ void vCalibrate_Scale(void){
               float fAuxCountAdcInicial = 0;
               float fAuxCountAdcFinal = 0;
               float fAuxCountDif = 0;
-
-//              stScaleParam.iCounter_Calibration++;  /* Aumenta el contador de calibraciones */ 
-//              vSaveParamScale(Parameter_Calibration);
+			  float weightCalibrationfactor = 100/(float)stScaleParam.iLoadPorcRefer;
 			  LCD_GLASS_Clear();
 			  LCD_GLASS_String("PRESS", LCD_PESO);
               LCD_GLASS_String("REF 0", LCD_TOTAL);
@@ -514,23 +512,28 @@ void vCalibrate_Scale(void){
  /* Espera a que se oprima 'C' para continuar */
               Key=0;while(Key!= KEY_C)key_scan();
 			  delay_ms(1000);
-              stScaleParam.fCapacityCali = fStablePoint(5, 1, 0);              
-              fAuxCountAdcFinal = stScaleParam.fCapacityCali;
-              
-              fAuxCountDif = (fAuxCountAdcFinal - fAuxCountAdcInicial);
-              fAuxCountDif    *= (100/stScaleParam.iLoadPorcRefer);
-              stScaleParam.fCapacityCali -= stScaleParam.fPointZeroCali;
-              stScaleParam.fCapacityCali *= (100/stScaleParam.iLoadPorcRefer);
-              
+              //stScaleParam.fCapacityCali =104962;// fStablePoint(5, 1, 0);              
+			  
+			  
+			  stScaleParam.fCapacityCali = fStablePoint(5, 1, 0);     
+			  fAuxCountAdcFinal = stScaleParam.fCapacityCali;
+			  fAuxCountDif = (fAuxCountAdcFinal - fAuxCountAdcInicial);
+			  fAuxCountDif = fAuxCountDif  * weightCalibrationfactor;
+
+
+			  stScaleParam.fCapacityCali -= stScaleParam.fPointZeroCali;
+              stScaleParam.fCapacityCali = stScaleParam.fCapacityCali *weightCalibrationfactor;
               stScaleParam.fFactorCalibrate = (float)(stScaleParam.fCapacityCali);
-              fAux_Value = (float)(stScaleParam.iCapacity);
+
+			  fAux_Value = (float)(stScaleParam.iCapacity);
               fAux_Value *= pow(10,(int)stScaleParam.cWeightDecimal);
               fAux_Value = (float)(fAux_Value)/(float)(stScaleParam.iDivisionMinima);
-              stScaleParam.fFactorCalibrate /= fAux_Value;
-              
-              if(stScaleParam.fCapacityCali < 0){
-                            stScaleParam.fCapacityCali *= (-1);
-              }
+			  stScaleParam.fFactorCalibrate /= fAux_Value;
+			   //############Borrar, solo utilizado en pruebas, no en codigo final
+              //stScaleParam.fFactorCalibrate = stScaleParam.fFactorCalibrate*(100/stScaleParam.iLoadPorcRefer);
+               if(stScaleParam.fCapacityCali < 0){
+                            stScaleParam.fCapacityCali = abs(stScaleParam.fCapacityCali);
+			  } 
 
               LCD_GLASS_Clear();     
               LCD_GLASS_String("FCTOR", LCD_PESO);
@@ -557,10 +560,10 @@ void vCalibrate_Scale(void){
   ******************************************************************************
   */
 void vPreConfiguration(unsigned char cPreConfiguration){
-	unsigned char  cIndex = 0;	
 	LCD_GLASS_Clear();	
 	stScaleParam.cMultirango = 1;
 	stScaleParam.cLenguage = ESPANOL;
+
 	if(cPreConfiguration == PreConfig15KG){
 		stScaleParam.iCapacity = 15;
 		stScaleParam.iDivisionMinima = 5;
@@ -568,6 +571,7 @@ void vPreConfiguration(unsigned char cPreConfiguration){
 		stScaleParam.iDivisionMenorMenor = 1;
 		stScaleParam.cWeightDecimal = 3;
 		stScaleParam.cUnits = UNIT_KG;
+		stScaleParam.iLoadPorcRefer = 100;		
 		//LCD_GLASS_Symbols(SYMBOL_KG, 1);
 		stScaleParam.cMoneda = MONEDA_PESOS;
 	}else if(cPreConfiguration == PreConfig20KG){
@@ -577,6 +581,7 @@ void vPreConfiguration(unsigned char cPreConfiguration){
 		stScaleParam.iDivisionMenorMenor = 1;
 		stScaleParam.cWeightDecimal = 3;
 		stScaleParam.cUnits = UNIT_KG;
+		stScaleParam.iLoadPorcRefer = 100;
 		//LCD_GLASS_Symbols(SYMBOL_KG, 1);
 		stScaleParam.cMoneda = MONEDA_PESOS;
 	}else if(cPreConfiguration == PreConfig30KG){
@@ -586,6 +591,7 @@ void vPreConfiguration(unsigned char cPreConfiguration){
 		stScaleParam.iDivisionMenorMenor = 2;
 		stScaleParam.cWeightDecimal = 3;
 		stScaleParam.cUnits = UNIT_KG;
+		stScaleParam.iLoadPorcRefer = 100;
 		//LCD_GLASS_Symbols(SYMBOL_KG, 1);
 		stScaleParam.cMoneda = MONEDA_PESOS;
 	}else if(cPreConfiguration == PreConfig31KG){
@@ -595,6 +601,7 @@ void vPreConfiguration(unsigned char cPreConfiguration){
 		stScaleParam.iDivisionMenorMenor = 1;
 		stScaleParam.cWeightDecimal = 3;
 		stScaleParam.cUnits = UNIT_KG;
+		stScaleParam.iLoadPorcRefer = 80;
 		//LCD_GLASS_Symbols(SYMBOL_KG, 1);
 		stScaleParam.cMoneda = MONEDA_PESOS;		
 	}else if(cPreConfiguration == PreConfig32KG){
@@ -605,6 +612,7 @@ void vPreConfiguration(unsigned char cPreConfiguration){
 		stScaleParam.cMultirango = 0;
 		stScaleParam.cWeightDecimal = 3;
 		stScaleParam.cUnits = UNIT_KG;
+		stScaleParam.iLoadPorcRefer = 100;
 		//LCD_GLASS_Symbols(SYMBOL_KG, 1);
 		stScaleParam.cMoneda = MONEDA_PESOS;		
 	}else if(cPreConfiguration == PreConfig40KG){
@@ -614,6 +622,7 @@ void vPreConfiguration(unsigned char cPreConfiguration){
 		stScaleParam.iDivisionMenorMenor = 2;
 		stScaleParam.cWeightDecimal = 3;
 		stScaleParam.cUnits = UNIT_KG;
+		stScaleParam.iLoadPorcRefer = 100;
 		//LCD_GLASS_Symbols(SYMBOL_KG, 1);
 		stScaleParam.cMoneda = MONEDA_PESOS;
 	}else if(cPreConfiguration == PreConfig60LB){
@@ -625,9 +634,10 @@ void vPreConfiguration(unsigned char cPreConfiguration){
 		//LCD_GLASS_Symbols(SYMBOL_LB, 1);
 		stScaleParam.cMoneda = MONEDA_DLLS;
 		stScaleParam.cMultirango = 0;
+		stScaleParam.iLoadPorcRefer = 100;
 	}
 	LCD_GLASS_Float(stScaleParam.iCapacity, stScaleParam.cWeightDecimal, LCD_PESO);
-	stScaleParam.iLoadPorcRefer = 100;
+	//stScaleParam.iLoadPorcRefer = 100;
 	stScaleParam.cPuntoDecimalTotal = 2;
 	stScaleParam.cRedondeoCifraTotal = 1;
 	stScaleParam.cPuntoDecimalPrecio = 3;
@@ -668,6 +678,8 @@ void vPreConfiguration(unsigned char cPreConfiguration){
 	e2rom_erase(ADDRESS_SCALE_CONFIG_PAGE);
 	e2rom_erase(ADDRESS_QLTY_AND_CNTRS_PAGE);
 	NRM_securty = 0x00;
+
+	//vErase_All_Address_Plus();
 		vSaveParamScale(Parameter_Voltages); 		
         vSaveParamScale(Parameter_Calibration);
     	vSaveParamScale(Parameter_Register);
@@ -735,7 +747,7 @@ unsigned char cRun_Scale(void){
 			LCD_GLASS_Symbols(SYMBOL_LB, 1);
 		}
 		
-		if(fWeightScale > -0.0005 && fWeightScale < 0.0005){	 
+		if(fWeightScale > -0.001 && fWeightScale < 0.0001){	 
 			LCD_GLASS_Symbols(SYMBOL_ZERO, 1);
 		}else{	
 			LCD_GLASS_Symbols(SYMBOL_ZERO, 0);
@@ -752,7 +764,7 @@ unsigned char cRun_Scale(void){
 		
 	}else{	
 		// Verifica si el peso es negativo
-		if(fWeightScale < 0){	
+		if(fWeightScale < -1){	
 			vWeight_Negative();			
 		}else{		
 			vWeight_Positive();			
@@ -801,7 +813,7 @@ void vWeight_Positive(void){
 	float fOverloadUnit =  (float)stScaleParam.iCapacity + 
 					((float)(stScaleParam.iDivisionMinima)/(float)(pow(10, (int)stScaleParam.cWeightDecimal)))*9;
 	
-	fOverloadUnit = fRoundFloat(fOverloadUnit, (int)stScaleParam.cWeightDecimal, stScaleParam.iDivisionMinima);
+	fOverloadUnit = fRoundFloat(fOverloadUnit, (int)stScaleParam.cWeightDecimal, stScaleParam.iDivisionMinima-1);
 	
 	fWeightOverload = stScaleParam.fWeightScaleCount-stScaleParam.fPointZeroInitial;
 	
@@ -846,7 +858,12 @@ void vWeight_Positive(void){
 		srFlagScale.bOverLoad = 0;
 		
 		// Despliega el peso registrado
-		LCD_GLASS_Float(stScaleParam.fWeightScale, stScaleParam.cWeightDecimal, LCD_PESO);
+		if(stScaleParam.fWeightScale>0.001){		
+		LCD_GLASS_Float(stScaleParam.fWeightScale, stScaleParam.cWeightDecimal, LCD_PESO);	
+		}else if(stScaleParam.fWeightScale<0.001){
+			LCD_GLASS_Float(0, stScaleParam.cWeightDecimal, LCD_PESO);
+		}//LCD_GLASS_Float(stScaleParam.fWeightScale, stScaleParam.cWeightDecimal, LCD_PESO);
+		//Despliega el valor de lectura del adc en Precio:
 					
 		// Verifica si la opcion fijar precio no esta activada
 		if(!srFlagScale.bFlagFijarPRecio){
@@ -875,9 +892,12 @@ void vWeight_Positive(void){
 		}else{
 			LCD_GLASS_Float(stScaleParam.fPrice_Unit, stScaleParam.cNumberDecimalPrice, LCD_PRECIO);
 		}
-		
+		if(stScaleParam.fWeightScale >0.001){
 		stScaleParam.fTotal_Venta = stScaleParam.fPrice_Unit * stScaleParam.fWeightScale;
-					
+		}
+		else{
+			stScaleParam.fTotal_Venta = 0;
+		}			
          stScaleParam.fTotal_Venta = fRoundFloat(stScaleParam.fTotal_Venta, 
 		   stScaleParam.cPuntoDecimalTotal, stScaleParam.cValorRedondeoCifraTotal);
 		
@@ -908,7 +928,7 @@ void vWeight_Negative(void){
 	srFlagScale.bOverLoad = 0;
 	
 	//En caso de un peso negativo verifica que no sea menor al peso tarado
-	if((srFlagScale.bTara == 1) && ((-1)*stScaleParam.fWeightScale <= fCuentasToPeso(stScaleParam.fValueTara))){		
+	if((srFlagScale.bTara == 1) && ((-1)*(stScaleParam.fWeightScale) <= fCuentasToPeso(stScaleParam.fValueTara))){		
 		LCD_GLASS_Float(stScaleParam.fWeightScale, (int)stScaleParam.cWeightDecimal, LCD_PESO);
 	}else{
 		LCD_GLASS_String("-----", LCD_PESO);
@@ -951,8 +971,9 @@ si no hay precio fijo realiza solo una lectura de forma natural.
 		fRead_Adc(1);
 		fRead_Adc(1);			
 	}
-   fWeightScale = fRead_Adc(1);
-
+   	fWeightScale = fRead_Adc(5);
+	//LCD_GLASS_Float(fWeightScale,0, LCD_TOTAL);
+	
 /*	if( srFlagScale.bErrorReadAdc == 1)	{
 		LCD_GLASS_String(" -E- ", LCD_PESO);
 		return;
