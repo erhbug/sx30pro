@@ -244,20 +244,10 @@ void vScan_Key(void){
 					break;
 				
 				case KEY_RCL:
-				strTimer.iTimerE=1;
-					while(strTimer.iTimerE < 60000){
-						key_scan();
-						if(Key != KEY_PUNTO && Key != KEY_NULL){
-							strTimer.iTimerE = 60000;
-							srFlagScale.bReadPlus = 1;
-							iIndex_Address_Plus = 0;
-							stScaleParam.fAddress_Plus = 0;
-							
-						}else if(Key == KEY_PUNTO){
-							vMostrar_Venta_Total();
-							srFlagScale.bAdd_Articulos = 0;
-						}
-					}
+					srFlagScale.bWritePlus = 0;
+					srFlagScale.bReadPlus = 1;//condiciones para 0??
+					iIndex_Address_Plus = 0;
+					stScaleParam.fAddress_Plus = 0;
 					//strTimer.cFLag_TimerI_End=0;
 					break;
 				
