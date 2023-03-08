@@ -60,19 +60,19 @@ void ReadHX712(void){ //by ERH
 	sclk_unit();
 	
 	//LCD_GLASS_Float(ADcode_pre, 0, LCD_TOTAL); 
- /*  
-	if(ADcode_pre == 262143){
+   
+	if(ADcode_pre == (unsigned long)262143){
 //	  srFlagScale.bErrorReadAdc=1;
-	}else if(ADcode_pre > 262143){
-		ADcode_pre = 524288 - ADcode_pre;
-		ADcode_pre = 32500 - ADcode_pre;
+	}else if(ADcode_pre > (unsigned long)262143){
+		ADcode_pre = (unsigned long)524288 - ADcode_pre;
+		ADcode_pre = (unsigned long)32500 - ADcode_pre;
 	//	srFlagScale.bErrorReadAdc = 0;
 	}else{
-		ADcode_pre += 32500;
+		ADcode_pre += (unsigned long)32500;
 //		srFlagScale.bErrorReadAdc = 0;
 	}
 	//LCD_GLASS_Float(ADcode_pre, 0, LCD_TOTAL); 
-*/
+
    return ;
 }
 

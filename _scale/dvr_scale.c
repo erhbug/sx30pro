@@ -559,6 +559,8 @@ void vCalibrate_Scale(void){
   * Prerequisitos: 
   ******************************************************************************
   */
+
+  
 void vPreConfiguration(unsigned char cPreConfiguration){
 	LCD_GLASS_Clear();	
 	stScaleParam.cMultirango = 1;
