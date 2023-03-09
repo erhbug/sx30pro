@@ -42,6 +42,8 @@ code enum digi_key eBACKLIGHT[8] = {KEY_TARA, KEY_1, KEY_0, KEY_1, KEY_0};
 code unsigned char eCODE_CALIBRACION[7]= "765432";
 code unsigned char eCODE_MENU[7]= "779103";
 
+void vTestTeclado(void);
+void vCalidadTest(void);
 void vSpecial_Action(unsigned char val)
 {
 val=0;
@@ -143,7 +145,8 @@ unsigned int TimeEnd=2000;
 				vSpecial_Action(Function_TestTeclado);	
 				return 1;
 			}else if(strcmp(eTEST_CALIDAD, arPass_Configuration) == 0){				
-				vSpecial_Action(Function_CalidadTest);	
+				vCalidadTest();
+				//vSpecial_Action(Function_CalidadTest);	
 				return 1;
 			}else if(strcmp(eBACKLIGHT, arPass_Configuration) == 0){				
 				vSpecial_Action(Function_Backlight);	
@@ -200,3 +203,172 @@ unsigned int TimeEnd=2000;
 	}
 	return 0;
 }
+
+
+
+
+void vCalidadTest(void){
+	
+	float fAux_Value = 0;
+	
+	LCD_GLASS_Clear();			
+	
+//	srFlagScale.bCalidadTest = 1;
+	srFlagScale.bTopeSobrePeso = 1;
+		
+	LCD_GLASS_String("SOBRE", LCD_PESO);
+	LCD_GLASS_String(" PESO", LCD_PRECIO);
+	LCD_GLASS_String("   OFF", LCD_TOTAL);
+	vSound_Saved_Param();
+	vSound_Saved_Param();
+	
+		/* Inicia un timer para esperar 2 seg 
+											a qe se digite alguna tecla para introducir un codigo */
+	strTimer.iTimerE=1;
+	while(strTimer.iTimerE<2000)
+	{		
+		IWDG_KEY_REFRESH;
+		fRead_Adc(1);				
+	}
+	
+	/* Se espera hasta encontrar un punto estable ademas de verificar las 
+		condiciones iniciales del peso */
+	cSetZeroPoint();
+	
+	do{
+		key_scan();
+	
+		if(Key != KEY_NULL){
+			vBeep_Key();
+		}
+		
+		cRun_Scale();
+		
+	}while(Key != KEY_C);
+	
+	LCD_GLASS_Clear();
+	LCD_GLASS_String("OFFSET", LCD_TOTAL);
+	
+	if(stScaleParam.cUnits == UNIT_KG){
+		LCD_GLASS_Symbols(SYMBOL_KG, 1);
+	}else if(stScaleParam.cUnits == UNIT_LB){
+		LCD_GLASS_Symbols(SYMBOL_LB, 1);
+	}
+	
+	do{
+		
+		fAux_Value = fRead_Adc(0);
+		fAux_Value = fCuentasToPeso(fAux_Value);
+		key_scan();
+	
+		if(Key != KEY_NULL){
+			vBeep_Key();
+		}
+		
+		LCD_GLASS_Float(fAux_Value, stScaleParam.cWeightDecimal, LCD_PESO);			
+		
+	}while(Key != KEY_C);
+	
+	vSpecial_Action(Data_Scale);	
+	vSpecial_Action(View_Voltage_Battery);
+	vSpecial_Action(Erase_Plus);
+	vSpecial_Action(Reset_Counter);
+	
+	LCD_GLASS_Clear();
+	LCD_GLASS_Float(stScaleParam.iCounter_Calibration, 0, LCD_PRECIO);
+	LCD_GLASS_String("CA", LCD_PRECIO);
+	
+	LCD_GLASS_Float(stScaleParam.iCounter_Configuration, 0, LCD_TOTAL);
+	LCD_GLASS_String(" CF", LCD_TOTAL);
+	
+	Key = KEY_NULL;
+	
+	while (Key == KEY_NULL){
+		IWDG_KEY_REFRESH;
+		key_scan();
+		
+		if(Key == KEY_C){
+			vBeep_Key();	
+		}
+	}
+
+	LCD_GLASS_Clear();			
+	LCD_GLASS_Symbols(SYMBOL_ZERO, 1);
+	LCD_GLASS_Float(stScaleParam.fPointZeroCali, 0, LCD_PRECIO);
+	
+	Key = KEY_NULL;
+	
+	while (Key == KEY_NULL){
+		IWDG_KEY_REFRESH;
+		key_scan();
+		
+		if(Key == KEY_C){
+			vBeep_Key();	
+		}
+	}
+	
+//	srFlagScale.bCalidadTest = 2;
+	OffBackLight;
+		strTimer.iTimerE=1;
+	while(strTimer.iTimerE<2000)
+	{		
+		IWDG_KEY_REFRESH;			
+	}
+	OnBackLight;
+	vTestTeclado();
+	
+//	srFlagScale.bCalidadTest = 0;
+	srFlagScale.bTopeSobrePeso = 0;
+	
+	stScaleParam.fVenta_Total_Scale = 0;
+}
+
+
+void vTestTeclado(void){
+	
+	unsigned char *Name_Tecla[20] = {"0", "1", "2", 
+	"3", "4", "5", "6", "7", "8",
+	"9", "TARA", "NNAS", "CHANGE", "NN1",
+	"NN2", "NNENN", "RCL", "C", "CERO", "PUNTO"
+	};
+	
+	unsigned char sPush_Tecla[20] = {0};
+	int iSumaTeclas = 0, i = 0;
+	int iNumberTeclas = 0;
+	
+		
+	LCD_GLASS_Clear();			
+	LCD_GLASS_String("TEST ", LCD_PESO);
+	LCD_GLASS_String("TECLA", LCD_PRECIO);
+	
+	iNumberTeclas = 20;
+	
+//	srFlagScale.bCalidadTest = 2;
+	
+	while(1){
+		
+		key_scan();
+		
+		if(Key != KEY_NULL){
+			vBeep_Key();			
+			LCD_GLASS_String(Name_Tecla[(int)(Key)], LCD_TOTAL);
+			sPush_Tecla[(int)(Key)] = 1;
+			
+			iSumaTeclas = 0;
+			for(i=0; i<iNumberTeclas; i++){
+				iSumaTeclas += sPush_Tecla[i];
+			}
+						
+			if(iSumaTeclas == iNumberTeclas-1){
+				LCD_GLASS_Clear();
+				LCD_GLASS_String("  PASS", LCD_TOTAL);	
+				vSound_Saved_Param();
+				vSound_Saved_Param();					
+//				srFlagScale.bCalidadTest = 0;
+				break;
+			}			
+		}		
+	}	
+}
+
+
