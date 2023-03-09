@@ -823,7 +823,9 @@ void vWeight_Positive(void){
 	// Verifca que no exista la condicion de sobrepeso 
 	if((fWeightOverload > stScaleParam.fWeightOverload || stScaleParam.fWeightScale > fOverloadUnit)  &&
 			srFlagScale.bTopeSobrePeso == 0){
-			
+			// if((fWeightOverload > 100.00 || stScaleParam.fWeightScale > 100.00)  &&
+			// srFlagScale.bTopeSobrePeso == 100){
+			    . . . . . . . . 
 		if(srFlagScale.bOverLoad == 0){
 			stScaleParam.iCountOverload++;		
 			vSaveParamScale(Parameter_Overload);
