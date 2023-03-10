@@ -71,7 +71,7 @@ void vReadParamScale(void){
 	}
 	
 	stScaleParam.cPuntoDecimalPrecio			= flash_read_u8(ADDR_DECIMAL_PRECIO);
-	stScaleParam.cZeroTracking						= 0; //flash_read_u8(ADDR_ZERO_TRACKING);
+	stScaleParam.cZeroTracking						= 1; //flash_read_u8(ADDR_ZERO_TRACKING);
 	stScaleParam.cMsgUnload								= flash_read_u8(ADDR_MSG_UNLOAD);
 	stScaleParam.cTimeAutooff							= flash_read_u8(ADDR_TIME_OFF);
 	stScaleParam.cModeloBascula						= flash_read_u8(ADDR_MODELO);
