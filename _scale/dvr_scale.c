@@ -375,7 +375,7 @@ void cOnOffModeTara(float fWeightTara){
 						srFlagScale.bTara = 1;
 					}
 				}else{
-					if(fCuentasToPeso(stScaleParam.fWeightScaleTara) <= 9.999){
+					if(fCuentasToPeso(stScaleParam.fWeightScaleTara) <= 9.995){
 						stScaleParam.fValueTara = stScaleParam.fWeightScaleTara;
 						srFlagScale.bTara = 1;
 					}
@@ -972,8 +972,8 @@ Se toman 3 lecturas para garantizar el peso al realizar las sumas c/precio fijo,
 si no hay precio fijo realiza solo una lectura de forma natural.
 ******************/	
 	if(srFlagScale.bFlagFijarPRecio){	
-		fRead_Adc(1);
-		fRead_Adc(1);			
+		fRead_Adc(5);
+		fRead_Adc(5);			
 	}
    	fWeightScale = fRead_Adc(5);
 	//LCD_GLASS_Float(fWeightScale,0, LCD_TOTAL);

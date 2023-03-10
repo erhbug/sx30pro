@@ -225,10 +225,10 @@ void vCalidadTest(void){
 		/* Inicia un timer para esperar 2 seg 
 											a qe se digite alguna tecla para introducir un codigo */
 	strTimer.iTimerE=1;
-	while(strTimer.iTimerE<2000)
+	while(strTimer.iTimerE<500)
 	{		
 		IWDG_KEY_REFRESH;
-		fRead_Adc(1);				
+		fRead_Adc(5);				
 	}
 	
 	/* Se espera hasta encontrar un punto estable ademas de verificar las 
@@ -257,7 +257,7 @@ void vCalidadTest(void){
 	
 	do{
 		
-		fAux_Value = fRead_Adc(0);
+		fAux_Value = fRead_Adc(5);
 		fAux_Value = fCuentasToPeso(fAux_Value);
 		key_scan();
 	
@@ -310,7 +310,7 @@ void vCalidadTest(void){
 //	srFlagScale.bCalidadTest = 2;
 	OffBackLight;
 		strTimer.iTimerE=1;
-	while(strTimer.iTimerE<2000)
+	while(strTimer.iTimerE<800)
 	{		
 		IWDG_KEY_REFRESH;			
 	}
@@ -326,40 +326,61 @@ void vCalidadTest(void){
 
 void vTestTeclado(void){
 	
-	unsigned char *Name_Tecla[20] = {"0", "1", "2", 
-	"3", "4", "5", "6", "7", "8",
-	"9", "TARA", "NNAS", "CHANGE", "NN1",
-	"NN2", "NNENN", "RCL", "C", "CERO", "PUNTO"
+	unsigned char *Name_Tecla[(char)20] = {"CERO", "TARA", "NN1", 
+	"RCL", "CHG", "NNAS", "NN2", "NNENN", "7",
+	"4", "1", "C", "8", "5",
+	"2", "0", "9", "6", "3", "PUNTO"
 	};
 	
-	unsigned char sPush_Tecla[20] = {0};
-	int iSumaTeclas = 0, i = 0;
-	int iNumberTeclas = 0;
-	
-		
+	unsigned char sPush_Tecla[21] ;
+	int iSumaTeclas = (int)0, i = (int)0;
+	int iNumberTeclas = (int)0;
 	LCD_GLASS_Clear();			
 	LCD_GLASS_String("TEST ", LCD_PESO);
 	LCD_GLASS_String("TECLA", LCD_PRECIO);
 	
 	iNumberTeclas = 20;
-	
 //	srFlagScale.bCalidadTest = 2;
-	
+memset(sPush_Tecla, 0x00, sizeof(sPush_Tecla));
+
 	while(1){
 		
 		key_scan();
-		
-		if(Key != KEY_NULL){
-			vBeep_Key();			
-			LCD_GLASS_String(Name_Tecla[(int)(Key)], LCD_TOTAL);
-			sPush_Tecla[(int)(Key)] = 1;
+		if(Key != KEY_NULL){		
+			switch(Key){
+				case KEY_CERO:	Key = 0; break;
+				case KEY_TARA: Key = 1;	break;
+				case KEY_M1:	Key = 2;	break;
+				case KEY_RCL:   Key = 3;   break;   
+				case KEY_CHG:   Key = 4;   break;
+				case KEY_MAS:   Key = 5;   break;
+				case KEY_M2:   Key = 6;   break;
+				case KEY_MEM:   Key = 7;   break;
+				case KEY_7:   Key = 8;   break;
+				case KEY_4:   Key = 9;   break;
+				case KEY_1:   Key = 10;   break;
+				case KEY_C:   Key = 11;   break;
+				case KEY_8:   Key = 12;   break;
+				case KEY_5:   Key = 13;   break;
+				case KEY_2:   Key = 14;   break;
+				case KEY_0:   Key = 15;   break;
+				case KEY_9:   Key = 16;   break;
+				case KEY_6:   Key = 17;   break;
+				case KEY_3:   Key = 18;   break;
+				case KEY_PUNTO:   Key = 19;   break;
+			}
 			
+
+LCD_GLASS_Clear();
+			LCD_GLASS_String(Name_Tecla[(char)(Key)], LCD_TOTAL);
+			sPush_Tecla[(char)(Key)] = 1;
+			//LCD_GLASS_Float((float)Key,0, LCD_TOTAL);
 			iSumaTeclas = 0;
 			for(i=0; i<iNumberTeclas; i++){
 				iSumaTeclas += sPush_Tecla[i];
 			}
 						
-			if(iSumaTeclas == iNumberTeclas-1){
+			if(iSumaTeclas == iNumberTeclas){
 				LCD_GLASS_Clear();
 				LCD_GLASS_String("  PASS", LCD_TOTAL);	
 				vSound_Saved_Param();
