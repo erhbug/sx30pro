@@ -22,12 +22,12 @@
 #define ADDRESS_PAGE_28 0x7000
 #define ADDRESS_PAGE_29 0x7400
 
-#define MINIMUN_ADDRESS_ALLOWED      ADDRESS_PAGE_27
+#define MINIMUN_ADDRESS_ALLOWED      ADDRESS_PAGE_28
 #define PAGE_SIZE      0X400
 
-#define ADDRESS_AUX_PAGE             ADDRESS_PAGE_26 //No usar esta pagina, se usa como auxiliar 
-#define ADDRESS_SCALE_CONFIG_PAGE    ADDRESS_PAGE_27
-#define ADDRESS_QLTY_AND_CNTRS_PAGE  ADDRESS_PAGE_28
+#define ADDRESS_AUX_PAGE             ADDRESS_PAGE_27 //No usar esta pagina, se usa como auxiliar 
+#define ADDRESS_SCALE_CONFIG_PAGE    ADDRESS_PAGE_28
+//#define ADDRESS_QLTY_AND_CNTRS_PAGE  ADDRESS_PAGE_28
 #define ADDRESS_PLU                  ADDRESS_PAGE_29
 
 extern unsigned char NRM_securty;						// EEPROM °²È«ÂëA

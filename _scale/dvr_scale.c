@@ -678,7 +678,7 @@ void vPreConfiguration(unsigned char cPreConfiguration){
 	NRM_securty = 0xaa;
 	e2rom_erase(ADDRESS_AUX_PAGE);
 	e2rom_erase(ADDRESS_SCALE_CONFIG_PAGE);
-	e2rom_erase(ADDRESS_QLTY_AND_CNTRS_PAGE);
+	e2rom_erase(ADDRESS_PLU);
 	NRM_securty = 0x00;
 
 	//vErase_All_Address_Plus();
