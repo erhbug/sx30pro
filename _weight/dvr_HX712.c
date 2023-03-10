@@ -147,8 +147,8 @@ float fFilter_Averaging(unsigned long iActualWeight, unsigned char cFastFill){
 //Funcion para leer adc:
 float fRead_Adc(unsigned char cFillFilter){	
 	float result;	
-	ReadHX712();			
-    //LowPassF();
+	//ReadHX712();			
+    LowPassF();
 	result = fFilter_Averaging(ADcode_pre,cFillFilter);
 	//LCD_GLASS_Float(ADcode_pre,0, LCD_TOTAL);
 	return result;
