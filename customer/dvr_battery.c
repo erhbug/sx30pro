@@ -15,14 +15,22 @@
  * Date:			12/02/13
  */
  
+#include <REG52.H>
 #include <stdio.h>
 #include <string.h>
-#include "main.h"
-#include "dvr_def.h"
-#include "dvr_scale.h"
-#include "dvr_lcd.h"
-#include "dvr_battery.h"
-#include "dvr_keyboard.h"
+
+#include "./_scale/dvr_def.h"
+#include "./_scale/dvr_scale.h"
+#include "./_display/dvr_lcd_SDI1621.h"
+#include "./customer/dvr_battery.h"
+#include "./customer/keyboard.h"
+#include "./_solidic/head_file_version.h"
+
+
+
+sbit BAT_DET_PIN = P0^5;
+
+
 
 #define HIGH_SPEED_CLOCK 	1
 #define LOW_SPEED_CLOCK		0
@@ -69,8 +77,8 @@ void vDriver_Backlight_Source(unsigned char cEliminadorOn);
 void vVbatBad(void);
 void vVbatHigh(void);
 void vVadapHigh(void);
-int vGet_ADCx_Value(uint16_t ADC_Channel, int iSampleNumber);
-int vGet_ADCx_Value_Ref(uint16_t ADC_Channel, int iSampleNumber);
+//int vGet_ADCx_Value(uint16_t ADC_Channel, int iSampleNumber);
+//int vGet_ADCx_Value_Ref(uint16_t ADC_Channel, int iSampleNumber);
 
 #if DISPLAY_20400047_EN > 0
 
@@ -81,8 +89,8 @@ const float lvl_2 = 3.65;
 const float lvl_1 = 3.52;
 
 
-uint8_t estado=0;
-uint8_t var=0;
+unsigned char estado=0;
+unsigned char var=0;
 
 void driver_symbol(void);
 void driver_symbol_init(void);
@@ -93,7 +101,7 @@ void driver_symbol_init(void);
 
 */
 void vGestorBateria(void){
-	
+/*	
 	unsigned char bStatus_Volt;
 
 	if(srFlagScale.bReadBattery > 0){
@@ -136,17 +144,17 @@ void vGestorBateria(void){
 					LCD_BlinkConfig(LCD_BlinkMode_Off,LCD_BlinkFrequency_Div128);
 					srFlagScale.bMsgBatteryLow = 0;
 					srFlagScale.bBateriaLow = 0;
-					srFlagScale.bBateriaCount = 0;
+					//srFlagScale.bBateriaCount = 0;
 				}
 				srFlagScale.bSourceVoltage =  SOURCE_BATTERY;
 				break;
 			
 			case SOURCE_BATTERY_HIGH:	
 				if(srFlagScale.bBateriaLow == 1){
-					LCD_BlinkConfig(LCD_BlinkMode_Off,LCD_BlinkFrequency_Div128);
-					srFlagScale.bMsgBatteryLow = 0;
+//					LCD_BlinkConfig(LCD_BlinkMode_Off,LCD_BlinkFrequency_Div128);
+//					srFlagScale.bMsgBatteryLow = 0;
 					srFlagScale.bBateriaLow = 0;
-					srFlagScale.bBateriaCount = 0;
+//					srFlagScale.bBateriaCount = 0;
 				}
 				
 				vVbatHigh();
@@ -157,7 +165,7 @@ void vGestorBateria(void){
 				srFlagScale.bSourceVoltage =  SOURCE_BATTERY;
 				srFlagScale.bBateriaLow = 1;
 				OffBackLight;
-			/* //CCC 
+			 //CCC 
 				if(srFlagScale.bBateriaCount > 8){
 					srFlagScale.bBateriaCount = 0;
 					srFlagScale.bMsgBatteryLow = 0;
@@ -179,8 +187,8 @@ void vGestorBateria(void){
 					LCD_GLASS_Symbols(SYMBOL_ZERO, 0);				
 					LCD_GLASS_Symbols(SYMBOL_X, 0);
 					return;
-				}*/else{
-					srFlagScale.bMsgBatteryLow = 0;
+				}else{
+//					srFlagScale.bMsgBatteryLow = 0;
 				}
 				break;
 				
@@ -188,15 +196,15 @@ void vGestorBateria(void){
 				
 				OffBackLight;
 				LCD_GLASS_Clear();
-				LCD_BlinkConfig(LCD_BlinkMode_Off,LCD_BlinkFrequency_Div128);
+//				LCD_BlinkConfig(LCD_BlinkMode_Off,LCD_BlinkFrequency_Div128);
 				
-			/*	if(stScaleParam.cLenguage == ENGLISH){
+				if(stScaleParam.cLenguage == ENGLISH){
 					LCD_GLASS_String("LOW  ", LCD_PRECIO);	
 					LCD_GLASS_String("  BATT", LCD_TOTAL);
 				}else{
 					LCD_GLASS_String("BAJA  ", LCD_PRECIO);	
 					LCD_GLASS_String("   BAT", LCD_TOTAL);
-				}*/
+				}
 
 				if(stScaleParam.cLenguage == ENGLISH){
 					LCD_GLASS_String("LOW ", LCD_PESO);	
@@ -208,14 +216,14 @@ void vGestorBateria(void){
 					LCD_GLASS_String(" OFF", LCD_TOTAL);
 				}
 
-				strTimer.cFLag_TimerE_Start = 1;
-				strTimer.cFLag_TimerE_End = 0;	
+//				strTimer.cFLag_TimerE_Start = 1;
+//				strTimer.cFLag_TimerE_End = 0;	
 				
-				while(strTimer.cFLag_TimerE_End == 0){
-					vReadKey();
-					IWDG->KR = IWDG_KEY_REFRESH;
-				}
-				IWDG->KR = IWDG_KEY_ENABLE;
+//				while(strTimer.cFLag_TimerE_End == 0){
+//					vReadKey();
+//					IWDG->KR = IWDG_KEY_REFRESH;
+//				}
+			//	IWDG->KR = IWDG_KEY_ENABLE;
 				while(1);    // Wait until reset occurs from IWDG
 				
 				break;
@@ -223,10 +231,10 @@ void vGestorBateria(void){
 			case SOURCE_ADAPTER_HIGH:
 			
 				if(srFlagScale.bBateriaLow == 1){
-					LCD_BlinkConfig(LCD_BlinkMode_Off,LCD_BlinkFrequency_Div128);
-					srFlagScale.bMsgBatteryLow = 0;
+//					LCD_BlinkConfig(LCD_BlinkMode_Off,LCD_BlinkFrequency_Div128);
+//					srFlagScale.bMsgBatteryLow = 0;
 					srFlagScale.bBateriaLow = 0;
-					srFlagScale.bBateriaCount = 0;
+//					srFlagScale.bBateriaCount = 0;
 				}
 				vVadapHigh();
 			
@@ -238,6 +246,7 @@ void vGestorBateria(void){
 	#endif
 	
 	}
+*/
 }
 
 /**
@@ -273,9 +282,10 @@ void driver_symbol_init(){
 
 void driver_symbol(){
 
-if(eAccionScale == scalePreOnDc || stScaleParam.cSpecialAction == 1)
-	return;
-else if(srFlagScale.bOverLoad == 1)
+//if(eAccionScale == scalePreOnDc || stScaleParam.cSpecialAction == 1)
+//	return;
+//else 
+if(srFlagScale.bOverLoad == 1)
 		{
 			LCD_GLASS_Symbols(9,0); //bateria 0/3
 			LCD_GLASS_Symbols(8,0);
@@ -284,22 +294,22 @@ else if(srFlagScale.bOverLoad == 1)
 			return;
 		} 
 	
-if(eAccionScale==scalePreOnDc || srFlagScale.bOverLoad ==1)
-	return;
+//if(eAccionScale==scalePreOnDc || srFlagScale.bOverLoad ==1)
+//	return;
 
 if(srFlagScale.bSourceVoltage == SOURCE_ADAPTER)
 {
 	
-	if(strTimer.cFLag_TimerCharge_End==1)
+	/*if(strTimer.cFLag_TimerCharge_End==1)
 	{
 			estado++;
 		if(estado==4)
 			estado=0;
-	}
+	}*/
 	
-	if(strTimer.cFLag_TimerCharge_On==0)
+/*	if(strTimer.cFLag_TimerCharge_On==0)
 		strTimer.cFLag_TimerCharge_Start=1;
-
+*/
 	if(fVoltage_Battery>=lvl_5)
 		estado=5;
 /* Condicion de carga completa para TM con dos puntos de lectura de voltaje.
@@ -358,10 +368,10 @@ if(srFlagScale.bSourceVoltage == SOURCE_ADAPTER)
 	}	
 }
 #endif
-
+/*
 unsigned char uGet_Status_Volt(void){
 	
-	vGet_Volts_Ref();
+	//vGet_Volts_Ref();
 	
 	//return SOURCE_ADAPTER;
 	
@@ -369,9 +379,9 @@ unsigned char uGet_Status_Volt(void){
 	
 	vGet_Volts_System();
 	
-/*	if(fVoltage_Ref >= 0.475){
-		fVoltage_Conector = (-5.5483)*fVoltage_Ref + 5.9148;
-	}*/
+// 	if(fVoltage_Ref >= 0.475){
+// 		fVoltage_Conector = (-5.5483)*fVoltage_Ref + 5.9148;
+// }
 		
 	if(fVoltage_Conector > HIGH_ADAPTER){
 		return SOURCE_ADAPTER_HIGH;
@@ -379,16 +389,16 @@ unsigned char uGet_Status_Volt(void){
 		
 	if(fVoltage_Battery < THRESHOLD_VOLTAGE){//if(fVoltage_Conector < LOW_VOLTAGE_ADAPTER){
 		
-/*		if (fVoltage_Conector < NO_ON){
-			return SOURCE_NO_ON;
-		}else if(fVoltage_Conector < LOW_BATTERY_OFF){// || srFlagScale.bStateBatDown){
-			return SOURCE_BATTERY_VERY_LOW;
-		}else if(fVoltage_Conector < LOW_BATTERY_MSG){
-			return SOURCE_BATTERY_LOW;
-		}else{
-			return SOURCE_BATTERY_OK;
-		} 
-*/		
+// 		if (fVoltage_Conector < NO_ON){
+// 			return SOURCE_NO_ON;
+// 		}else if(fVoltage_Conector < LOW_BATTERY_OFF){// || srFlagScale.bStateBatDown){
+// 			return SOURCE_BATTERY_VERY_LOW;
+// 		}else if(fVoltage_Conector < LOW_BATTERY_MSG){
+// 			return SOURCE_BATTERY_LOW;
+// 		}else{
+// 			return SOURCE_BATTERY_OK;
+// 		} 
+// 		
 	if (fVoltage_Battery < NO_ON){
 			return SOURCE_NO_ON;
 		}else if(fVoltage_Battery < LOW_BATTERY_OFF){// || srFlagScale.bStateBatDown){
@@ -403,34 +413,50 @@ unsigned char uGet_Status_Volt(void){
 		return SOURCE_ADAPTER;
 	}
 }
-
+*/
 /**
 
 
 **/
 void vGet_Volts_System(void){
 	
-	int iValue_Adc = 0;
+	unsigned char iValue_Adc = 0;
+	EA = 0;
+	BAT_DET_PIN = 1;
+	SARCON  = 0x09;
+	delay_ms(1);
 	
-	// Lectura del Voltaje del eliminador
-	ADC_SamplingTimeConfig(ADC1, ADC_Group_FastChannels, ADC_SamplingTime_96Cycles);
-	
-	iValue_Adc = vGet_ADCx_Value(ADC_VIN, 100);	//Obtiene voltaje eliminador
-	fVoltage_Conector = (float)(iValue_Adc)*(0.000805664)*6.11+1;
-	fVoltage_Battery = (float)(iValue_Adc)*(0.000805664)*6.11+0.37;
+	if(!(SARCON & 0x04)) // 
+	{
+		SARCON |= 0x04;
+		while(SARCON & 0x04) // 
+		{
+		}
+	}
 
+	iValue_Adc = (unsigned char)SARDATA;
+
+	SARCON  &= 0xf7;
+	EA = 1;
+
+	
+	
+	//iValue_Adc = vGet_ADCx_Value(ADC_VIN, 100);	//Obtiene voltaje eliminador
+	//fVoltage_Conector = (float)(iValue_Adc)*(0.000805664)*6.11+1;
+	fVoltage_Battery = ((3.3/256.0 * (float)iValue_Adc)/10.0)*61.1;
+	if(fVoltage_Battery>5.0)fVoltage_Battery+=0.2;
+
+     LCD_GLASS_Float(fVoltage_Battery,2,LCD_TOTAL);
+/*
 if(fVoltage_Ref > REFERENCE)
 	{
 		fVoltage_Battery = (float)(iValue_Adc)*FactConvAjustado*6.11+0.37;
 	} 
-		
+*/		
 }
 
-/*
-
-*/
 void vGet_Volts_Ref(void){
-
+/*
 	int iValue_Adc;	
 
 	srFlagScale.bStateBatDown = 0;
@@ -443,7 +469,7 @@ void vGet_Volts_Ref(void){
 	{
 		FactConvAjustado = (CuentasAdcRef*0.000805664)/(float)(iValue_Adc);
 	}
-/*	if(fVoltage_Ref > REFERENCE){
+	if(fVoltage_Ref > REFERENCE){
 		srFlagScale.bStateBatDown = 1;
 	}
 	else{
@@ -456,7 +482,7 @@ void vGet_Volts_Ref(void){
 **/
 
 void vDriver_Backlight_Source(unsigned char cEliminadorOn){
-	
+/*	
 	if(cEliminadorOn != SOURCE_ADAPTER && srFlagScale.bBateriaLow == 0)
 	{
 		if(eAccionScale == ScaleRun || eAccionScale == ScaleWait){
@@ -465,7 +491,7 @@ void vDriver_Backlight_Source(unsigned char cEliminadorOn){
 	}
 
 
-/*	if(cEliminadorOn != 0){
+	if(cEliminadorOn != 0){
 		
 		if(srFlagScale.bEliminadorOn == 1){
 			OffBackLight;
@@ -490,13 +516,13 @@ void vDriver_Backlight_Source(unsigned char cEliminadorOn){
   * Objetivo: Proteger el circuito de una polaridad inversa de la bateria
   * Parametros entrada: Ninguno
 	*/
-void vVbatBad(void){
+/*void vVbatBad(void){
 	
 	int iValue_Adc = 0;
 	float fVoltage_Aux = 0;
 	//enum digi_key Value_Key_Press;
 	
-	LCD_Cmd(ENABLE);		/* Habilita el modulo LCD */	
+	LCD_Cmd(ENABLE);		// Habilita el modulo LCD 	
 	LCD_GLASS_Clear();
 	
 	if(stScaleParam.cLenguage == ENGLISH){
@@ -521,14 +547,14 @@ void vVbatBad(void){
 	
 	LCD_GLASS_Clear();
 }
-
+*/
 /*
 */
 void vVbatHigh(void){
-	
+/*	
 	float fVoltage_Aux = 0;
 
-	LCD_Cmd(ENABLE);		/* Habilita el modulo LCD */	
+	LCD_Cmd(ENABLE);		 Habilita el modulo LCD 	
 	LCD_GLASS_Clear();
 	
 	if(stScaleParam.cLenguage == ENGLISH){
@@ -544,15 +570,15 @@ void vVbatHigh(void){
 		vSound_Saved_Param();
 	}
 	
-	LCD_GLASS_Clear();
+	LCD_GLASS_Clear();*/
 }
 /*
 */
 void vVadapHigh(void){
-	
+/*	
 	float fVoltage_Aux = 0;
 
-	LCD_Cmd(ENABLE);		/* Habilita el modulo LCD */	
+	LCD_Cmd(ENABLE);		 Habilita el modulo LCD 	
 	LCD_GLASS_Clear();
 	
 	if(stScaleParam.cLenguage == ENGLISH){
@@ -569,7 +595,7 @@ void vVadapHigh(void){
 	}
 	
 	LCD_GLASS_Clear();
-	
+	*/
 }
 
 
@@ -579,8 +605,8 @@ void vVadapHigh(void){
   ******************************************************************************
 	*/
 void vVbatVeryLow(void){
-
-	LCD_Cmd(ENABLE);		/* Habilita el modulo LCD */	
+/*
+	LCD_Cmd(ENABLE);		Habilita el modulo LCD 	
 	OffBackLight;
 	LCD_GLASS_Clear();
 	
@@ -600,75 +626,7 @@ void vVbatVeryLow(void){
 	}
 	IWDG->KR = IWDG_KEY_ENABLE;
 	while(1);    // Wait until reset occurs from IWDG
-}
-
-/**
-  ******************************************************************************
-  * Objective: To obtain the value of the channel ADC.
-	******************************************************************************
-	*/
-int vGet_ADCx_Value(uint16_t ADC_Channel, int iSampleNumber){
-
-	long iValue_ADC = 0;
-	int i = 0;
-	
-	CLK_PeripheralClockConfig(CLK_Peripheral_ADC1, ENABLE);
-	ADC_Cmd(ADC1, ENABLE);
-	ADC_ChannelCmd(ADC1, ADC_Channel, ENABLE);
-		
-	for(i=0; i<iSampleNumber; i++){		
-		ADC_SoftwareStartConv(ADC1);
-		
-		while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC)){}
-	
-		iValue_ADC += (long)(ADC_GetConversionValue(ADC1));
-	}
-	
-	iValue_ADC = iValue_ADC/iSampleNumber;
-					
-	ADC_ChannelCmd(ADC1, ADC_Channel, DISABLE);
-	
-	ADC_Cmd(ADC1, DISABLE);
-	CLK_PeripheralClockConfig(CLK_Peripheral_ADC1, DISABLE);
-	
-	return (int)(iValue_ADC);
-}
-
-
-/**
-  ******************************************************************************
-  * Objective: To obtain the value of the Reference channel ADC.
-	******************************************************************************
-	*/
-int vGet_ADCx_Value_Ref(uint16_t ADC_Channel, int iSampleNumber){
-
-	long iValue_ADC = 0;
-	int i = 0;
-	
-	CLK_PeripheralClockConfig(CLK_Peripheral_ADC1, ENABLE);
-	ADC_VrefintCmd(ENABLE);
-	ADC_Cmd(ADC1, ENABLE);
-	ADC_ChannelCmd(ADC1, ADC_Channel, ENABLE);
-	
-	for(i=0; i<iSampleNumber; i++){		
-		ADC_SoftwareStartConv(ADC1);
-		
-		while(!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC)){}
-	
-		iValue_ADC += (long)(ADC_GetConversionValue(ADC1));
-	}
-	
-	iValue_ADC = iValue_ADC/iSampleNumber;
-					
-	ADC_ChannelCmd(ADC1, ADC_Channel, DISABLE);
-	
-	ADC_Cmd(ADC1, DISABLE);
-	
-	ADC_VrefintCmd(DISABLE);
-	
-	CLK_PeripheralClockConfig(CLK_Peripheral_ADC1, DISABLE);
-	
-	return (int)(iValue_ADC);
+*/
 }
 
 /*

@@ -4,6 +4,8 @@
 #include "./_scale/dvr_scale.h"
 #include "./customer/beeper.h"
 #include "./customer/dvr_inicio.h"
+
+#include "./customer/dvr_battery.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -45,6 +47,10 @@ void main(void) {
   init_int_timer0();
   LCD_GLASS_Init();
   eAccionScale = ScalePreOn; /* Inicia en el primer estado Off */
+ /* while(1){
+    LCD_GLASS_String("6F",LCD_PESO);
+    vGet_Volts_System();
+  }*/
   while (1) {
    switch (eAccionScale) {
     case ScalePreOn:
@@ -62,11 +68,11 @@ void main(void) {
       break;
 
     case ScaleBattery:
+      //cRta_Function = uGet_Status_Volt();
       eAccionScale = ScaleWait;
       break;
 
     case ScaleWait:
-
       if (cWait_Scale() == 0) {
         eAccionScale = ScaleRun;
         LCD_GLASS_Clear();

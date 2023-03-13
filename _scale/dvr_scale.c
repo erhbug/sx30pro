@@ -9,7 +9,7 @@
 #include "./_weight/dvr_HX712.h"
 #include "./_scale/dvr_scale.h"
 #include "./customer/beeper.h"
-#include "./_battery/dvr_battery.h"
+#include "./customer/dvr_battery.h"
 #include "./customer/dvr_registradora.h"
 #include "./customer/usr_dbg.h"
 
@@ -712,6 +712,8 @@ void vPreConfiguration(unsigned char cPreConfiguration){
   ***
 	*/
 unsigned char cRun_Scale(void){
+
+	//vGestorBateria();
 	if(srFlagScale.bOverLoad ==0){//indicador de sobrecarga en la bascula == 0;
 		if(srFlagScale.bSourceVoltage ==  SOURCE_ADAPTER){
 			LCD_GLASS_Symbols(SYMBOL_Y, 1);

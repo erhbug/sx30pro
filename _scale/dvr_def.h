@@ -15,6 +15,8 @@
 #define OnBackLight 	srFlagScale.bBacklight_On = 1; P1|= (1<<5);//GPIO_SetBits(GPIOG, BACK_LIGHT)
 #define OffBackLight	srFlagScale.bBacklight_On = 0; P1&= ~(1<<5);//GPIO_ResetBits(GPIOG, BACK_LIGHT)
 
+
+
 /* ACCIONES */
 
 /*
