@@ -17,11 +17,6 @@
  
 #include <stdio.h>
 #include <string.h>
-#include "stm8l15x.h"
-#include "stm8l15x_tim5.h"
-#include "stm8l15x_iwdg.h"
-#include "stm8l15x_adc.h"
-#include "stm8l15x_lcd.h"
 #include "main.h"
 #include "dvr_def.h"
 #include "dvr_scale.h"
@@ -99,7 +94,7 @@ void driver_symbol_init(void);
 */
 void vGestorBateria(void){
 	
-	u8 bStatus_Volt;
+	unsigned char bStatus_Volt;
 
 	if(srFlagScale.bReadBattery > 0){
 		
@@ -364,7 +359,7 @@ if(srFlagScale.bSourceVoltage == SOURCE_ADAPTER)
 }
 #endif
 
-u8 uGet_Status_Volt(void){
+unsigned char uGet_Status_Volt(void){
 	
 	vGet_Volts_Ref();
 	
