@@ -66,7 +66,6 @@ typedef struct {
 	float fValueOverload;
 	
 	float fVoltage_Batt;
-	float fVoltage_Adap;
 	
 //	float fTemperature;
 	
@@ -129,10 +128,10 @@ enum digi_key{
 
 typedef struct {
 //	unsigned bScaleOn : 1;			/* Indica si la bascula esta encendida o apagada */
-//	unsigned bReadBattery : 1;	/* Indica que ya se puede leer el valor de la bateria */
+	unsigned bReadBattery : 1;	/* Indica que ya se puede leer el valor de la bateria */
 	unsigned bBateriaLow : 1;		/* Indica el estado de la bateria */
-//	unsigned bMsgBatteryLow : 1;
-//	unsigned bBateriaCount : 1;
+	unsigned bMsgBatteryLow : 1;
+	unsigned bBateriaCount : 1;
 	unsigned bSourceVoltage : 1; /* Indica de donde procede el voltaje de alimentacion	bateria o eliminador */
 //	unsigned bZeroTracking : 1;	/* Inidica si la funcion ZeroTrcking esta activada */
 	unsigned bTara : 1;					/* 1 -> Tara Activada, 0 -> Desactivada */
@@ -213,13 +212,15 @@ extern idata FlagScale srFlagScale;
 /* Global variables ----------------------------------------------------------*/
 typedef struct {
 	unsigned char iTimerA;//200mS
-	unsigned int iTimerE;					//5
-	unsigned int iTimerJ;							//  1s
+	unsigned char iTimerC;//1Seg
+	unsigned int iTimerE;//5seg
+	unsigned int iTimerJ;//1min
 	unsigned int iTimerDBG;
 }strTimers;
 extern idata strTimers strTimer;
 
 #define TimerAend 200
+#define TimerCend 1000
 #define TimerEend 5000
 #define TimerJend 60000
 
@@ -229,7 +230,7 @@ enum ActionScale{
 	ScaleBattery, ScalePreOn, ScaleWait, 
 	ScaleRun,
 };
-//extern enum ActionScale eAccionScale;
+extern enum ActionScale eAccionScale;
 
 
 // Global function prototypes -----------------------------------------------

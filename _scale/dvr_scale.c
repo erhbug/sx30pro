@@ -177,7 +177,6 @@ void vSaveParamScale(unsigned char cType_Parameter){
 			
 		case Parameter_Voltages:
 			flash_write_float32(ADDR_VOLT_BATT, stScaleParam.fVoltage_Batt);
-			flash_write_float32(ADDR_VOLT_ADAP, stScaleParam.fVoltage_Adap);
 			break;
 		
 	
@@ -656,7 +655,6 @@ void vPreConfiguration(unsigned char cPreConfiguration){
     stScaleParam.cFormatoImpresion = 2; 
 	stScaleParam.cTypeBeeper = 0;
 	stScaleParam.fVoltage_Batt = 0;
-	stScaleParam.fVoltage_Adap = 0;
 	stScaleParam.fCapacityCali = 0;
 	stScaleParam.fPointZeroCali = 0;
 	stScaleParam.fFactorCalibrate = 5;//stScaleParam.fFactorCalibrate = 2;
@@ -715,7 +713,7 @@ unsigned char cRun_Scale(void){
 
 	//vGestorBateria();
 	if(srFlagScale.bOverLoad ==0){//indicador de sobrecarga en la bascula == 0;
-		if(srFlagScale.bSourceVoltage ==  SOURCE_ADAPTER){
+		if(srFlagScale.bSourceVoltage >=  SOURCE_ADAPTER_LOW){
 			LCD_GLASS_Symbols(SYMBOL_Y, 1);
 		}else{
 			LCD_GLASS_Symbols(SYMBOL_Y, 0);
@@ -781,7 +779,7 @@ unsigned char cRun_Scale(void){
 				strTimer.iTimerJ = 1;
 				srFlagScale.bBacklight_On = 1;	
 			}else{
-				if(srFlagScale.bSourceVoltage != SOURCE_ADAPTER && strTimer.iTimerJ >= TimerJend){
+				if(srFlagScale.bSourceVoltage < SOURCE_ADAPTER_LOW && strTimer.iTimerJ >= TimerJend){
 					OffBackLight;
 					srFlagScale.bBacklight_On = 0;	
 				}
@@ -793,7 +791,7 @@ unsigned char cRun_Scale(void){
 					strTimer.iTimerJ = 1;
 					srFlagScale.bBacklight_On = 1;	
 				}else{
-					if(srFlagScale.bSourceVoltage != SOURCE_ADAPTER && strTimer.iTimerJ >= TimerJend){
+					if(srFlagScale.bSourceVoltage < SOURCE_ADAPTER_LOW && strTimer.iTimerJ >= TimerJend){
 						OffBackLight;
 						srFlagScale.bBacklight_On = 0;	
 				}
@@ -1081,6 +1079,7 @@ float fCuentasToPeso(float fCountADC){
   ******************************************************************************
 	*/
 float fSleep_Run(void){
+	
 float fValueReturn = 0;	
 /*	float fWeightScale = 0;
 	

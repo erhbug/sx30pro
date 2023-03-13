@@ -259,24 +259,6 @@ void vScan_Key(void){
 					vActionMemoryPlu(2);
 					break;
 	
-	/*			case KEY_M3:
-					vActionMemoryPlu(3);
-					break;
-		
-				case KEY_M4:
-					vActionMemoryPlu(4);
-					break;
-					
-				case KEY_FOCO:
-					if(srFlagScale.bBacklight_On){
-						OffBackLight;
-					}else{
-						if(srFlagScale.bBateriaLow == 0){
-						if(stScaleParam.cBacklight){OnBackLight;}
-						}
-					}
-					break;
-	*/			
 				case KEY_MAS:
 					
 					if(srFlagScale.bFlagWeightNeg == 0 && (stScaleParam.fTotal_Venta > 0 || stScaleParam.cFormatoImpresion == 2)){
@@ -348,41 +330,6 @@ void vScan_Key(void){
 
 /**
   ******************************************************************************
-  * Objetivo: Asignar valor decimal a tecla pulsada si esta entre 0 y 9.
-  * Parametros entrada: Nombre de la tecla.
-	* Parametros Salida: Valor decimal de la tecla pulsada.
-  * Prerequisitos: 
-  ***
-	*/
-/*unsigned char cConvert_Char(unsigned char Key_Num){
-	
-	if(Key_Num == KEY_9){
-		return '9';
-	}else if(Key_Num == KEY_8){
-		return '8';
-	}else if(Key_Num == KEY_7){
-		return '7';
-	}else if(Key_Num == KEY_6){
-		return '6';
-	}else if(Key_Num == KEY_5){
-		return '5';
-	}else if(Key_Num == KEY_4){
-		return '4';
-	}else if(Key_Num == KEY_3){
-		return '3';
-	}else if(Key_Num == KEY_2){
-		return '2';
-	}else if(Key_Num == KEY_1){
-		return '1';
-	}else if(Key_Num == KEY_0){
-		return '0';
-	}else{
-		return Key_Num;
-	}
-}*/
-
-/**
-  ******************************************************************************
   * Objetivo: Ejecutar la accion en la memoria de productos.
   * Parametros entrada:
 	* Parametros Salida:
@@ -402,45 +349,6 @@ void vActionMemoryPlu(unsigned char cIndexMemory){
 	srFlagScale.bWritePlus = 0;
 	srFlagScale.bReadPlus = 0;
 }
-
-
-/**
-  ******************************************************************************
-  * Objetivo: Ensamblar numero con las teclas pulsadas
-  * Parametros entrada:
-	* Parametros Salida:
-  * Prerequisitos: 
-  ***
-	*/
-/*
-float vCapture_Valor_Test(unsigned char fNew_Digit, unsigned char cDecimal_Number, 
-		float fValue_Capture){
-	
-	long int iValue_Funct = 0;
-	unsigned char *pText_Valor = cValue_Precio;
-	unsigned char i = 0;
-
-
-	if(fValue_Capture == 0){
-		for(i=0; i<5; i++){
-			pText_Valor[i] = ' ';
-		}
-	}
-
-	for(i=0; i<4; i++){
-		pText_Valor[i] = pText_Valor[i+1];
-	}
-	
-	pText_Valor[4] = fNew_Digit;
-	
-	//sscanf(cValue_Precio, "%ld", &iValue_Funct);//QUÉ SE SUPONE QUE HACE ESTO AQUI???!!	
-	//Hacer que los valores leídos en el teclado sean el precio del producto
-
-	return (float)(iValue_Funct);
-	
-	return 0.0;
-}
-*/
 
 /**
   ******************************************************************************

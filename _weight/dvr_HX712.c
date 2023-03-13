@@ -7,10 +7,7 @@ unsigned long ADcode_pre=0;
 float  xdata fAverage_x = 0;
 unsigned char iValueOut = 0;
 float xdata arfDataFilter_x[FILTER_SIZE_BUFF] = {0.00};
-//extern unsigned long idata ADcode_pre;
-//extern float arfDataFilter_x[];
-//extern float fAverage_x;
-//extern unsigned char iValueOut;
+
 void _nop_(void);
 
 
@@ -40,22 +37,6 @@ void ReadHX712(void){ //by ERH
 		if(MISO)ADcode_pre++;
 	}
 	//1 bit de configuración a 10Hz
- /*   
-	ADcode_pre >>= 7;
-	sclk_unit();
-
-    
-	if(ADcode_pre == 65535){
-//	  srFlagScale.bErrorReadAdc=1;
-	}else if(ADcode_pre > 65535){
-		ADcode_pre = 131072 - ADcode_pre;
-		ADcode_pre = 32500 - ADcode_pre;
-	//	srFlagScale.bErrorReadAdc = 0;
-	}else{
-		ADcode_pre += 32500;
-//		srFlagScale.bErrorReadAdc = 0;
-	}
-*/
 	ADcode_pre >>= 5;
 	sclk_unit();
 	

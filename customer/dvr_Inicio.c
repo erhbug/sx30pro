@@ -42,12 +42,8 @@ code enum digi_key eBACKLIGHT[8] = {KEY_TARA, KEY_1, KEY_0, KEY_1, KEY_0};
 code unsigned char eCODE_CALIBRACION[7]= "765432";
 code unsigned char eCODE_MENU[7]= "779103";
 
-void vTestTeclado(void);
+//void vTestTeclado(void);
 void vCalidadTest(void);
-void vSpecial_Action(unsigned char val)
-{
-val=0;
-}
 
 unsigned char cWait_Scale(void){	
 enum digi_key arPass_Configuration[8] = {0,0,0,0,0,0,0,0};
@@ -104,52 +100,8 @@ unsigned int TimeEnd=2000;
 			    vSound_Saved_Param();
 				vPreConfiguration(PreConfig40KG);
 				return 1;
-			}else if(strcmp(eDATA_SCALE, arPass_Configuration) == 0){
-				vSpecial_Action(Data_Scale);
-				return 1;
-			}else if(strcmp(eOFFSET_ADC, arPass_Configuration) == 0){
-				 vSpecial_Action(Offset_Adc);
-				 return 1;
-			}else if(strcmp(eERASE_PLUS, arPass_Configuration) == 0){
-				 vSpecial_Action(Erase_Plus);
-				 return 1;
-				return 1;
-			}else if(strcmp(eRESET_COUNTER, arPass_Configuration) == 0){
-				 vSpecial_Action(Reset_Counter);
-				return 1;
-			}else if(strcmp(eVIEW_COUNTER_CALIBRATION, arPass_Configuration) == 0){
-				 vSpecial_Action(View_Counter_Calibration);
-				 return 1;
-			}else if(strcmp(eVIEW_COUNTER_CONFIGURATION, arPass_Configuration) == 0){
-				vSpecial_Action(View_Counter_Configuration);
-				return 1;
-			}else if(strcmp(eVIEW_VOLTAGE_BATTERY, arPass_Configuration) == 0){
-				vSpecial_Action(View_Voltage_Battery);
-				return 1;
-			}else if(strcmp(eVIEW_MEMORY, arPass_Configuration) == 0){
-				vSpecial_Action(View_Memory);
-				return 1;
-			}else if(strcmp(eACT_PROGRAM, arPass_Configuration) == 0){
-				vSpecial_Action(Activar_Debug);
-				return 1;
-			}else if(strcmp(eINF_CAL, arPass_Configuration) == 0){
-				vSpecial_Action(Info_Calibracion);
-				return 1;
-			}else if(strcmp(eTEMPERATURE, arPass_Configuration) == 0){
-				vSpecial_Action(Function_Temperature);
-				return 1;
-			}else if(strcmp(eVER_OVERLOAD, arPass_Configuration) == 0){
-				vSpecial_Action(Function_VerOverload);
-				return 1;
-			}else if(strcmp(eTEST_TECLADO, arPass_Configuration) == 0){				
-				vSpecial_Action(Function_TestTeclado);	
-				return 1;
 			}else if(strcmp(eTEST_CALIDAD, arPass_Configuration) == 0){				
 				vCalidadTest();
-				//vSpecial_Action(Function_CalidadTest);	
-				return 1;
-			}else if(strcmp(eBACKLIGHT, arPass_Configuration) == 0){				
-				vSpecial_Action(Function_Backlight);	
 				return 1;
 			}else if(strcmp(eSEQUENCE_RESET_REFERENCE, arPass_Configuration) == 0){
 						
@@ -178,7 +130,7 @@ unsigned int TimeEnd=2000;
 	 strTimer.iTimerE=0;
 			if(strcmp(eLCD_ALL_SEGMENT, arPass_Configuration) == 0){
 				
-				vSpecial_Action(All_Segment);
+;
 				
 			}else if(strcmp(eSOBRE_PESO_OFF,arPass_Configuration) == 0){
 				srFlagScale.bTopeSobrePeso = 1;
@@ -208,17 +160,10 @@ unsigned int TimeEnd=2000;
 
 
 void vCalidadTest(void){
-	
-	float fAux_Value = 0;
-	
-	LCD_GLASS_Clear();			
+	float fAux_Value = 0;	
 	
 //	srFlagScale.bCalidadTest = 1;
 	srFlagScale.bTopeSobrePeso = 1;
-		
-	LCD_GLASS_String("SOBRE", LCD_PESO);
-	LCD_GLASS_String(" PESO", LCD_PRECIO);
-	LCD_GLASS_String("   OFF", LCD_TOTAL);
 	vSound_Saved_Param();
 	vSound_Saved_Param();
 	
@@ -237,10 +182,6 @@ void vCalidadTest(void){
 	
 	do{
 		key_scan();
-	
-		if(Key != KEY_NULL){
-			vBeep_Key();
-		}
 		
 		cRun_Scale();
 		
@@ -260,19 +201,10 @@ void vCalidadTest(void){
 		fAux_Value = fRead_Adc(5);
 		fAux_Value = fCuentasToPeso(fAux_Value);
 		key_scan();
-	
-		if(Key != KEY_NULL){
-			vBeep_Key();
-		}
 		
 		LCD_GLASS_Float(fAux_Value, stScaleParam.cWeightDecimal, LCD_PESO);			
 		
 	}while(Key != KEY_C);
-	
-	vSpecial_Action(Data_Scale);	
-	vSpecial_Action(View_Voltage_Battery);
-	vSpecial_Action(Erase_Plus);
-	vSpecial_Action(Reset_Counter);
 	
 	LCD_GLASS_Clear();
 	LCD_GLASS_Float(stScaleParam.iCounter_Calibration, 0, LCD_PRECIO);
@@ -315,7 +247,7 @@ void vCalidadTest(void){
 		IWDG_KEY_REFRESH;			
 	}
 	OnBackLight;
-	vTestTeclado();
+	//vTestTeclado();
 	
 //	srFlagScale.bCalidadTest = 0;
 	srFlagScale.bTopeSobrePeso = 0;
@@ -323,9 +255,8 @@ void vCalidadTest(void){
 	stScaleParam.fVenta_Total_Scale = 0;
 }
 
-
-void vTestTeclado(void){
-	
+/*
+void vTestTeclado(void){	
 	unsigned char *Name_Tecla[(char)20] = {"CERO", "TARA", "NN1", 
 	"RCL", "CHG", "NNAS", "NN2", "NNENN", "7",
 	"4", "1", "C", "8", "5",
@@ -342,9 +273,7 @@ void vTestTeclado(void){
 	iNumberTeclas = 20;
 //	srFlagScale.bCalidadTest = 2;
 memset(sPush_Tecla, 0x00, sizeof(sPush_Tecla));
-
-	while(1){
-		
+	while(1){		
 		key_scan();
 		if(Key != KEY_NULL){		
 			switch(Key){
@@ -369,7 +298,6 @@ memset(sPush_Tecla, 0x00, sizeof(sPush_Tecla));
 				case KEY_3:   Key = 18;   break;
 				case KEY_PUNTO:   Key = 19;   break;
 			}
-			
 
 LCD_GLASS_Clear();
 			LCD_GLASS_String(Name_Tecla[(char)(Key)], LCD_TOTAL);
@@ -393,3 +321,4 @@ LCD_GLASS_Clear();
 }
 
 
+*/

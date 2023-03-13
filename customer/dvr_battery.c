@@ -26,11 +26,7 @@
 #include "./customer/keyboard.h"
 #include "./_solidic/head_file_version.h"
 
-
-
 sbit BAT_DET_PIN = P0^5;
-
-
 
 #define HIGH_SPEED_CLOCK 	1
 #define LOW_SPEED_CLOCK		0
@@ -48,17 +44,9 @@ sbit BAT_DET_PIN = P0^5;
 
 #define CuentasAdcRef       1514 //*** Cuentas de ADC para 1.22V de referencia
 
-float fVoltage_Conector = 0;
 float fVoltage_Battery = 0;
-float fVoltage_Ref = 0;
 
 float FactConvAjustado = 0;
-
-enum ActionCargador{ 
-	CargadorOff, CargadorOn, CargadorInicio, CargadorTrickle 
-};
-
-enum ActionCargador eAccionCargador;
 
 struct Time_Battery{
 	long iDescanso_2_Hora;
@@ -67,10 +55,9 @@ struct Time_Battery{
 };
 struct Time_Battery stTime_Battery;
 
-//extern enum ActionScale eAccionScale;
+extern enum ActionScale eAccionScale;
 
 void vGet_Volts_System(void);
-void vGet_Volts_Ref(void);
 unsigned char uGet_Status_Volt(void);
 void vDriver_Backlight_Source(unsigned char cEliminadorOn);
 
@@ -101,28 +88,18 @@ void driver_symbol_init(void);
 
 */
 void vGestorBateria(void){
-/*	
 	unsigned char bStatus_Volt;
 
-	if(srFlagScale.bReadBattery > 0){
-		
-		srFlagScale.bReadBattery = 0;
-		
-		if(stScaleParam.iDebug != 24275){ //Debug OFF{
-			uOFF_Carga;
-		}
-		
+	if(srFlagScale.bReadBattery > 0){		
+		srFlagScale.bReadBattery = 0;		
 		bStatus_Volt = uGet_Status_Volt();
-	
-//		vDriver_Backlight_Source(bStatus_Volt);
+		vDriver_Backlight_Source(bStatus_Volt);
 		
 		switch(bStatus_Volt){
+				
 			
-			
-			
-			case SOURCE_ADAPTER:
+			case SOURCE_ADAPTER_OK:
 				if(srFlagScale.bBateriaLow == 1){
-					LCD_BlinkConfig(LCD_BlinkMode_Off,LCD_BlinkFrequency_Div128);
 					srFlagScale.bMsgBatteryLow = 0;
 					srFlagScale.bBateriaLow = 0;
 					srFlagScale.bBateriaCount = 0;
@@ -130,23 +107,20 @@ void vGestorBateria(void){
 				if(eAccionScale == ScaleRun || eAccionScale ==ScaleWait){					
 					if(stScaleParam.cBacklight){OnBackLight;}
 				}	
-				srFlagScale.bSourceVoltage =  SOURCE_ADAPTER;
-				Auto_Off_On_15m;
-				Restart_Sleep_Time;				
-				if(stScaleParam.iDebug != 24275){ //Debug OFF
-					uON_Carga;
-				}
+				srFlagScale.bSourceVoltage =  SOURCE_ADAPTER_OK;
+				//Auto_Off_On_15m;
+				//Restart_Sleep_Time;				
 				
 				break;
 				
 			case SOURCE_BATTERY_OK:
 				if(srFlagScale.bBateriaLow == 1){
-					LCD_BlinkConfig(LCD_BlinkMode_Off,LCD_BlinkFrequency_Div128);
+					//LCD_BlinkConfig(LCD_BlinkMode_Off,LCD_BlinkFrequency_Div128);
 					srFlagScale.bMsgBatteryLow = 0;
 					srFlagScale.bBateriaLow = 0;
-					//srFlagScale.bBateriaCount = 0;
+					srFlagScale.bBateriaCount = 0;
 				}
-				srFlagScale.bSourceVoltage =  SOURCE_BATTERY;
+				srFlagScale.bSourceVoltage =  SOURCE_BATTERY_OK;
 				break;
 			
 			case SOURCE_BATTERY_HIGH:	
@@ -154,7 +128,7 @@ void vGestorBateria(void){
 //					LCD_BlinkConfig(LCD_BlinkMode_Off,LCD_BlinkFrequency_Div128);
 //					srFlagScale.bMsgBatteryLow = 0;
 					srFlagScale.bBateriaLow = 0;
-//					srFlagScale.bBateriaCount = 0;
+					srFlagScale.bBateriaCount = 0;
 				}
 				
 				vVbatHigh();
@@ -162,17 +136,17 @@ void vGestorBateria(void){
 			
 			case SOURCE_BATTERY_LOW:
 			
-				srFlagScale.bSourceVoltage =  SOURCE_BATTERY;
+				srFlagScale.bSourceVoltage =  SOURCE_BATTERY_LOW;
 				srFlagScale.bBateriaLow = 1;
 				OffBackLight;
 			 //CCC 
 				if(srFlagScale.bBateriaCount > 8){
 					srFlagScale.bBateriaCount = 0;
 					srFlagScale.bMsgBatteryLow = 0;
-					LCD_BlinkConfig(LCD_BlinkMode_Off,LCD_BlinkFrequency_Div128);
+					//LCD_BlinkConfig(LCD_BlinkMode_Off,LCD_BlinkFrequency_Div128);
 				}
 				else if(srFlagScale.bBateriaCount >= 7 && srFlagScale.bBateriaCount <= 9 ){				
-					LCD_BlinkConfig(LCD_BlinkMode_AllSEG_AllCOM,LCD_BlinkFrequency_Div128);				
+					//LCD_BlinkConfig(LCD_BlinkMode_AllSEG_AllCOM,LCD_BlinkFrequency_Div128);				
 					srFlagScale.bMsgBatteryLow = 1;
 					LCD_GLASS_Symbols(SYMBOL_ALL, 0);
 					LCD_GLASS_String("     ", LCD_PESO);	
@@ -234,7 +208,7 @@ void vGestorBateria(void){
 //					LCD_BlinkConfig(LCD_BlinkMode_Off,LCD_BlinkFrequency_Div128);
 //					srFlagScale.bMsgBatteryLow = 0;
 					srFlagScale.bBateriaLow = 0;
-//					srFlagScale.bBateriaCount = 0;
+					srFlagScale.bBateriaCount = 0;
 				}
 				vVadapHigh();
 			
@@ -246,7 +220,7 @@ void vGestorBateria(void){
 	#endif
 	
 	}
-*/
+
 }
 
 /**
@@ -297,7 +271,7 @@ if(srFlagScale.bOverLoad == 1)
 //if(eAccionScale==scalePreOnDc || srFlagScale.bOverLoad ==1)
 //	return;
 
-if(srFlagScale.bSourceVoltage == SOURCE_ADAPTER)
+if(srFlagScale.bSourceVoltage >= SOURCE_ADAPTER_LOW)
 {
 	
 	/*if(strTimer.cFLag_TimerCharge_End==1)
@@ -368,64 +342,33 @@ if(srFlagScale.bSourceVoltage == SOURCE_ADAPTER)
 	}	
 }
 #endif
-/*
+
 unsigned char uGet_Status_Volt(void){
-	
-	//vGet_Volts_Ref();
-	
-	//return SOURCE_ADAPTER;
-	
-	///
-	
+	unsigned char source;
+		
 	vGet_Volts_System();
-	
-// 	if(fVoltage_Ref >= 0.475){
-// 		fVoltage_Conector = (-5.5483)*fVoltage_Ref + 5.9148;
-// }
-		
-	if(fVoltage_Conector > HIGH_ADAPTER){
-		return SOURCE_ADAPTER_HIGH;
-	}
-		
-	if(fVoltage_Battery < THRESHOLD_VOLTAGE){//if(fVoltage_Conector < LOW_VOLTAGE_ADAPTER){
-		
-// 		if (fVoltage_Conector < NO_ON){
-// 			return SOURCE_NO_ON;
-// 		}else if(fVoltage_Conector < LOW_BATTERY_OFF){// || srFlagScale.bStateBatDown){
-// 			return SOURCE_BATTERY_VERY_LOW;
-// 		}else if(fVoltage_Conector < LOW_BATTERY_MSG){
-// 			return SOURCE_BATTERY_LOW;
-// 		}else{
-// 			return SOURCE_BATTERY_OK;
-// 		} 
-// 		
-	if (fVoltage_Battery < NO_ON){
-			return SOURCE_NO_ON;
-		}else if(fVoltage_Battery < LOW_BATTERY_OFF){// || srFlagScale.bStateBatDown){
-			return SOURCE_BATTERY_VERY_LOW;
-		}else if(fVoltage_Battery < LOW_BATTERY_MSG){
-			return SOURCE_BATTERY_LOW;
-		}else{
-			return SOURCE_BATTERY_OK;
-		}	
-		
-	}else{
-		return SOURCE_ADAPTER;
-	}
+	if(fVoltage_Battery>LEVEL_BATTERY_HIGH)fVoltage_Battery+=DIODE_VOLTAGE;
+	if(fVoltage_Battery<LEVEL_ADAPTER_HIGH) 	source=SOURCE_ADAPTER_HIGH;
+	if(fVoltage_Battery<LEVEL_ADAPTER_OK) 		source=SOURCE_ADAPTER_OK;
+	if(fVoltage_Battery<LEVEL_ADAPTER_LOW) 		source=SOURCE_ADAPTER_LOW;
+	if(fVoltage_Battery<LEVEL_BATTERY_HIGH) 	source=SOURCE_BATTERY_HIGH;
+	if(fVoltage_Battery<LEVEL_BATTERY_OK) 		source=SOURCE_BATTERY_OK;
+	if(fVoltage_Battery<LEVEL_BATTERY_LOW) 		source=SOURCE_BATTERY_LOW;
+	if(fVoltage_Battery<LEVEL_BATTERY_VERY_LOW) source=SOURCE_BATTERY_VERY_LOW;
+
+	return source;
 }
-*/
+
 /**
 
 
 **/
 void vGet_Volts_System(void){
-	
 	unsigned char iValue_Adc = 0;
 	EA = 0;
 	BAT_DET_PIN = 1;
 	SARCON  = 0x09;
-	delay_ms(1);
-	
+	delay_ms(1);	
 	if(!(SARCON & 0x04)) // 
 	{
 		SARCON |= 0x04;
@@ -433,49 +376,12 @@ void vGet_Volts_System(void){
 		{
 		}
 	}
-
 	iValue_Adc = (unsigned char)SARDATA;
-
 	SARCON  &= 0xf7;
 	EA = 1;
-
-	
-	
-	//iValue_Adc = vGet_ADCx_Value(ADC_VIN, 100);	//Obtiene voltaje eliminador
-	//fVoltage_Conector = (float)(iValue_Adc)*(0.000805664)*6.11+1;
-	fVoltage_Battery = ((3.3/256.0 * (float)iValue_Adc)/10.0)*61.1;
-	if(fVoltage_Battery>5.0)fVoltage_Battery+=0.2;
-
-     LCD_GLASS_Float(fVoltage_Battery,2,LCD_TOTAL);
-/*
-if(fVoltage_Ref > REFERENCE)
-	{
-		fVoltage_Battery = (float)(iValue_Adc)*FactConvAjustado*6.11+0.37;
-	} 
-*/		
+	fVoltage_Battery = ((3.3/256.0 * (float)iValue_Adc)/10.0)*61.1;	
 }
 
-void vGet_Volts_Ref(void){
-/*
-	int iValue_Adc;	
-
-	srFlagScale.bStateBatDown = 0;
-
-	ADC_SamplingTimeConfig(ADC1, ADC_Group_FastChannels, ADC_SamplingTime_96Cycles);
-	iValue_Adc = vGet_ADCx_Value_Ref(ADC_VREF, 10);
-	fVoltage_Ref = 0.000805664*(float)(iValue_Adc);
-
-	if(fVoltage_Ref > REFERENCE)
-	{
-		FactConvAjustado = (CuentasAdcRef*0.000805664)/(float)(iValue_Adc);
-	}
-	if(fVoltage_Ref > REFERENCE){
-		srFlagScale.bStateBatDown = 1;
-	}
-	else{
-		srFlagScale.bStateBatDown = 0;
-	}*/
-}
 
 /**
 
@@ -516,8 +422,8 @@ void vDriver_Backlight_Source(unsigned char cEliminadorOn){
   * Objetivo: Proteger el circuito de una polaridad inversa de la bateria
   * Parametros entrada: Ninguno
 	*/
-/*void vVbatBad(void){
-	
+void vVbatBad(void){
+/*	
 	int iValue_Adc = 0;
 	float fVoltage_Aux = 0;
 	//enum digi_key Value_Key_Press;
@@ -545,9 +451,9 @@ void vDriver_Backlight_Source(unsigned char cEliminadorOn){
 		srFlagScale.bShowErroBat = 0;
 	}
 	
-	LCD_GLASS_Clear();
+	LCD_GLASS_Clear();*/
 }
-*/
+
 /*
 */
 void vVbatHigh(void){
@@ -635,72 +541,4 @@ void vVbatVeryLow(void){
 void vSet_Volts_System(void){
 	uGet_Status_Volt();
 	stScaleParam.fVoltage_Batt =	fVoltage_Battery;
-	stScaleParam.fVoltage_Adap =	fVoltage_Conector;	
 }
-
-/*
-
-*/
-void vShowDataBatLcd(void){
-//	float fV_Diode = 0.3;
-	float fV_Conn = 0;
-	
-	char cValue_Adc_Ref[5] = {0,0,0,0,0};
-	int i;
-	
-//fV_Conn = fVoltage_Conector + fV_Diode;
-	LCD_GLASS_Float(fVoltage_Conector, 3, LCD_PESO);
-	LCD_GLASS_Float(fVoltage_Battery, 2, LCD_PRECIO);
-	LCD_GLASS_Float(fVoltage_Ref, 2, LCD_TOTAL);
-	
-/*	sprintf(cValue_Adc_Ref, "%d", iValue_Adc_Ref);
-	
-					for(i=0; i<5; i++){
-					if(cValue_Adc_Ref[i] == 0){
-						cValue_Adc_Ref[i] = ' ';
-						
-					}
-				}
-				
-	LCD_GLASS_String(cValue_Adc_Ref, LCD_TOTAL);*/
-	
-	#if DISPLAY_20400047_EN > 0
-		driver_symbol();
-	#endif
-}
-	
-
-/*
-
-*/
-void vShowDataCargador(void){
-	switch(eAccionCargador){
-		
-		case CargadorOff:		
-			LCD_GLASS_String("  OFF", LCD_PESO);		
-			LCD_GLASS_String("     ", LCD_PRECIO);
-			LCD_GLASS_String("      ", LCD_TOTAL);			
-			break;
-		
-		case CargadorInicio:			
-			LCD_GLASS_String("  INI", LCD_PESO);
-			LCD_GLASS_String("     ", LCD_PRECIO);
-			LCD_GLASS_String("      ", LCD_TOTAL);
-			break;
-		
-		case CargadorOn:
-			LCD_GLASS_String("   ON", LCD_PESO);
-			LCD_GLASS_String("     ", LCD_PRECIO);
-			LCD_GLASS_Float(stTime_Battery.iTimeOut_16, 0, LCD_TOTAL);
-			break;
-		
-		case CargadorTrickle:
-			LCD_GLASS_String("   TC", LCD_PESO);
-			LCD_GLASS_Float(stTime_Battery.iTrickleCharge, 0, LCD_PRECIO);			
-			LCD_GLASS_Float(stTime_Battery.iDescanso_2_Hora, 0, LCD_TOTAL);
-			break;		
-	}
-}
-
-
-

@@ -9,7 +9,6 @@
 #include <stdio.h>
 #include <string.h>
 
-unsigned int convertidorADC(void);
 void init_pwm(void);
 void wdt_init(void);
 void gpio_init(void);
@@ -19,7 +18,7 @@ Parameter stScaleParam;	/* Contiene los parametros de uso de la Bascula*/
 
 /*Display*/
 volatile SOLIDIC Display;
-
+enum ActionScale eAccionScale;
 
 /*HX712*/
 
@@ -39,7 +38,6 @@ unsigned int iCounterZeroTracking = 0;
 
 
 void main(void) {
-  enum ActionScale eAccionScale;
   wdt_init();
   gpio_init();
   adc_init();
@@ -68,7 +66,8 @@ void main(void) {
       break;
 
     case ScaleBattery:
-      //cRta_Function = uGet_Status_Volt();
+      //cRta_Function =
+       uGet_Status_Volt();
       eAccionScale = ScaleWait;
       break;
 
@@ -174,33 +173,25 @@ void init_int_timer0(void)
     TCON |= (1<<4);//Start timer0
 }
 
-unsigned int convertidorADC(){
-
-unsigned int v=0;
-SARCON = 0x09;
-	if(!(SARCON & 0x04))
-	{
-		SARCON |= 0x04;
-		while(SARCON & 0x04)
-		{
-		}
-	}
-v=SARDATA;
-SARCON &= 0xf7;
-return v;
-
-}
 /////////   Interrups timer0    ////////////////
 
 static void timer0(void) interrupt 1
 {	
     
-    if(strTimer.iTimerA>0){ 
+  if(strTimer.iTimerA>0){ 
       if(strTimer.iTimerA==1)BEEPER_EN;	
 
 	  strTimer.iTimerA++;
 		if(strTimer.iTimerA>=TimerAend)BEEPER_DIS;
 	}
+//if(strTimer.iTimerC>0 ){
+	strTimer.iTimerC++;
+  if (strTimer.iTimerC>=TimerCend)
+  {
+    strTimer.iTimerC=0;
+    srFlagScale.bReadBattery++;
+  }
+//}
 
 	if(strTimer.iTimerE>0 )
 	strTimer.iTimerE++;
