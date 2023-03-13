@@ -603,7 +603,7 @@ void vPreConfiguration(unsigned char cPreConfiguration){
 		stScaleParam.iDivisionMenorMenor = 1;
 		stScaleParam.cWeightDecimal = 3;
 		stScaleParam.cUnits = UNIT_KG;
-		stScaleParam.iLoadPorcRefer = 80;
+		stScaleParam.iLoadPorcRefer = 100;
 		//LCD_GLASS_Symbols(SYMBOL_KG, 1);
 		stScaleParam.cMoneda = MONEDA_PESOS;		
 	}else if(cPreConfiguration == PreConfig32KG){
