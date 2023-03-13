@@ -11,7 +11,7 @@
 #include "./customer/beeper.h"
 #include "./_battery/dvr_battery.h"
 #include "./customer/dvr_registradora.h"
-
+#include "./customer/usr_dbg.h"
 
 extern float fWeightScale;									/* Contiene el valor del peso leido */
 extern float fWeightScaleBefore;
@@ -867,24 +867,23 @@ void vWeight_Positive(void){
 		}else if(stScaleParam.fWeightScale<0.001){
 			LCD_GLASS_Float(0, stScaleParam.cWeightDecimal, LCD_PESO);
 		}//LCD_GLASS_Float(stScaleParam.fWeightScale, stScaleParam.cWeightDecimal, LCD_PESO);
-		//Despliega el valor de lectura del adc en Precio:
-					
+		//Despliega el valor de lectura del adc en Precio:	
 		// Verifica si la opcion fijar precio no esta activada
-		if(!srFlagScale.bFlagFijarPRecio){
+		//if(!srFlagScale.bFlagFijarPRecio){
 			if(stScaleParam.fWeightScale == 0 && fWeightScaleBefore > 0){
 				stScaleParam.fPrice_Unit = 0;
 				stScaleParam.cNumberDecimalPrice = 0;
 				srFlagScale.bDotDecimalPrice = 0;
 				stScaleParam.cNumberDecimalPrice = 0;
 			}
-		}
+		//}
 		
 		/*if(stScaleParam.fWeightScale != fWeightScaleBefore){
 			//Auto_Off_On_15m;
 			//Restart_Sleep_Time;
 		}*/
 			
-		//fWeightScaleBefore = stScaleParam.fWeightScale;
+		fWeightScaleBefore = stScaleParam.fWeightScale;
 		
 		// Muestra el precio x unidad del producto
 		if(stScaleParam.fWeightScale == 0 && srFlagScale.bFlagFijarPRecio == 0 && srFlagScale.bPrecioCero == 0){
