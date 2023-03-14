@@ -190,11 +190,11 @@ void vCalidadTest(void){
 	LCD_GLASS_Clear();
 	LCD_GLASS_String("OFFSET", LCD_TOTAL);
 	
-	if(stScaleParam.cUnits == UNIT_KG){
-		LCD_GLASS_Symbols(SYMBOL_KG, 1);
-	}else if(stScaleParam.cUnits == UNIT_LB){
-		LCD_GLASS_Symbols(SYMBOL_LB, 1);
-	}
+	// if(stScaleParam.cUnits == UNIT_KG){
+	// 	LCD_GLASS_Symbols(SYMBOL_KG, 1);
+	// }else if(stScaleParam.cUnits == UNIT_LB){
+	// 	LCD_GLASS_Symbols(SYMBOL_LB, 1);
+	// }
 	
 	do{
 		

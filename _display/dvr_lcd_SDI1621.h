@@ -29,10 +29,6 @@ sbit LCD_DATA_N = P2^3;
 sbit LCD_WR_N = P2^2;
 sbit LCD_CS_N = P2^1;		
 
-#define SYMBOL_ALARM_HI	7
-#define SYMBOL_MENOS		8
-#define SYMBOL_ALARM		9
-#define SYMBOL_ALARM_LO	10
 #define SYMBOL_AC				11
 #define SYMBOL_BATT			12
 #define SYMBOL_TARE			13
@@ -48,6 +44,11 @@ sbit LCD_CS_N = P2^1;
 #define SYMBOL_X		4
 #define SYMBOL_Y		5
 #define SYMBOL_ALL	6
+
+#define LOW_BATT_SYM    7
+#define MIDDLE_BATT_SYM 8
+#define FULL_BATT_SYM   9
+#define BATT_OUTSIDE    10
 
 void LCD_GLASS_Init(void);
 void LCD_GLASS_DeInit(void);

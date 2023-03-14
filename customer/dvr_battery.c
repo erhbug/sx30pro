@@ -159,7 +159,7 @@ void vGestorBateria(void){
 						LCD_GLASS_String("   BAT", LCD_TOTAL);
 					}
 					LCD_GLASS_Symbols(SYMBOL_ZERO, 0);				
-					LCD_GLASS_Symbols(SYMBOL_X, 0);
+					// LCD_GLASS_Symbols(SYMBOL_X, 0);
 					return;
 				}else{
 //					srFlagScale.bMsgBatteryLow = 0;

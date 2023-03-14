@@ -736,18 +736,18 @@ unsigned char cRun_Scale(void){
 
 		
 		// Verifica si esta la opcion fijar precio para mostrar indicador
-		if(srFlagScale.bFlagFijarPRecio){	
-			LCD_GLASS_Symbols(SYMBOL_X, 1);
-		}else{
-			LCD_GLASS_Symbols(SYMBOL_X, 0);
-		}
+		// if(srFlagScale.bFlagFijarPRecio){	
+		// 	LCD_GLASS_Symbols(SYMBOL_X, 1);
+		// }else{
+		// 	LCD_GLASS_Symbols(SYMBOL_X, 0);
+		// }
 		
 		// Verfica el tipo de unidades a mostrar
-		if(stScaleParam.cUnits == UNIT_KG){	
-			LCD_GLASS_Symbols(SYMBOL_KG, 1);
-		}else if(stScaleParam.cUnits == UNIT_LB){	
-			LCD_GLASS_Symbols(SYMBOL_LB, 1);
-		}
+		// if(stScaleParam.cUnits == UNIT_KG){	
+		// 	LCD_GLASS_Symbols(SYMBOL_KG, 1);
+		// }else if(stScaleParam.cUnits == UNIT_LB){	
+		// 	LCD_GLASS_Symbols(SYMBOL_LB, 1);
+		// }
 		
 		if(fWeightScale > -0.001 && fWeightScale < 0.0001){	 
 			LCD_GLASS_Symbols(SYMBOL_ZERO, 1);
