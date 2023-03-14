@@ -184,6 +184,7 @@ void vScan_Key(void){
 			}else if(Key == KEY_PUNTO){	
 				if(stScaleParam.cNumberDecimalPrice == 0 && stScaleParam.cPuntoDecimalPrecio > 2){
 					srFlagScale.bDotDecimalPrice = 1;
+					vMostrar_Venta_Total();
 				}
 				return;
 			}

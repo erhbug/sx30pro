@@ -435,7 +435,7 @@ void vFinalizar_Venta(void){
   ******************************************************************************
   */
 void vMostrar_Venta_Total(void){
-	/*
+	
 	unsigned char xdata cText_Venta_Total[13] = "           ";
 	unsigned char xdata cText_Precio[6] = "     ";
 	unsigned char xdata cText_Total[8] = "      ";
@@ -445,9 +445,9 @@ void vMostrar_Venta_Total(void){
 	//LCD_GLASS_Clear();
 	
 	if(stScaleParam.cLenguage == ESPANOL){
-		LCD_GLASS_String("TOTAL", LCD_TOTAL);
+		LCD_GLASS_String("TOTAL", LCD_PESO);
 	}else{
-		LCD_GLASS_String("   TS", LCD_TOTAL);
+		LCD_GLASS_String("   TS", LCD_PESO);
 	}
 	
 	stScaleParam.fVenta_Total_Scale = fRoundFloat(stScaleParam.fVenta_Total_Scale, 
@@ -468,9 +468,9 @@ void vMostrar_Venta_Total(void){
 		cText_Total[i-5] = cText_Venta_Total[i];
 	}
 	
-	LCD_GLASS_String(cText_Total, LCD_PRECIO);
-	LCD_GLASS_Dot(stScaleParam.cPuntoDecimalTotal, LCD_PESO, 1);
-	LCD_GLASS_String(cText_Precio, LCD_PESO);
+	LCD_GLASS_String(cText_Total, LCD_TOTAL);
+	LCD_GLASS_Dot(stScaleParam.cPuntoDecimalTotal, LCD_TOTAL, 1);
+	LCD_GLASS_String(cText_Precio, LCD_TOTAL);
 	
 	i = 0; 
 	strTimer.iTimerE = 1;
@@ -480,7 +480,6 @@ void vMostrar_Venta_Total(void){
 			key_scan();
 		
 		if(Key  != KEY_NULL){
-			vBeep_Key();
 		}
 		
 		if((Key  == KEY_C ||Key  == KEY_CHG) && i < 2){
@@ -500,5 +499,5 @@ void vMostrar_Venta_Total(void){
 				i++;
 			}
 		} 
-	}*/
+	}
 }
