@@ -385,7 +385,7 @@ void cOnOffModeTara(float fWeightTara){
 						stScaleParam.fValueTara = stScaleParam.fWeightScaleTara;
 					}
 				}else{
-					if(fCuentasToPeso(stScaleParam.fWeightScaleTara) < 9.999){
+					if(fCuentasToPeso(stScaleParam.fWeightScaleTara) < 9.995){
 						stScaleParam.fValueTara = stScaleParam.fWeightScaleTara;
 					}
 				}

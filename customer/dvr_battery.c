@@ -31,16 +31,16 @@ sbit BAT_DET_PIN = P0^5;
 #define HIGH_SPEED_CLOCK 	1
 #define LOW_SPEED_CLOCK		0
 
-#define COUNT_1_HORA  3600
-#define COUNT_1_MIN		60
+#define COUNT_1_HORA  		3600
+#define COUNT_1_MIN			60
 
 #define HIGH_ADAPTER        7.0  //6.1
-#define LOW_BATTERY_MSG 		3.5
-#define LOW_BATTERY_OFF 		3.2
+#define LOW_BATTERY_MSG 	3.5
+#define LOW_BATTERY_OFF 	3.2
 #define THRESHOLD_VOLTAGE 	4.5	 //#define LOW_VOLTAGE_ADAPTER 4.35
-#define REFERENCE						1.22 //0.48
-#define HIGH_BATTERY_MSG 		6.0
-#define NO_ON						 		3.0  //2.5
+#define REFERENCE			1.22 //0.48
+#define HIGH_BATTERY_MSG 	6.0
+#define NO_ON				3.0  //2.5
 
 #define CuentasAdcRef       1514 //*** Cuentas de ADC para 1.22V de referencia
 
@@ -69,7 +69,7 @@ void vVadapHigh(void);
 
 #if DISPLAY_20400047_EN > 0
 
-const float delta=0.05; 
+const float delta = 0.05; 
 const float lvl_5 = 5.14;
 const float lvl_3 = 4.0;
 const float lvl_2 = 3.65;
