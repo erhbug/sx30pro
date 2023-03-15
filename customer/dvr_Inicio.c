@@ -35,7 +35,7 @@ code enum digi_key ePASS_MULTIRANGO_OFF[8] = {KEY_TARA, KEY_5, KEY_4, KEY_3, KEY
 code unsigned char eCODE_CALIBRACION[7]= "765432";
 code unsigned char eCODE_MENU[7]= "779103";
 
-//void vTestTeclado(void);
+void vTestTeclado(void);
 void vCalidadTest(void);
 
 unsigned char cWait_Scale(void){	
