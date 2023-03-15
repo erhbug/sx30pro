@@ -13,12 +13,9 @@
 
 /* --- Registro de Password */
 code enum digi_key eSEQUENCE_CONFIGURATION[8] = {KEY_TARA, KEY_C, KEY_CERO, KEY_RCL};
-code enum digi_key ePRE_CONFIGURATION_15KG[8] = {KEY_TARA, KEY_M1, KEY_TARA, KEY_1, KEY_5};
-code enum digi_key ePRE_CONFIGURATION_20KG[8] = {KEY_TARA, KEY_M1, KEY_TARA, KEY_2, KEY_0};
 code enum digi_key ePRE_CONFIGURATION_30KG[8] = {KEY_TARA, KEY_M1, KEY_TARA, KEY_3, KEY_0};
 code enum digi_key ePRE_CONFIGURATION_31KG[8] = {KEY_TARA, KEY_M1, KEY_TARA, KEY_3, KEY_1};	
 code enum digi_key ePRE_CONFIGURATION_32KG[8] = {KEY_TARA, KEY_M1, KEY_TARA, KEY_3, KEY_2};	
-code enum digi_key ePRE_CONFIGURATION_40KG[8] = {KEY_TARA, KEY_M1, KEY_TARA, KEY_4, KEY_0};
 code enum digi_key eLCD_ALL_SEGMENT[8] = {KEY_TARA, KEY_8};
 code enum digi_key eDATA_SCALE[8] = {KEY_TARA, KEY_C, KEY_RCL, KEY_MEM}; 
 code enum digi_key eOFFSET_ADC[8] = {KEY_TARA, KEY_MEM, KEY_1, KEY_5};
@@ -32,13 +29,9 @@ code enum digi_key eFUNC_ESPECIAL[8] = {KEY_C, KEY_MEM, KEY_RCL, KEY_MEM};
 code enum digi_key eVIEW_MEMORY[8] = {KEY_TARA, KEY_MEM, KEY_C, KEY_C};
 code enum digi_key eSEQUENCE_RESET_REFERENCE[8] = {	KEY_TARA, KEY_TARA, KEY_0};
 code enum digi_key eTEST_TECLADO[8] = {	KEY_TARA, KEY_MEM, KEY_MEM, KEY_RCL, KEY_RCL};
-code enum digi_key eTEST_CALIDAD[8] = {	KEY_TARA, KEY_MEM, KEY_MEM, KEY_RCL, KEY_MEM};
-code enum digi_key eACT_PROGRAM[8] = {KEY_TARA, KEY_2, KEY_4, KEY_2, KEY_7};	
-code enum digi_key eINF_CAL[8] = {KEY_TARA, KEY_MEM, KEY_0};
-code enum digi_key eTEMPERATURE[8] = {KEY_TARA, KEY_CERO, KEY_CERO, KEY_RCL};
-code enum digi_key eVER_OVERLOAD[8] = {KEY_TARA, KEY_RCL, KEY_CERO, KEY_1};
+code enum digi_key eTEST_CALIDAD[8] = {	KEY_TARA, KEY_C, KEY_0, KEY_1, KEY_5,KEY_9};
+code enum digi_key eACT_PROGRAM[8] = {KEY_TARA, KEY_2, KEY_4, KEY_2, KEY_7};
 code enum digi_key ePASS_MULTIRANGO_OFF[8] = {KEY_TARA, KEY_5, KEY_4, KEY_3, KEY_2, KEY_1, KEY_0};
-code enum digi_key eBACKLIGHT[8] = {KEY_TARA, KEY_1, KEY_0, KEY_1, KEY_0};	
 code unsigned char eCODE_CALIBRACION[7]= "765432";
 code unsigned char eCODE_MENU[7]= "779103";
 
@@ -76,14 +69,6 @@ unsigned int TimeEnd=2000;
 			if(strcmp(eSEQUENCE_CONFIGURATION, arPass_Configuration) == 0){
 				srFlagScale.bCodeConfiguration = 1;
 				return 1;
-			}else if(strcmp(ePRE_CONFIGURATION_15KG, arPass_Configuration) == 0){			
-     			vSound_Saved_Param();
-			    vPreConfiguration(PreConfig15KG);
-				return 1;
-			}else if(strcmp(ePRE_CONFIGURATION_20KG, arPass_Configuration) == 0){
-			    vSound_Saved_Param();
-				vPreConfiguration(PreConfig20KG);
-				return 1;
 			}else if(strcmp(ePRE_CONFIGURATION_30KG, arPass_Configuration) == 0){
 			    vSound_Saved_Param();
 				vPreConfiguration(PreConfig30KG);
@@ -95,10 +80,6 @@ unsigned int TimeEnd=2000;
 			}else if(strcmp(ePRE_CONFIGURATION_32KG, arPass_Configuration) == 0){
 				vSound_Saved_Param();
 			    vPreConfiguration(PreConfig32KG);	
-				return 1;
-			}else if(strcmp(ePRE_CONFIGURATION_40KG, arPass_Configuration) == 0){
-			    vSound_Saved_Param();
-				vPreConfiguration(PreConfig40KG);
 				return 1;
 			}else if(strcmp(eTEST_CALIDAD, arPass_Configuration) == 0){				
 				vCalidadTest();
@@ -255,7 +236,7 @@ void vCalidadTest(void){
 	stScaleParam.fVenta_Total_Scale = 0;
 }
 
-/*
+
 void vTestTeclado(void){	
 	unsigned char *Name_Tecla[(char)20] = {"CERO", "TARA", "NN1", 
 	"RCL", "CHG", "NNAS", "NN2", "NNENN", "7",
@@ -321,4 +302,3 @@ LCD_GLASS_Clear();
 }
 
 
-*/
