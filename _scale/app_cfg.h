@@ -17,10 +17,10 @@
 /*--------------------------------------------------------------
 								TIPO DE DISPLAY
 ----------------------------------------------------------------*/
-#define 	DISPLAY_20400047_EN			DEF_ENABLED				//Habilita display con las siguientes características
+#define 	DISPLAY_20400047_EN			DEF_ENABLED				//Habilita display con las siguientes caracter?sticas
 																	// -Indicador peso y precio en la parte superior
-																	// -Indicador de batería
-																// En caso de deshabilitación, se considera el arreglo de display 20400022
+																	// -Indicador de bater?a
+																// En caso de deshabilitaci?n, se considera el arreglo de display 20400022
 #if DISPLAY_20400047_EN > 0
 		#define LCD_TOTAL   0 
 		#define LCD_PESO    1 
@@ -37,6 +37,6 @@
 
 #define 	SX30PRO		DEF_ENABLED
 
-#define sVersion "22I0"
+#define sVersion "23C0"
 
 #endif // APP_CFG_H

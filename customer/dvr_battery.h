@@ -21,7 +21,6 @@
 	#define DIODE_VOLTAGE	 		   (float)0.2
 
 	void vGestorBateria(void);
-	void vVbatHigh(void);
 	void vVadapHigh(void);
 	void vVbatVeryLow(void);
 	unsigned char uGet_Status_Volt(void);

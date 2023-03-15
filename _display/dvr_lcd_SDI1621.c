@@ -131,14 +131,14 @@ const unsigned char xdata cABC_LCD[] = {
 
 #endif
 
-	// funci��n de retardo 10us
+	// funci¨®n de retardo 10us
 //void delay_35u(void){ 	
 //	unsigned char j;
  // 	for(j= 0;j<5;j++);
 //}	
 
 //****************************************************
-// Controlador LCD 1621 bloque compilaci��n condicional ------ comenzar -------
+// Controlador LCD 1621 bloque compilaci¨®n condicional ------ comenzar -------
 //****************************************************
 void lcd_unit_write(unsigned char d){
 	unsigned char i;
@@ -185,12 +185,12 @@ void LCD_GLASS_Init(void){//int i,j,k;
 
 
 
-// funci��n de escritura LCD
+// funci¨®n de escritura LCD
 // modo:
 // 0: Entrada de comando
-// 1: actualizar todas las ��reas
-// cmd: comando de codificaci��n
-// ---- Nota: Mostrar la funci��n de la tecla de interrupci��n ET0 en la funci��n - (Cuando el programa no necesita abrir la interrupci��n T0, preste especial atenci��n para evitar que la funci��n de pantalla abra accidentalmente la interrupci��n T0)
+// 1: actualizar todas las ¨¢reas
+// cmd: comando de codificaci¨®n
+// ---- Nota: Mostrar la funci¨®n de la tecla de interrupci¨®n ET0 en la funci¨®n - (Cuando el programa no necesita abrir la interrupci¨®n T0, preste especial atenci¨®n para evitar que la funci¨®n de pantalla abra accidentalmente la interrupci¨®n T0)
 
 void write_lcd(SOLIDIC Display, unsigned char mode){//char mode,unsigned char cmd,unsigned char addr,unsigned char counter)
 	unsigned char i=0;	
@@ -229,7 +229,7 @@ void write_lcd(SOLIDIC Display, unsigned char mode){//char mode,unsigned char cm
 	else 
 	{		
 		addr = 0;
-		for(i=0;i<6;i++){	// ����д������,�����׵�ַ  Comando de escritura de datos, enviar la primera direcci��n
+		for(i=0;i<6;i++){	// Êý¾ÝÐ´ÈëÃüÁî,·¢ËÍÊ×µØÖ·  Comando de escritura de datos, enviar la primera direcci¨®n
 			LCD_WR_N = 0;			
 			if( (addr & 0x80) == 0 ) 
 				LCD_DATA_N = 0;
@@ -240,7 +240,7 @@ void write_lcd(SOLIDIC Display, unsigned char mode){//char mode,unsigned char cm
 		//	delay_35u();
 			addr <<= 1;
 		}		
-		for(i=0;i<16;i++)	// ����д������,��������  Comando de escritura de datos, enviar datos
+		for(i=0;i<16;i++)	// Êý¾ÝÐ´ÈëÃüÁî,·¢ËÍÊý¾Ý  Comando de escritura de datos, enviar datos
 			lcd_unit_write(Display.LCD_BUF[15 - i]);		
 	}
 	LCD_CS_N = 1;
@@ -374,42 +374,29 @@ void LCD_GLASS_Symbols(unsigned char cSymbol, unsigned char cFlag_On){
 	switch(cSymbol){	
 		#if DISPLAY_20400047_EN > 0	
 		
-			case 7: 
-				if(cFlag_On == 1){
-					Display.LCD_BUF[S_14]|=0x80;
-					Display.LCD_BUF[S_24]|=0x80;
-				}
-				else{
-					Display.LCD_BUF[S_14]&=0x7F;
-					Display.LCD_BUF[S_24]&=0x7F;
-				}
-					
+		case 10:  //vSend_String_Usart(&huart1,"1/4 ");
+			if(cFlag_On == 1)
+				Display.LCD_BUF[S_14]|=0x80;
+			else
+				Display.LCD_BUF[S_14]&=0x7F;	
+			break;	
+			case 7: // vSend_String_Usart(&huart1,"2/4 ");
+				if(cFlag_On == 1)
+				Display.LCD_BUF[S_24]|=0x80;
+			else
+				Display.LCD_BUF[S_24]&=0x7F;	
 			break;	
 			case 8:  //vSend_String_Usart(&huart1,"3/4");
-			if(cFlag_On == 1){
-				Display.LCD_BUF[S_14]|=0x80;
-				Display.LCD_BUF[S_24]|=0x80;
+			if(cFlag_On == 1)
 				Display.LCD_BUF[S_34]|=0x80;
-			}
-			else{
-				Display.LCD_BUF[S_14]&=0x7F;
-				Display.LCD_BUF[S_24]&=0x7F;
-				Display.LCD_BUF[S_34]&=0x7F;
-			}	
+			else
+				Display.LCD_BUF[S_34]&=0x7F;	
 			break;	
-			case 9:  
-			if(cFlag_On == 1){
-				Display.LCD_BUF[S_14]|=0x80;
-				Display.LCD_BUF[S_24]|=0x80;
-				Display.LCD_BUF[S_34]|=0x80;
+			case 9:  //vSend_String_Usart(&huart1,"4/4");
+			if(cFlag_On == 1)
 				Display.LCD_BUF[S_44]|=0x80;
-			}
-			else{
-				Display.LCD_BUF[S_14]&=0x7F;
-				Display.LCD_BUF[S_24]&=0x7F;
-				Display.LCD_BUF[S_34]&=0x7F;
-				Display.LCD_BUF[S_44]&=0x7F;
-			}	
+			else
+				Display.LCD_BUF[S_44]&=0x7F;	
 			break;	
 			case SYMBOL_NET:  //vSend_String_Usart(&huart1,"SYMBOL_NET");
 			if(cFlag_On == 1)
@@ -665,7 +652,7 @@ if(c=='k'||c=='K')return LCD_char_K;
 if(c=='l'||c=='L')return LCD_char_L;
 if(c=='m'||c=='M')return LCD_char_M;
 if(c=='n'||c=='N')return LCD_char_N;
-//if(c=='�'||c=='�')return LCD_char_�;
+//if(c=='ñ'||c=='Ñ')return LCD_char_Ñ;
 if(c=='o'||c=='O')return LCD_char_O;
 if(c=='p'||c=='P')return LCD_char_P;
 if(c=='q'||c=='Q')return LCD_char_Q;

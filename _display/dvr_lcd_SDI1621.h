@@ -45,11 +45,6 @@ sbit LCD_CS_N = P2^1;
 #define SYMBOL_Y		5
 #define SYMBOL_ALL	6
 
-#define LOW_BATT_SYM    7
-#define MIDDLE_BATT_SYM 8
-#define FULL_BATT_SYM   9
-#define BATT_OUTSIDE    10
-
 void LCD_GLASS_Init(void);
 void LCD_GLASS_DeInit(void);
 void LCD_GLASS_Clear(void);

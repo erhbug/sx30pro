@@ -110,9 +110,10 @@ typedef struct {
 	
 	unsigned char cFormatoImpresion;
 	unsigned char cMoneda;
+	unsigned char cSourceVoltage;
 	
 	//unsigned char cSpecialAction;
-	unsigned char cBacklight;
+	//unsigned char cBacklight;
 	
 }Parameter;
 extern Parameter stScaleParam;
@@ -132,7 +133,7 @@ typedef struct {
 	unsigned bBateriaLow : 1;		/* Indica el estado de la bateria */
 	unsigned bMsgBatteryLow : 1;
 	unsigned bBateriaCount : 1;
-	unsigned bSourceVoltage : 1; /* Indica de donde procede el voltaje de alimentacion	bateria o eliminador */
+	//unsigned bSourceVoltage : 1; /* Indica de donde procede el voltaje de alimentacion	bateria o eliminador */
 //	unsigned bZeroTracking : 1;	/* Inidica si la funcion ZeroTrcking esta activada */
 	unsigned bTara : 1;					/* 1 -> Tara Activada, 0 -> Desactivada */
 //	unsigned bZero : 1;					/* Inidica si el sistema debe tomar una nueva referncia	a cero */
@@ -212,17 +213,22 @@ extern idata FlagScale srFlagScale;
 /* Global variables ----------------------------------------------------------*/
 typedef struct {
 	unsigned char iTimerA;//200mS
-	unsigned char iTimerC;//1Seg
+	unsigned int iTimerC;//1Seg
 	unsigned int iTimerE;//5seg
+	unsigned int iTimerBlk;//5seg
 	unsigned int iTimerJ;//1min
 	unsigned int iTimerDBG;
+	unsigned int iTimerCharge;
 }strTimers;
 extern idata strTimers strTimer;
 
-#define TimerAend 200
-#define TimerCend 1000
-#define TimerEend 5000
-#define TimerJend 60000
+#define TimerAend (unsigned char)200
+#define TimerCend (unsigned int)1000
+#define TimerEend (unsigned int)5000
+#define iTimerBlk1end (unsigned int)5000
+#define iTimerBlk2end (unsigned int)15000
+#define TimerJend (unsigned int)60000
+#define TimerChargeend (unsigned char)50
 
 
 

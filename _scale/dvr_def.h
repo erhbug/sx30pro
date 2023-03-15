@@ -6,17 +6,17 @@
 
 #define TIMTICK         (TIM4)		/* Se define el timer a utilizar */
 
-#define     BL_EN	P1 |= 0x20
-#define     BL_DIS	P1 &= 0xDF
+#define BL_EN	P1 |= 0x20
+#define BL_DIS	P1 &= 0xDF
 
-#define     BEEPER_EN	P1 |= 0x10
-#define     BEEPER_DIS	P1 &= 0xEF
+#define BEEPER_EN	P1 |= 0x10
+#define BEEPER_DIS	P1 &= 0xEF
 
-#define OnBackLight 	srFlagScale.bBacklight_On = 1; P1|= (1<<5);//GPIO_SetBits(GPIOG, BACK_LIGHT)
-#define OffBackLight	srFlagScale.bBacklight_On = 0; P1&= ~(1<<5);//GPIO_ResetBits(GPIOG, BACK_LIGHT)
+void init_pwm(unsigned char BlkPWM);
 
-
-
+#define OnBackLight 		srFlagScale.bBacklight_On = 1; BL_EN;  strTimer.iTimerBlk=1; init_pwm(0x50);//P1|= (1<<5);
+#define DecreaseBackLight	srFlagScale.bBacklight_On = 1; BL_EN;  						 init_pwm(0x10);//P1&= ~(1<<5);
+#define OffBackLight		srFlagScale.bBacklight_On = 0; BL_DIS; strTimer.iTimerBlk=0;//P1&= ~(1<<5);
 /* ACCIONES */
 
 /*

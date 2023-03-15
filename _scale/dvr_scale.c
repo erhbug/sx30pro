@@ -710,10 +710,9 @@ void vPreConfiguration(unsigned char cPreConfiguration){
   ***
 	*/
 unsigned char cRun_Scale(void){
-
-	//vGestorBateria();
+	vGestorBateria();
 	if(srFlagScale.bOverLoad ==0){//indicador de sobrecarga en la bascula == 0;
-		if(srFlagScale.bSourceVoltage >=  SOURCE_ADAPTER_LOW){
+		if(stScaleParam.cSourceVoltage >=  SOURCE_ADAPTER_LOW){
 			LCD_GLASS_Symbols(SYMBOL_Y, 1);
 		}else{
 			LCD_GLASS_Symbols(SYMBOL_Y, 0);
@@ -729,7 +728,7 @@ unsigned char cRun_Scale(void){
 	if(srFlagScale.bOverLoad ==0){		
 	/*	if(srFlagScale.bActiveSaveBattery == 1 && stScaleParam.cZeroTracking == 1 && 
 			fWeightScale == 0 && stScaleParam.cSaveBattery == 1 &&
-				srFlagScale.bSourceVoltage !=  SOURCE_ADAPTER && srFlagScale.bTara == 0){	
+				stScaleParam.cSourceVoltage !=  SOURCE_ADAPTER && srFlagScale.bTara == 0){	
 			fSleep_Run();
 			 vCalculate_Weight();	
 		}*/
@@ -775,11 +774,10 @@ unsigned char cRun_Scale(void){
 	
 		if(srFlagScale.bTara){
 			if((fWeightLight >= stScaleParam.fValueTara+20*stScaleParam.fFactorCalibrate) && srFlagScale.bBateriaLow == 0){
-				if(stScaleParam.cBacklight){OnBackLight;}
+				OnBackLight;
 				strTimer.iTimerJ = 1;
-				srFlagScale.bBacklight_On = 1;	
 			}else{
-				if(srFlagScale.bSourceVoltage < SOURCE_ADAPTER_LOW && strTimer.iTimerJ >= TimerJend){
+				if(stScaleParam.cSourceVoltage < SOURCE_ADAPTER_LOW && strTimer.iTimerJ >= TimerJend){
 					OffBackLight;
 					srFlagScale.bBacklight_On = 0;	
 				}
@@ -787,11 +785,10 @@ unsigned char cRun_Scale(void){
 			
 		}else{
 			if((fWeightLight >= stScaleParam.fPointZero+20*stScaleParam.fFactorCalibrate) && srFlagScale.bBateriaLow == 0){
-					if(stScaleParam.cBacklight){OnBackLight;}
+					OnBackLight;
 					strTimer.iTimerJ = 1;
-					srFlagScale.bBacklight_On = 1;	
 				}else{
-					if(srFlagScale.bSourceVoltage < SOURCE_ADAPTER_LOW && strTimer.iTimerJ >= TimerJend){
+					if(stScaleParam.cSourceVoltage < SOURCE_ADAPTER_LOW && strTimer.iTimerJ >= TimerJend){
 						OffBackLight;
 						srFlagScale.bBacklight_On = 0;	
 				}
