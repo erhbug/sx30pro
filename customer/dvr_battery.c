@@ -274,7 +274,7 @@ void vGet_Volts_System(void){
 	iValue_Adc = (unsigned char)SARDATA;
 	SARCON  &= 0xf7;
 	EA = 1;
-	fVoltage_Battery = ((3.3/256.0 * (float)iValue_Adc))*6.11;
+	fVoltage_Battery = ((3.3/256.0 * (float)iValue_Adc))*6.0;
 }
 
 void vDriver_Backlight_Source(unsigned char cEliminadorOn){
