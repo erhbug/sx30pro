@@ -565,27 +565,7 @@ void vPreConfiguration(unsigned char cPreConfiguration){
 	stScaleParam.cMultirango = 1;
 	stScaleParam.cLenguage = ESPANOL;
 
-	if(cPreConfiguration == PreConfig15KG){
-		stScaleParam.iCapacity = 15;
-		stScaleParam.iDivisionMinima = 5;
-		stScaleParam.iDivisionMenor = 2;
-		stScaleParam.iDivisionMenorMenor = 1;
-		stScaleParam.cWeightDecimal = 3;
-		stScaleParam.cUnits = UNIT_KG;
-		stScaleParam.iLoadPorcRefer = 100;		
-		//LCD_GLASS_Symbols(SYMBOL_KG, 1);
-		stScaleParam.cMoneda = MONEDA_PESOS;
-	}else if(cPreConfiguration == PreConfig20KG){
-		stScaleParam.iCapacity = 20;
-		stScaleParam.iDivisionMinima = 5;
-		stScaleParam.iDivisionMenor = 2;
-		stScaleParam.iDivisionMenorMenor = 1;
-		stScaleParam.cWeightDecimal = 3;
-		stScaleParam.cUnits = UNIT_KG;
-		stScaleParam.iLoadPorcRefer = 100;
-		//LCD_GLASS_Symbols(SYMBOL_KG, 1);
-		stScaleParam.cMoneda = MONEDA_PESOS;
-	}else if(cPreConfiguration == PreConfig30KG){
+	if(cPreConfiguration == PreConfig30KG){
 		stScaleParam.iCapacity = 30;
 		stScaleParam.iDivisionMinima = 10;
 		stScaleParam.iDivisionMenor = 5;
@@ -616,26 +596,6 @@ void vPreConfiguration(unsigned char cPreConfiguration){
 		stScaleParam.iLoadPorcRefer = 100;
 		//LCD_GLASS_Symbols(SYMBOL_KG, 1);
 		stScaleParam.cMoneda = MONEDA_PESOS;		
-	}else if(cPreConfiguration == PreConfig40KG){
-		stScaleParam.iCapacity = 40;
-		stScaleParam.iDivisionMinima = 10;
-		stScaleParam.iDivisionMenor = 5;
-		stScaleParam.iDivisionMenorMenor = 2;
-		stScaleParam.cWeightDecimal = 3;
-		stScaleParam.cUnits = UNIT_KG;
-		stScaleParam.iLoadPorcRefer = 100;
-		//LCD_GLASS_Symbols(SYMBOL_KG, 1);
-		stScaleParam.cMoneda = MONEDA_PESOS;
-	}else if(cPreConfiguration == PreConfig60LB){
-		stScaleParam.iCapacity = 60;
-		stScaleParam.iDivisionMinima = 2;
-		stScaleParam.cWeightDecimal = 2;
-		stScaleParam.cUnits = UNIT_LB;
-		stScaleParam.cLenguage = ENGLISH;
-		//LCD_GLASS_Symbols(SYMBOL_LB, 1);
-		stScaleParam.cMoneda = MONEDA_DLLS;
-		stScaleParam.cMultirango = 0;
-		stScaleParam.iLoadPorcRefer = 100;
 	}
 	LCD_GLASS_Float(stScaleParam.iCapacity, stScaleParam.cWeightDecimal, LCD_PESO);
 	//stScaleParam.iLoadPorcRefer = 100;
@@ -1075,9 +1035,9 @@ float fCuentasToPeso(float fCountADC){
   * Objective: To Reduce the power consumption of the load cell.
   ******************************************************************************
 	*/
-float fSleep_Run(void){
+//float fSleep_Run(void){
 	
-float fValueReturn = 0;	
+//float fValueReturn = 0;	
 /*	float fWeightScale = 0;
 	
 	float fLimite = 0;
@@ -1201,8 +1161,8 @@ float fValueReturn = 0;
 	//Restart_Sleep_Time;
 	//Auto_Off_On_15m;
 	*/
-	return fValueReturn;
-}
+//	return fValueReturn;
+//}
 
 /**
   ******************************************************************************
