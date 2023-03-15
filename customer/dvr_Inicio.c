@@ -228,7 +228,7 @@ void vCalidadTest(void){
 		IWDG_KEY_REFRESH;			
 	}
 	OnBackLight;
-	//vTestTeclado();
+	vTestTeclado();
 	
 //	srFlagScale.bCalidadTest = 0;
 	srFlagScale.bTopeSobrePeso = 0;
