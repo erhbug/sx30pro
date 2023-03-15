@@ -332,17 +332,14 @@ void vVbatVeryLow(void){
 		LCD_GLASS_String("BAJA  ", LCD_PRECIO);	
 		LCD_GLASS_String("   BAT", LCD_TOTAL);
 	}
+vSound_Saved_Param();
 
-	while(uGet_Status_Volt() == SOURCE_ADAPTER_HIGH){		
-		vSound_Saved_Param();
+
+while(uGet_Status_Volt() == SOURCE_BATTERY_VERY_LOW){		
 		IWDG_KEY_REFRESH;
 	}
-
-	strTimer.iTimerE=1;//llenar vector
-	while(strTimer.iTimerE < 1000);
 	
-	LCD_GLASS_Clear();
-	while(1);
+
 }
 
 /*

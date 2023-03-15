@@ -16,7 +16,7 @@
 	#define LEVEL_BATTERY_HIGH			(float)5.0
 	#define LEVEL_BATTERY_OK			(float)4.5
 	#define LEVEL_BATTERY_LOW			(float)3.5
-	#define LEVEL_BATTERY_VERY_LOW	    (float)3.3
+	#define LEVEL_BATTERY_VERY_LOW	    (float)3.0
 
 	#define DIODE_VOLTAGE	 		   (float)0.2
 
