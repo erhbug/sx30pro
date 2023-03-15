@@ -11,7 +11,7 @@
 #include "./customer/beeper.h"
 #include "./customer/dvr_battery.h"
 #include "./customer/dvr_registradora.h"
-#include "./customer/usr_dbg.h"
+//#include "./customer/usr_dbg.h"
 
 extern float fWeightScale;									/* Contiene el valor del peso leido */
 extern float fWeightScaleBefore;

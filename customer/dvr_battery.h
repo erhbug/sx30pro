@@ -28,6 +28,6 @@
 	void vGet_Volts_System(void);
 	
 	void driver_symbol(void);
-	void driver_symbol_init(void);
+	//void driver_symbol_init(void);
 	
 #endif /* __DVR_BATTERY */

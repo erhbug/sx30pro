@@ -1,8 +1,8 @@
 //*************************************************************************//
 //* Name				:   data_nvm_825.h
 //* Vision				:	V-Nov07_12
-//* Project				:   »ª°î 825 ÏµÁÐµ¥Æ¬»ú
-//* Function			:   Solidic µç×Ó³Æ ·ÇÒ×Ê§ÐÔÊý¾Ý ²Ù×÷
+//* Project				:   ï¿½ï¿½ï¿½ï¿½ 825 Ïµï¿½Ðµï¿½Æ¬ï¿½ï¿½
+//* Function			:   Solidic ï¿½ï¿½ï¿½Ó³ï¿½ ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 //* $Author				:   superc
 //*
 //* Copyright 2012 by solidic
@@ -30,12 +30,12 @@
 //#define ADDRESS_QLTY_AND_CNTRS_PAGE  ADDRESS_PAGE_28
 #define ADDRESS_PLU                  ADDRESS_PAGE_29
 
-extern unsigned char NRM_securty;						// EEPROM °²È«ÂëA
+extern unsigned char NRM_securty;						// EEPROM ï¿½ï¿½È«ï¿½ï¿½A
 
 //**************************
-//EEPROM½Ó¿Úº¯Êý
+//EEPROMï¿½Ó¿Úºï¿½ï¿½ï¿½
 //**************************
-//¶ÁÈ¡EEPROMÖÐµÄÒ»¸ö×Ö£¨4×Ö½Ú£©£»
+//ï¿½ï¿½È¡EEPROMï¿½Ðµï¿½Ò»ï¿½ï¿½ï¿½Ö£ï¿½4ï¿½Ö½Ú£ï¿½ï¿½ï¿½
 unsigned char flash_read_u8(unsigned int addr);
 unsigned int  flash_read_u16(unsigned int addr);
 unsigned long flash_read_u32(unsigned int addr);
@@ -43,7 +43,7 @@ float flash_read_float32(unsigned int addr);
 
 void flash_write_u8(unsigned int addr,unsigned char in_data);
 void flash_write_u16(unsigned int addr,unsigned int in_data);
-void flash_write_u32(unsigned int addr,unsigned long in_data);
+//void flash_write_u32(unsigned int addr,unsigned long in_data);
 void flash_write_float32(unsigned int addr,float in_data);
 void e2rom_erase(unsigned int addr);
 void vEepromInit(unsigned char en);

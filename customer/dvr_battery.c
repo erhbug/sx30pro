@@ -18,7 +18,7 @@
 #include <REG52.H>
 #include <stdio.h>
 #include <string.h>
-#include "./customer/usr_dbg.h"
+//#include "./customer/usr_dbg.h"
 #include "./_scale/dvr_def.h"
 #include "./_scale/dvr_scale.h"
 #include "./_display/dvr_lcd_SDI1621.h"
@@ -79,7 +79,7 @@ unsigned char estado=0;
 unsigned char var=0;
 
 void driver_symbol(void);
-void driver_symbol_init(void);
+//void driver_symbol_init(void);
 
 #endif
 
@@ -137,7 +137,8 @@ void vGestorBateria(void){
 }
 
 #if DISPLAY_20400047_EN > 0
-void driver_symbol_init(){
+
+/*void driver_symbol_init(){
 		
 		if(fVoltage_Battery>=4.0)
 		{
@@ -153,7 +154,7 @@ void driver_symbol_init(){
 			estado=0;
 		}
 }
-
+*/
 /*
 */
 

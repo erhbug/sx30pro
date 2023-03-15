@@ -167,14 +167,14 @@ void vScan_Key(void){
 							stScaleParam.cNumberDecimalPrice = 0;
 						}
 							
-						if(stScaleParam.cPuntoDecimalPrecio < 3){
+						// if(stScaleParam.cPuntoDecimalPrecio < 3){
 								
-							stScaleParam.fPrice_Unit = vCapture_Valor_Test(Key, stScaleParam.cPuntoDecimalPrecio, stScaleParam.fPrice_Unit);
-							stScaleParam.fPrice_Unit /= (float)(pow(10,stScaleParam.cPuntoDecimalPrecio));
+						// 	stScaleParam.fPrice_Unit = vCapture_Valor_Test(Key, stScaleParam.cPuntoDecimalPrecio, stScaleParam.fPrice_Unit);
+						// 	stScaleParam.fPrice_Unit /= (float)(pow(10,stScaleParam.cPuntoDecimalPrecio));
 							
-						}else{
-							vCapture_Valor((float *)&stScaleParam.fPrice_Unit, Key - '0', 5, stScaleParam.cNumberDecimalPrice);
-						}
+						// }else{
+						 	vCapture_Valor((float *)&stScaleParam.fPrice_Unit, Key - '0', 5, stScaleParam.cNumberDecimalPrice);
+						// }
 					}
 					
 					return;

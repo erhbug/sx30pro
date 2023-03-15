@@ -248,7 +248,7 @@ void write_lcd(SOLIDIC Display, unsigned char mode){//char mode,unsigned char cm
 	LCD_WR_N = 1;	
 }
 
-void LCD_GLASS_DeInit(void){	
+/*void LCD_GLASS_DeInit(void){	
 //	Display.mode=LCD_DATA;
 //	Display.addr=0;
 //	Display.counter=sizeof(Display.LCD_BUF);	
@@ -265,7 +265,7 @@ void LCD_GLASS_DeInit(void){
 	write_lcd(Display,LCD_COMAND);//Turn off system oscillator
 
 }
-
+*/
 /*
 */
 void LCD_GLASS_Clear(void){	
@@ -276,12 +276,12 @@ void LCD_GLASS_Clear(void){
 
 /*
 */
-void LCD_GLASS_All_On(void){
+/*void LCD_GLASS_All_On(void){
 	//Display.mode=LCD_DATA;	
 	memset(Display.LCD_BUF, 0xFF, sizeof(Display.LCD_BUF));
 	write_lcd(Display,LCD_DATA);	
 }
-
+*/
 
 
 void LCD_SET_Char(unsigned char cCaracter, unsigned char cPosition_On_LCD, unsigned char cPosition_Text)

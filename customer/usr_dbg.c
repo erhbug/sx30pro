@@ -19,7 +19,7 @@
 // -- ȫ��ͷ�ļ� ���й��� ---- ���汾�޸��ļ�����䶯 ---  �����޸� ����ļ�
 //**************************************************************************
 #include "./_solidic/head_file_version.h"//comentar
-#include "./customer/usr_dbg.h"
+//#include "./customer/usr_dbg.h"
 #include "./_scale/dvr_def.h"
 #include "./_scale/dvr_scale.h"
 #include "./customer/beeper.h"

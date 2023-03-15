@@ -10,7 +10,7 @@
 #include "./customer/beeper.h"
 #include "./dvr_battery.h"
 #include "./customer/dvr_registradora.h"
-#include "./customer/usr_dbg.h"
+//usr_dbg.h"
 //extern bool KeyPressed;
 
 code unsigned char cPASS_BORRAR_VT[3] = {KEY_C, KEY_C};
@@ -207,14 +207,14 @@ void vCalcular_Cambio(void){
 					stScaleParam.cNumberDecimalPrice = 0;
 				}
 			
-				if(stScaleParam.cPuntoDecimalPrecio < 3){
+				// if(stScaleParam.cPuntoDecimalPrecio < 3){
 					
-					fValor_Cliente = vCapture_Valor_Test(cCaracter, stScaleParam.cPuntoDecimalPrecio, fValor_Cliente);
-					fValor_Cliente /= (float)(pow(10,stScaleParam.cPuntoDecimalPrecio));
+				// 	fValor_Cliente = vCapture_Valor_Test(cCaracter, stScaleParam.cPuntoDecimalPrecio, fValor_Cliente);
+				// 	fValor_Cliente /= (float)(pow(10,stScaleParam.cPuntoDecimalPrecio));
 					
-				}else{
-					vCapture_Valor((float *)&fValor_Cliente, cCaracter - '0', 6, stScaleParam.cNumberDecimalPrice);
-				}
+				// }else{
+				 	vCapture_Valor((float *)&fValor_Cliente, cCaracter - '0', 6, stScaleParam.cNumberDecimalPrice);
+				// }
 
 				if(stScaleParam.cPuntoDecimalPrecio < 3){
 					LCD_GLASS_Float(fValor_Cliente, stScaleParam.cPuntoDecimalPrecio, LCD_TOTAL);
