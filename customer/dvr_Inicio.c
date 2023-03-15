@@ -9,7 +9,8 @@
 #include "./customer/dvr_inicio.h"
 #include "./_scale/dvr_scale.h"
 #include "./_scale/app_cfg.h"
-#include "./_data_nvm/data_nvm_5219_Vc_Dec09_13.h"	
+#include "./_data_nvm/data_nvm_5219_Vc_Dec09_13.h"
+#include "dvr_plu.h"	
 
 /* --- Registro de Password */
 code enum digi_key eSEQUENCE_CONFIGURATION[8] = {KEY_TARA, KEY_C, KEY_CERO, KEY_RCL};
@@ -78,6 +79,9 @@ unsigned int TimeEnd=2000;
 			}else if(strcmp(eTEST_CALIDAD, arPass_Configuration) == 0){				
 				vCalidadTest();
 				return 1;
+			}else if(strcmp(eERASE_PLUS, arPass_Configuration) == 0){
+				vErase_All_Address_Plus();
+				//strTimer.cFLag_TimerD_End = 1;
 			}else if(strcmp(eSEQUENCE_RESET_REFERENCE, arPass_Configuration) == 0){
 						
 				stScaleParam.fPointZeroCali = fStablePoint(1, 0, 0);
