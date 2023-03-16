@@ -451,7 +451,6 @@ void vSetZero(void){
 void vGetZeroTracking(float fActualWeightScale){
 	float fValor_Limite = 0;
 	
-	
 	if(stScaleParam.cMultirango == 1){
 		fValor_Limite = stScaleParam.fFactorCalibrate/stScaleParam.iDivisionMinima;
 		fValor_Limite *= stScaleParam.iDivisionMenorMenor;
@@ -725,7 +724,7 @@ unsigned char cRun_Scale(void){
 		
 	}else{	
 		// Verifica si el peso es negativo
-		if(fWeightScale < -1){	
+		if(fWeightScale < -0.002){	
 			vWeight_Negative();			
 		}else{		
 			vWeight_Positive();			
@@ -1030,139 +1029,6 @@ float fCuentasToPeso(float fCountADC){
 	return fPesoFinal;
 }
 
-/**
-  ******************************************************************************
-  * Objective: To Reduce the power consumption of the load cell.
-  ******************************************************************************
-	*/
-//float fSleep_Run(void){
-	
-//float fValueReturn = 0;	
-/*	float fWeightScale = 0;
-	
-	float fLimite = 0;
-	int i = 0 ;	
-	unsigned char cFlag_Continue = 1;	//Flag para 
-	
-	//Variable para rotar el mensaje
-	unsigned char strMsgSaveBatt[16];
-	unsigned char strSave[6] = {0,0,0,0,0,0};
-	unsigned char strBatt[7] = {0,0,0,0,0,0,0};
-	unsigned char cDataTemp = 0;
-	unsigned char cDataTemp1 = 0;
-	unsigned char bStatus_Battery = 0;
-
-	
-	strcpy(strMsgSaveBatt, "---------- ");
-	
-	fLimite = fCuentasToPeso(stScaleParam.fFactorCalibrate);
-	
-	Time_Sleep;	//Reinicia el contador para realizar lectura del ADC
-	
-	for(i=0; i<11; i++){
-		if(i<5){
-			strSave[i] = strMsgSaveBatt[i];
-		}else if(i<11){
-			strBatt[i-5] = strMsgSaveBatt[i];
-		}
-	}
-	
-	OffBackLight;//GPIO_ResetBits(GPIOA, BACK_LIGHT);	//Off BackLight
-				
-	LCD_GLASS_Symbols(SYMBOL_ALL, 0);
-	LCD_GLASS_String("-----", LCD_PRECIO);
-	LCD_GLASS_String("------", LCD_TOTAL);
-	LCD_GLASS_Float(0, 0, LCD_PESO);
-	
-	while(cFlag_Continue){
-		//Verifica por que salio del Wait
-		if(srFlagScale.bScaleOn == 0){ //Si se oprimio la tecla On
-			cFlag_Continue = 0;
-		}else if(strTimer.iTimerB<TimerBend){ //Si ya pasaron 3 segundos
-			
-			fWeightScale = fRead_Adc(0);
-			
-			// Si esta la funcion ZeroTracking la ejecuta
-			if(stScaleParam.cZeroTracking == 1 && srFlagScale.bTara == 0){
-				vGetZeroTracking(fWeightScale);
-			}
-			
-			stScaleParam.fWeightScaleCount = fWeightScale;
-			
-			// Calcula peso bruto (numero de cuentas ADC del peso)
-			fWeightScale -= stScaleParam.fPointZero;
-			fValueReturn = fWeightScale;
-			fWeightScale = fCuentasToPeso(fWeightScale);
-			
-			if(fWeightScale >= fLimite || fWeightScale < (-1)*(fLimite)){
-				cFlag_Continue = 0;
-			}else if(vActionKey() != KEY_NULL){
-				cFlag_Continue = 0;
-				vBeep_Key();
-			}				
-			
-			if(cFlag_Continue){				
-				
-				//Verifica si ya esta conectado el elimnador para salir de bajo consumo
-				bStatus_Battery = uGet_Status_Volt();
-				
-				if(bStatus_Battery != SOURCE_ADAPTER){ 
-					vGestorBateria();
-				}else{
-					cFlag_Continue = 0;
-				}
-				
-				if(srFlagScale.bMsgBatteryLow == 0){
-					//Muestra animacion de lineas 
-					
-					cDataTemp = strMsgSaveBatt[0];
-					
-					for(i=0; i<14; i++){
-						strMsgSaveBatt[i] = strMsgSaveBatt[i+1];
-					}
-					
-					strMsgSaveBatt[10] = cDataTemp;
-					
-					for(i=0; i<11; i++){
-						if(i<5){
-							strSave[i] = strMsgSaveBatt[i];
-						}else if(i<11){
-							strBatt[i-5] = strMsgSaveBatt[i];
-						}
-					}
-					
-					LCD_GLASS_String("    0", LCD_PESO);
-					LCD_GLASS_String(strSave, LCD_PRECIO);
-					LCD_GLASS_String(strBatt, LCD_TOTAL);
-				}
-				
-				Time_Sleep;
-			}
-		}else if(vActionKey() != KEY_NULL){
-			cFlag_Continue = 0;
-			vBeep_Key();
-		}
-		
-		if(srFlagScale.bScaleOn == 0){
-			cFlag_Continue = 0;
-		}
-		
-		if(srFlagScale.cAuto_Off_Time == 1 && stScaleParam.cTimeAutooff == 1){
-			srFlagScale.bScaleOn = 0;
-			cFlag_Continue = 0;
-		}
-	}	
-	
-	if(srFlagScale.bBacklight_On){
-		if(stScaleParam.cBacklight){OnBackLight;}
-	}
-	
-///////CCC///////CCC	CLK_PeripheralClockConfig(CLK_Peripheral_ADC1, ENABLE);
-	//Restart_Sleep_Time;
-	//Auto_Off_On_15m;
-	*/
-//	return fValueReturn;
-//}
 
 /**
   ******************************************************************************
