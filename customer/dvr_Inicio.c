@@ -139,8 +139,13 @@ unsigned int TimeEnd=2000;
 
 
 void vCalidadTest(void){
-	float fAux_Value = 0;	
+	float fAux_Value = 0;
 	
+	vTestTeclado();
+
+	//LCD_GLASS_String("SOBRE", LCD_PESO);
+	LCD_GLASS_String(" PESO", LCD_PRECIO);
+	LCD_GLASS_String("   OFF", LCD_TOTAL);
 //	srFlagScale.bCalidadTest = 1;
 	srFlagScale.bTopeSobrePeso = 1;
 	vSound_Saved_Param();
@@ -226,7 +231,7 @@ void vCalidadTest(void){
 		IWDG_KEY_REFRESH;			
 	}
 	OnBackLight;
-	vTestTeclado();
+	//vTestTeclado();
 	
 //	srFlagScale.bCalidadTest = 0;
 	srFlagScale.bTopeSobrePeso = 0;
