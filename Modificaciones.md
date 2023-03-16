@@ -2,10 +2,9 @@
 en dvr_scale.c
  533  stScaleParam.fFactorCalibrate = stScaleParam.fFactorCalibrate*2;
 
-# Agregar calibracion con 25k a la opcion de 30 k 
+# Agregar calibracion con 24kg
 
+# ZeroTracking
 
-# variables de costos:
-
-stScaleParam.fTotal_Venta
-stScaleParam.fPrice_Unit
+Para hacer funcionar el Zero Tracking se necesita poner en 1 la variable
+    stScaleParam.cZeroTracking

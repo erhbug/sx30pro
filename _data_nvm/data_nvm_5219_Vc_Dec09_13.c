@@ -2,7 +2,7 @@
 //* Name				:   data_nvm_825.c
 //* Vision				:	V-Jun20_13
 //* Project				:   
-//* Function			:   Solidic µç×Ó³Æ ·ÇÒ×Ê§ÐÔÊý¾Ý ²Ù×÷
+//* Function			:   Solidic ï¿½ï¿½ï¿½Ó³ï¿½ ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 //* $Author				:   superc
 //*
 //* Copyright 2012 by solidic
@@ -91,27 +91,27 @@ void nvm_data_write_byte(unsigned int addr,unsigned char in_data)
 	flash_addr.i = addr;
    	ea_save  =  EA;            // Save EA
 	EA = 0;
-	//-- ×¼±¸µØÖ·ºÍÊý¾Ý --
+	//-- ×¼ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ --
 	FLASH_ADDRH = flash_addr.b[0]; // point to the address you want to erase 
 	FLASH_ADDRL = flash_addr.b[1]; 
 	FLASH_DATA = in_data;	
 
-	//-- ×´Ì¬Çå³ý --
+	//-- ×´Ì¬ï¿½ï¿½ï¿½ --
 	FLASH_ENA = 0x00;
 	FLASH_ENB = 0x00;
 	FLASH_ENC = 0x00;
-	//-- Í¨¹ý°²È«¼ìÑéºó²ÅÄÜÆô¶¯ Flash ²Ù×÷ --
+	//-- Í¨ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Flash ï¿½ï¿½ï¿½ï¿½ --
 	if((NRM_securty == 0xaa))
-		FLASH_CON = 0x03;	//×´Ì¬Çå³ý£¬Ö´ÐÐÒ»´ÎFLASH_CON£¬½«°²È«×´Ì¬¸´Î»
-		nop();	//ÑÓÊ±
-	//-- Ð´°²È«Âë¿ªÆôFlash²Ù×÷Ðí¿É --		
+		FLASH_CON = 0x03;	//×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½Ò»ï¿½ï¿½FLASH_CONï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È«×´Ì¬ï¿½ï¿½Î»
+		nop();	//ï¿½ï¿½Ê±
+	//-- Ð´ï¿½ï¿½È«ï¿½ë¿ªï¿½ï¿½Flashï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ --		
 	FLASH_ENA = 0x05;
 	FLASH_ENB = 0x0a;
 	FLASH_ENC = 0x09;
-	//-- Í¨¹ý°²È«¼ìÑéºó²ÅÄÜÆô¶¯ Flash ²Ù×÷ --
+	//-- Í¨ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Flash ï¿½ï¿½ï¿½ï¿½ --
 	if((NRM_securty == 0xaa))
 		FLASH_CON = 0x03;
-	//-- Çå³ý°²È«Âë --
+	//-- ï¿½ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½ --
 	FLASH_ENA = 0x00;
 	FLASH_ENB = 0x00;
 	FLASH_ENC = 0x00;
@@ -156,6 +156,7 @@ void flash_write_u16(unsigned int addr,unsigned int in_data)
 	}	
 }
 
+/*
 void flash_write_u32(unsigned int addr,unsigned long in_data)
 {
 	unsigned char *ptr;
@@ -163,12 +164,11 @@ void flash_write_u32(unsigned int addr,unsigned long in_data)
 	unsigned long read=0;
 	read=flash_read_u32(addr);
 
-	/****************************/
+	
 	if( read!=0xffffffff ){
 	  ClearThisButAll(addr,4);
 //	LCD_GLASS_String("CTBAL3", LCD_TOTAL);delay_ms(3000);
 	  }		
-	/****************************/
 
 	ptr=(unsigned char *)&in_data;
 	for(i=0;i<4;i++)
@@ -176,6 +176,7 @@ void flash_write_u32(unsigned int addr,unsigned long in_data)
 	  nvm_data_write_byte(addr++,*(ptr++));
 	}	
 }
+*/
 
 void flash_write_float32(unsigned int addr,float in_data)
 {
@@ -198,11 +199,11 @@ void flash_write_float32(unsigned int addr,float in_data)
 	}	
 }
 
-//EEPROM BLOCK(1k) ²Á³ý
-//addr = £¨0 - 31£©* 1024 ,²Á³ý¶ÔÓ¦µÄBlockµØÖ·
-//µ÷ÓÃÇ°ÐèÒª:
+//EEPROM BLOCK(1k) ï¿½ï¿½ï¿½ï¿½
+//addr = ï¿½ï¿½0 - 31ï¿½ï¿½* 1024 ,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½Blockï¿½ï¿½Ö·
+//ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½Òª:
 //NRM_securty_a,NRM_securty_b
-//flash²Ù×÷¹Ø±Õ×ÜÖÐ¶Ï£¬²Ù×÷Íêºó»á¿ªÆô×ÜÖÐ¶Ï(×¢Òâ)
+//flashï¿½ï¿½ï¿½ï¿½ï¿½Ø±ï¿½ï¿½ï¿½ï¿½Ð¶Ï£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½á¿ªï¿½ï¿½ï¿½ï¿½ï¿½Ð¶ï¿½(×¢ï¿½ï¿½)
 void e2rom_erase(unsigned int addr)
 {unsigned char i=0;
 	union INTpattern flash_addr;
@@ -212,22 +213,22 @@ void e2rom_erase(unsigned int addr)
 	EA = 0;
 	FLASH_ADDRH = flash_addr.b[0]; // point to the address you want to erase 
 	FLASH_ADDRL = flash_addr.b[1]; 
-	//-- ×´Ì¬Çå³ý --
+	//-- ×´Ì¬ï¿½ï¿½ï¿½ --
 	FLASH_ENA = 0x00;
 	FLASH_ENB = 0x00;
 	FLASH_ENC = 0x00;
-	//-- Í¨¹ý°²È«¼ìÑéºó²ÅÄÜÆô¶¯ Flash ²Ù×÷ --
+	//-- Í¨ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Flash ï¿½ï¿½ï¿½ï¿½ --
 	if((NRM_securty == 0xaa))
-		FLASH_CON = 0x03;	//×´Ì¬Çå³ý£¬Ö´ÐÐÒ»´ÎFLASH_CON£¬½«°²È«×´Ì¬¸´Î»
+		FLASH_CON = 0x03;	//×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½Ò»ï¿½ï¿½FLASH_CONï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È«×´Ì¬ï¿½ï¿½Î»
 	nop();
-	//-- Ð´°²È«Âë¿ªÆôFlash²Ù×÷Ðí¿É --
+	//-- Ð´ï¿½ï¿½È«ï¿½ë¿ªï¿½ï¿½Flashï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ --
 	FLASH_ENA = 0x05;
 	FLASH_ENB = 0x0a;
 	FLASH_ENC = 0x09;
-	//-- Í¨¹ý°²È«¼ìÑéºó²ÅÄÜÆô¶¯ Flash ²Ù×÷ --
+	//-- Í¨ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Flash ï¿½ï¿½ï¿½ï¿½ --
 	if((NRM_securty == 0xaa))
 		FLASH_CON = 0x0c;
-	//-- Çå³ý°²È«Âë --
+	//-- ï¿½ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½ --
 	FLASH_ENA = 0x00;
 	FLASH_ENB = 0x00;
 	FLASH_ENC = 0x00;

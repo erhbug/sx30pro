@@ -8,9 +8,9 @@
 #include "./_weight/dvr_HX712.h"
 #include "./_scale/dvr_scale.h"
 #include "./customer/beeper.h"
-#include "./_battery/dvr_battery.h"
+#include "./dvr_battery.h"
 #include "./customer/dvr_registradora.h"
-#include "./customer/usr_dbg.h"
+//usr_dbg.h"
 //extern bool KeyPressed;
 
 code unsigned char cPASS_BORRAR_VT[3] = {KEY_C, KEY_C};
@@ -50,7 +50,7 @@ void vAdd_Articulos(float fPrecio_Articulo){
 				key_scan();
 
 				strTimer.iTimerE= 1;
-
+		
 				while(strTimer.iTimerE < delaytimeMS){
 					key_scan();
  					if(Key != KEY_NULL){ 
@@ -129,7 +129,8 @@ void vAdd_Articulos(float fPrecio_Articulo){
 	* Parametros Salida:
   * Prerequisitos: 
   ***
-	*/
+	*/ 
+
 void vCalcular_Cambio(void){	
 	unsigned char cCaracter;
 	float fValor_Cliente = 0;
@@ -206,14 +207,14 @@ void vCalcular_Cambio(void){
 					stScaleParam.cNumberDecimalPrice = 0;
 				}
 			
-				if(stScaleParam.cPuntoDecimalPrecio < 3){
+				// if(stScaleParam.cPuntoDecimalPrecio < 3){
 					
-					fValor_Cliente = vCapture_Valor_Test(cCaracter, stScaleParam.cPuntoDecimalPrecio, fValor_Cliente);
-					fValor_Cliente /= (float)(pow(10,stScaleParam.cPuntoDecimalPrecio));
+				// 	fValor_Cliente = vCapture_Valor_Test(cCaracter, stScaleParam.cPuntoDecimalPrecio, fValor_Cliente);
+				// 	fValor_Cliente /= (float)(pow(10,stScaleParam.cPuntoDecimalPrecio));
 					
-				}else{
-					vCapture_Valor((float *)&fValor_Cliente, cCaracter - '0', 6, stScaleParam.cNumberDecimalPrice);
-				}
+				// }else{
+				 	vCapture_Valor((float *)&fValor_Cliente, cCaracter - '0', 6, stScaleParam.cNumberDecimalPrice);
+				// }
 
 				if(stScaleParam.cPuntoDecimalPrecio < 3){
 					LCD_GLASS_Float(fValor_Cliente, stScaleParam.cPuntoDecimalPrecio, LCD_TOTAL);
@@ -282,7 +283,7 @@ void vCalcular_Cambio(void){
 				
 				switch(stScaleParam.cPuntoDecimalTotal){
 					case 0:
-					//usr_dbg("a",1000);
+					
 						if(fValor_Cliente > 0){
 							LCD_GLASS_Float(fValor_Cliente, stScaleParam.cPuntoDecimalTotal, LCD_TOTAL);
 						}else{
@@ -291,7 +292,7 @@ void vCalcular_Cambio(void){
 						break;
 					
 					case 1:		
-					//usr_dbg("b",1000);			
+								
 						if(fValor_Cliente > 99999.9){
 							LCD_GLASS_Float(fValor_Cliente, 0, LCD_TOTAL);
 						}else{
@@ -306,19 +307,18 @@ void vCalcular_Cambio(void){
 					case 2:
 						if(fValor_Cliente > 9999.99){
 							if(fValor_Cliente > 99999.9){
-								//usr_dbg("1",1000);
+								
 								LCD_GLASS_Float(fValor_Cliente, 0, LCD_TOTAL);								
 							}else{
-								//usr_dbg("2",1000);
+								
 								LCD_GLASS_Float(fValor_Cliente, 1, LCD_TOTAL);
 							}
 						}else{
 							if(fValor_Cliente > 0){
-								//usr_dbg("3",1000);
+								
 								LCD_GLASS_Float(fValor_Cliente, stScaleParam.cPuntoDecimalTotal, LCD_TOTAL);
 							}else{
 								LCD_GLASS_Float(0, 0, LCD_TOTAL);
-								//usr_dbg("4",1000);
 							}
 						}						
 						break;
@@ -434,51 +434,70 @@ void vFinalizar_Venta(void){
   * Prerequisitos: 
   ******************************************************************************
   */
-void vMostrar_Venta_Total(void){	
-	char i;
-
-	//stScaleParam.fTotal_Venta_Articulos 
-	LCD_GLASS_Clear();
+void vMostrar_Venta_Total(void){
+	
+	unsigned char xdata cText_Venta_Total[13] = "           ";
+	unsigned char xdata cText_Precio[6] = "     ";
+	unsigned char xdata cText_Total[8] = "      ";
+	unsigned char xdata cCode_Borrar_VT[3] = "  ";
+	int i;
+	
+	//LCD_GLASS_Clear();
 	
 	if(stScaleParam.cLenguage == ESPANOL){
 		LCD_GLASS_String("TOTAL", LCD_PESO);
 	}else{
 		LCD_GLASS_String("   TS", LCD_PESO);
 	}
-	LCD_GLASS_Float(stScaleParam.fTotal_Venta_Articulos , stScaleParam.cPuntoDecimalTotal, LCD_TOTAL);
-
-	i = 0;
+	
+	stScaleParam.fVenta_Total_Scale = fRoundFloat(stScaleParam.fVenta_Total_Scale, 
+	stScaleParam.cPuntoDecimalTotal, stScaleParam.cValorcRedondeoCifraVentaTotal);
+	
+	if(stScaleParam.cPuntoDecimalTotal == 0){
+		sprintf(cText_Venta_Total, "%10.0f", stScaleParam.fVenta_Total_Scale);
+	}else if(stScaleParam.cPuntoDecimalTotal == 1){
+		sprintf(cText_Venta_Total, "%11.1f", stScaleParam.fVenta_Total_Scale);
+	}else if(stScaleParam.cPuntoDecimalTotal == 2){
+		sprintf(cText_Venta_Total, "%11.2f", stScaleParam.fVenta_Total_Scale);
+	}
+		for(i=0; i<5; i++){
+		cText_Precio[i] = cText_Venta_Total[i];
+	}
+	
+	for(i=5; i<12; i++){
+		cText_Total[i-5] = cText_Venta_Total[i];
+	}
+	
+	LCD_GLASS_String(cText_Total, LCD_TOTAL);
+	LCD_GLASS_Dot(stScaleParam.cPuntoDecimalTotal, LCD_TOTAL, 1);
+	LCD_GLASS_String(cText_Precio, LCD_TOTAL);
+	
+	i = 0; 
 	strTimer.iTimerE = 1;
 	while(strTimer.iTimerE < TimerEend){
 		
 		IWDG_KEY_REFRESH;
 			key_scan();
 		
-		if(Key  != KEY_NULL && Key == KEY_C){
-			if (i==1){break;}
-			else{
-			i++;
-			}
+		if(Key  != KEY_NULL){
 		}
-		else if(Key != KEY_NULL){
-			break;
-			}
-		strTimer.iTimerE++;
-	}
 		
-	if(Key  == KEY_C ){
-			stScaleParam.fTotal_Venta_Articulos = 0;
-			stScaleParam.iNumber_Articulos_Venta = 0;	
-			LCD_GLASS_String("RESET", LCD_PESO);
-			LCD_GLASS_String("TOTAL", LCD_PRECIO);
-			LCD_GLASS_String("      ", LCD_TOTAL);
-			strTimer.iTimerE =1;
-			key_scan();
-			while(strTimer.iTimerE < TimerEend){
-				IWDG_KEY_REFRESH;
-				strTimer.iTimerE++;
-				// key_scan();
-				// if(Key  != KEY_NULL){break;}		
+		if((Key  == KEY_C ||Key  == KEY_CHG) && i < 2){
+			cCode_Borrar_VT[i] =Key ;
+			i++;
+		}else if(i == 2){
+			
+			if(strcmp(cCode_Borrar_VT, cPASS_BORRAR_VT) == 0){
+				stScaleParam.fVenta_Total_Scale = 0;
+				vSaveParamScale(Parameter_Register);
+				strTimer.iTimerE= 1;
+				while(strTimer.iTimerE < TimerEend){
+					LCD_GLASS_String("RESET", LCD_PESO);
+					LCD_GLASS_String("TOTAL", LCD_PRECIO);
+					LCD_GLASS_String("      ", LCD_TOTAL);
+				}
+				i++;
 			}
+		} 
 	}
-}	
+}

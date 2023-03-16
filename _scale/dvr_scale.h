@@ -38,12 +38,12 @@
 #define ADDR_MULTIRANGO				ADDRESS_SCALE_CONFIG_PAGE + 52 	/* 1 byte */
 #define ADDR_DIVISION_MENORMENOR    ADDRESS_SCALE_CONFIG_PAGE + 53 	/* 2 bytes */
 
-#define ADDR_COUNTER_CALIBRATION    ADDRESS_QLTY_AND_CNTRS_PAGE + 0 	/* 2 byte */
-#define ADDR_COUNTER_CONFIGURATION  ADDRESS_QLTY_AND_CNTRS_PAGE + 2 	/* 2 byte */
-#define ADDR_COUNT_OVERLOAD		    ADDRESS_QLTY_AND_CNTRS_PAGE + 4  /* 2 bytes */
-#define ADDR_VALUE_OVERLOAD		    ADDRESS_QLTY_AND_CNTRS_PAGE + 6  /* 4 bytes */
-#define ADDR_ERRORBATT			    ADDRESS_QLTY_AND_CNTRS_PAGE + 10  /* 1 byte */
-#define ADDR_VENTA_TOTAL		    ADDRESS_QLTY_AND_CNTRS_PAGE + 11   /* 4 bytes */
+#define ADDR_COUNTER_CALIBRATION    ADDRESS_PLU + 512 	/* 2 byte */
+#define ADDR_COUNTER_CONFIGURATION  ADDRESS_PLU + 514 	/* 2 byte */
+#define ADDR_COUNT_OVERLOAD		    ADDRESS_PLU + 516  /* 2 bytes */
+#define ADDR_VALUE_OVERLOAD		    ADDRESS_PLU + 518  /* 4 bytes */
+#define ADDR_ERRORBATT			    ADDRESS_PLU + 522  /* 1 byte */
+#define ADDR_VENTA_TOTAL		    ADDRESS_PLU + 524   /* 4 bytes */
 
 enum UnitScale{ 
 	UNIT_LB, UNIT_KG, UNIT_OZ 
@@ -66,7 +66,6 @@ typedef struct {
 	float fValueOverload;
 	
 	float fVoltage_Batt;
-	float fVoltage_Adap;
 	
 //	float fTemperature;
 	
@@ -111,9 +110,10 @@ typedef struct {
 	
 	unsigned char cFormatoImpresion;
 	unsigned char cMoneda;
+	unsigned char cSourceVoltage;
 	
 	//unsigned char cSpecialAction;
-	unsigned char cBacklight;
+	//unsigned char cBacklight;
 	
 }Parameter;
 extern Parameter stScaleParam;
@@ -129,11 +129,11 @@ enum digi_key{
 
 typedef struct {
 //	unsigned bScaleOn : 1;			/* Indica si la bascula esta encendida o apagada */
-//	unsigned bReadBattery : 1;	/* Indica que ya se puede leer el valor de la bateria */
+	unsigned bReadBattery : 1;	/* Indica que ya se puede leer el valor de la bateria */
 	unsigned bBateriaLow : 1;		/* Indica el estado de la bateria */
-//	unsigned bMsgBatteryLow : 1;
-//	unsigned bBateriaCount : 1;
-	unsigned bSourceVoltage : 1; /* Indica de donde procede el voltaje de alimentacion	bateria o eliminador */
+	unsigned bMsgBatteryLow : 1;
+	unsigned bBateriaCount : 1;
+	//unsigned bSourceVoltage : 1; /* Indica de donde procede el voltaje de alimentacion	bateria o eliminador */
 //	unsigned bZeroTracking : 1;	/* Inidica si la funcion ZeroTrcking esta activada */
 	unsigned bTara : 1;					/* 1 -> Tara Activada, 0 -> Desactivada */
 //	unsigned bZero : 1;					/* Inidica si el sistema debe tomar una nueva referncia	a cero */
@@ -213,15 +213,22 @@ extern idata FlagScale srFlagScale;
 /* Global variables ----------------------------------------------------------*/
 typedef struct {
 	unsigned char iTimerA;//200mS
-	unsigned int iTimerE;					//5
-	unsigned int iTimerJ;							//  1s
+	unsigned int iTimerC;//1Seg
+	unsigned int iTimerE;//5seg
+	unsigned int iTimerBlk;//5seg
+	unsigned int iTimerJ;//1min
 	unsigned int iTimerDBG;
+	unsigned int iTimerCharge;
 }strTimers;
 extern idata strTimers strTimer;
 
-#define TimerAend 200
-#define TimerEend 5000
-#define TimerJend 60000
+#define TimerAend (unsigned char)200
+#define TimerCend (unsigned int)1000
+#define TimerEend (unsigned int)5000
+#define iTimerBlk1end (unsigned int)5000
+#define iTimerBlk2end (unsigned int)15000
+#define TimerJend (unsigned int)60000
+#define TimerChargeend (unsigned char)50
 
 
 
@@ -229,7 +236,7 @@ enum ActionScale{
 	ScaleBattery, ScalePreOn, ScaleWait, 
 	ScaleRun,
 };
-//extern enum ActionScale eAccionScale;
+extern enum ActionScale eAccionScale;
 
 
 // Global function prototypes -----------------------------------------------

@@ -18,9 +18,9 @@
 #include "./_weight/dvr_HX712.h"
 #include "./_scale/dvr_scale.h"
 #include "./customer/beeper.h"
-#include "./_battery/dvr_battery.h"
+#include "./customer/dvr_battery.h"
 #include "./customer/dvr_registradora.h"
-#include "./customer/usr_dbg.h"
+//usr_dbg.h"
 
 #define ADDRES_START_PLUS	ADDRESS_PLU //200
 

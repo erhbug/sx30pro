@@ -4,11 +4,11 @@
 #include "./_scale/dvr_scale.h"
 #include "./customer/beeper.h"
 #include "./customer/dvr_inicio.h"
+
+#include "./customer/dvr_battery.h"
 #include <stdio.h>
 #include <string.h>
 
-unsigned int convertidorADC(void);
-void init_pwm(void);
 void wdt_init(void);
 void gpio_init(void);
 void adc_init(void);
@@ -17,10 +17,6 @@ Parameter stScaleParam;	/* Contiene los parametros de uso de la Bascula*/
 
 /*Display*/
 volatile SOLIDIC Display;
-
-
-/*HX712*/
-
 
 /*flash*/
 unsigned char NRM_securty;
@@ -31,21 +27,25 @@ float fWeightScaleBefore = 0;
 float fWeightLight = 0;
 idata FlagScale srFlagScale;		/* Contiene las banderas del sistema */
 unsigned int iCounterZeroTracking = 0;
-
-///////
-
-
+extern float fVoltage_Battery;
+enum ActionScale eAccionScale;
 
 void main(void) {
-  enum ActionScale eAccionScale;
   wdt_init();
   gpio_init();
   adc_init();
-  init_pwm();
+  init_pwm(0x01);
   init_int_timer0();
   LCD_GLASS_Init();
   eAccionScale = ScalePreOn; /* Inicia en el primer estado Off */
-  //while(1){ReadHX712();}
+
+  /*eAccionScale == ScaleRun;
+  while(1){
+	vGestorBateria();
+	LCD_GLASS_Float(fVoltage_Battery,2,LCD_PESO);  	
+	IWDG_KEY_REFRESH; 		  
+  } */
+  vGestorBateria();
   while (1) {
    switch (eAccionScale) {
     case ScalePreOn:
@@ -53,21 +53,21 @@ void main(void) {
       memset( & srFlagScale, 0x00, sizeof(srFlagScale));
       memset( & stScaleParam, 0x00, sizeof(stScaleParam));
       vReadParamScale(); // Inicia los parametros de la Bascula					
-      LCD_GLASS_Clear();
+	  LCD_GLASS_Clear();
       LCD_GLASS_String("-----", LCD_PESO);
       LCD_GLASS_String("-----", LCD_PRECIO);
       LCD_GLASS_String("------", LCD_TOTAL); 
+	  OnBackLight;	
 	  
       vBeep_Key();
       eAccionScale = ScaleBattery; // Pasa al siguiente estado
       break;
 
-    case ScaleBattery:
+    case ScaleBattery:	 
       eAccionScale = ScaleWait;
       break;
 
     case ScaleWait:
-
       if (cWait_Scale() == 0) {
         eAccionScale = ScaleRun;
         LCD_GLASS_Clear();
@@ -77,8 +77,8 @@ void main(void) {
 
     case ScaleRun:
       	// Lee teclado y ejecuta las acciones correspondientes 
-	  vScan_Key();
-      cRun_Scale();
+	    vScan_Key();
+	    cRun_Scale();
       break;
 
     } //switch
@@ -86,27 +86,27 @@ void main(void) {
 } //main
 
 //##################################################
-void init_pwm(void){
+void init_pwm(unsigned char BlkPWM){
 //apagar bl y beeper
 	BL_EN;
 	BEEPER_DIS;
 
    //Configuracion salida BL
     P1M0 |= (1<<5);
-    P1M1 &= ~(1<<5);
+    P1M1 &= ~(1<<5);   
 
     PWMF_H  = 0x00;
-	PWMF_L  = 0xA0;
-	PWM0  	= 0X6C;//BEEPER correcto 0x6c
-	PWM1  	= 0X50;
-	PWMCON  = 0x04;	//PWM0-P1.4(LCD_LAMP)????(?PWM0=0xff?,?????)	
+	  PWMF_L  = 0xA0;
+	  PWM0  	= 0X6C;//BEEPER correcto 0x6c
+	  PWM1  	= BlkPWM;//0x10;//0X50;
+	  PWMCON  = 0x04;	//PWM0-P1.4(LCD_LAMP)????(?PWM0=0xff?,?????)	
 }
 
 void wdt_init(void){// watch dog ///
     EA = 0;
     WD_TA = 0x05;
-	WD_TA = 0x0a;
-	WDCON = 0x1f; /// 4s?,0.2s ///
+	  WD_TA = 0x0a;
+	  WDCON = 0x1f; /// 4s?,0.2s ///
     EA = 1;
 	IWDG_KEY_REFRESH;
 }
@@ -169,40 +169,35 @@ void init_int_timer0(void)
     TCON |= (1<<4);//Start timer0
 }
 
-unsigned int convertidorADC(){
-
-unsigned int v=0;
-SARCON = 0x09;
-	if(!(SARCON & 0x04))
-	{
-		SARCON |= 0x04;
-		while(SARCON & 0x04)
-		{
-		}
-	}
-v=SARDATA;
-SARCON &= 0xf7;
-return v;
-
-}
 /////////   Interrups timer0    ////////////////
-
 static void timer0(void) interrupt 1
 {	
     
-    if(strTimer.iTimerA>0){ 
+  if(strTimer.iTimerA>0){ 
       if(strTimer.iTimerA==1)BEEPER_EN;	
 
 	  strTimer.iTimerA++;
 		if(strTimer.iTimerA>=TimerAend)BEEPER_DIS;
 	}
 
+if(strTimer.iTimerBlk>0 )
+	strTimer.iTimerBlk++;
+
+//if(strTimer.iTimerC>0 ){
+	strTimer.iTimerC++;
+  if (strTimer.iTimerC>=TimerCend)
+  {
+    strTimer.iTimerC=0;
+	if(srFlagScale.bReadBattery==0)
+		srFlagScale.bReadBattery++;
+  }
+//}
+
 	if(strTimer.iTimerE>0 )
 	strTimer.iTimerE++;
 
-	if(strTimer.iTimerDBG>0 )
-	strTimer.iTimerDBG++;
-
+  if(strTimer.iTimerCharge>0 )
+	strTimer.iTimerCharge++;
 
 	//P0 ^= (1<<1);//P1 ^= (1<<5);
 	TL0 = 0xCF;

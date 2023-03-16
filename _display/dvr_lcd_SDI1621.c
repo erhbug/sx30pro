@@ -131,14 +131,14 @@ const unsigned char xdata cABC_LCD[] = {
 
 #endif
 
-	// funci¨®n de retardo 10us
+	// funciÂ¨Â®n de retardo 10us
 //void delay_35u(void){ 	
 //	unsigned char j;
  // 	for(j= 0;j<5;j++);
 //}	
 
 //****************************************************
-// Controlador LCD 1621 bloque compilaci¨®n condicional ------ comenzar -------
+// Controlador LCD 1621 bloque compilaciÂ¨Â®n condicional ------ comenzar -------
 //****************************************************
 void lcd_unit_write(unsigned char d){
 	unsigned char i;
@@ -185,12 +185,12 @@ void LCD_GLASS_Init(void){//int i,j,k;
 
 
 
-// funci¨®n de escritura LCD
+// funciÂ¨Â®n de escritura LCD
 // modo:
 // 0: Entrada de comando
-// 1: actualizar todas las ¨¢reas
-// cmd: comando de codificaci¨®n
-// ---- Nota: Mostrar la funci¨®n de la tecla de interrupci¨®n ET0 en la funci¨®n - (Cuando el programa no necesita abrir la interrupci¨®n T0, preste especial atenci¨®n para evitar que la funci¨®n de pantalla abra accidentalmente la interrupci¨®n T0)
+// 1: actualizar todas las Â¨Â¢reas
+// cmd: comando de codificaciÂ¨Â®n
+// ---- Nota: Mostrar la funciÂ¨Â®n de la tecla de interrupciÂ¨Â®n ET0 en la funciÂ¨Â®n - (Cuando el programa no necesita abrir la interrupciÂ¨Â®n T0, preste especial atenciÂ¨Â®n para evitar que la funciÂ¨Â®n de pantalla abra accidentalmente la interrupciÂ¨Â®n T0)
 
 void write_lcd(SOLIDIC Display, unsigned char mode){//char mode,unsigned char cmd,unsigned char addr,unsigned char counter)
 	unsigned char i=0;	
@@ -229,7 +229,7 @@ void write_lcd(SOLIDIC Display, unsigned char mode){//char mode,unsigned char cm
 	else 
 	{		
 		addr = 0;
-		for(i=0;i<6;i++){	// Êý¾ÝÐ´ÈëÃüÁî,·¢ËÍÊ×µØÖ·  Comando de escritura de datos, enviar la primera direcci¨®n
+		for(i=0;i<6;i++){	// ÃŠÃ½Â¾ÃÃÂ´ÃˆÃ«ÃƒÃ¼ÃÃ®,Â·Â¢Ã‹ÃÃŠÃ—ÂµÃ˜Ã–Â·  Comando de escritura de datos, enviar la primera direcciÂ¨Â®n
 			LCD_WR_N = 0;			
 			if( (addr & 0x80) == 0 ) 
 				LCD_DATA_N = 0;
@@ -240,7 +240,7 @@ void write_lcd(SOLIDIC Display, unsigned char mode){//char mode,unsigned char cm
 		//	delay_35u();
 			addr <<= 1;
 		}		
-		for(i=0;i<16;i++)	// Êý¾ÝÐ´ÈëÃüÁî,·¢ËÍÊý¾Ý  Comando de escritura de datos, enviar datos
+		for(i=0;i<16;i++)	// ÃŠÃ½Â¾ÃÃÂ´ÃˆÃ«ÃƒÃ¼ÃÃ®,Â·Â¢Ã‹ÃÃŠÃ½Â¾Ã  Comando de escritura de datos, enviar datos
 			lcd_unit_write(Display.LCD_BUF[15 - i]);		
 	}
 	LCD_CS_N = 1;
@@ -248,7 +248,7 @@ void write_lcd(SOLIDIC Display, unsigned char mode){//char mode,unsigned char cm
 	LCD_WR_N = 1;	
 }
 
-void LCD_GLASS_DeInit(void){	
+/*void LCD_GLASS_DeInit(void){	
 //	Display.mode=LCD_DATA;
 //	Display.addr=0;
 //	Display.counter=sizeof(Display.LCD_BUF);	
@@ -265,7 +265,7 @@ void LCD_GLASS_DeInit(void){
 	write_lcd(Display,LCD_COMAND);//Turn off system oscillator
 
 }
-
+*/
 /*
 */
 void LCD_GLASS_Clear(void){	
@@ -276,12 +276,12 @@ void LCD_GLASS_Clear(void){
 
 /*
 */
-void LCD_GLASS_All_On(void){
+/*void LCD_GLASS_All_On(void){
 	//Display.mode=LCD_DATA;	
 	memset(Display.LCD_BUF, 0xFF, sizeof(Display.LCD_BUF));
 	write_lcd(Display,LCD_DATA);	
 }
-
+*/
 
 
 void LCD_SET_Char(unsigned char cCaracter, unsigned char cPosition_On_LCD, unsigned char cPosition_Text)
@@ -652,7 +652,7 @@ if(c=='k'||c=='K')return LCD_char_K;
 if(c=='l'||c=='L')return LCD_char_L;
 if(c=='m'||c=='M')return LCD_char_M;
 if(c=='n'||c=='N')return LCD_char_N;
-//if(c=='ñ'||c=='Ñ')return LCD_char_Ñ;
+//if(c=='Ã±'||c=='Ã‘')return LCD_char_Ã‘;
 if(c=='o'||c=='O')return LCD_char_O;
 if(c=='p'||c=='P')return LCD_char_P;
 if(c=='q'||c=='Q')return LCD_char_Q;

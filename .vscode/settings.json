@@ -1,5 +1,9 @@
 {
     "files.associations": {
-        "keyboard.h": "c"
+        "keyboard.h": "c",
+        "dvr_def.h": "c",
+        "dvr_scale.h": "c",
+        "beeper.h": "c",
+        "head_file_version.h": "c"
     }
 }

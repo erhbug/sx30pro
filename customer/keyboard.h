@@ -40,7 +40,7 @@ extern unsigned char idata Key;
 void key_scan(void);
 void delay_ms(unsigned int num);
 void vScan_Key(void);
-float vCapture_Valor_Test(unsigned char fNew_Digit, unsigned char cDecimal_Number, float fValue_Capture);
+//float vCapture_Valor_Test(unsigned char fNew_Digit, unsigned char cDecimal_Number, float fValue_Capture);
 void vCapture_Valor(float *pfValor, float fNew_Digit, int iNumber_Max_Digit,unsigned char cCounter_Decimal);
 void vActionMemoryPlu(unsigned char cIndexMemory);
 //unsigned char cConvert_Char(unsigned char Key_Num);

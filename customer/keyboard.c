@@ -64,7 +64,7 @@ void key_scan(void) {
     if (k == 2) KEY_D2 = 0;
     if (k == 3) KEY_D3 = 0;
     if (k == 4) KEY_D4 = 0;
-    delay_ms(1);
+    delay_ms(50);
     if (KEY_K0 != 1) Key = 1 + (k * 4);
     if (KEY_K1 != 1) Key = 2 + (k * 4);
     if (KEY_K2 != 1) Key = 3 + (k * 4);
@@ -74,7 +74,7 @@ void key_scan(void) {
 if(Key==0)Key=KEY_NULL;
 if(Key==1)Key=KEY_CERO;
 if(Key==2)Key=KEY_TARA;
-if(Key==3)Key=KEY_M1;
+if(Key==3)Key=KEY_M1;																							  
 if(Key==4)Key=KEY_RCL;
 if(Key==5)Key=KEY_CHG;
 if(Key==6)Key=KEY_MAS;
@@ -92,8 +92,6 @@ if(Key==17)Key=KEY_9;
 if(Key==18)Key=KEY_6;
 if(Key==19)Key=KEY_3;
 if(Key==20)Key=KEY_PUNTO;
-
-
   
   if (LastKey == 0 && Key != 0) {
     KeyState = PRESS; //se presiono
@@ -107,7 +105,7 @@ if(Key==20)Key=KEY_PUNTO;
     KeyState = RELEASE; //se solto
 	LastKey = Key;
 	Key=0;
-	for (k = 0; k < 15; k++);//peque�o delay
+	delay_ms(50);
   } else if (LastKey == 0 && Key == 0) {
     KeyState = 0; //no se ha presionado una tecla	
   }
@@ -118,9 +116,9 @@ if(Key==20)Key=KEY_PUNTO;
 
 
 void vScan_Key(void){
-	int iMultiplicador_Producto = 0;
-	float fMultiplicador_Producto = 0;
-	float fWeightScale = 0;
+	int idata iMultiplicador_Producto = 0;
+	float idata fMultiplicador_Producto = 0;
+	float idata fWeightScale = 0;
 	unsigned char idata fBeep_Key_Off = 0; 
 	
 	key_scan();
@@ -146,15 +144,15 @@ void vScan_Key(void){
 							//delay_ms(10000);
 
 							iIndex_Address_Plus++;
-						}
-						if(iIndex_Address_Plus == 2){
-							stScaleParam.fPrice_Unit = fFuncionPlus((int)(stScaleParam.fAddress_Plus), 
-							srFlagScale.bReadPlus, srFlagScale.bWritePlus, stScaleParam.fPrice_Unit, stScaleParam.cNumberDecimalPrice);
-							iIndex_Address_Plus = 0;
-							srFlagScale.bWritePlus = 0;
-							srFlagScale.bReadPlus = 0;
+							
+							if(iIndex_Address_Plus == 2){
+								stScaleParam.fPrice_Unit = fFuncionPlus((int)(stScaleParam.fAddress_Plus), 
+									srFlagScale.bReadPlus, srFlagScale.bWritePlus, stScaleParam.fPrice_Unit, stScaleParam.cNumberDecimalPrice);
+								iIndex_Address_Plus = 0;
+								srFlagScale.bWritePlus = 0;
+								srFlagScale.bReadPlus = 0;
 							} 
-						
+						}
 					}else{
 						
 						if(srFlagScale.bDotDecimalPrice){
@@ -169,25 +167,22 @@ void vScan_Key(void){
 							stScaleParam.cNumberDecimalPrice = 0;
 						}
 							
-						if(stScaleParam.cPuntoDecimalPrecio < 3){
+						// if(stScaleParam.cPuntoDecimalPrecio < 3){
 								
-							stScaleParam.fPrice_Unit = vCapture_Valor_Test(Key, stScaleParam.cPuntoDecimalPrecio, stScaleParam.fPrice_Unit);
-							stScaleParam.fPrice_Unit /= (float)(pow(10,stScaleParam.cPuntoDecimalPrecio));
+						// 	stScaleParam.fPrice_Unit = vCapture_Valor_Test(Key, stScaleParam.cPuntoDecimalPrecio, stScaleParam.fPrice_Unit);
+						// 	stScaleParam.fPrice_Unit /= (float)(pow(10,stScaleParam.cPuntoDecimalPrecio));
 							
-						}else{
-							vCapture_Valor((float *)&stScaleParam.fPrice_Unit, Key - '0', 5, stScaleParam.cNumberDecimalPrice);
-						}
+						// }else{
+						 	vCapture_Valor((float *)&stScaleParam.fPrice_Unit, Key - '0', 5, stScaleParam.cNumberDecimalPrice);
+						// }
 					}
 					
 					return;
 			
-			}else if(Key == KEY_PUNTO){
-				if(srFlagScale.bReadPlus ==1){
-					srFlagScale.bReadPlus =0;
-					vMostrar_Venta_Total();
-				}
-				else if(stScaleParam.cNumberDecimalPrice == 0 && stScaleParam.cPuntoDecimalPrecio > 2){
+			}else if(Key == KEY_PUNTO){	
+				if(stScaleParam.cNumberDecimalPrice == 0 && stScaleParam.cPuntoDecimalPrecio > 2){
 					srFlagScale.bDotDecimalPrice = 1;
+					vMostrar_Venta_Total();
 				}
 				return;
 			}
@@ -204,7 +199,8 @@ void vScan_Key(void){
 				case KEY_C:
 				
 					if(srFlagScale.bAdd_Articulos == 1)
-
+						
+				
 					srFlagScale.bMultiplicar_Producto = 0;
 					stScaleParam.iMultiplicador_Producto = 0;
 					stScaleParam.fPrice_Unit = 0;
@@ -214,7 +210,7 @@ void vScan_Key(void){
 					srFlagScale.bAdd_Articulos = 0;
 					srFlagScale.bArticulosTotalCero = 0;
 					
-					
+					vBeep_Key();
 					
 					break;
 				
@@ -240,18 +236,19 @@ void vScan_Key(void){
 						break;
 					
 				case KEY_MEM:
+					//CCC srFlagScale.bBL_Lpcr = 1;
 					srFlagScale.bWritePlus = 1;
-					srFlagScale.bReadPlus = 0;
 					iIndex_Address_Plus = 0;
 					stScaleParam.fAddress_Plus = 0;
 					break;
 				
 				case KEY_RCL:
-				srFlagScale.bWritePlus = 0;
-				srFlagScale.bReadPlus = 1;//condiciones para 0??
-				iIndex_Address_Plus = 0;
-				stScaleParam.fAddress_Plus = 0;
-				break;
+					srFlagScale.bWritePlus = 0;
+					srFlagScale.bReadPlus = 1;//condiciones para 0??
+					iIndex_Address_Plus = 0;
+					stScaleParam.fAddress_Plus = 0;
+					//strTimer.cFLag_TimerI_End=0;
+					break;
 				
 				case KEY_M1:
 					vActionMemoryPlu(1);				
@@ -260,9 +257,12 @@ void vScan_Key(void){
 				case KEY_M2:
 					vActionMemoryPlu(2);
 					break;
-				
+	
 				case KEY_MAS:
+					
 					if(srFlagScale.bFlagWeightNeg == 0 && (stScaleParam.fTotal_Venta > 0 || stScaleParam.cFormatoImpresion == 2)){
+						//pone en uno la bandera de producto sin peso para poder sumar 
+						if(stScaleParam.fWeightScale==0){srFlagScale.bAdd_Producto_Sin_Peso = 1;}
 						
 						fWeightScale = fStablePoint(1, 0, 1);
 
@@ -279,15 +279,12 @@ void vScan_Key(void){
 								{
 									stScaleParam.fTotal_Venta = stScaleParam.fPrice_Unit * stScaleParam.fWeightScale;
 									stScaleParam.fTotal_Venta = fRoundFloat(stScaleParam.fTotal_Venta, stScaleParam.cPuntoDecimalTotal, stScaleParam.cValorRedondeoCifraTotal);
-									if(stScaleParam.fTotal_Venta ==0){
-										srFlagScale.bAdd_Producto_Sin_Peso =1;
-									}else{srFlagScale.bAdd_Producto_Sin_Peso =0;}
 								}
 							}
 						else
 							break;
 						
-						if(srFlagScale.bAdd_Producto_Sin_Peso){
+						if(srFlagScale.bAdd_Producto_Sin_Peso==1){
 							vAdd_Articulos(stScaleParam.fPrice_Unit);
 						}else{
 							vAdd_Articulos(stScaleParam.fTotal_Venta);
@@ -311,7 +308,10 @@ void vScan_Key(void){
 						} 
 						
 					}
-
+					/*
+					condiciones para llamar a la funcion venta total:
+					peso, precio y total = 0
+					*/
 					break;
 					
 				/* Si la tecla presiona fue cambio inicia el proceso de calcular el cambio 
@@ -326,42 +326,6 @@ void vScan_Key(void){
 			}
 		}	
 }
-
-
-/**
-  ******************************************************************************
-  * Objetivo: Asignar valor decimal a tecla pulsada si esta entre 0 y 9.
-  * Parametros entrada: Nombre de la tecla.
-	* Parametros Salida: Valor decimal de la tecla pulsada.
-  * Prerequisitos: 
-  ***
-	*/
-/*unsigned char cConvert_Char(unsigned char Key_Num){
-	
-	if(Key_Num == KEY_9){
-		return '9';
-	}else if(Key_Num == KEY_8){
-		return '8';
-	}else if(Key_Num == KEY_7){
-		return '7';
-	}else if(Key_Num == KEY_6){
-		return '6';
-	}else if(Key_Num == KEY_5){
-		return '5';
-	}else if(Key_Num == KEY_4){
-		return '4';
-	}else if(Key_Num == KEY_3){
-		return '3';
-	}else if(Key_Num == KEY_2){
-		return '2';
-	}else if(Key_Num == KEY_1){
-		return '1';
-	}else if(Key_Num == KEY_0){
-		return '0';
-	}else{
-		return Key_Num;
-	}
-}*/
 
 /**
   ******************************************************************************
@@ -378,56 +342,12 @@ void vActionMemoryPlu(unsigned char cIndexMemory){
 	}
 			
 	stScaleParam.fPrice_Unit = fFuncionPlus((int)(cIndexMemory), 
-	srFlagScale.bReadPlus, srFlagScale.bWritePlus, stScaleParam.fPrice_Unit, stScaleParam.cNumberDecimalPrice);
+		srFlagScale.bReadPlus, srFlagScale.bWritePlus, stScaleParam.fPrice_Unit, stScaleParam.cNumberDecimalPrice);
 	
-	srFlagScale.bWritePlus = 0;
 	iIndex_Address_Plus = 0;
 	srFlagScale.bWritePlus = 0;
 	srFlagScale.bReadPlus = 0;
-
-	// srFlagScale.bWritePlus = 1;
-	// iIndex_Address_Plus = 0;
-	// stScaleParam.fAddress_Plus = 0;
 }
-
-
-/**
-  ******************************************************************************
-  * Objetivo: Ensamblar numero con las teclas pulsadas
-  * Parametros entrada:
-	* Parametros Salida:
-  * Prerequisitos: 
-  ***
-	*/
-/*
-float vCapture_Valor_Test(unsigned char fNew_Digit, unsigned char cDecimal_Number, 
-		float fValue_Capture){
-	
-	long int iValue_Funct = 0;
-	unsigned char *pText_Valor = cValue_Precio;
-	unsigned char i = 0;
-
-
-	if(fValue_Capture == 0){
-		for(i=0; i<5; i++){
-			pText_Valor[i] = ' ';
-		}
-	}
-
-	for(i=0; i<4; i++){
-		pText_Valor[i] = pText_Valor[i+1];
-	}
-	
-	pText_Valor[4] = fNew_Digit;
-	
-	//sscanf(cValue_Precio, "%ld", &iValue_Funct);//QUÉ SE SUPONE QUE HACE ESTO AQUI???!!	
-	//Hacer que los valores leídos en el teclado sean el precio del producto
-
-	return (float)(iValue_Funct);
-	
-	return 0.0;
-}
-*/
 
 /**
   ******************************************************************************
