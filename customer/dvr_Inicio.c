@@ -11,6 +11,8 @@
 #include "./_scale/app_cfg.h"
 #include "./_data_nvm/data_nvm_5219_Vc_Dec09_13.h"
 #include "dvr_plu.h"	
+#include "./_scale/app_cfg.h"
+#include "./customer/dvr_battery.h"
 
 /* --- Registro de Password */
 code enum digi_key eSEQUENCE_CONFIGURATION[8] = {KEY_TARA, KEY_C, KEY_CERO, KEY_RCL};
@@ -140,6 +142,7 @@ unsigned int TimeEnd=2000;
 
 void vCalidadTest(void){
 	float fAux_Value = 0;
+	extern float fVoltage_Battery;
 	
 	vTestTeclado();
 
@@ -188,7 +191,27 @@ void vCalidadTest(void){
 		
 		LCD_GLASS_Float(fAux_Value, stScaleParam.cWeightDecimal, LCD_PESO);			
 		
-	}while(Key != KEY_C);
+	}
+	while(Key != KEY_C);
+	LCD_GLASS_Clear();
+	LCD_GLASS_String("PROG", LCD_PESO);
+	LCD_GLASS_String(sVersion, LCD_TOTAL);
+	
+	do{
+		key_scan();
+	
+	}
+	
+	while(Key != KEY_C);
+	LCD_GLASS_Clear();
+	LCD_GLASS_String("VOLT",LCD_PESO);
+	do{
+		vGestorBateria();
+		LCD_GLASS_Float(fVoltage_Battery,2,LCD_PESO);
+		key_scan();
+	}
+
+	while(Key != KEY_C);
 	
 	LCD_GLASS_Clear();
 	LCD_GLASS_Float(stScaleParam.iCounter_Calibration, 0, LCD_PRECIO);
@@ -204,14 +227,16 @@ void vCalidadTest(void){
 		key_scan();
 		
 		if(Key == KEY_C){
-			vBeep_Key();	
+			break;
 		}
 	}
 
-	LCD_GLASS_Clear();			
-	LCD_GLASS_Symbols(SYMBOL_ZERO, 1);
-	LCD_GLASS_Float(stScaleParam.fPointZeroCali, 0, LCD_PRECIO);
 	
+	
+	LCD_GLASS_Clear();     
+    LCD_GLASS_String("FCTOR", LCD_PESO);
+	LCD_GLASS_Float(stScaleParam.fFactorCalibrate, 2, LCD_TOTAL);
+
 	Key = KEY_NULL;
 	
 	while (Key == KEY_NULL){
@@ -222,15 +247,14 @@ void vCalidadTest(void){
 			vBeep_Key();	
 		}
 	}
-	
 //	srFlagScale.bCalidadTest = 2;
-	OffBackLight;
-		strTimer.iTimerE=1;
-	while(strTimer.iTimerE<800)
-	{		
-		IWDG_KEY_REFRESH;			
-	}
-	OnBackLight;
+	// OffBackLight;
+	// 	strTimer.iTimerE=1;
+	// while(strTimer.iTimerE<800)
+	// {		
+	// 	IWDG_KEY_REFRESH;			
+	// }
+	// OnBackLight;
 	//vTestTeclado();
 	
 //	srFlagScale.bCalidadTest = 0;
