@@ -767,7 +767,7 @@ void vWeight_Positive(void){
 	float fWeightOverload = 0;
 	
 	float fOverloadUnit =  (float)stScaleParam.iCapacity + 
-					((float)(stScaleParam.iDivisionMinima)/(float)(pow(10, (int)stScaleParam.cWeightDecimal)))*9;
+					((float)(stScaleParam.iDivisionMinima)/(float)(pow(10, (int)stScaleParam.cWeightDecimal)))*10;
 	
 	fOverloadUnit = fRoundFloat(fOverloadUnit, (int)stScaleParam.cWeightDecimal, stScaleParam.iDivisionMinima-1);
 	
