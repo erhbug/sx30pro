@@ -123,6 +123,7 @@ void vErase_All_Address_Plus(void){
 	
 	vEepromInit(ENABLE);					// Habilita la escritura/lectura en la EEPROM 
 	LCD_GLASS_String("FORMAT", LCD_TOTAL);
+	e2rom_erase(ADDRESS_PLU);
 	for(i=0; i<100; i++){
 		flash_write_float32((int)(ADDRES_START_PLUS + (i*5)), 0);
 		flash_write_u8((int)(ADDRES_START_PLUS + (i*5) + 4), 0);

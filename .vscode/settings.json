@@ -6,6 +6,8 @@
         "beeper.h": "c",
         "head_file_version.h": "c",
         "dvr_lcd_sdi1621.h": "c",
-        "data_nvm_5219_vc_dec09_13.h": "c"
+        "data_nvm_5219_vc_dec09_13.h": "c",
+        "dvr_hx712.h": "c",
+        "dvr_inicio.h": "c"
     }
 }

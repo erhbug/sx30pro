@@ -10,6 +10,7 @@
 #include "./customer/beeper.h"
 #include "./dvr_battery.h"
 #include "./customer/dvr_registradora.h"
+#include "./customer/dvr_inicio.h"
 //usr_dbg.h"
 //extern bool KeyPressed;
 
@@ -49,16 +50,7 @@ void vAdd_Articulos(float fPrecio_Articulo){
 				LCD_GLASS_String("ERROR", LCD_TOTAL);
 				key_scan();
 
-				strTimer.iTimerE= 1;
-		
-				while(strTimer.iTimerE < delaytimeMS){
-					key_scan();
- 					if(Key != KEY_NULL){ 
-						break;
-					}
-					//IWDG_KEY_REFRESH;
-					strTimer.iTimerE++;
-				}
+				DelayWithKey(delaytimeMS);
 			}
 
 		else{
@@ -74,19 +66,12 @@ void vAdd_Articulos(float fPrecio_Articulo){
 				srFlagScale.bPlsUnload_Enable = 0;
 				key_scan();
 	/*
-			if(bFlagShowLowBat == 1){
+				if(bFlagShowLowBat == 1){
 					bFlagShowLowBat = 0;
 					bFlagShowInfo = 0;
 					}
 	*/
-				while(strTimer.iTimerE < delaytimeMS){
-					key_scan();
- 					if(Key != KEY_NULL){ 
-						break;
-					}
-						//IWDG_KEY_REFRESH;
-						strTimer.iTimerE++;
-					}
+				DelayWithKey(delaytimeMS);
 
 			}
 
@@ -108,15 +93,7 @@ void vAdd_Articulos(float fPrecio_Articulo){
 				bFlagShowLowBat = 0;
 				bFlagShowInfo = 0;
 				} */
-		strTimer.iTimerE = 1;
-		while(strTimer.iTimerE < delaytimeMS){
-					key_scan();
- 					if(Key != KEY_NULL){ 
-						break;
-					}
-					//IWDG_KEY_REFRESH;
-					strTimer.iTimerE++;
-				}	
+		DelayWithKey(delaytimeMS);
 	}
 }
 

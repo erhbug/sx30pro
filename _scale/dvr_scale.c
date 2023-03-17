@@ -506,7 +506,7 @@ void vCalibrate_Scale(void){
               LCD_GLASS_String("PRESS", LCD_PESO);
               LCD_GLASS_String(" LOAD", LCD_TOTAL);
               LCD_GLASS_String("C   ", LCD_PRECIO);
-
+			  vBeep_Key();
  /* Espera a que se oprima 'C' para continuar */
               Key=0;while(Key!= KEY_C)key_scan();
 			  delay_ms(1000);

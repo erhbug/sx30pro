@@ -46,14 +46,15 @@ void main(void) {
 	IWDG_KEY_REFRESH; 		  
   } */
   vGestorBateria();
+  
   while (1) {
    switch (eAccionScale) {
     case ScalePreOn:
-      IWDG_KEY_REFRESH;
+      IWDG_KEY_REFRESH;    
       memset( & srFlagScale, 0x00, sizeof(srFlagScale));
-      memset( & stScaleParam, 0x00, sizeof(stScaleParam));
-      vReadParamScale(); // Inicia los parametros de la Bascula					
-	  LCD_GLASS_Clear();
+      memset( & stScaleParam, 0x00, sizeof(stScaleParam));  
+      vReadParamScale(); // Inicia los parametros de la Bascula		      			
+	    LCD_GLASS_Clear();
       LCD_GLASS_String("-----", LCD_PESO);
       LCD_GLASS_String("-----", LCD_PRECIO);
       LCD_GLASS_String("------", LCD_TOTAL); 
