@@ -738,7 +738,6 @@ unsigned char cRun_Scale(void){
 			}else{
 				if(stScaleParam.cSourceVoltage < SOURCE_ADAPTER_LOW && strTimer.iTimerJ >= TimerJend){
 					OffBackLight;
-					srFlagScale.bBacklight_On = 0;	
 				}
 			}
 			
@@ -749,7 +748,6 @@ unsigned char cRun_Scale(void){
 				}else{
 					if(stScaleParam.cSourceVoltage < SOURCE_ADAPTER_LOW && strTimer.iTimerJ >= TimerJend){
 						OffBackLight;
-						srFlagScale.bBacklight_On = 0;	
 				}
 			}
 		} 
