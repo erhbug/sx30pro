@@ -230,6 +230,7 @@ extern idata strTimers strTimer;
 #define TimerJend (unsigned int)60000
 #define TimerChargeend (unsigned char)50
 
+#define ZeroTolerance ((float)0.002)
 
 
 enum ActionScale{ 

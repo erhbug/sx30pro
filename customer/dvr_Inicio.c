@@ -11,27 +11,32 @@
 #include "./_scale/app_cfg.h"
 #include "./_data_nvm/data_nvm_5219_Vc_Dec09_13.h"
 #include "dvr_plu.h"	
+#include "./_scale/app_cfg.h"
+#include "./customer/dvr_battery.h"
 
 /* --- Registro de Password */
-code enum digi_key eSEQUENCE_CONFIGURATION[8] = {KEY_TARA, KEY_C, KEY_CERO, KEY_RCL};
+//code enum digi_key eSEQUENCE_CONFIGURATION[8] = {KEY_TARA, KEY_C, KEY_CERO, KEY_RCL};
 code enum digi_key ePRE_CONFIGURATION_30KG[8] = {KEY_TARA, KEY_M1, KEY_TARA, KEY_3, KEY_0};
 code enum digi_key ePRE_CONFIGURATION_31KG[8] = {KEY_TARA, KEY_M1, KEY_TARA, KEY_3, KEY_1};	
 code enum digi_key ePRE_CONFIGURATION_32KG[8] = {KEY_TARA, KEY_M1, KEY_TARA, KEY_3, KEY_2};	
 code enum digi_key eLCD_ALL_SEGMENT[8] = {KEY_TARA, KEY_8};
 code enum digi_key eSOBRE_PESO_OFF[8] = {KEY_TARA, KEY_MEM, KEY_1, KEY_TARA};
 code enum digi_key eERASE_PLUS[8] = {KEY_TARA, KEY_TARA, KEY_2, KEY_9};
-code enum digi_key eRESET_COUNTER[8] = {KEY_TARA, KEY_RCL, KEY_C, KEY_CERO};
-code enum digi_key eVIEW_COUNTER_CALIBRATION[8] = {KEY_TARA, KEY_MEM, KEY_C, KEY_1, KEY_0, KEY_0, KEY_0};
-code enum digi_key eVIEW_COUNTER_CONFIGURATION[8] = {KEY_TARA, KEY_MEM, KEY_C, KEY_1, KEY_0, KEY_0, KEY_1};
+code enum digi_key eRESET_COUNTER[8] = {KEY_TARA, KEY_RCL, KEY_C, KEY_CERO};//
+code enum digi_key eVIEW_COUNTERS[8] = {KEY_TARA, KEY_MEM, KEY_C, KEY_1, KEY_0, KEY_0, KEY_0};
 code enum digi_key eSEQUENCE_RESET_REFERENCE[8] = {	KEY_TARA, KEY_TARA, KEY_0};
 code enum digi_key eTEST_CALIDAD[8] = {	KEY_TARA, KEY_C, KEY_0, KEY_1, KEY_5,KEY_9};
 code enum digi_key eACT_PROGRAM[8] = {KEY_TARA, KEY_2, KEY_4, KEY_2, KEY_7};
 code enum digi_key ePASS_MULTIRANGO_OFF[8] = {KEY_TARA, KEY_5, KEY_4, KEY_3, KEY_2, KEY_1, KEY_0};
-code unsigned char eCODE_CALIBRACION[7]= "765432";
-code unsigned char eCODE_MENU[7]= "779103";
+code enum digi_key eCODE_CALIBRACION[8] = {KEY_TARA, KEY_C, KEY_MAS, KEY_RCL, KEY_2, KEY_4, KEY_6};
+//code unsigned char eCODE_MENU[7]= "779103";
 
 void vTestTeclado(void);
 void vCalidadTest(void);
+void viewCounters(void);
+void waitKeyC(void);
+void viewProgramVersion(void);
+extern float fVoltage_Battery;
 
 unsigned char cWait_Scale(void){	
 enum digi_key arPass_Configuration[8] = {0,0,0,0,0,0,0,0};
@@ -50,7 +55,7 @@ unsigned int TimeEnd=2000;
 		/* La tecla pulsada se almacena en el vector de pass de configuracion */
 		if( Key != KEY_NULL  ){
 			strTimer.iTimerE=1;		/* Reinicia el contador para permitir
-																		/* escribir todo el codigo */
+										/* escribir todo el codigo */
 			/* Solo permite 7 digitos para el codigo */
 			if(strlen(arPass_Configuration) < 7){
 				/* Agrega la tecla pulsada a la cadena */
@@ -61,10 +66,11 @@ unsigned int TimeEnd=2000;
 				LCD_GLASS_String("BAD", LCD_PRECIO);
 			}
 			
-			if(strcmp(eSEQUENCE_CONFIGURATION, arPass_Configuration) == 0){
-				srFlagScale.bCodeConfiguration = 1;
-				return 1;
-			}else if(strcmp(ePRE_CONFIGURATION_30KG, arPass_Configuration) == 0){
+			// if(strcmp(eSEQUENCE_CONFIGURATION, arPass_Configuration) == 0){
+			// 	srFlagScale.bCodeConfiguration = 1;
+			// 	return 1;
+			// }else
+			if(strcmp(ePRE_CONFIGURATION_30KG, arPass_Configuration) == 0){
 			    vSound_Saved_Param();
 				vPreConfiguration(PreConfig30KG);
 				return 1;
@@ -81,37 +87,48 @@ unsigned int TimeEnd=2000;
 				return 1;
 			}else if(strcmp(eERASE_PLUS, arPass_Configuration) == 0){
 				vErase_All_Address_Plus();
-				//strTimer.cFLag_TimerD_End = 1;
+				DelayWithKey(1000);
+				return 1;
+			}else if(strcmp(eCODE_CALIBRACION, arPass_Configuration) == 0){				
+				vCalibrate_Scale();
+				return 1;	
+			}else if(strcmp(eVIEW_COUNTERS, arPass_Configuration) == 0){				
+				viewCounters();
+				return 1;	
+			}else if(strcmp(eRESET_COUNTER, arPass_Configuration) == 0){				
+				stScaleParam.iCounter_Calibration=0;
+				vSaveParamScale(Parameter_Calibration); 
+				viewCounters();
+				return 1;	
+			}else if(strcmp(eLCD_ALL_SEGMENT, arPass_Configuration) == 0){				
+				LCD_GLASS_All_On();
+				waitKeyC();
+				return 1;	
+			}else if(strcmp(eACT_PROGRAM, arPass_Configuration) == 0){				
+				viewProgramVersion();
+				return 1;	
 			}else if(strcmp(eSEQUENCE_RESET_REFERENCE, arPass_Configuration) == 0){
-						
+				LCD_GLASS_String("RESET", LCD_PESO);
+				LCD_GLASS_String("  ADC", LCD_PRECIO);
 				stScaleParam.fPointZeroCali = fStablePoint(1, 0, 0);
 				vEepromInit(ENABLE);					/* Habilita la escritura/lectura en la EEPROM */
 				flash_write_float32(ADDR_POINT_ZERO, stScaleParam.fPointZeroCali);				
-				vEepromInit(DISABLE);					/* Deshabilita la escritura en la EEPROM */
-				
-				LCD_GLASS_String("RESET", LCD_PESO);
-				LCD_GLASS_String("  ADC", LCD_PRECIO);
-				LCD_GLASS_String("      ", LCD_TOTAL);
+				vEepromInit(DISABLE);					/* Deshabilita la escritura en la EEPROM */				
+				DelayWithKey(1000);
 				return 1;
 				
-			}else if(strcmp(ePASS_MULTIRANGO_OFF, arPass_Configuration) == 0){
-				
+			}/*else if(strcmp(ePASS_MULTIRANGO_OFF, arPass_Configuration) == 0){				
 				stScaleParam.cMultirango = 0;				
 				LCD_GLASS_String("NNULR", LCD_PESO);
 				LCD_GLASS_String("  OFF", LCD_PRECIO);
-				LCD_GLASS_String("      ", LCD_TOTAL);
 				vSound_Saved_Param();
-				return 1;
-
-			}
+				DelayWithKey(1000);
+				return 0;
+			}*/
 		}
 	 if(strTimer.iTimerE >= TimeEnd){
-	 strTimer.iTimerE=0;
-			if(strcmp(eLCD_ALL_SEGMENT, arPass_Configuration) == 0){
-				
-;
-				
-			}else if(strcmp(eSOBRE_PESO_OFF,arPass_Configuration) == 0){
+			strTimer.iTimerE=0;
+			if(strcmp(eSOBRE_PESO_OFF,arPass_Configuration) == 0){
 				srFlagScale.bTopeSobrePeso = 1;
 				vSound_Saved_Param();
 			}
@@ -120,15 +137,12 @@ unsigned int TimeEnd=2000;
 				condiciones iniciales del peso */
 			stScaleParam.fWeightOverload = (stScaleParam.fCapacityCali);
 			stScaleParam.fWeightOverload += (stScaleParam.fFactorCalibrate * 9);
-
-		  // if(cFuncion_Especial){
-		//		stScaleParam.fPointZero = stScaleParam.fPointZeroCali;				
-		//	}else{
+		  	// if(cFuncion_Especial){
+			//		stScaleParam.fPointZero = stScaleParam.fPointZeroCali;				
+			//	}else{
 				cSetZeroPoint();
-		//	}
-					
-			stScaleParam.fPointZeroInitial = stScaleParam.fPointZero;
-			
+			//	}					
+			stScaleParam.fPointZeroInitial = stScaleParam.fPointZero;			
 			return 0;
 		}
 	}
@@ -188,14 +202,27 @@ void vCalidadTest(void){
 		
 		LCD_GLASS_Float(fAux_Value, stScaleParam.cWeightDecimal, LCD_PESO);			
 		
+	}
+	while(Key != KEY_C);
+
+	viewProgramVersion();
+
+	LCD_GLASS_Clear();
+	LCD_GLASS_String("VOLT",LCD_PESO);
+	do{
+		vGestorBateria();
+		LCD_GLASS_Float(fVoltage_Battery,2,LCD_PESO);
+		key_scan();
 	}while(Key != KEY_C);
 	
-	LCD_GLASS_Clear();
+	viewCounters();
+
+	/*LCD_GLASS_Clear();
 	LCD_GLASS_Float(stScaleParam.iCounter_Calibration, 0, LCD_PRECIO);
 	LCD_GLASS_String("CA", LCD_PRECIO);
 	
-	LCD_GLASS_Float(stScaleParam.iCounter_Configuration, 0, LCD_TOTAL);
-	LCD_GLASS_String(" CF", LCD_TOTAL);
+	//LCD_GLASS_Float(stScaleParam.iCounter_Configuration, 0, LCD_TOTAL);
+	//LCD_GLASS_String(" CF", LCD_TOTAL);
 	
 	Key = KEY_NULL;
 	
@@ -204,33 +231,25 @@ void vCalidadTest(void){
 		key_scan();
 		
 		if(Key == KEY_C){
-			vBeep_Key();	
+			break;
 		}
-	}
+	}*/
 
-	LCD_GLASS_Clear();			
-	LCD_GLASS_Symbols(SYMBOL_ZERO, 1);
-	LCD_GLASS_Float(stScaleParam.fPointZeroCali, 0, LCD_PRECIO);
 	
-	Key = KEY_NULL;
 	
-	while (Key == KEY_NULL){
-		IWDG_KEY_REFRESH;
-		key_scan();
-		
-		if(Key == KEY_C){
-			vBeep_Key();	
-		}
-	}
-	
+	LCD_GLASS_Clear();     
+    LCD_GLASS_String("FCTOR", LCD_PESO);
+	LCD_GLASS_Float(stScaleParam.fFactorCalibrate, 2, LCD_TOTAL);
+
+	waitKeyC();
 //	srFlagScale.bCalidadTest = 2;
-	OffBackLight;
-		strTimer.iTimerE=1;
-	while(strTimer.iTimerE<800)
-	{		
-		IWDG_KEY_REFRESH;			
-	}
-	OnBackLight;
+	// OffBackLight;
+	// 	strTimer.iTimerE=1;
+	// while(strTimer.iTimerE<800)
+	// {		
+	// 	IWDG_KEY_REFRESH;			
+	// }
+	// OnBackLight;
 	//vTestTeclado();
 	
 //	srFlagScale.bCalidadTest = 0;
@@ -304,4 +323,46 @@ LCD_GLASS_Clear();
 	}	
 }
 
+void viewCounters(void){
 
+	LCD_GLASS_Clear();
+	LCD_GLASS_Float(stScaleParam.iCounter_Calibration, 0, LCD_PRECIO);
+	LCD_GLASS_String("CA", LCD_PRECIO);
+	
+	//LCD_GLASS_Float(stScaleParam.iCounter_Configuration, 0, LCD_TOTAL);
+	//LCD_GLASS_String(" CF", LCD_TOTAL);
+	
+	waitKeyC();
+}
+
+void waitKeyC(void){
+	Key = KEY_NULL;	
+	while (Key == KEY_NULL){
+		IWDG_KEY_REFRESH;
+		key_scan();					
+		if(Key == KEY_C)
+			break;					
+	}
+}
+
+void DelayWithKey(unsigned int Delay){
+strTimer.iTimerE= 1;		
+				while(strTimer.iTimerE < Delay){
+					key_scan();
+ 					if(Key != KEY_NULL){ 
+						break;
+					}
+					strTimer.iTimerE++;
+				}
+}
+
+void viewProgramVersion(void){
+	LCD_GLASS_Clear();
+	LCD_GLASS_String("PROG", LCD_PESO);
+	LCD_GLASS_String(sVersion, LCD_TOTAL);
+	
+	do{
+		key_scan();
+	
+	}while(Key != KEY_C);
+}

@@ -24,7 +24,6 @@
 	void vVadapHigh(void);
 	void vVbatVeryLow(void);
 	unsigned char uGet_Status_Volt(void);
-	void vSet_Volts_System(void);
 	void vGet_Volts_System(void);
 	
 	void driver_symbol(void);

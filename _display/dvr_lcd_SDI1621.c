@@ -276,12 +276,11 @@ void LCD_GLASS_Clear(void){
 
 /*
 */
-/*void LCD_GLASS_All_On(void){
+void LCD_GLASS_All_On(void){
 	//Display.mode=LCD_DATA;	
 	memset(Display.LCD_BUF, 0xFF, sizeof(Display.LCD_BUF));
 	write_lcd(Display,LCD_DATA);	
 }
-*/
 
 
 void LCD_SET_Char(unsigned char cCaracter, unsigned char cPosition_On_LCD, unsigned char cPosition_Text)

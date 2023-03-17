@@ -3,4 +3,5 @@
 #define __DVR_INICIO
 
 unsigned char cWait_Scale(void);
+void DelayWithKey(unsigned int Delay);
 #endif
