@@ -285,17 +285,15 @@ void vDriver_Backlight_Source(unsigned char cEliminadorOn){
 		}
 		else
 		if(srFlagScale.bBacklight_On == 1){
-				if(strTimer.iTimerBlk>=iTimerBlk2end){
+			if(strTimer.iTimerBlk>=iTimerBlk1end){
+				DecreaseBackLight;
+			}
+		}
+		if(strTimer.iTimerBlk>=iTimerBlk2end){
 					OffBackLight;
-				}
-				else
-				if(strTimer.iTimerBlk>=iTimerBlk1end){
-					DecreaseBackLight;
-				}
 		}
 	}
 }
-
 
 void vVadapHigh(void){
 	LCD_GLASS_Clear();

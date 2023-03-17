@@ -36,6 +36,7 @@ void vCalidadTest(void);
 void viewCounters(void);
 void waitKeyC(void);
 void viewProgramVersion(void);
+extern float fVoltage_Battery;
 
 unsigned char cWait_Scale(void){	
 enum digi_key arPass_Configuration[8] = {0,0,0,0,0,0,0,0};
@@ -153,7 +154,6 @@ unsigned int TimeEnd=2000;
 
 void vCalidadTest(void){
 	float fAux_Value = 0;
-	extern float fVoltage_Battery;
 	
 	vTestTeclado();
 

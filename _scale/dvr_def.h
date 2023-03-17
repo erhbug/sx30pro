@@ -14,8 +14,8 @@
 
 void init_pwm(unsigned char BlkPWM);
 
-#define OnBackLight 		srFlagScale.bBacklight_On = 1; BL_EN;  strTimer.iTimerBlk=1; init_pwm(0x50);//P1|= (1<<5);
-#define DecreaseBackLight	srFlagScale.bBacklight_On = 1; BL_EN;  						 init_pwm(0x10);//P1&= ~(1<<5);
+#define OnBackLight 		if(srFlagScale.bBacklight_On == 0){srFlagScale.bBacklight_On = 1; BL_EN; init_pwm(0x50);}strTimer.iTimerBlk=1;
+#define DecreaseBackLight	if(srFlagScale.bBacklight_On == 1){srFlagScale.bBacklight_On = 0; BL_EN; init_pwm(0x10);}
 #define OffBackLight		srFlagScale.bBacklight_On = 0; BL_DIS; strTimer.iTimerBlk=0;//P1&= ~(1<<5);
 /* ACCIONES */
 

@@ -95,6 +95,7 @@ void vAdd_Articulos(float fPrecio_Articulo){
 				} */
 		DelayWithKey(delaytimeMS);
 	}
+	srFlagScale.bAdd_Producto_Sin_Peso=0;
 }
 
 //#################################################################################

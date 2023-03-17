@@ -262,7 +262,9 @@ void vScan_Key(void){
 					
 					if(srFlagScale.bFlagWeightNeg == 0 && (stScaleParam.fTotal_Venta > 0 || stScaleParam.cFormatoImpresion == 2)){
 						//pone en uno la bandera de producto sin peso para poder sumar 
-						if(stScaleParam.fWeightScale==0){srFlagScale.bAdd_Producto_Sin_Peso = 1;}
+						if(stScaleParam.fWeightScale<=ZeroTolerance){	
+							srFlagScale.bAdd_Producto_Sin_Peso = 1;
+						}
 						
 						fWeightScale = fStablePoint(1, 0, 1);
 

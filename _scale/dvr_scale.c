@@ -724,7 +724,7 @@ unsigned char cRun_Scale(void){
 		
 	}else{	
 		// Verifica si el peso es negativo
-		if(fWeightScale < -0.002){	
+		if(fWeightScale < (-1.0)*ZeroTolerance){	
 			vWeight_Negative();			
 		}else{		
 			vWeight_Positive();			
@@ -816,15 +816,15 @@ void vWeight_Positive(void){
 		srFlagScale.bOverLoad = 0;
 		
 		// Despliega el peso registrado
-		if(stScaleParam.fWeightScale>0.001){		
+		if(stScaleParam.fWeightScale>=ZeroTolerance){
 		LCD_GLASS_Float(stScaleParam.fWeightScale, stScaleParam.cWeightDecimal, LCD_PESO);	
-		}else if(stScaleParam.fWeightScale<0.001){
+		}else{
 			LCD_GLASS_Float(0, stScaleParam.cWeightDecimal, LCD_PESO);
 		}//LCD_GLASS_Float(stScaleParam.fWeightScale, stScaleParam.cWeightDecimal, LCD_PESO);
 		//Despliega el valor de lectura del adc en Precio:	
 		// Verifica si la opcion fijar precio no esta activada
 		//if(!srFlagScale.bFlagFijarPRecio){
-			if(stScaleParam.fWeightScale == 0 && fWeightScaleBefore > 0){
+			if(stScaleParam.fWeightScale<ZeroTolerance	&& fWeightScaleBefore>ZeroTolerance){
 				stScaleParam.fPrice_Unit = 0;
 				stScaleParam.cNumberDecimalPrice = 0;
 				srFlagScale.bDotDecimalPrice = 0;
