@@ -168,7 +168,7 @@ void driver_symbol(void){
 		LCD_GLASS_Symbols(10,0);
 		return;
 } */
-LCD_GLASS_Float(fVoltage_Battery,0,LCD_TOTAL);
+
 if(stScaleParam.cSourceVoltage >= SOURCE_ADAPTER_LOW)
 {
 	if(strTimer.iTimerCharge==0)
@@ -305,6 +305,7 @@ void vGet_Volts_System(void){
 	iValue_Adc = (unsigned char)SARDATA;
 	SARCON  &= 0xf7;
 	EA = 1;
+	if(iValue_Adc<33)fVoltage_Battery=0.5;
 	if(iValue_Adc>47){
 		fVoltage_Battery = (((3.3/256.0)* (float)iValue_Adc))*10.0;
 	}
@@ -358,11 +359,6 @@ void vGet_Volts_System(void){
 				break;
 			}
 	}
-	// fVoltage_Battery = (((3.3/256.0)* (float)iValue_Adc))*6.0 +1.5;
-	 //LCD_GLASS_Float(iValue_Adc,2,LCD_TOTAL);
-	
-
-
 }
 
 void vDriver_Backlight_Source(unsigned char cEliminadorOn){
@@ -426,12 +422,4 @@ while(uGet_Status_Volt() == SOURCE_BATTERY_VERY_LOW){
 	}
 	
 
-}
-
-/*
-
-*/
-void vSet_Volts_System(void){
-	uGet_Status_Volt();
-	stScaleParam.fVoltage_Batt =	fVoltage_Battery;
 }

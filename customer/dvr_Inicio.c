@@ -27,7 +27,7 @@ code enum digi_key eVIEW_COUNTERS[8] = {KEY_TARA, KEY_MEM, KEY_C, KEY_1, KEY_0, 
 code enum digi_key eSEQUENCE_RESET_REFERENCE[8] = {	KEY_TARA, KEY_TARA, KEY_0};
 code enum digi_key eTEST_CALIDAD[8] = {	KEY_TARA, KEY_C, KEY_0, KEY_1, KEY_5,KEY_9};
 code enum digi_key eACT_PROGRAM[8] = {KEY_TARA, KEY_2, KEY_4, KEY_2, KEY_7};
-code enum digi_key ePASS_MULTIRANGO_OFF[8] = {KEY_TARA, KEY_5, KEY_4, KEY_3, KEY_2, KEY_1, KEY_0};
+//code enum digi_key ePASS_MULTIRANGO_OFF[8] = {KEY_TARA, KEY_5, KEY_4, KEY_3, KEY_2, KEY_1, KEY_0};
 code enum digi_key eCODE_CALIBRACION[8] = {KEY_TARA, KEY_C, KEY_MAS, KEY_RCL, KEY_2, KEY_4, KEY_6};
 //code unsigned char eCODE_MENU[7]= "779103";
 
