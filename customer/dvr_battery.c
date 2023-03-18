@@ -68,11 +68,11 @@ void vVadapHigh(void);
 
 #if DISPLAY_20400047_EN > 0
 
-const float delta=0.05; 
+const float delta= 0.0;//0.05; 
 const float lvl_5 = 4.7;
-const float lvl_3 = 4.0;
-const float lvl_2 = 3.65;
-const float lvl_1 = 3.52;
+const float lvl_3 = 4.2;
+const float lvl_2 = 4.0;
+const float lvl_1 = 3.5;
 
 
 unsigned char estado=0;
@@ -189,7 +189,19 @@ if(stScaleParam.cSourceVoltage >= SOURCE_ADAPTER_LOW)
 		estado=5;
 		
 }else{
-	if(fVoltage_Battery < (lvl_3 - delta) && estado == 3)	
+	if(fVoltage_Battery < (lvl_3) && estado == 3)	
+		estado = 2;
+	else if(fVoltage_Battery >= (lvl_3) && estado == 2)
+		estado = 3;
+	else if(fVoltage_Battery < (lvl_2) && estado == 2)
+		estado = 1;
+	else if(fVoltage_Battery >= (lvl_2) && estado == 1)
+		estado = 2;
+	else if(fVoltage_Battery < (lvl_1) && estado == 1)
+		estado = 0;	
+	else if(fVoltage_Battery >= (lvl_1) && estado == 0)
+		estado = 1;
+/*	if(fVoltage_Battery < (lvl_3 - delta) && estado == 3)	
 		estado = 2;
 	else if(fVoltage_Battery >= (lvl_3 + delta) && estado == 2)
 		estado = 3;
@@ -201,6 +213,7 @@ if(stScaleParam.cSourceVoltage >= SOURCE_ADAPTER_LOW)
 		estado = 0;	
 	else if(fVoltage_Battery >= (lvl_1 + delta) && estado == 0)
 		estado = 1;
+		*/
 	 }
 
 	 if(estado==0)
@@ -275,7 +288,64 @@ void vGet_Volts_System(void){
 	iValue_Adc = (unsigned char)SARDATA;
 	SARCON  &= 0xf7;
 	EA = 1;
-	fVoltage_Battery = ((3.3/256.0 * (float)iValue_Adc))*6.0;
+	if(iValue_Adc>47){
+		fVoltage_Battery = (((3.3/256.0)* (float)iValue_Adc))*10.0;
+	}
+	else{
+			switch (iValue_Adc)
+			{
+			case 33:
+				fVoltage_Battery = 3.66;
+				break;
+			case 34:
+				fVoltage_Battery = 3.87;
+				break;
+			case 35:
+				fVoltage_Battery = 4.0;
+				break;
+			case 36:
+				fVoltage_Battery = 4.2;
+				break;
+			case 37:
+				fVoltage_Battery = 4.4;
+				break;
+			case 38:
+				fVoltage_Battery = 4.6;
+				break;
+			case 39:
+				fVoltage_Battery = 4.8;
+				break;
+			case 40:
+				fVoltage_Battery = 5.0;
+				break;
+			case 41:
+				fVoltage_Battery = 5.2;
+				break;
+			case 42:
+				fVoltage_Battery = 5.3;
+				break;
+			case 43:
+				fVoltage_Battery = 5.5;
+				break;
+			case 44:
+				fVoltage_Battery = 5.8;
+				break;
+			case 45:
+				fVoltage_Battery = 6.0;
+				break;
+			case 46:
+				fVoltage_Battery = 6.2;
+				break;
+			case 47:
+				fVoltage_Battery = 6.5;
+				break;
+			}
+	}
+	// fVoltage_Battery = (((3.3/256.0)* (float)iValue_Adc))*6.0 +1.5;
+	 //LCD_GLASS_Float(iValue_Adc,2,LCD_TOTAL);
+	
+
+
 }
 
 void vDriver_Backlight_Source(unsigned char cEliminadorOn){
