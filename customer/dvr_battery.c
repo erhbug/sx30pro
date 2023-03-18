@@ -68,7 +68,7 @@ void vVadapHigh(void);
 
 #if DISPLAY_20400047_EN > 0
 
-const float delta= 0.0;//0.05; 
+const float delta= 0.05; 
 const float lvl_5 = 4.7;
 const float lvl_3 = 4.2;
 const float lvl_2 = 4.0;
@@ -168,7 +168,7 @@ void driver_symbol(void){
 		LCD_GLASS_Symbols(10,0);
 		return;
 } */
-
+LCD_GLASS_Float(fVoltage_Battery,0,LCD_TOTAL);
 if(stScaleParam.cSourceVoltage >= SOURCE_ADAPTER_LOW)
 {
 	if(strTimer.iTimerCharge==0)
@@ -189,7 +189,24 @@ if(stScaleParam.cSourceVoltage >= SOURCE_ADAPTER_LOW)
 		estado=5;
 		
 }else{
-	if(fVoltage_Battery < (lvl_3) && estado == 3)	
+	if(fVoltage_Battery<4.72 && fVoltage_Battery>4.5){
+		estado =4;
+	}
+	if(fVoltage_Battery<=4.5 && fVoltage_Battery>4.2){
+		estado = 3;
+	}
+	if (fVoltage_Battery<= 4.2 &&fVoltage_Battery>3.8)
+	{
+		estado = 2;
+	}
+	if(fVoltage_Battery<3.8){
+		estado = 1;
+	}
+	if(fVoltage_Battery<3.4){
+		estado = 0;
+	}
+	
+/* 	if(fVoltage_Battery < (lvl_3) && estado == 3)	
 		estado = 2;
 	else if(fVoltage_Battery >= (lvl_3) && estado == 2)
 		estado = 3;
@@ -200,8 +217,8 @@ if(stScaleParam.cSourceVoltage >= SOURCE_ADAPTER_LOW)
 	else if(fVoltage_Battery < (lvl_1) && estado == 1)
 		estado = 0;	
 	else if(fVoltage_Battery >= (lvl_1) && estado == 0)
-		estado = 1;
-/*	if(fVoltage_Battery < (lvl_3 - delta) && estado == 3)	
+		estado = 1; */
+/* 	if(fVoltage_Battery < (lvl_3 - delta) && estado == 3)	
 		estado = 2;
 	else if(fVoltage_Battery >= (lvl_3 + delta) && estado == 2)
 		estado = 3;
@@ -212,8 +229,8 @@ if(stScaleParam.cSourceVoltage >= SOURCE_ADAPTER_LOW)
 	else if(fVoltage_Battery < (lvl_1 - delta) && estado == 1)
 		estado = 0;	
 	else if(fVoltage_Battery >= (lvl_1 + delta) && estado == 0)
-		estado = 1;
-		*/
+		estado = 1; */
+		
 	 }
 
 	 if(estado==0)
