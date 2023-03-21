@@ -41,7 +41,7 @@ sbit BAT_DET_PIN = P0^5;
 	const float lvl_5 = 61.0;
 	const float lvl_3 = 55.0;
 	const float lvl_2 = 50.0;
-	const float lvl_1 = 46.0;
+	const float lvl_1 = 47.0;
 
 float fVoltage_Battery = 0;
 
@@ -184,7 +184,7 @@ if(stScaleParam.cSourceVoltage >= SOURCE_ADAPTER_LOW)
 		estado = 1;
 	else if(fVoltage_Battery >= (lvl_2 + delta) && estado == 1)
 		estado = 2;
-	else if(fVoltage_Battery < (lvl_1 - delta) && estado == 1)
+	else if(fVoltage_Battery < (lvl_1) && estado == 1)
 		estado = 0;	
 	else if(fVoltage_Battery >= (lvl_1 + delta) && estado == 0)
 		estado = 1; 
