@@ -10,15 +10,13 @@
 	#define SOURCE_BATTERY_LOW			1
 	#define SOURCE_BATTERY_VERY_LOW	    0
 
-	#define LEVEL_ADAPTER_HIGH			(float)10.0
-	#define LEVEL_ADAPTER_OK			(float)6.5
-	#define LEVEL_ADAPTER_LOW			(float)5.5
-	#define LEVEL_BATTERY_HIGH			(float)5.0
-	#define LEVEL_BATTERY_OK			(float)4.5
-	#define LEVEL_BATTERY_LOW			(float)3.5
-	#define LEVEL_BATTERY_VERY_LOW	    (float)3.0
-
-	#define DIODE_VOLTAGE	 		   (float)0.2
+	#define LEVEL_ADAPTER_HIGH			(float)254
+	#define LEVEL_ADAPTER_OK			(float)80
+	#define LEVEL_ADAPTER_LOW			(float)64
+	#define LEVEL_BATTERY_HIGH			(float)63
+	#define LEVEL_BATTERY_OK			(float)50
+	#define LEVEL_BATTERY_LOW			(float)47
+	#define LEVEL_BATTERY_VERY_LOW	    (float)45
 
 	void vGestorBateria(void);
 	void vVadapHigh(void);

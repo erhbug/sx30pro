@@ -38,6 +38,11 @@ void main(void) {
   init_int_timer0();
   LCD_GLASS_Init();
   eAccionScale = ScalePreOn; /* Inicia en el primer estado Off */  
+  
+  // while(1){
+  //   vGestorBateria();
+  // }
+
   while (1) {
    switch (eAccionScale) {
     case ScalePreOn:
