@@ -59,7 +59,7 @@ extern enum ActionScale eAccionScale;
 void vGet_Volts_System(void);
 unsigned char uGet_Status_Volt(void);
 void vDriver_Backlight_Source(unsigned char cEliminadorOn);
-
+void View_Voltage_BatteryTest(void);
 void vVadapHigh(void);
 
 #if DISPLAY_20400047_EN > 0
@@ -331,4 +331,20 @@ while(uGet_Status_Volt() == SOURCE_BATTERY_VERY_LOW){
 	}
 	
 
+}
+
+void View_Voltage_BatteryTest(void){
+	LCD_GLASS_Clear();
+	LCD_GLASS_String("ADC",LCD_PESO);
+	LCD_GLASS_String("VALUE",LCD_PRECIO);
+	Key = KEY_NULL;		
+	while(1){
+		key_scan();		
+		vGet_Volts_System();
+		LCD_GLASS_Float(fVoltage_Battery,0,LCD_TOTAL);
+		IWDG_KEY_REFRESH;
+ 		if(Key == KEY_C){ 
+			break;
+		}
+	}	
 }

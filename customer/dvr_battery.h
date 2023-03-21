@@ -15,16 +15,16 @@
 	#define LEVEL_ADAPTER_LOW			(float)64
 	#define LEVEL_BATTERY_HIGH			(float)63
 	#define LEVEL_BATTERY_OK			(float)50
-	#define LEVEL_BATTERY_LOW			(float)47
-	#define LEVEL_BATTERY_VERY_LOW	    (float)45
+	#define LEVEL_BATTERY_LOW			(float)48
+	#define LEVEL_BATTERY_VERY_LOW	    (float)46
 
 	void vGestorBateria(void);
 	void vVadapHigh(void);
 	void vVbatVeryLow(void);
 	unsigned char uGet_Status_Volt(void);
 	void vGet_Volts_System(void);
-	
 	void driver_symbol(void);
 	//void driver_symbol_init(void);
-	
+	void View_Voltage_BatteryTest(void);
 #endif /* __DVR_BATTERY */
+	
