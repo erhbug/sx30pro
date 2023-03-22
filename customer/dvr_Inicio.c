@@ -16,9 +16,9 @@
 
 /* --- Registro de Password */
 //code enum digi_key eSEQUENCE_CONFIGURATION[8] = {KEY_TARA, KEY_C, KEY_CERO, KEY_RCL};
-code enum digi_key ePRE_CONFIGURATION_30KG[8] = {KEY_TARA, KEY_M1, KEY_TARA, KEY_3, KEY_0};
-code enum digi_key ePRE_CONFIGURATION_31KG[8] = {KEY_TARA, KEY_M1, KEY_TARA, KEY_3, KEY_1};	
-code enum digi_key ePRE_CONFIGURATION_32KG[8] = {KEY_TARA, KEY_M1, KEY_TARA, KEY_3, KEY_2};	
+//code enum digi_key ePRE_CONFIGURATION_30KG[8] = {KEY_TARA, KEY_M1, KEY_TARA, KEY_3, KEY_0};
+code enum digi_key ePRE_CONFIGURATION_31KG[8] = {KEY_TARA, KEY_M1, KEY_TARA, KEY_3, KEY_0};	
+//code enum digi_key ePRE_CONFIGURATION_32KG[8] = {KEY_TARA, KEY_M1, KEY_TARA, KEY_3, KEY_2};	
 code enum digi_key eLCD_ALL_SEGMENT[8] = {KEY_TARA, KEY_8};
 code enum digi_key eSOBRE_PESO_OFF[8] = {KEY_TARA, KEY_MEM, KEY_1, KEY_TARA};
 code enum digi_key eERASE_PLUS[8] = {KEY_TARA, KEY_TARA, KEY_2, KEY_9};
