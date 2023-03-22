@@ -180,9 +180,11 @@ void vScan_Key(void){
 					return;
 			
 			}else if(Key == KEY_PUNTO){	
+				if(srFlagScale.bReadPlus ==1){
+					vMostrar_Venta_Total();	
+				}
 				if(stScaleParam.cNumberDecimalPrice == 0 && stScaleParam.cPuntoDecimalPrecio > 2){
 					srFlagScale.bDotDecimalPrice = 1;
-					vMostrar_Venta_Total();
 				}
 				return;
 			}
