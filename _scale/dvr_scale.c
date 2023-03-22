@@ -732,7 +732,8 @@ unsigned char cRun_Scale(void){
 	}
 	
 		if(srFlagScale.bTara){
-			if((fWeightLight >= stScaleParam.fValueTara+20*stScaleParam.fFactorCalibrate) && srFlagScale.bBateriaLow == 0){
+			//if((fWeightLight >= stScaleParam.fValueTara+20*stScaleParam.fFactorCalibrate) && srFlagScale.bBateriaLow == 0){
+			if((fWeightLight >= stScaleParam.fValueTara+4*stScaleParam.fFactorCalibrate) && srFlagScale.bBateriaLow == 0){
 				OnBackLight;
 				strTimer.iTimerJ = 1;
 			}else{
@@ -742,7 +743,8 @@ unsigned char cRun_Scale(void){
 			}
 			
 		}else{
-			if((fWeightLight >= stScaleParam.fPointZero+20*stScaleParam.fFactorCalibrate) && srFlagScale.bBateriaLow == 0){
+			//if((fWeightLight >= stScaleParam.fPointZero+20*stScaleParam.fFactorCalibrate) && srFlagScale.bBateriaLow == 0){
+			if((fWeightLight >= stScaleParam.fPointZero+4*stScaleParam.fFactorCalibrate) && srFlagScale.bBateriaLow == 0){
 					OnBackLight;
 					strTimer.iTimerJ = 1;
 				}else{
