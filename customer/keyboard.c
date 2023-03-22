@@ -96,6 +96,7 @@ if(Key==20)Key=KEY_PUNTO;
   if (LastKey == 0 && Key != 0) {
     KeyState = PRESS; //se presiono
 	LastKey = Key;
+	OnBackLight;
     for (k = 0; k < 15; k++);//peque�o delay
   } else if (LastKey == Key && Key != 0) {
     KeyState = PRESSED; //se mantiene presionado
