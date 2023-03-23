@@ -15,10 +15,7 @@
 #include "./customer/dvr_battery.h"
 
 /* --- Registro de Password */
-//code enum digi_key eSEQUENCE_CONFIGURATION[8] = {KEY_TARA, KEY_C, KEY_CERO, KEY_RCL};
-code enum digi_key ePRE_CONFIGURATION_30KG[8] = {KEY_TARA, KEY_M1, KEY_TARA, KEY_3, KEY_0};
-code enum digi_key ePRE_CONFIGURATION_31KG[8] = {KEY_TARA, KEY_M1, KEY_TARA, KEY_3, KEY_1};	
-code enum digi_key ePRE_CONFIGURATION_32KG[8] = {KEY_TARA, KEY_M1, KEY_TARA, KEY_3, KEY_2};	
+code enum digi_key ePRE_CONFIGURATION_31KG[8] = {KEY_TARA, KEY_M1, KEY_TARA, KEY_3, KEY_0};	
 code enum digi_key eLCD_ALL_SEGMENT[8] = {KEY_TARA, KEY_8};
 code enum digi_key eSOBRE_PESO_OFF[8] = {KEY_TARA, KEY_MEM, KEY_1, KEY_TARA};
 code enum digi_key eERASE_PLUS[8] = {KEY_TARA, KEY_TARA, KEY_2, KEY_9};
@@ -27,9 +24,9 @@ code enum digi_key eVIEW_COUNTERS[8] = {KEY_TARA, KEY_MEM, KEY_C, KEY_1, KEY_0, 
 code enum digi_key eSEQUENCE_RESET_REFERENCE[8] = {	KEY_TARA, KEY_TARA, KEY_0};
 code enum digi_key eTEST_CALIDAD[8] = {	KEY_TARA, KEY_C, KEY_0, KEY_1, KEY_5,KEY_9};
 code enum digi_key eACT_PROGRAM[8] = {KEY_TARA, KEY_2, KEY_4, KEY_2, KEY_7};
-//code enum digi_key ePASS_MULTIRANGO_OFF[8] = {KEY_TARA, KEY_5, KEY_4, KEY_3, KEY_2, KEY_1, KEY_0};
+const enum digi_key eVIEW_VOLTAGE_BATTERY[8] = {KEY_TARA, KEY_MEM, KEY_MEM, KEY_C, KEY_C}; 
 code enum digi_key eCODE_CALIBRACION[8] = {KEY_TARA, KEY_C, KEY_MAS, KEY_RCL, KEY_2, KEY_4, KEY_6};
-//code unsigned char eCODE_MENU[7]= "779103";
+
 
 void vTestTeclado(void);
 void vCalidadTest(void);
@@ -85,6 +82,8 @@ unsigned int TimeEnd=2000;
 			}else if(strcmp(eTEST_CALIDAD, arPass_Configuration) == 0){				
 				vCalidadTest();
 				return 1;
+			}else if(strcmp(eVIEW_VOLTAGE_BATTERY, arPass_Configuration) == 0){
+				View_Voltage_BatteryTest();
 			}else if(strcmp(eERASE_PLUS, arPass_Configuration) == 0){
 				vErase_All_Address_Plus();
 				DelayWithKey(1000);

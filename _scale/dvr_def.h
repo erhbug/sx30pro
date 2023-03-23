@@ -64,10 +64,7 @@ void init_pwm(unsigned char BlkPWM);
 #define ESPANOL 1
 #define ENGLISH	0
 
-#define MONEDA_DLLS			0
 #define MONEDA_PESOS		1
-#define MONEDA_EUROS		2
-#define MONEDA_BSF			3
 
 #define PreConfig15KG 0
 #define PreConfig20KG 1

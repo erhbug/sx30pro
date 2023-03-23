@@ -37,15 +37,11 @@ sbit BAT_DET_PIN = P0^5;
 #define COUNT_1_HORA  3600
 #define COUNT_1_MIN		60
 
-#define HIGH_ADAPTER        7.0  //6.1
-#define LOW_BATTERY_MSG 		3.5
-#define LOW_BATTERY_OFF 		3.2
-#define THRESHOLD_VOLTAGE 	4.5	 //#define LOW_VOLTAGE_ADAPTER 4.35
-#define REFERENCE			1.22 //0.48
-#define HIGH_BATTERY_MSG 	6.0
-#define NO_ON				3.0  //2.5
-
-#define CuentasAdcRef       1514 //*** Cuentas de ADC para 1.22V de referencia
+	const float delta = 1.0; 
+	const float lvl_5 = 61.0;
+	const float lvl_3 = 55.0;
+	const float lvl_2 = 50.0;
+	const float lvl_1 = 47.0;
 
 float fVoltage_Battery = 0;
 
@@ -63,16 +59,13 @@ extern enum ActionScale eAccionScale;
 void vGet_Volts_System(void);
 unsigned char uGet_Status_Volt(void);
 void vDriver_Backlight_Source(unsigned char cEliminadorOn);
-
+void View_Voltage_BatteryTest(void);
 void vVadapHigh(void);
 
 #if DISPLAY_20400047_EN > 0
 
-const float delta=0.05; 
-const float lvl_5 = 4.7;
-const float lvl_3 = 4.0;
-const float lvl_2 = 3.65;
-const float lvl_1 = 3.52;
+
+
 
 
 unsigned char estado=0;
@@ -176,20 +169,14 @@ if(stScaleParam.cSourceVoltage >= SOURCE_ADAPTER_LOW)
 
 	if(strTimer.iTimerCharge>=TimerChargeend)
 	{
-		strTimer.iTimerCharge=0;
+		strTimer.iTimerCharge=1;
 		estado++;
 		if(estado==4)
 			estado=0;
-	}
+	}	
 	
-	if(fVoltage_Battery>=lvl_5)
-		estado=5;
-// Condicion de carga completa para TM con dos puntos de lectura de voltaje.
-	if(fVoltage_Battery<=5.22 && fVoltage_Battery>=4.72)
-		estado=5;
-		
 }else{
-	if(fVoltage_Battery < (lvl_3 - delta) && estado == 3)	
+ 	if(fVoltage_Battery < (lvl_3 - delta) && estado == 3)	
 		estado = 2;
 	else if(fVoltage_Battery >= (lvl_3 + delta) && estado == 2)
 		estado = 3;
@@ -197,10 +184,11 @@ if(stScaleParam.cSourceVoltage >= SOURCE_ADAPTER_LOW)
 		estado = 1;
 	else if(fVoltage_Battery >= (lvl_2 + delta) && estado == 1)
 		estado = 2;
-	else if(fVoltage_Battery < (lvl_1 - delta) && estado == 1)
+	else if(fVoltage_Battery < (lvl_1) && estado == 1)
 		estado = 0;	
 	else if(fVoltage_Battery >= (lvl_1 + delta) && estado == 0)
-		estado = 1;
+		estado = 1; 
+		
 	 }
 
 	 if(estado==0)
@@ -243,7 +231,7 @@ unsigned char uGet_Status_Volt(void){
 	unsigned char source;
 		
 	vGet_Volts_System();
-	if(fVoltage_Battery>LEVEL_BATTERY_HIGH)fVoltage_Battery+=DIODE_VOLTAGE;
+//	if(fVoltage_Battery>LEVEL_BATTERY_HIGH)fVoltage_Battery+=DIODE_VOLTAGE;
 	
 	if(fVoltage_Battery<LEVEL_ADAPTER_HIGH) 	source=SOURCE_ADAPTER_HIGH;
 	if(fVoltage_Battery<LEVEL_ADAPTER_OK) 		source=SOURCE_ADAPTER_OK;
@@ -275,7 +263,11 @@ void vGet_Volts_System(void){
 	iValue_Adc = (unsigned char)SARDATA;
 	SARCON  &= 0xf7;
 	EA = 1;
-	fVoltage_Battery = ((3.3/256.0 * (float)iValue_Adc))*6.0;
+
+	fVoltage_Battery = (float)iValue_Adc;
+
+	// LCD_GLASS_Float(iValue_Adc,0,LCD_PRECIO);
+	// LCD_GLASS_Float(fVoltage_Battery,2,LCD_TOTAL);
 }
 
 void vDriver_Backlight_Source(unsigned char cEliminadorOn){
@@ -288,6 +280,12 @@ void vDriver_Backlight_Source(unsigned char cEliminadorOn){
 			if(strTimer.iTimerBlk>=iTimerBlk1end){
 				DecreaseBackLight;
 			}
+			if(strTimer.iTimerBlk>=iTimerBlk1end){
+				DecreaseBackLight;
+			}
+		}
+		if(strTimer.iTimerBlk>=iTimerBlk2end){
+					OffBackLight;
 		}
 		if(strTimer.iTimerBlk>=iTimerBlk2end){
 					OffBackLight;
@@ -339,4 +337,20 @@ while(uGet_Status_Volt() == SOURCE_BATTERY_VERY_LOW){
 	}
 	
 
+}
+
+void View_Voltage_BatteryTest(void){
+	LCD_GLASS_Clear();
+	LCD_GLASS_String("ADC",LCD_PESO);
+	LCD_GLASS_String("VALUE",LCD_PRECIO);
+	Key = KEY_NULL;		
+	while(1){
+		key_scan();		
+		vGet_Volts_System();
+		LCD_GLASS_Float(fVoltage_Battery,0,LCD_TOTAL);
+		IWDG_KEY_REFRESH;
+ 		if(Key == KEY_C){ 
+			break;
+		}
+	}	
 }

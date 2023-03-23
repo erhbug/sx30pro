@@ -732,7 +732,8 @@ unsigned char cRun_Scale(void){
 	}
 	
 		if(srFlagScale.bTara){
-			if((fWeightLight >= stScaleParam.fValueTara+20*stScaleParam.fFactorCalibrate) && srFlagScale.bBateriaLow == 0){
+			//if((fWeightLight >= stScaleParam.fValueTara+20*stScaleParam.fFactorCalibrate) && srFlagScale.bBateriaLow == 0){
+			if((fWeightLight >= stScaleParam.fValueTara+4*stScaleParam.fFactorCalibrate) && srFlagScale.bBateriaLow == 0){
 				OnBackLight;
 				strTimer.iTimerJ = 1;
 			}else{
@@ -742,7 +743,8 @@ unsigned char cRun_Scale(void){
 			}
 			
 		}else{
-			if((fWeightLight >= stScaleParam.fPointZero+20*stScaleParam.fFactorCalibrate) && srFlagScale.bBateriaLow == 0){
+			//if((fWeightLight >= stScaleParam.fPointZero+20*stScaleParam.fFactorCalibrate) && srFlagScale.bBateriaLow == 0){
+			if((fWeightLight >= stScaleParam.fPointZero+4*stScaleParam.fFactorCalibrate) && srFlagScale.bBateriaLow == 0){
 					OnBackLight;
 					strTimer.iTimerJ = 1;
 				}else{
@@ -767,7 +769,7 @@ void vWeight_Positive(void){
 	float fWeightOverload = 0;
 	
 	float fOverloadUnit =  (float)stScaleParam.iCapacity + 
-					((float)(stScaleParam.iDivisionMinima)/(float)(pow(10, (int)stScaleParam.cWeightDecimal)))*9;
+					((float)(stScaleParam.iDivisionMinima)/(float)(pow(10, (int)stScaleParam.cWeightDecimal)))*10;
 	
 	fOverloadUnit = fRoundFloat(fOverloadUnit, (int)stScaleParam.cWeightDecimal, stScaleParam.iDivisionMinima-1);
 	

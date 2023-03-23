@@ -96,6 +96,7 @@ if(Key==20)Key=KEY_PUNTO;
   if (LastKey == 0 && Key != 0) {
     KeyState = PRESS; //se presiono
 	LastKey = Key;
+	OnBackLight;
     for (k = 0; k < 15; k++);//peque�o delay
   } else if (LastKey == Key && Key != 0) {
     KeyState = PRESSED; //se mantiene presionado
@@ -180,9 +181,11 @@ void vScan_Key(void){
 					return;
 			
 			}else if(Key == KEY_PUNTO){	
+				if(srFlagScale.bReadPlus ==1){
+					vMostrar_Venta_Total();	
+				}
 				if(stScaleParam.cNumberDecimalPrice == 0 && stScaleParam.cPuntoDecimalPrecio > 2){
 					srFlagScale.bDotDecimalPrice = 1;
-					vMostrar_Venta_Total();
 				}
 				return;
 			}

@@ -37,16 +37,12 @@ void main(void) {
   init_pwm(0x01);
   init_int_timer0();
   LCD_GLASS_Init();
-  eAccionScale = ScalePreOn; /* Inicia en el primer estado Off */
-
-  /*eAccionScale == ScaleRun;
-  while(1){
-	vGestorBateria();
-	LCD_GLASS_Float(fVoltage_Battery,2,LCD_PESO);  	
-	IWDG_KEY_REFRESH; 		  
-  } */
-  vGestorBateria();
+  eAccionScale = ScalePreOn; /* Inicia en el primer estado Off */  
   
+  // while(1){
+  //   vGestorBateria();
+  // }
+
   while (1) {
    switch (eAccionScale) {
     case ScalePreOn:
