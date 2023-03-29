@@ -44,7 +44,7 @@ void vAdd_Articulos(float fPrecio_Articulo){
 		sprintf(cNumber_Articulos_Venta, "%d", stScaleParam.iNumber_Articulos_Venta);
 		//LCD_GLASS_Clear();
 		
-		if(stScaleParam.fTotal_Venta_Articulos > (999999/(float)(pow(10,stScaleParam.cPuntoDecimalTotal)))){ 
+		if(stScaleParam.fTotal_Venta_Articulos >= ((float)1000000/(float)(pow(10,stScaleParam.cPuntoDecimalTotal)))){ 
 				LCD_GLASS_String("------", LCD_PESO);
 				LCD_GLASS_String("------", LCD_PRECIO);
 				LCD_GLASS_String("ERROR", LCD_TOTAL);
@@ -78,23 +78,34 @@ void vAdd_Articulos(float fPrecio_Articulo){
 		}
 
 	else{
-		if(stScaleParam.cLenguage == ESPANOL){
-			LCD_GLASS_String("ART.  ", LCD_PESO);
-		}else{
-			LCD_GLASS_String("ITENN", LCD_PESO);
+		if(stScaleParam.fTotal_Venta_Articulos >= ((float)1000000/(float)(pow(10,stScaleParam.cPuntoDecimalTotal)))){ 
+				LCD_GLASS_String("------", LCD_PESO);
+				LCD_GLASS_String("------", LCD_PRECIO);
+				LCD_GLASS_String("ERROR", LCD_TOTAL);
+				key_scan();
+
+				DelayWithKey(delaytimeMS);
+			}
+		else{	
+				if(stScaleParam.cLenguage == ESPANOL){
+					LCD_GLASS_String("ART.  ", LCD_PESO);
+				}else{
+					LCD_GLASS_String("ITENN", LCD_PESO);
+				}
+				sprintf(cNumber_Articulos_Venta, "%d", stScaleParam.iNumber_Articulos_Venta);
+				LCD_GLASS_String(cNumber_Articulos_Venta, LCD_PRECIO);
+				LCD_GLASS_Float(stScaleParam.fTotal_Venta_Articulos, stScaleParam.cPuntoDecimalTotal, LCD_TOTAL);
+				srFlagScale.bPlsUnload_Enable = 0;
+				//key_scan();
+			/* 
+				if(bFlagShowLowBat == 1){
+						bFlagShowLowBat = 0;
+						bFlagShowInfo = 0;
+						} */
+				DelayWithKey(delaytimeMS);
 		}
-		sprintf(cNumber_Articulos_Venta, "%d", stScaleParam.iNumber_Articulos_Venta);
-		LCD_GLASS_String(cNumber_Articulos_Venta, LCD_PRECIO);
-		LCD_GLASS_Float(stScaleParam.fTotal_Venta_Articulos, stScaleParam.cPuntoDecimalTotal, LCD_TOTAL);
-		srFlagScale.bPlsUnload_Enable = 0;
-		//key_scan();
-	/* 
-		if(bFlagShowLowBat == 1){
-				bFlagShowLowBat = 0;
-				bFlagShowInfo = 0;
-				} */
-		DelayWithKey(delaytimeMS);
 	}
+
 	srFlagScale.bAdd_Producto_Sin_Peso=0;
 }
 
@@ -314,18 +325,22 @@ void vCalcular_Cambio(void){
 	else if((fValor_Cliente - fVenta_Total) < 0 && Key == KEY_CHG ){
 
 		Key = KEY_NULL;
+		LCD_GLASS_Clear();
+		LCD_GLASS_String("------", LCD_PESO);
+		LCD_GLASS_String("------", LCD_PRECIO);
+		LCD_GLASS_String("ERROR", LCD_TOTAL);
 		
 		while(Key == KEY_NULL){ 
 		
 			//vGestorBateria();
 			
-			if(stScaleParam.cLenguage){
-				LCD_GLASS_String("  CA. ", LCD_PRECIO);
-			}else{
-				LCD_GLASS_String("CHG", LCD_PRECIO);
-			}
+			// if(stScaleParam.cLenguage){
+			// 	LCD_GLASS_String("  CA. ", LCD_PRECIO);
+			// }else{
+			// 	LCD_GLASS_String("CHG", LCD_PRECIO);
+			// }
 		
-			LCD_GLASS_Float(0, 0, LCD_TOTAL);
+			//LCD_GLASS_Float(0, 0, LCD_TOTAL);
 			
 			key_scan();
 			
