@@ -67,18 +67,10 @@ unsigned int TimeEnd=2000;
 			// 	srFlagScale.bCodeConfiguration = 1;
 			// 	return 1;
 			// }else
-			if(strcmp(ePRE_CONFIGURATION_30KG, arPass_Configuration) == 0){
-			    vSound_Saved_Param();
-				vPreConfiguration(PreConfig30KG);
-				return 1;
-			}else if(strcmp(ePRE_CONFIGURATION_31KG, arPass_Configuration) == 0){
+			if(strcmp(ePRE_CONFIGURATION_31KG, arPass_Configuration) == 0){
 			    vSound_Saved_Param();
 				vPreConfiguration(PreConfig31KG);	
 				return 1;	
-			}else if(strcmp(ePRE_CONFIGURATION_32KG, arPass_Configuration) == 0){
-				vSound_Saved_Param();
-			    vPreConfiguration(PreConfig32KG);	
-				return 1;
 			}else if(strcmp(eTEST_CALIDAD, arPass_Configuration) == 0){				
 				vCalidadTest();
 				return 1;
