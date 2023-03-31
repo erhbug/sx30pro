@@ -233,6 +233,10 @@ void vScan_Key(void){
 				case KEY_CERO:			
 						srFlagScale.bShowCountADC = 0;
 						if(srFlagScale.bTara == 0 && srFlagScale.bOverLoad == 0){
+							strTimer.iTimerE= 1;		
+							while(strTimer.iTimerE < 250){
+									IWDG_KEY_REFRESH;
+								}
 							vSetZero();
 						}
 						key_scan();

@@ -42,7 +42,7 @@ unsigned int TimeEnd=2000;
 								
 	strTimer.iTimerE=1;//llenar vector
 	while(strTimer.iTimerE < 1000)
-		fRead_Adc(1);
+		fRead_Adc(3);
 
 	strTimer.iTimerE=1;// Inicia un timer para esperar 2 seg a qe se digite alguna tecla para introducir un codigo 
 	while(1){		

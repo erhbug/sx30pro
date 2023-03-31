@@ -295,10 +295,9 @@ float fStablePoint(unsigned char cSetCountBack, unsigned char cShowCount, unsign
 //////	unsigned char Value_Key_Press;
 	float fWeightPlate = 0;		// Calcula el peso del plato en numero de cuentas 
 	float fPointZero = 0;
-		
+
 	fPointZero = fStablePoint(0, 0, 0);
 	
-
 	//Se encuentra el peso actual del plato respecto al punto cero de calibracion 
 	fWeightPlate = fPointZero - stScaleParam.fPointZeroCali;
 	
@@ -333,7 +332,7 @@ float fStablePoint(unsigned char cSetCountBack, unsigned char cShowCount, unsign
 		stScaleParam.fPointZero = fPointZero;
 	}
 	
-	
+	vSetZero();
 
 return 0;
 }
@@ -449,25 +448,25 @@ void vSetZero(void){
   ******************************************************************************
   */
 void vGetZeroTracking(float fActualWeightScale){
-	float fValor_Limite = 0;
+	float fValor_Limite = 0.0;
 	
 	if(stScaleParam.cMultirango == 1){
-		fValor_Limite = stScaleParam.fFactorCalibrate/stScaleParam.iDivisionMinima;
-		fValor_Limite *= stScaleParam.iDivisionMenorMenor;
+		fValor_Limite = stScaleParam.fFactorCalibrate/(float)stScaleParam.iDivisionMinima;
+		fValor_Limite *= (float)stScaleParam.iDivisionMenorMenor;
 	}else	
 		fValor_Limite = stScaleParam.fFactorCalibrate;
 	
-	fValor_Limite /= 2; 
+	fValor_Limite /= 2.0; 
 	
-	if(fValor_Limite < 0){
-		fValor_Limite *= (-1);
+	if(fValor_Limite < 0.0){
+		fValor_Limite *= (-1.0);
 	}
 	
 	if(fActualWeightScale > (stScaleParam.fPointZero - fValor_Limite) &&
 		fActualWeightScale < (stScaleParam.fPointZero + fValor_Limite)){
 		
 		iCounterZeroTracking++;
-		if(iCounterZeroTracking >=15){
+		if(iCounterZeroTracking >=65){
 			stScaleParam.fPointZero = fActualWeightScale;
 		}
 	}else{
@@ -707,7 +706,7 @@ unsigned char cRun_Scale(void){
 		// 	LCD_GLASS_Symbols(SYMBOL_LB, 1);
 		// }
 		
-		if(fWeightScale > -0.001 && fWeightScale < 0.0001){	 
+		if(fWeightScale > -0.001 && fWeightScale < 0.0005){	 
 			LCD_GLASS_Symbols(SYMBOL_ZERO, 1);
 		}else{	
 			LCD_GLASS_Symbols(SYMBOL_ZERO, 0);
