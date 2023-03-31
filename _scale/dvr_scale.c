@@ -852,18 +852,25 @@ void vWeight_Positive(void){
 		}
 		if(stScaleParam.fWeightScale >0.001){
 		stScaleParam.fTotal_Venta = stScaleParam.fPrice_Unit * stScaleParam.fWeightScale;
+			// if(stScaleParam.fTotal_Venta >=10000.0){
+			// 	stScaleParam.fTotal_Venta=0;
+			// }
 		}
 		else{
 			stScaleParam.fTotal_Venta = 0;
 		}			
-         stScaleParam.fTotal_Venta = fRoundFloat(stScaleParam.fTotal_Venta, 
-		   stScaleParam.cPuntoDecimalTotal, stScaleParam.cValorRedondeoCifraTotal);
+        //  stScaleParam.fTotal_Venta = fRoundFloat(stScaleParam.fTotal_Venta, 
+		//    stScaleParam.cPuntoDecimalTotal, stScaleParam.cValorRedondeoCifraTotal);
 		
 		//Verifica si el valor del total excede el limite a mostrar en la LCD
-		if(stScaleParam.fTotal_Venta > (999999 / (float)(pow(10,stScaleParam.cPuntoDecimalTotal)))){
+		//if(stScaleParam.fTotal_Venta >= (1000000 / (float)(pow(10,stScaleParam.cPuntoDecimalTotal)))){
+		if(stScaleParam.fTotal_Venta >= (float)10000){
 			LCD_GLASS_String("------", LCD_TOTAL);
 		}else{
-			if(stScaleParam.fTotal_Venta > 0){
+			 stScaleParam.fTotal_Venta = fRoundFloat(stScaleParam.fTotal_Venta, 
+		   stScaleParam.cPuntoDecimalTotal, stScaleParam.cValorRedondeoCifraTotal);
+		
+			if(stScaleParam.fTotal_Venta > 0.0 &&stScaleParam.fTotal_Venta < (float)10000){
 				LCD_GLASS_Float(stScaleParam.fTotal_Venta, stScaleParam.cPuntoDecimalTotal, LCD_TOTAL);
 			}else{
 				LCD_GLASS_Float(0, 0, LCD_TOTAL);
