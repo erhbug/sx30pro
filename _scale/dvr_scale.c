@@ -333,7 +333,7 @@ float fStablePoint(unsigned char cSetCountBack, unsigned char cShowCount, unsign
 		stScaleParam.fPointZero = fPointZero;
 	}
 	
-	
+	vSetZero();
 
 return 0;
 }
@@ -449,18 +449,18 @@ void vSetZero(void){
   ******************************************************************************
   */
 void vGetZeroTracking(float fActualWeightScale){
-	float fValor_Limite = 0;
+	float fValor_Limite = 0.0;
 	
 	if(stScaleParam.cMultirango == 1){
-		fValor_Limite = stScaleParam.fFactorCalibrate/stScaleParam.iDivisionMinima;
-		fValor_Limite *= stScaleParam.iDivisionMenorMenor;
+		fValor_Limite = stScaleParam.fFactorCalibrate/(float)stScaleParam.iDivisionMinima;
+		fValor_Limite *= (float)stScaleParam.iDivisionMenorMenor;
 	}else	
 		fValor_Limite = stScaleParam.fFactorCalibrate;
 	
-	fValor_Limite /= 2; 
+	fValor_Limite /= 2.0; 
 	
-	if(fValor_Limite < 0){
-		fValor_Limite *= (-1);
+	if(fValor_Limite < 0.0){
+		fValor_Limite *= (-1.0);
 	}
 	
 	if(fActualWeightScale > (stScaleParam.fPointZero - fValor_Limite) &&
@@ -707,7 +707,7 @@ unsigned char cRun_Scale(void){
 		// 	LCD_GLASS_Symbols(SYMBOL_LB, 1);
 		// }
 		
-		if(fWeightScale > -0.001 && fWeightScale < 0.0001){	 
+		if(fWeightScale > -0.001 && fWeightScale < 0.0005){	 
 			LCD_GLASS_Symbols(SYMBOL_ZERO, 1);
 		}else{	
 			LCD_GLASS_Symbols(SYMBOL_ZERO, 0);
@@ -853,18 +853,25 @@ void vWeight_Positive(void){
 		}
 		if(stScaleParam.fWeightScale >0.001){
 		stScaleParam.fTotal_Venta = stScaleParam.fPrice_Unit * stScaleParam.fWeightScale;
+			// if(stScaleParam.fTotal_Venta >=10000.0){
+			// 	stScaleParam.fTotal_Venta=0;
+			// }
 		}
 		else{
 			stScaleParam.fTotal_Venta = 0;
 		}			
-         stScaleParam.fTotal_Venta = fRoundFloat(stScaleParam.fTotal_Venta, 
-		   stScaleParam.cPuntoDecimalTotal, stScaleParam.cValorRedondeoCifraTotal);
+        //  stScaleParam.fTotal_Venta = fRoundFloat(stScaleParam.fTotal_Venta, 
+		//    stScaleParam.cPuntoDecimalTotal, stScaleParam.cValorRedondeoCifraTotal);
 		
 		//Verifica si el valor del total excede el limite a mostrar en la LCD
-		if(stScaleParam.fTotal_Venta > (999999 / (float)(pow(10,stScaleParam.cPuntoDecimalTotal)))){
+		//if(stScaleParam.fTotal_Venta >= (1000000 / (float)(pow(10,stScaleParam.cPuntoDecimalTotal)))){
+		if(stScaleParam.fTotal_Venta >= (float)10000){
 			LCD_GLASS_String("------", LCD_TOTAL);
 		}else{
-			if(stScaleParam.fTotal_Venta > 0){
+			 stScaleParam.fTotal_Venta = fRoundFloat(stScaleParam.fTotal_Venta, 
+		   stScaleParam.cPuntoDecimalTotal, stScaleParam.cValorRedondeoCifraTotal);
+		
+			if(stScaleParam.fTotal_Venta > 0.0 &&stScaleParam.fTotal_Venta < (float)10000){
 				LCD_GLASS_Float(stScaleParam.fTotal_Venta, stScaleParam.cPuntoDecimalTotal, LCD_TOTAL);
 			}else{
 				LCD_GLASS_Float(0, 0, LCD_TOTAL);
