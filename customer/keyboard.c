@@ -106,7 +106,7 @@ if(Key==20)Key=KEY_PUNTO;
     KeyState = RELEASE; //se solto
 	LastKey = Key;
 	Key=0;
-	delay_ms(10);
+	delay_ms(80);
   } else if (LastKey == 0 && Key == 0) {
     KeyState = 0; //no se ha presionado una tecla	
   }
@@ -266,7 +266,7 @@ void vScan_Key(void){
 					break;
 	
 				case KEY_MAS:
-					
+					//if(stScaleParam.fWeightScale > ZeroTolerance && stScaleParam.fPrice_Unit == 0.000){;}
 					if(srFlagScale.bFlagWeightNeg == 0 && (stScaleParam.fTotal_Venta > 0 || stScaleParam.cFormatoImpresion == 2)){
 						//pone en uno la bandera de producto sin peso para poder sumar 
 						if(stScaleParam.fWeightScale<=ZeroTolerance){	
@@ -295,8 +295,10 @@ void vScan_Key(void){
 						
 						if(srFlagScale.bAdd_Producto_Sin_Peso==1){
 							vAdd_Articulos(stScaleParam.fPrice_Unit);
-						}else{
+						}else if(stScaleParam.fTotal_Venta != 0 && stScaleParam.fPrice_Unit != 0){
 							vAdd_Articulos(stScaleParam.fTotal_Venta);
+						}else{
+							break;
 						}
 						
 						srFlagScale.bMultiplicar_Producto = 0;

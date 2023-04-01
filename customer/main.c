@@ -39,9 +39,6 @@ void main(void) {
   LCD_GLASS_Init();
   eAccionScale = ScalePreOn; /* Inicia en el primer estado Off */  
   
-   while(1){
-     LCD_GLASS_All_On();
-   }
 
   while (1) {
    switch (eAccionScale) {
@@ -74,7 +71,7 @@ void main(void) {
 
     case ScaleRun:
       	// Lee teclado y ejecuta las acciones correspondientes 
-	    OnBackLight;
+	    //OnBackLight;
       vScan_Key();
 	    cRun_Scale();
       break;
