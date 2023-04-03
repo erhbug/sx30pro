@@ -223,11 +223,11 @@ float fStablePoint(unsigned char cSetCountBack, unsigned char cShowCount, unsign
 	}
 
 	strTimer.iTimerE=1;
-	while(strTimer.iTimerE < 800)
+	while(strTimer.iTimerE < 1000)
 	    fWeightAdc = (unsigned long)fRead_Adc(cRunStable);
 
 	while(cCountBack > -1){
-		delay_ms(80);
+		delay_ms(150);
 		fActualWeightAdc = fRead_Adc(cRunStable);
 		/* Verifica si debe mostrar el contador en la LCD */
 		if(cShowCount == 1){
@@ -423,7 +423,7 @@ void vSetZero(void){
 	
 	/* Verifica si el peso es estable para volver cero */
 	fWeightZero = fStablePoint(1, 0, 1);
-	stScaleParam.fPointZero = fWeightZero;	
+		
 	if(srFlagScale.bFlagStable == 1){		
 		stScaleParam.fPointZero = fWeightZero;
 	}

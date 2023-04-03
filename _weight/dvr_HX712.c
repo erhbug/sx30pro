@@ -112,13 +112,14 @@ float fFilter_Averaging(unsigned long iActualWeight, unsigned char cFastFill){
 		}	 
 	}
 	
-	fAverage_x = 0;
+	//fAverage_x = 0;
 	
-	for(i=1; i<iLenthData_x-1; i++){
-		fAverage_x += arfLowestToHighest[i];
-	}
-	
-	fAverage_x /= (float)(iLenthData_x - 2);	
+	// for(i=FILTER_DEPRECIATE_SIZE; i<iLenthData_x-FILTER_DEPRECIATE_SIZE; i++){
+	// 	fAverage_x += arfLowestToHighest[i];
+	// }
+	fAverage_x = arfLowestToHighest[FILTER_DEPRECIATE_SIZE];
+	//fAverage_x /= (float)(iLenthData_x - 2);	
+	//fAverage_x = fAverage_x/(iLenthData_x - (2*FILTER_DEPRECIATE_SIZE));	
 	
 	return fAverage_x;
 }

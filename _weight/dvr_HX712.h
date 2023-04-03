@@ -6,7 +6,7 @@
 sbit MISO = P0^3;	
 sbit SCLK = P0^4;	
 
-#define FILTER_SIZE_BUFF 10
+#define FILTER_SIZE_BUFF 9
 #define FILTER_DEPRECIATE_SIZE 4//3ok
 
 float fRead_Adc(unsigned char cFillFilter);
