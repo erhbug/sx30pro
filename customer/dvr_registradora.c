@@ -21,6 +21,13 @@ code unsigned char cPASS_BORRAR_VT[3] = {KEY_C, KEY_C};
 //void vFinalizar_Venta(void);
 //void vCalcular_Cambio(void);
 
+void msgError(void){
+	LCD_GLASS_String("------", LCD_PESO);
+				LCD_GLASS_String("------", LCD_PRECIO);
+				LCD_GLASS_String("ERROR", LCD_TOTAL);
+				key_scan();	
+				DelayWithKey(2000);	
+}
 
 /**
   ******************************************************************************
@@ -41,48 +48,45 @@ void vAdd_Articulos(float fPrecio_Articulo){
 		//LCD_GLASS_Clear();
 		
 		if(stScaleParam.fTotal_Venta_Articulos >= ((float)1000000/(float)(pow(10,stScaleParam.cPuntoDecimalTotal)))){ 
-				LCD_GLASS_String("------", LCD_PESO);
-				LCD_GLASS_String("------", LCD_PRECIO);
-				LCD_GLASS_String("ERROR", LCD_TOTAL);
-				key_scan();
-	
-				DelayWithKey(delaytimeMS);
-				
+		//if(stScaleParam.fTotal_Venta_Articulos >=10000.0 ){ 
+				msgError();			
 			}
 
 		else{
-				if(stScaleParam.cLenguage == ESPANOL){
-					LCD_GLASS_String("ART.  ", LCD_PESO);
-				}else{
-					LCD_GLASS_String("ITENN", LCD_PESO);
+
+				if(stScaleParam.fTotal_Venta_Articulos + fPrecio_Articulo>=10000){
+				 msgError();
 				}
-				stScaleParam.iNumber_Articulos_Venta++;
-				stScaleParam.fTotal_Venta_Articulos = stScaleParam.fTotal_Venta_Articulos + fPrecio_Articulo;		
+				else{
+					if(stScaleParam.cLenguage == ESPANOL){
+						LCD_GLASS_String("ART.  ", LCD_PESO);
+					}else{
+						LCD_GLASS_String("ITENN", LCD_PESO);
+					}
+					stScaleParam.iNumber_Articulos_Venta++;
+					stScaleParam.fTotal_Venta_Articulos = stScaleParam.fTotal_Venta_Articulos + fPrecio_Articulo;		
 
-				sprintf(cNumber_Articulos_Venta, "%d", stScaleParam.iNumber_Articulos_Venta);
+					sprintf(cNumber_Articulos_Venta, "%d", stScaleParam.iNumber_Articulos_Venta);
+			
+
+					LCD_GLASS_String(cNumber_Articulos_Venta, LCD_PRECIO);
+					LCD_GLASS_Float(stScaleParam.fTotal_Venta_Articulos, stScaleParam.cPuntoDecimalTotal, LCD_TOTAL);
+					srFlagScale.bPlsUnload_Enable = 0;
+					key_scan();
 		
-
-				LCD_GLASS_String(cNumber_Articulos_Venta, LCD_PRECIO);
-				LCD_GLASS_Float(stScaleParam.fTotal_Venta_Articulos, stScaleParam.cPuntoDecimalTotal, LCD_TOTAL);
-				srFlagScale.bPlsUnload_Enable = 0;
-				key_scan();
-	
-				DelayWithKey(delaytimeMS);
-				if(Key == KEY_CHG){
-					vCalcular_Cambio();
+					DelayWithKey(2000);
+					if(Key == KEY_CHG){
+						vCalcular_Cambio();
+					}
 				}
 			}
 
 		}
 
 	else{
-		if(stScaleParam.fTotal_Venta_Articulos >= ((float)1000000/(float)(pow(10,stScaleParam.cPuntoDecimalTotal)))){ 
-				LCD_GLASS_String("------", LCD_PESO);
-				LCD_GLASS_String("------", LCD_PRECIO);
-				LCD_GLASS_String("ERROR", LCD_TOTAL);
-				key_scan();
-
-				DelayWithKey(delaytimeMS);
+			if(stScaleParam.fTotal_Venta_Articulos >= ((float)1000000/(float)(pow(10,stScaleParam.cPuntoDecimalTotal)))){ 
+			//if(stScaleParam.fTotal_Venta_Articulos >= (10000.0)){ 
+				msgError();
 			}
 		else{	
 				if(stScaleParam.cLenguage == ESPANOL){
@@ -90,17 +94,15 @@ void vAdd_Articulos(float fPrecio_Articulo){
 				}else{
 					LCD_GLASS_String("ITENN", LCD_PESO);
 				}
-				stScaleParam.iNumber_Articulos_Venta++;
-				stScaleParam.fTotal_Venta_Articulos = stScaleParam.fTotal_Venta_Articulos + fPrecio_Articulo;		
-
-				//sprintf(cNumber_Articulos_Venta, "%d", stScaleParam.iNumber_Articulos_Venta);
+				
+				sprintf(cNumber_Articulos_Venta, "%d", stScaleParam.iNumber_Articulos_Venta);
 		
 				sprintf(cNumber_Articulos_Venta, "%d", stScaleParam.iNumber_Articulos_Venta);
 				LCD_GLASS_String(cNumber_Articulos_Venta, LCD_PRECIO);
 				LCD_GLASS_Float(stScaleParam.fTotal_Venta_Articulos, stScaleParam.cPuntoDecimalTotal, LCD_TOTAL);
 				srFlagScale.bPlsUnload_Enable = 0;
 			
-				DelayWithKey(delaytimeMS);
+				DelayWithKey(2000);
 				if(Key == KEY_CHG){
 					vCalcular_Cambio();
 				}
@@ -228,7 +230,6 @@ void vCalcular_Cambio(void){
 	
 	bFlagShowInfo = 0;
 	bFlagShowLowBat = 0;
-	
 	if((fValor_Cliente - fVenta_Total) >= 0 && Key  == KEY_CHG ){
 		fValor_Cliente -= fRoundFloat(fVenta_Total, 
 			stScaleParam.cPuntoDecimalTotal, stScaleParam.cValorcRedondeoCifraVentaTotal);

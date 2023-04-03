@@ -12,8 +12,8 @@
 
 	#define LEVEL_ADAPTER_HIGH			(float)254
 	#define LEVEL_ADAPTER_OK			(float)80
-	#define LEVEL_ADAPTER_LOW			(float)64
-	#define LEVEL_BATTERY_HIGH			(float)63
+	#define LEVEL_ADAPTER_LOW			(float)62
+	#define LEVEL_BATTERY_HIGH			(float)60
 	#define LEVEL_BATTERY_OK			(float)50
 	#define LEVEL_BATTERY_LOW			(float)48
 	#define LEVEL_BATTERY_VERY_LOW	    (float)46

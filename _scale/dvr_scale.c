@@ -227,7 +227,11 @@ float fStablePoint(unsigned char cSetCountBack, unsigned char cShowCount, unsign
 	    fWeightAdc = (unsigned long)fRead_Adc(cRunStable);
 
 	while(cCountBack > -1){
-		delay_ms(150);
+		
+		strTimer.iTimerE= 1;		
+				while(strTimer.iTimerE < 120){
+					IWDG_KEY_REFRESH;
+				}
 		fActualWeightAdc = fRead_Adc(cRunStable);
 		/* Verifica si debe mostrar el contador en la LCD */
 		if(cShowCount == 1){
