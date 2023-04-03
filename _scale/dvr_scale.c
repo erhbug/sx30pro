@@ -367,27 +367,16 @@ void cOnOffModeTara(float fWeightTara){
 		if(fWeightTara > 0){
 			if(srFlagScale.bTara == 0){	
 				
-				if(stScaleParam.cUnits == UNIT_LB){
-					if(fCuentasToPeso(stScaleParam.fWeightScaleTara) <= stScaleParam.iCapacity){
+					if(fCuentasToPeso(stScaleParam.fWeightScaleTara) <= 9.998){
 						stScaleParam.fValueTara = stScaleParam.fWeightScaleTara;
 						srFlagScale.bTara = 1;
 					}
-				}else{
-					if(fCuentasToPeso(stScaleParam.fWeightScaleTara) <= 9.995){
-						stScaleParam.fValueTara = stScaleParam.fWeightScaleTara;
-						srFlagScale.bTara = 1;
-					}
-				}
+				
 			}else{
-				if(stScaleParam.cUnits == UNIT_LB){
-					if(fCuentasToPeso(stScaleParam.fWeightScaleTara) <= stScaleParam.iCapacity){
+					if(fCuentasToPeso(stScaleParam.fWeightScaleTara) <= 9.998){
 						stScaleParam.fValueTara = stScaleParam.fWeightScaleTara;
 					}
-				}else{
-					if(fCuentasToPeso(stScaleParam.fWeightScaleTara) < 9.995){
-						stScaleParam.fValueTara = stScaleParam.fWeightScaleTara;
-					}
-				}
+				
 			}
 		}else if(fWeightTara < 0){
 			
@@ -395,18 +384,18 @@ void cOnOffModeTara(float fWeightTara){
 				fWeightTara *= (-1);
 				
 				if(stScaleParam.cMultirango == 1){
-					if(stScaleParam.fValueTara <= stScaleParam.fCapacityCali*0.2){
+					if(stScaleParam.fValueTara <= stScaleParam.fCapacityCali*0.3333){
 							AuxTara = stScaleParam.fFactorCalibrate / stScaleParam.iDivisionMinima;
 							AuxTara *= stScaleParam.iDivisionMenor;
-							fLimite_Inf = fCuentasToPeso(stScaleParam.fValueTara - 3*AuxTara);
-							fLimite_Sup = fCuentasToPeso(stScaleParam.fValueTara + 3*AuxTara);
+							fLimite_Inf = fCuentasToPeso(stScaleParam.fValueTara - 3.0*AuxTara);
+							fLimite_Sup = fCuentasToPeso(stScaleParam.fValueTara + 3.0*AuxTara);
 						}else{
-							fLimite_Inf = fCuentasToPeso(stScaleParam.fValueTara - 3*stScaleParam.fFactorCalibrate);
-							fLimite_Sup = fCuentasToPeso(stScaleParam.fValueTara + 3*stScaleParam.fFactorCalibrate);
+							fLimite_Inf = fCuentasToPeso(stScaleParam.fValueTara - 3.0*stScaleParam.fFactorCalibrate);
+							fLimite_Sup = fCuentasToPeso(stScaleParam.fValueTara + 3.0*stScaleParam.fFactorCalibrate);
 						}
 				}else{
-					fLimite_Inf = fCuentasToPeso(stScaleParam.fValueTara - 3*stScaleParam.fFactorCalibrate);
-					fLimite_Sup = fCuentasToPeso(stScaleParam.fValueTara + 3*stScaleParam.fFactorCalibrate);
+					fLimite_Inf = fCuentasToPeso(stScaleParam.fValueTara - 3.0*stScaleParam.fFactorCalibrate);
+					fLimite_Sup = fCuentasToPeso(stScaleParam.fValueTara + 3.0*stScaleParam.fFactorCalibrate);
 				}
 					
 				if((fWeightTara >= fLimite_Inf) && (fWeightTara <= fLimite_Sup)){

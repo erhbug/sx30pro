@@ -64,7 +64,7 @@ void key_scan(void) {
     if (k == 2) KEY_D2 = 0;
     if (k == 3) KEY_D3 = 0;
     if (k == 4) KEY_D4 = 0;
-    delay_ms(10);
+    delay_ms(50);
     if (KEY_K0 != 1) Key = 1 + (k * 4);
     if (KEY_K1 != 1) Key = 2 + (k * 4);
     if (KEY_K2 != 1) Key = 3 + (k * 4);
@@ -106,7 +106,7 @@ if(Key==20)Key=KEY_PUNTO;
     KeyState = RELEASE; //se solto
 	LastKey = Key;
 	Key=0;
-	delay_ms(80);
+	delay_ms(100);
   } else if (LastKey == 0 && Key == 0) {
     KeyState = 0; //no se ha presionado una tecla	
   }
