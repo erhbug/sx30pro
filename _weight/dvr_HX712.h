@@ -11,5 +11,5 @@ sbit SCLK = P0^4;
 
 float fRead_Adc(unsigned char cFillFilter);
 float fFilter_Averaging(unsigned long iActualWeight, unsigned char cFastFill);
-volatile void LowPassF(void);
+
 #endif
