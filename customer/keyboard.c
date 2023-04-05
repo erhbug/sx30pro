@@ -272,27 +272,27 @@ void vScan_Key(void){
 						if(stScaleParam.fWeightScale<=ZeroTolerance){	
 							srFlagScale.bAdd_Producto_Sin_Peso = 1;
 						}
-						
-						fWeightScale = fStablePoint(1, 0, 1);
+						else{
+							fWeightScale = fStablePoint(1, 0, 1);
 
-						if(srFlagScale.bTara == 1)
-							fWeightScale -= stScaleParam.fPointZero;
-						else
-							fWeightScale -= stScaleParam.fValueTara;		
+							if(srFlagScale.bTara == 1)
+								fWeightScale -= stScaleParam.fPointZero;
+							else
+								fWeightScale -= stScaleParam.fValueTara;		
 						
-						fWeightScale = fCuentasToPeso(fWeightScale);
-
-						if(srFlagScale.bFlagStable == 1)
-							{
-								if(srFlagScale.bMultiplicar_Producto !=1)
+							fWeightScale = fCuentasToPeso(fWeightScale);
+						
+							if(srFlagScale.bFlagStable == 1)
 								{
-									stScaleParam.fTotal_Venta = stScaleParam.fPrice_Unit * stScaleParam.fWeightScale;
-									stScaleParam.fTotal_Venta = fRoundFloat(stScaleParam.fTotal_Venta, stScaleParam.cPuntoDecimalTotal, stScaleParam.cValorRedondeoCifraTotal);
+									if(srFlagScale.bMultiplicar_Producto !=1)
+									{
+										stScaleParam.fTotal_Venta = stScaleParam.fPrice_Unit * stScaleParam.fWeightScale;
+										stScaleParam.fTotal_Venta = fRoundFloat(stScaleParam.fTotal_Venta, stScaleParam.cPuntoDecimalTotal, stScaleParam.cValorRedondeoCifraTotal);
+									}
 								}
-							}
-						else
-							break;
-						
+							else
+								break;
+						}
 						if(srFlagScale.bAdd_Producto_Sin_Peso==1){
 							vAdd_Articulos(stScaleParam.fPrice_Unit);
 						}else if(stScaleParam.fTotal_Venta != 0 && stScaleParam.fPrice_Unit != 0){
