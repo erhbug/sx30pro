@@ -30,7 +30,7 @@
 unsigned char idata Key;
 unsigned char idata LastKey;
 unsigned char idata KeyState=0;
-
+unsigned char k = 0;
 unsigned int iIndex_Address_Plus = 0;
 //unsigned char cValue_Precio[5] = "     ";
 
@@ -50,15 +50,19 @@ volatile void delay_ms(unsigned int num)
 
 
 void key_scan(void) {
-  unsigned char k = 0;
+  
   Key = 0;
-
+	// KEY_D0 = 1;
+    // KEY_D1 = 1;
+    // KEY_D2 = 1;
+    // KEY_D3 = 1;
+    // KEY_D4 = 1;
   for (k = 0; k < 5; k++) {
-    KEY_D0 = 1;
-    KEY_D1 = 1;
-    KEY_D2 = 1;
-    KEY_D3 = 1;
-    KEY_D4 = 1;
+    // KEY_D0 = 1;
+    // KEY_D1 = 1;
+    // KEY_D2 = 1;
+    // KEY_D3 = 1;
+    // KEY_D4 = 1;
     if (k == 0) KEY_D0 = 0;
     if (k == 1) KEY_D1 = 0;
     if (k == 2) KEY_D2 = 0;
@@ -69,29 +73,39 @@ void key_scan(void) {
     if (KEY_K1 != 1) Key = 2 + (k * 4);
     if (KEY_K2 != 1) Key = 3 + (k * 4);
     if (KEY_K3 != 1) Key = 4 + (k * 4);
+	if(k == 0)
+		KEY_D0 = 1;
+    else if(k == 1)
+		KEY_D1 = 1;
+    else if(k ==2)
+		KEY_D2 = 1;
+    else if(k ==3)
+		KEY_D3 = 1;
+    else if(k==4)
+		KEY_D4 = 1;
   }
 
 if(Key==0)Key=KEY_NULL;
-if(Key==1)Key=KEY_CERO;
-if(Key==2)Key=KEY_TARA;
-if(Key==3)Key=KEY_M1;																							  
-if(Key==4)Key=KEY_RCL;
-if(Key==5)Key=KEY_CHG;
-if(Key==6)Key=KEY_MAS;
-if(Key==7)Key=KEY_M2;
-if(Key==8)Key=KEY_MEM;
-if(Key==9)Key=KEY_7;
-if(Key==10)Key=KEY_4;
-if(Key==11)Key=KEY_1;
-if(Key==12)Key=KEY_C;
-if(Key==13)Key=KEY_8;
-if(Key==14)Key=KEY_5;
-if(Key==15)Key=KEY_2;
-if(Key==16)Key=KEY_0;
-if(Key==17)Key=KEY_9;
-if(Key==18)Key=KEY_6;
-if(Key==19)Key=KEY_3;
-if(Key==20)Key=KEY_PUNTO;
+else if(Key==1)Key=KEY_CERO;
+else if(Key==2)Key=KEY_TARA;
+else if(Key==3)Key=KEY_M1;																							  
+else if(Key==4)Key=KEY_RCL;
+else if(Key==5)Key=KEY_CHG;
+else if(Key==6)Key=KEY_MAS;
+else if(Key==7)Key=KEY_M2;
+else if(Key==8)Key=KEY_MEM;
+else if(Key==9)Key=KEY_7;
+else if(Key==10)Key=KEY_4;
+else if(Key==11)Key=KEY_1;
+else if(Key==12)Key=KEY_C;
+else if(Key==13)Key=KEY_8;
+else if(Key==14)Key=KEY_5;
+else if(Key==15)Key=KEY_2;
+else if(Key==16)Key=KEY_0;
+else if(Key==17)Key=KEY_9;
+else if(Key==18)Key=KEY_6;
+else if(Key==19)Key=KEY_3;
+else if(Key==20)Key=KEY_PUNTO;
   
   if (LastKey == 0 && Key != 0) {
     KeyState = PRESS; //se presiono
