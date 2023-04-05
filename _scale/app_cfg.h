@@ -37,6 +37,6 @@
 
 #define 	SX30PRO		DEF_ENABLED
 
-#define sVersion "23D0"
+#define sVersion "23D1"
 
 #endif // APP_CFG_H

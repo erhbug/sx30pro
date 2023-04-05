@@ -414,11 +414,12 @@ void vMostrar_Venta_Total(void){
 	//unsigned char xdata cText_Venta_Total[13] = "           ";
 	//unsigned char xdata cText_Precio[6] = "     ";
 	//unsigned char xdata cText_Total[8] = "      ";
-	unsigned char xdata cCode_Borrar_VT[3] = "  ";
+	unsigned char cCode_Borrar_VT[3]="  ";
 	int i;
-	
 	//LCD_GLASS_Clear();
-	vReadParamScale();
+	//vReadParamScale();
+	
+	//return;
 	if(stScaleParam.cLenguage == ESPANOL){
 		LCD_GLASS_String("TOTAL", LCD_PESO);
 	}else{
@@ -450,12 +451,7 @@ void vMostrar_Venta_Total(void){
 	i = 0; 
 	strTimer.iTimerE = 1;
 	while(strTimer.iTimerE < TimerEend){
-		
-		IWDG_KEY_REFRESH;
 			key_scan();
-		
-		if(Key  != KEY_NULL){
-		}
 		
 		if((Key  == KEY_C ||Key  == KEY_CHG) && i < 2){
 			cCode_Borrar_VT[i] =Key ;
@@ -465,13 +461,14 @@ void vMostrar_Venta_Total(void){
 			if(strcmp(cCode_Borrar_VT, cPASS_BORRAR_VT) == 0){
 				stScaleParam.fVenta_Total_Scale = 0;
 				vSaveParamScale(Parameter_Register);
+				LCD_GLASS_String("RESET", LCD_PESO);
+				LCD_GLASS_String("TOTAL", LCD_PRECIO);
+				LCD_GLASS_String("      ", LCD_TOTAL);
 				strTimer.iTimerE= 1;
 				while(strTimer.iTimerE < TimerEend){
-					LCD_GLASS_String("RESET", LCD_PESO);
-					LCD_GLASS_String("TOTAL", LCD_PRECIO);
-					LCD_GLASS_String("      ", LCD_TOTAL);
+					IWDG_KEY_REFRESH;
 				}
-				i++;
+				i=0;
 			}
 		} 
 	}
