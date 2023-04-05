@@ -64,6 +64,7 @@ void main(void) {
     case ScaleWait:
       if (cWait_Scale() == 0) {
         eAccionScale = ScaleRun;
+        OnBackLight;
         LCD_GLASS_Clear();
       } else
         eAccionScale = ScalePreOn;
@@ -71,7 +72,6 @@ void main(void) {
 
     case ScaleRun:
       	// Lee teclado y ejecuta las acciones correspondientes 
-	    //OnBackLight;
       vScan_Key();
 	    cRun_Scale();
       break;
