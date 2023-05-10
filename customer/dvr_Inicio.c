@@ -26,7 +26,7 @@ code enum digi_key eTEST_CALIDAD[8] = {	KEY_TARA, KEY_C, KEY_0, KEY_1, KEY_5,KEY
 code enum digi_key eACT_PROGRAM[8] = {KEY_TARA, KEY_2, KEY_4, KEY_2, KEY_7};
 const enum digi_key eVIEW_VOLTAGE_BATTERY[8] = {KEY_TARA, KEY_MEM, KEY_MEM, KEY_C, KEY_C}; 
 code enum digi_key eCODE_CALIBRACION[8] = {KEY_TARA, KEY_C, KEY_MAS, KEY_RCL, KEY_2, KEY_4, KEY_6};
-
+code enum digi_key eCODE_KEYBOARD_TEST[8] = {KEY_TARA, KEY_C,KEY_0,KEY_0,KEY_0};
 
 void vTestTeclado(void);
 void vCalidadTest(void);
@@ -98,6 +98,8 @@ unsigned int TimeEnd=2000;
 			}else if(strcmp(eACT_PROGRAM, arPass_Configuration) == 0){				
 				viewProgramVersion();
 				return 1;	
+			}else if(strcmp(eCODE_KEYBOARD_TEST, arPass_Configuration) == 0){
+				vTestTeclado();
 			}else if(strcmp(eSEQUENCE_RESET_REFERENCE, arPass_Configuration) == 0){
 				LCD_GLASS_String("RESET", LCD_PESO);
 				LCD_GLASS_String("  ADC", LCD_PRECIO);

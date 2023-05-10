@@ -38,7 +38,7 @@ void main(void) {
   init_int_timer0();
   LCD_GLASS_Init();
   eAccionScale = ScalePreOn; /* Inicia en el primer estado Off */  
-  
+
 
   while (1) {
    switch (eAccionScale) {
@@ -119,11 +119,13 @@ void gpio_init(void)
   P0M0 Registro de configuración del modo del puerto
   P0M1 Registro de configuración del modo del puerto
   */
-    P0 = 0x0C;//P0 = 0x04;
+//Se intercambia P0.0 (SCLK) por P0.3 y P0.1(MISO) por P0.4 
+
+    P0 = 0x06;//P0 = 0x0C;//P0 = 0x04;
     P1 = 0x40;
     P2 = 0x11;
 
-    P0M0 = 0xF0; //0b11111111;
+    P0M0 = 0xE1;//P0M0 = 0xF0; //0b11111111;
     P0M1 = 0x00; //0b00000000;    
     P1M0 = 0xBF; //0b10111111;
     P1M1 = 0x00; //0b00000000;        

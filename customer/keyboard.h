@@ -23,8 +23,13 @@ sbit KEY_K1 = P2^4;
 sbit KEY_K2 = P2^0;	
 sbit KEY_K3 = P1^6;	
 
+/*
 sbit KEY_D0 = P0^1;
 sbit KEY_D1 = P0^0;	
+*/
+sbit KEY_D0 = P0^3;
+sbit KEY_D1 = P0^4;	
+
 sbit KEY_D2 = P1^0;	
 sbit KEY_D3 = P1^1;	
 sbit KEY_D4 = P1^2;
